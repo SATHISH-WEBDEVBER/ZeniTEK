@@ -1,0 +1,10 @@
+{
+  "name": "zenitek-solar-thermal-app",
+  "version": "1.0.0",
+  "description": "Production-Ready MERN Stack Application for ZeniTEK Solar Thermal Solutions",
+  "scripts": {
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build"
+  }
+}
