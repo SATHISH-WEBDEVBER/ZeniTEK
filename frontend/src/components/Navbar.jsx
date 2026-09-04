@@ -95,12 +95,8 @@ export default function Navbar({ onOpenQuoteModal }) {
               {t('navApplications')}
             </Link>
 
-            <Link to="/stories" className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors leading-normal whitespace-nowrap ${location.pathname === '/stories' ? 'text-white bg-blue-800 font-bold shadow-sm' : 'text-blue-100 hover:text-white hover:bg-blue-900'}`}>
-              {t('navStories')}
-            </Link>
-
-            <Link to="/map" className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors leading-normal whitespace-nowrap ${location.pathname === '/map' ? 'text-white bg-blue-800 font-bold shadow-sm' : 'text-blue-100 hover:text-white hover:bg-blue-900'}`}>
-              {t('navMap')}
+            <Link to="/gallery" className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors leading-normal whitespace-nowrap ${location.pathname.startsWith('/gallery') ? 'text-white bg-blue-800 font-bold shadow-sm' : 'text-blue-100 hover:text-white hover:bg-blue-900'}`}>
+              {t('navGallery')}
             </Link>
 
             <Link to="/contact" className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors leading-normal whitespace-nowrap ${location.pathname === '/contact' ? 'text-white bg-blue-800 font-bold shadow-sm' : 'text-blue-100 hover:text-white hover:bg-blue-900'}`}>
@@ -118,8 +114,7 @@ export default function Navbar({ onOpenQuoteModal }) {
           <Link to="/about" className="block px-4 py-3 rounded-xl text-sm font-semibold text-blue-100 hover:bg-blue-900 border-b border-blue-900/50">{t('navAbout')}</Link>
           <Link to="/dryers" className="block px-4 py-3 rounded-xl text-sm font-semibold text-blue-100 hover:bg-blue-900 border-b border-blue-900/50">{t('navDryers')}</Link>
           <Link to="/applications" className="block px-4 py-3 rounded-xl text-sm font-semibold text-blue-100 hover:bg-blue-900 border-b border-blue-900/50">{t('navApplications')}</Link>
-          <Link to="/stories" className="block px-4 py-3 rounded-xl text-sm font-semibold text-blue-100 hover:bg-blue-900 border-b border-blue-900/50">{t('navStories')}</Link>
-          <Link to="/map" className="block px-4 py-3 rounded-xl text-sm font-bold text-green-300 hover:bg-blue-900 border-b border-blue-900/50">{t('navMap')}</Link>
+          <Link to="/gallery" className="block px-4 py-3 rounded-xl text-sm font-semibold text-blue-100 hover:bg-blue-900 border-b border-blue-900/50">{t('navGallery')}</Link>
           <Link to="/contact" className="block px-4 py-3 rounded-xl text-sm font-semibold text-blue-100 hover:bg-blue-900 border-b border-blue-900/50">{t('navContact')}</Link>
           
           <div className="pt-3">

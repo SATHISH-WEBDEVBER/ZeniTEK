@@ -42,7 +42,7 @@ export default function Footer({ onOpenQuoteModal }) {
               <li><Link to="/dryers?model=polyhouse" className="hover:text-blue-700 transition-colors">Polyhouse Tunnel Dryer (100-500 kg)</Link></li>
               <li><Link to="/dryers?model=industrial" className="hover:text-blue-700 transition-colors">Industrial Multi-Tunnel Dryer (1 Ton+)</Link></li>
               <li><Link to="/applications" className="hover:text-blue-700 transition-colors">Crop Moisture Parameter Chart</Link></li>
-              <li><Link to="/map" className="hover:text-blue-700 transition-colors">Active Installation Map</Link></li>
+              <li><Link to="/gallery" className="hover:text-blue-700 transition-colors">Installation Photo Gallery</Link></li>
             </ul>
           </div>
 
