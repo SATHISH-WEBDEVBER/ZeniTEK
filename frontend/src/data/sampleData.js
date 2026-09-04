@@ -10,8 +10,14 @@ export const sampleProjects = [
     cropDrying: "Copra / Coconut",
     dryerType: "Commercial Polyhouse Tunnel Dryer",
     capacity: "500 kg batch",
-    imageUrl: "https://images.unsplash.com/photo-1546554137-f86b9593a222?auto=format&fit=crop&w=600&q=80",
-    description: "Reduced copra drying time from 7 days sun drying to 2.5 days with zero dust contamination and 100% white kernel grade."
+    imageUrl: "https://images.unsplash.com/photo-1546554137-f86b9593a222?auto=format&fit=crop&w=800&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    description: "Reduced copra drying time from 7 days sun drying to 2.5 days with zero dust contamination and 100% white kernel grade. Operating successfully under Pollachi FPO cooperative.",
+    dryingStats: { originalDays: "7 Days Open Sun", solarDays: "2.5 Days Solar", moistureStart: "52%", moistureEnd: "6%", qualityGrade: "100% Grade-1 White Copra", priceAdd: "+28% Value Addition" },
+    photos: [
+      "https://images.unsplash.com/photo-1546554137-f86b9593a222?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=800&q=80"
+    ]
   },
   {
     _id: "p2",
@@ -22,8 +28,14 @@ export const sampleProjects = [
     cropDrying: "Black Pepper & Cardamom",
     dryerType: "Hybrid Solar Thermal Dryer",
     capacity: "300 kg batch",
-    imageUrl: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80",
-    description: "Preserves natural volatile oil content in cardamom and pepper with controlled low-temperature humidity extraction."
+    imageUrl: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    description: "Preserves natural essential oil content in cardamom and black pepper with controlled low-temperature humidity extraction for European export buyers.",
+    dryingStats: { originalDays: "6 Days Open Sun", solarDays: "2.0 Days Solar", moistureStart: "70%", moistureEnd: "10%", qualityGrade: "High Volatile Oil Retention", priceAdd: "+35% Export Premium" },
+    photos: [
+      "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
+    ]
   },
   {
     _id: "p3",
@@ -34,8 +46,14 @@ export const sampleProjects = [
     cropDrying: "Moringa Leaf Powder",
     dryerType: "Multi-Tier Polyhouse Dryer",
     capacity: "1 Ton batch",
-    imageUrl: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
-    description: "Ultra-hygienic green leaf powder drying for EU export compliance. Maintains 100% chlorophyll color."
+    imageUrl: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    description: "Ultra-hygienic green leaf powder drying for EU export compliance. Maintains 100% chlorophyll color with UV protection.",
+    dryingStats: { originalDays: "4 Days Open Sun", solarDays: "1.2 Days Solar", moistureStart: "80%", moistureEnd: "8%", qualityGrade: "100% Chlorophyll Retention", priceAdd: "+40% Export Grade" },
+    photos: [
+      "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=800&q=80"
+    ]
   },
   {
     _id: "p4",
@@ -46,8 +64,14 @@ export const sampleProjects = [
     cropDrying: "Medicinal Herbs & Tea Leaves",
     dryerType: "Portable DIY Solar Dryer",
     capacity: "100 kg batch",
-    imageUrl: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=600&q=80",
-    description: "Self-help group women cooperative drying high-altitude organic herbs at 45°C constant temperature."
+    imageUrl: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=800&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    description: "Self-help group women cooperative drying high-altitude organic herbs at constant 45°C temperature.",
+    dryingStats: { originalDays: "5 Days Open Sun", solarDays: "1.5 Days Solar", moistureStart: "75%", moistureEnd: "9%", qualityGrade: "Zero Mold & Dust Free", priceAdd: "+30% Herbal Margin" },
+    photos: [
+      "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80"
+    ]
   },
   {
     _id: "p5",
@@ -58,8 +82,14 @@ export const sampleProjects = [
     cropDrying: "Red Chillies",
     dryerType: "Multi-Tunnel Industrial Dryer",
     capacity: "2 Ton batch",
-    imageUrl: "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&w=600&q=80",
-    description: "Protects chillies from unseasonal rains and aflatoxin mold contamination while preserving bright red color."
+    imageUrl: "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&w=800&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    description: "Protects chillies from unseasonal rains and aflatoxin mold contamination while preserving bright red glossy skin.",
+    dryingStats: { originalDays: "10 Days Open Sun", solarDays: "3.0 Days Solar", moistureStart: "75%", moistureEnd: "10%", qualityGrade: "Zero Aflatoxin Mold", priceAdd: "+25% Glossy Grade" },
+    photos: [
+      "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1546554137-f86b9593a222?auto=format&fit=crop&w=800&q=80"
+    ]
   },
   {
     _id: "p6",
@@ -70,8 +100,14 @@ export const sampleProjects = [
     cropDrying: "Salted Fish & Shrimp",
     dryerType: "Sealed Hygienic Solar Polyhouse",
     capacity: "400 kg batch",
-    imageUrl: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80",
-    description: "100% fly-free and crow-free marine drying setup. Reduced moisture to export quality standard under 15%."
+    imageUrl: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    description: "100% fly-free and crow-free marine drying setup. Reduced moisture to export quality standard under 15%.",
+    dryingStats: { originalDays: "3 Days Open Sun", solarDays: "1.0 Day Solar", moistureStart: "60%", moistureEnd: "15%", qualityGrade: "100% Fly-Free Sanitation", priceAdd: "+50% Export Price" },
+    photos: [
+      "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&w=800&q=80"
+    ]
   }
 ];
 

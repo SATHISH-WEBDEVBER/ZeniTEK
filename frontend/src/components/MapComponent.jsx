@@ -64,6 +64,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
     setActiveCenter([project.latitude, project.longitude]);
     setActiveZoom(10);
     setMobileTab('map');
+    setSelectedDetailProject(project);
   };
 
   return (
@@ -157,7 +158,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
           <MapContainer
             center={activeCenter}
             zoom={activeZoom}
-            scrollWheelZoom={false}
+            scrollWheelZoom={true}
             style={{ width: '100%', height: '100%' }}
           >
             <ChangeView center={activeCenter} zoom={activeZoom} />
@@ -171,39 +172,58 @@ export default function MapComponent({ onSelectProjectQuote }) {
                 key={p._id || p.title}
                 position={[p.latitude, p.longitude]}
                 icon={createCustomIcon()}
+                eventHandlers={{
+                  mouseover: (e) => {
+                    e.target.openPopup();
+                  },
+                  click: () => {
+                    setSelectedDetailProject(p);
+                  }
+                }}
               >
                 <Popup className="custom-leaflet-popup">
                   <div className="p-1 max-w-xs space-y-2">
                     {p.imageUrl && (
-                      <img
-                        src={p.imageUrl}
-                        alt={p.title}
-                        className="w-full h-28 object-cover rounded-lg border border-slate-200"
-                      />
+                      <div className="relative rounded-lg overflow-hidden border border-slate-200 h-28 bg-slate-100">
+                        <img
+                          src={p.imageUrl}
+                          alt={p.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <span className="absolute top-1.5 right-1.5 text-[9px] font-extrabold bg-blue-700 text-white px-2 py-0.5 rounded shadow">
+                          {p.capacity}
+                        </span>
+                      </div>
                     )}
                     <div>
                       <div className="text-[10px] uppercase font-bold text-blue-700">{p.dryerType}</div>
                       <h4 className="text-sm font-bold text-slate-900">{p.title}</h4>
                       <p className="text-[11px] text-slate-600 flex items-center mt-0.5">
-                        <MapPin className="w-3 h-3 text-green-600 mr-1" /> {p.locationName}
+                        <MapPin className="w-3 h-3 text-green-600 mr-1 shrink-0" /> {p.locationName}
                       </p>
                     </div>
                     <p className="text-[10px] text-slate-500 italic line-clamp-2">{p.description}</p>
                     
                     {/* Popup Actions */}
-                    <div className="pt-2 border-t border-slate-200 flex items-center justify-between gap-1.5">
+                    <div className="pt-2 border-t border-slate-200 flex flex-col gap-1.5">
                       <button
-                        onClick={() => setSelectedDetailProject(p)}
-                        className="flex-1 text-[10px] font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 px-2 py-1 rounded shadow-sm text-center flex items-center justify-center space-x-1"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedDetailProject(p);
+                        }}
+                        className="w-full text-[10px] font-extrabold text-white bg-blue-700 hover:bg-blue-800 py-1.5 rounded shadow-sm text-center flex items-center justify-center space-x-1"
                       >
                         <Info className="w-3 h-3" />
-                        <span>{t('seeMoreDetails')}</span>
+                        <span>View Case Study, Photos & Video</span>
                       </button>
 
                       {onSelectProjectQuote && (
                         <button
-                          onClick={() => onSelectProjectQuote(p)}
-                          className="flex-1 text-[10px] font-bold text-white bg-blue-700 hover:bg-blue-600 px-2 py-1 rounded shadow-sm text-center"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onSelectProjectQuote(p);
+                          }}
+                          className="w-full text-[10px] font-bold text-blue-900 bg-blue-50 hover:bg-blue-100 border border-blue-200 py-1 rounded shadow-sm text-center"
                         >
                           {t('enquireSetup')}
                         </button>

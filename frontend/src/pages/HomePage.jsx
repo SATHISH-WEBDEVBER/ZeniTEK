@@ -152,22 +152,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       </section>
 
 
-      {/* SECTION 4: INTERACTIVE INSTALLATION MAP */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="border-b border-slate-200 pb-4">
-          <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 px-3 py-1 rounded-full border border-green-200">
-            GEOGRAPHICAL FOOTPRINT
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-950 mt-1">
-            Active Solar Dryer Installations Map
-          </h2>
-        </div>
-
-        <MapComponent onSelectProjectQuote={(project) => onOpenQuoteModal({ cropType: project.cropDrying, capacityNeeded: project.capacity, district: project.locationName })} />
-      </section>
-
-
-      {/* SECTION 5: DRYER MODELS GRID */}
+      {/* SECTION 4: DRYER MODELS GRID */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <span className="text-xs font-bold text-blue-700 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
@@ -235,6 +220,24 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       </section>
 
 
+      {/* SECTION 5: INTERACTIVE INSTALLATION MAP (BELOW SOLAR DRYERS) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 px-3.5 py-1 rounded-full border border-green-200 inline-flex items-center">
+            <MapPin className="w-3.5 h-3.5 mr-1.5 text-green-600" /> GEOGRAPHICAL FOOTPRINT & FIELD SITES
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-950">
+            Active Solar Dryer Installations Map
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 font-medium">
+            Explore live operational sites across Tamil Nadu, Kerala, Andhra Pradesh & Karnataka. Hover over any marker for instant site preview or click to open full installation metrics and video.
+          </p>
+        </div>
+
+        <MapComponent onSelectProjectQuote={(project) => onOpenQuoteModal({ cropType: project.cropDrying, capacityNeeded: project.capacity, district: project.locationName })} />
+      </section>
+
+
       {/* SECTION 6: APPLICATIONS SHOWCASE */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-slate-200 pb-6">
@@ -269,13 +272,58 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
           <div className="p-6 bg-white rounded-2xl space-y-3 border border-slate-200 shadow-sm hover:border-blue-500 transition-all">
             <div className="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-700 flex items-center justify-center font-bold text-xl">🐟</div>
             <h3 className="text-base font-bold text-slate-900">Marine & Seafood</h3>
-            <p className="text-xs text-slate-600">Closed polyhouse setup ensuring 100% fly-free dry fish sanitation for export.</p>
           </div>
         </div>
       </section>
 
 
-      {/* SECTION 7: LEAD CAPTURE ENQUIRY FORM */}
+      {/* SECTION 7: FARMER STORIES & TESTIMONIALS */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 px-3.5 py-1 rounded-full border border-green-200">
+            FARMER SUCCESS STORIES
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-950">
+            {t('trustedBy')}
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600">
+            Real feedback from coconut growers, spice exporters, and food entrepreneurs across South India.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {sampleReviews.map(rev => (
+            <div key={rev._id} className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-1 text-amber-400">
+                    {'★'.repeat(rev.rating || 5)}
+                  </div>
+                  <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">
+                    Verified User
+                  </span>
+                </div>
+                <p className="text-xs text-slate-700 leading-relaxed font-medium italic">
+                  "{rev.comment}"
+                </p>
+              </div>
+
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                <div>
+                  <h4 className="text-sm font-extrabold text-slate-900">{rev.name}</h4>
+                  <div className="text-[11px] font-semibold text-green-700">{rev.role}</div>
+                  <div className="text-[10px] text-slate-400 flex items-center mt-0.5">
+                    <MapPin className="w-3 h-3 mr-0.5 text-slate-400" /> {rev.location}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+
+      {/* SECTION 8: LEAD CAPTURE ENQUIRY FORM */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-green-800 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
           <div className="max-w-4xl mx-auto text-center space-y-3 mb-8">

@@ -4,23 +4,30 @@ import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LeadModal from './components/LeadModal';
+import DryerDetailModal from './components/DryerDetailModal';
 import LanguageWidget from './components/LanguageWidget';
 
 import HomePage from './pages/HomePage';
 import AboutUsPage from './pages/AboutUsPage';
 import SolarDryersPage from './pages/SolarDryersPage';
 import ApplicationsPage from './pages/ApplicationsPage';
-import FarmerStoriesPage from './pages/FarmerStoriesPage';
-import MapPage from './pages/MapPage';
+import GalleryPage from './pages/GalleryPage';
 import ContactUsPage from './pages/ContactUsPage';
 
 export default function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalInitialData, setModalInitialData] = useState({});
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
+  const [selectedDryerModel, setSelectedDryerModel] = useState(null);
 
   const handleOpenQuoteModal = (initialData = {}) => {
     setModalInitialData(initialData);
     setModalOpen(true);
+  };
+
+  const handleOpenDetailModal = (model) => {
+    setSelectedDryerModel(model);
+    setDetailModalOpen(true);
   };
 
   return (
@@ -33,12 +40,11 @@ export default function App() {
         {/* Main Page Routing */}
         <main className="flex-1">
           <Routes>
-            <Route path="/" element={<HomePage onOpenQuoteModal={handleOpenQuoteModal} />} />
+            <Route path="/" element={<HomePage onOpenQuoteModal={handleOpenQuoteModal} onOpenDetailModal={handleOpenDetailModal} />} />
             <Route path="/about" element={<AboutUsPage onOpenQuoteModal={handleOpenQuoteModal} />} />
-            <Route path="/dryers" element={<SolarDryersPage onOpenQuoteModal={handleOpenQuoteModal} />} />
+            <Route path="/dryers" element={<SolarDryersPage onOpenQuoteModal={handleOpenQuoteModal} onOpenDetailModal={handleOpenDetailModal} />} />
             <Route path="/applications" element={<ApplicationsPage onOpenQuoteModal={handleOpenQuoteModal} />} />
-            <Route path="/stories" element={<FarmerStoriesPage onOpenQuoteModal={handleOpenQuoteModal} />} />
-            <Route path="/map" element={<MapPage onOpenQuoteModal={handleOpenQuoteModal} />} />
+            <Route path="/gallery" element={<GalleryPage onOpenQuoteModal={handleOpenQuoteModal} />} />
             <Route path="/contact" element={<ContactUsPage onOpenQuoteModal={handleOpenQuoteModal} />} />
           </Routes>
         </main>
@@ -48,6 +54,14 @@ export default function App() {
 
         {/* Global Floating Bottom-Right Language Switcher */}
         <LanguageWidget />
+
+        {/* Global Product Detail Modal */}
+        <DryerDetailModal
+          isOpen={detailModalOpen}
+          onClose={() => setDetailModalOpen(false)}
+          model={selectedDryerModel}
+          onOpenQuoteModal={handleOpenQuoteModal}
+        />
 
         {/* Global Lead Quote Modal */}
         <LeadModal
@@ -60,3 +74,4 @@ export default function App() {
     </LanguageProvider>
   );
 }
+
