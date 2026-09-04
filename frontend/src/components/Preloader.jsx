@@ -2,101 +2,115 @@ import React, { useState, useEffect } from 'react';
 
 export default function Preloader({ onComplete }) {
   const [progress, setProgress] = useState(0);
-  const [statusText, setStatusText] = useState('Initializing ZeniTEK Solar Engine...');
   const [fadingOut, setFadingOut] = useState(false);
 
+  const TOTAL_DURATION = 4000; // 4 Seconds exact loading
+  const UPDATE_INTERVAL = 30; // Update every 30ms
+
   useEffect(() => {
-    const statusMessages = [
-      { at: 15, text: 'Initializing Solar Thermal Technology...' },
-      { at: 40, text: 'Loading MNRE Approved Site Data...' },
-      { at: 70, text: 'Configuring Precision Heat Controls...' },
-      { at: 90, text: 'Preparing Sustainable Future...' },
-      { at: 100, text: 'Welcome to ZeniTEK Solar' }
-    ];
+    const startTime = Date.now();
 
     const timer = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(timer);
+      const elapsed = Date.now() - startTime;
+      const calculatedProgress = Math.min(100, (elapsed / TOTAL_DURATION) * 100);
+
+      setProgress(calculatedProgress);
+
+      if (elapsed >= TOTAL_DURATION) {
+        clearInterval(timer);
+        setProgress(100);
+        setTimeout(() => {
+          setFadingOut(true);
           setTimeout(() => {
-            setFadingOut(true);
-            setTimeout(() => {
-              if (onComplete) onComplete();
-            }, 600); // fade out duration
-          }, 300);
-          return 100;
-        }
-
-        const next = prev + Math.floor(Math.random() * 8) + 4;
-        const currentTarget = Math.min(next, 100);
-
-        const currentMsg = statusMessages.find(m => currentTarget >= m.at);
-        if (currentMsg) {
-          setStatusText(currentMsg.text);
-        }
-
-        return currentTarget;
-      });
-    }, 60);
+            if (onComplete) onComplete();
+          }, 500); // 0.5s smooth fade out
+        }, 150);
+      }
+    }, UPDATE_INTERVAL);
 
     return () => clearInterval(timer);
   }, [onComplete]);
 
+  // Circle progress calculations (Radius = 110 => Circumference ~ 691.15)
+  const radius = 110;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+
   return (
-    <div className={`fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-slate-950 text-white selection:bg-blue-600 transition-opacity duration-700 ${fadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+    <div className={`fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-white text-slate-900 selection:bg-blue-600 transition-opacity duration-500 ${fadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
       
-      {/* Background Animated Gradient Aura */}
-      <div className="absolute w-96 h-96 bg-gradient-to-tr from-green-600/20 via-blue-600/20 to-emerald-400/20 rounded-full blur-3xl animate-pulse pointer-events-none" />
-
-      <div className="relative z-10 flex flex-col items-center space-y-6 max-w-sm px-6 text-center">
+      <div className="relative flex flex-col items-center justify-center space-y-6 px-6 text-center max-w-md mx-auto">
         
-        {/* Emblem Logo Container with Pulsing Ring */}
+        {/* Big Logo with Circular Progress Ring */}
         <div className="relative flex items-center justify-center">
-          {/* Outer Rotating Glowing Ring */}
-          <div className="absolute -inset-4 rounded-full border-2 border-dashed border-green-500/40 animate-spin-slow" />
-          <div className="absolute -inset-8 rounded-full border border-blue-500/20 animate-ping" />
+          
+          {/* SVG Circular Progress Bar */}
+          <svg className="w-64 h-64 sm:w-72 sm:h-72 transform -rotate-90 drop-shadow-sm" viewBox="0 0 240 240">
+            <defs>
+              <linearGradient id="circleProgressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#1e3a8a" /> {/* blue-900 */}
+                <stop offset="50%" stopColor="#2563eb" /> {/* blue-600 */}
+                <stop offset="100%" stopColor="#16a34a" /> {/* green-600 */}
+              </linearGradient>
+            </defs>
 
-          {/* Center Emblem Logo */}
-          <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-slate-900/80 backdrop-blur-xl p-3 border border-slate-800 shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform">
+            {/* Background Track Circle */}
+            <circle
+              cx="120"
+              cy="120"
+              r={radius}
+              stroke="#e2e8f0"
+              strokeWidth="8"
+              fill="transparent"
+            />
+
+            {/* Active Circular Progress Ring */}
+            <circle
+              cx="120"
+              cy="120"
+              r={radius}
+              stroke="url(#circleProgressGradient)"
+              strokeWidth="8"
+              fill="transparent"
+              strokeDasharray={circumference}
+              strokeDashoffset={strokeDashoffset}
+              strokeLinecap="round"
+              className="transition-all duration-75 ease-linear"
+            />
+          </svg>
+
+          {/* Big Emblem Logo Centered Inside Circle */}
+          <div className="absolute inset-0 flex items-center justify-center p-10">
             <img
               src="/emblem.png"
-              alt="ZeniTEK Emblem"
-              className="w-full h-full object-contain animate-pulse"
+              alt="ZeniTEK Logo"
+              className="w-44 h-44 sm:w-52 sm:h-52 object-contain drop-shadow-md"
             />
           </div>
         </div>
 
-        {/* Brand Text */}
-        <div className="space-y-1">
-          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white flex items-center justify-center">
+        {/* Circular Format Percentage Pill */}
+        <div className="inline-flex items-center space-x-2 px-5 py-2 rounded-full bg-slate-50 border border-slate-200 shadow-sm text-slate-800 text-xs font-extrabold font-mono tracking-wide">
+          <span className="w-2.5 h-2.5 rounded-full bg-green-600 animate-pulse"></span>
+          <span>{Math.round(progress)}%</span>
+        </div>
+
+        {/* Clean Brand Typography */}
+        <div className="space-y-1.5 pt-1">
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-blue-950 flex items-center justify-center">
             <span>Zeni</span>
-            <span className="text-green-500">TEK</span>
-            <span className="ml-2 text-xs font-bold uppercase tracking-widest text-green-400 bg-green-950/80 px-2 py-0.5 rounded border border-green-800">
+            <span className="text-green-600">TEK</span>
+            <span className="ml-2.5 text-[11px] font-extrabold uppercase tracking-widest text-green-700 bg-green-50 px-2.5 py-0.5 rounded border border-green-200">
               Solar
             </span>
           </h1>
-          <p className="text-xs font-semibold text-slate-400 tracking-wider">
+          <p className="text-xs font-semibold text-slate-500 tracking-wider uppercase">
             Towards Sustainable Future
           </p>
         </div>
 
-        {/* Progress Bar & Percentage */}
-        <div className="w-full space-y-2 pt-2">
-          <div className="flex items-center justify-between text-[11px] font-mono font-bold text-slate-400">
-            <span className="truncate max-w-[220px] text-left">{statusText}</span>
-            <span className="text-green-400">{progress}%</span>
-          </div>
-
-          <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden p-0.5 border border-slate-700/50 shadow-inner">
-            <div
-              className="h-full bg-gradient-to-r from-blue-600 via-green-500 to-emerald-400 rounded-full transition-all duration-150 ease-out shadow-lg shadow-green-500/30"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        </div>
-
-        {/* Bottom Trust Tag */}
-        <div className="pt-4 text-[10px] text-slate-500 font-medium tracking-widest uppercase">
+        {/* Sub-tagline */}
+        <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest pt-2">
           MNRE Approved • ISO 9001:2015 Certified
         </div>
 
@@ -104,3 +118,4 @@ export default function Preloader({ onComplete }) {
     </div>
   );
 }
+
