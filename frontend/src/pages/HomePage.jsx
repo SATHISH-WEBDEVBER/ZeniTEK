@@ -5,7 +5,7 @@ import MapComponent from '../components/MapComponent';
 import { sampleReviews, dryerModelsData, cropMatrixData } from '../data/sampleData';
 import { useLanguage } from '../context/LanguageContext';
 import {
-  Sun, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, TrendingUp, Zap, ChevronRight, MapPin, Search
+  Sun, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, TrendingUp, Zap, ChevronRight, MapPin, Search, SlidersHorizontal, Sprout
 } from 'lucide-react';
 
 export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
@@ -230,9 +230,16 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
       {/* SECTION 4.5: MODEL TECHNICAL COMPARISON MATRIX */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="text-center space-y-2">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-950">Model Technical Comparison Matrix</h2>
-          <p className="text-xs text-slate-500">Side-by-side specifications of ZeniTEK solar thermal dryer models.</p>
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <span className="text-xs font-bold text-blue-700 uppercase tracking-widest bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200 inline-flex items-center shadow-sm">
+            <SlidersHorizontal className="w-3.5 h-3.5 mr-1.5 text-blue-600" /> TECHNICAL SPECIFICATION COMPARISON
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-950">
+            Model Technical Comparison Matrix
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 font-medium">
+            Side-by-side specifications, capacity ratings, heat retention performance, and government subsidy guidelines.
+          </p>
         </div>
 
         <div className="bg-white rounded-3xl overflow-x-auto border border-slate-200 shadow-md">
@@ -284,49 +291,58 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
       {/* SECTION 4.6: CROP MOISTURE PARAMETER MATRIX */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-          <div>
-            <h2 className="text-2xl font-extrabold text-blue-950">Crop Moisture Parameter Matrix</h2>
-            <p className="text-xs text-slate-500">Moisture targets & solar vs open sun drying days.</p>
+        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-md space-y-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-100 pb-5">
+            <div className="space-y-2">
+              <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 px-3.5 py-1.5 rounded-full border border-green-200 inline-flex items-center shadow-sm">
+                <Sprout className="w-3.5 h-3.5 mr-1.5 text-green-600" /> CROP DEHYDRATION PROFILES
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-950">
+                Crop Moisture Parameter Matrix
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 font-medium">
+                Target moisture retention and drying duration comparison: ZeniTEK Solar Thermal vs Open Sun Drying.
+              </p>
+            </div>
+
+            <div className="relative w-full md:w-80 shrink-0">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+              <input
+                type="text"
+                placeholder="Search crop or profit benefit..."
+                value={matrixSearch}
+                onChange={(e) => setMatrixSearch(e.target.value)}
+                className="w-full bg-slate-50 border border-slate-300 rounded-2xl pl-10 pr-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 shadow-inner"
+              />
+            </div>
           </div>
 
-          <div className="relative w-full sm:w-72">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
-            <input
-              type="text"
-              placeholder="Search crop or benefit..."
-              value={matrixSearch}
-              onChange={(e) => setMatrixSearch(e.target.value)}
-              className="w-full bg-white border border-slate-300 rounded-2xl pl-10 pr-4 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 shadow-sm"
-            />
-          </div>
-        </div>
-
-        <div className="bg-white rounded-3xl overflow-x-auto border border-slate-200 shadow-md">
-          <table className="w-full text-left border-collapse min-w-[750px]">
-            <thead>
-              <tr className="bg-[#1e3a8a] text-white text-xs uppercase font-bold tracking-wider">
-                <th className="p-4 rounded-tl-3xl">TARGET PRODUCE</th>
-                <th className="p-4">FRESH MOISTURE %</th>
-                <th className="p-4 text-green-300">DRIED MOISTURE %</th>
-                <th className="p-4">ZENITEK SOLAR TIME</th>
-                <th className="p-4">OPEN SUN TIME</th>
-                <th className="p-4 rounded-tr-3xl">KEY PROFIT BENEFIT</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-200 text-xs text-slate-700 font-medium">
-              {filteredCropMatrix.map((item, idx) => (
-                <tr key={idx} className="hover:bg-blue-50/50 transition-colors">
-                  <td className="p-4 font-bold text-slate-900">{item.crop}</td>
-                  <td className="p-4 text-rose-600 font-mono font-semibold">{item.freshMoisture}</td>
-                  <td className="p-4 text-green-700 font-mono font-bold">{item.targetMoisture}</td>
-                  <td className="p-4 font-bold text-blue-700">{item.solarDays}</td>
-                  <td className="p-4 text-slate-500">{item.openSunDays}</td>
-                  <td className="p-4 text-slate-800">{item.benefit}</td>
+          <div className="rounded-2xl overflow-x-auto border border-slate-200">
+            <table className="w-full text-left border-collapse min-w-[750px]">
+              <thead>
+                <tr className="bg-[#1e3a8a] text-white text-xs uppercase font-bold tracking-wider">
+                  <th className="p-4">TARGET PRODUCE</th>
+                  <th className="p-4">FRESH MOISTURE %</th>
+                  <th className="p-4 text-green-300">DRIED MOISTURE %</th>
+                  <th className="p-4">ZENITEK SOLAR TIME</th>
+                  <th className="p-4">OPEN SUN TIME</th>
+                  <th className="p-4">KEY PROFIT BENEFIT</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-slate-200 text-xs text-slate-700 font-medium">
+                {filteredCropMatrix.map((item, idx) => (
+                  <tr key={idx} className="hover:bg-blue-50/50 transition-colors">
+                    <td className="p-4 font-bold text-slate-900">{item.crop}</td>
+                    <td className="p-4 text-rose-600 font-mono font-semibold">{item.freshMoisture}</td>
+                    <td className="p-4 text-green-700 font-mono font-bold">{item.targetMoisture}</td>
+                    <td className="p-4 font-bold text-blue-700">{item.solarDays}</td>
+                    <td className="p-4 text-slate-500">{item.openSunDays}</td>
+                    <td className="p-4 text-slate-800">{item.benefit}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 

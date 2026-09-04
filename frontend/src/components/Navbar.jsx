@@ -66,29 +66,29 @@ export default function Navbar({ onOpenQuoteModal }) {
       {/* 2. SUB-NAVBAR (BELOW MAIN NAVBAR): DEDICATED NAV ITEMS */}
       <nav className="hidden lg:block bg-blue-950 border-b border-blue-900 text-white w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center space-x-1 py-1.5 overflow-x-auto">
+          <div className="flex items-center justify-between py-2 w-full">
             
-            <Link to="/" className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors leading-normal whitespace-nowrap ${location.pathname === '/' ? 'text-white bg-blue-800 font-bold shadow-sm' : 'text-blue-100 hover:text-white hover:bg-blue-900'}`}>
+            <Link to="/" className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${location.pathname === '/' ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
               {t('navHome')}
             </Link>
 
-            <Link to="/about" className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors leading-normal whitespace-nowrap ${location.pathname.startsWith('/about') ? 'text-white bg-blue-800 font-bold shadow-sm' : 'text-blue-100 hover:text-white hover:bg-blue-900'}`}>
+            <Link to="/about" className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/about') ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
               {t('navAbout')}
             </Link>
 
-            <Link to="/dryers" className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors leading-normal whitespace-nowrap ${location.pathname.startsWith('/dryers') ? 'text-white bg-blue-800 font-bold shadow-sm' : 'text-blue-100 hover:text-white hover:bg-blue-900'}`}>
+            <Link to="/dryers" className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/dryers') ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
               {t('navDryers')}
             </Link>
 
-            <Link to="/applications" className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors leading-normal whitespace-nowrap ${location.pathname.startsWith('/applications') ? 'text-white bg-blue-800 font-bold shadow-sm' : 'text-blue-100 hover:text-white hover:bg-blue-900'}`}>
+            <Link to="/applications" className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/applications') ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
               {t('navApplications')}
             </Link>
 
-            <Link to="/gallery" className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors leading-normal whitespace-nowrap ${location.pathname.startsWith('/gallery') ? 'text-white bg-blue-800 font-bold shadow-sm' : 'text-blue-100 hover:text-white hover:bg-blue-900'}`}>
+            <Link to="/gallery" className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/gallery') ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
               {t('navGallery')}
             </Link>
 
-            <Link to="/contact" className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors leading-normal whitespace-nowrap ${location.pathname === '/contact' ? 'text-white bg-blue-800 font-bold shadow-sm' : 'text-blue-100 hover:text-white hover:bg-blue-900'}`}>
+            <Link to="/contact" className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${location.pathname === '/contact' ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
               {t('navContact')}
             </Link>
 
