@@ -77,7 +77,7 @@ export default function Footer({ onOpenQuoteModal }) {
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-green-700 shrink-0" />
-                <a href="tel:+919442589000" className="hover:text-blue-700 font-semibold">+91 94425 89000 / +91 422 2689000</a>
+                <a href="tel:+918098613422" className="hover:text-blue-700 font-semibold">+91 80986 13422 (Balakrishnan)</a>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-blue-700 shrink-0" />
