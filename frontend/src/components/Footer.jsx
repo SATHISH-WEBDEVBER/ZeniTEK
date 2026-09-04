@@ -13,13 +13,12 @@ export default function Footer({ onOpenQuoteModal }) {
           
           {/* Col 1: Brand Info */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-9 h-9 rounded-lg bg-blue-700 text-white flex items-center justify-center font-bold">
-                <Sun className="w-5 h-5" />
-              </div>
-              <span className="text-xl font-extrabold tracking-tight text-blue-900">
-                ZeniTEK Solar
-              </span>
+            <div className="flex items-center">
+              <img
+                src="/logo.png"
+                alt="ZeniTEK - Towards Sustainable Future"
+                className="h-10 w-auto object-contain"
+              />
             </div>
             <p className="text-xs leading-relaxed text-slate-600 max-w-sm">
               ZeniTEK is India's leading designer & manufacturer of high-efficiency polyhouse greenhouse solar thermal dryers. Engineered in Coimbatore to eliminate post-harvest waste for farmers, FPOs, and exporters.

@@ -3,7 +3,7 @@ import { dryerModelsData, cropMatrixData } from '../data/sampleData';
 import { CheckCircle2, ArrowRight, ShieldCheck, Filter, Download, Zap, Sun } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
-export default function SolarDryersPage({ onOpenQuoteModal }) {
+export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal }) {
   const [filterMode, setFilterMode] = useState('capacity');
   const { t } = useLanguage();
 
@@ -22,7 +22,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
           </span>
         </h1>
         <p className="text-sm text-slate-600 max-w-2xl mx-auto">
-          Explore our range of UV-stabilized polycarbonate polyhouse solar thermal dryers engineered for maximum thermal heat retention.
+          Explore our range of UV-stabilized polycarbonate polyhouse solar thermal dryers engineered for maximum thermal heat retention. Click any model to view full technical specifications.
         </p>
 
         <div className="flex items-center justify-center space-x-3 pt-4">
@@ -46,11 +46,17 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         {dryerModelsData.map((model, index) => (
           <div
             key={model.id}
-            className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-md p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+            className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-md p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center hover:border-blue-400 transition-all"
           >
             <div className={`lg:col-span-5 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-              <div className="relative rounded-2xl overflow-hidden border border-slate-200 h-72">
-                <img src={model.imageUrl} alt={model.name} className="w-full h-full object-cover" />
+              <div
+                onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
+                className="relative rounded-2xl overflow-hidden border border-slate-200 h-72 cursor-pointer group"
+              >
+                <img src={model.imageUrl} alt={model.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-blue-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span className="px-3.5 py-1.5 bg-white/90 text-blue-950 text-xs font-extrabold rounded-xl shadow">Click for Full Specifications</span>
+                </div>
                 <span className="absolute top-3 left-3 bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-1 rounded-md shadow">
                   {model.badge}
                 </span>
@@ -59,7 +65,12 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
 
             <div className="lg:col-span-7 space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-slate-900">{model.name}</h2>
+                <h2
+                  onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
+                  className="text-2xl font-bold text-slate-900 cursor-pointer hover:text-blue-700 transition-colors"
+                >
+                  {model.name}
+                </h2>
                 <span className="text-xs font-bold text-green-800 bg-green-50 border border-green-200 px-3 py-1 rounded-lg">
                   {model.capacityRange}
                 </span>
@@ -86,7 +97,14 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                 </div>
               </div>
 
-              <div className="pt-2 flex flex-wrap gap-4 items-center">
+              <div className="pt-2 flex flex-wrap gap-3 items-center">
+                <button
+                  onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
+                  className="py-3 px-5 bg-white border border-blue-600 text-blue-700 hover:bg-blue-50 font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center space-x-1.5"
+                >
+                  <span>View Specifications & Photos</span>
+                </button>
+
                 <button
                   onClick={() => onOpenQuoteModal({ capacityNeeded: model.name })}
                   className="py-3 px-6 bg-gradient-to-r from-blue-700 to-green-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow hover:scale-105 transition-all flex items-center space-x-1.5"

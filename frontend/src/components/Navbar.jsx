@@ -19,24 +19,13 @@ export default function Navbar({ onOpenQuoteModal }) {
       <div className="border-b border-slate-200 py-2.5 bg-white w-full">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between">
           
-          {/* Logo (Compact on mobile to prevent overflow) */}
-          <Link to="/" className="flex items-center space-x-2 shrink-0">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-blue-700 to-green-700 p-0.5 shadow-sm">
-              <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
-                <Sun className="w-5 h-5 sm:w-6 sm:h-6 text-blue-700" />
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center">
-                <span className="text-lg sm:text-xl font-extrabold tracking-tight text-blue-950">
-                  ZeniTEK
-                </span>
-                <span className="ml-1 text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-green-800 bg-green-50 px-1 py-0.5 rounded border border-green-200">
-                  Solar
-                </span>
-              </div>
-              <p className="hidden sm:block text-[10px] font-medium text-slate-500 tracking-wider uppercase">Solar Thermal Solutions</p>
-            </div>
+          {/* Logo (New Official ZeniTEK Logo) */}
+          <Link to="/" className="flex items-center shrink-0">
+            <img
+              src="/logo.png"
+              alt="ZeniTEK - Towards Sustainable Future"
+              className="h-10 sm:h-12 w-auto object-contain py-0.5"
+            />
           </Link>
 
           {/* Center Info (Desktop Only) */}

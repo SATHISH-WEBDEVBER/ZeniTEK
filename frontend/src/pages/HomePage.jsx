@@ -8,7 +8,7 @@ import {
   Sun, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, TrendingUp, Zap, ChevronRight, MapPin
 } from 'lucide-react';
 
-export default function HomePage({ onOpenQuoteModal }) {
+export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
   const { t } = useLanguage();
   const [quickForm, setQuickForm] = useState({
     name: '',
@@ -147,25 +147,20 @@ export default function HomePage({ onOpenQuoteModal }) {
 
 
       {/* SECTION 3: INTERACTIVE ROI CALCULATOR */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="roi-calculator">
         <ROICalculator onSelectModelQuote={(modelKey, kg, crop) => onOpenQuoteModal({ capacityNeeded: modelKey, cropType: crop })} />
       </section>
 
 
       {/* SECTION 4: INTERACTIVE INSTALLATION MAP */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between border-b border-slate-200 pb-4 gap-2">
-          <div>
-            <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 px-3 py-1 rounded-full border border-green-200">
-              GEOGRAPHICAL FOOTPRINT
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-950 mt-1">
-              Active Solar Dryer Installations Map
-            </h2>
-          </div>
-          <Link to="/map" className="text-xs font-bold text-blue-700 hover:underline flex items-center shrink-0">
-            Open Fullscreen Map Showcase <ArrowRight className="w-4 h-4 ml-1" />
-          </Link>
+        <div className="border-b border-slate-200 pb-4">
+          <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 px-3 py-1 rounded-full border border-green-200">
+            GEOGRAPHICAL FOOTPRINT
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-950 mt-1">
+            Active Solar Dryer Installations Map
+          </h2>
         </div>
 
         <MapComponent onSelectProjectQuote={(project) => onOpenQuoteModal({ cropType: project.cropDrying, capacityNeeded: project.capacity, district: project.locationName })} />
@@ -182,16 +177,19 @@ export default function HomePage({ onOpenQuoteModal }) {
             {t('modelsHeading')}
           </h2>
           <p className="text-xs sm:text-sm text-slate-600">
-            {t('modelsSubtitle')}
+            {t('modelsSubtitle')} (Click any model for complete specifications & photos)
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {dryerModelsData.map(model => (
             <div key={model.id} className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-blue-500 transition-all duration-300 flex flex-col justify-between shadow-sm hover:shadow-lg group">
-              <div>
+              <div className="cursor-pointer" onClick={() => onOpenDetailModal && onOpenDetailModal(model)}>
                 <div className="relative h-48 overflow-hidden">
                   <img src={model.imageUrl} alt={model.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-blue-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="px-3 py-1 bg-white/90 text-blue-950 text-xs font-extrabold rounded-lg shadow">View Full Specs</span>
+                  </div>
                   <span className="absolute top-3 right-3 bg-blue-700 text-white font-bold text-[10px] uppercase px-2.5 py-1 rounded-md shadow">
                     {model.badge}
                   </span>
@@ -215,7 +213,14 @@ export default function HomePage({ onOpenQuoteModal }) {
                 </div>
               </div>
 
-              <div className="p-6 pt-0">
+              <div className="p-6 pt-0 space-y-2">
+                <button
+                  onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
+                  className="w-full py-2.5 bg-white border border-blue-600 text-blue-700 font-bold text-xs uppercase tracking-wider rounded-xl hover:bg-blue-50 transition-all"
+                >
+                  View Details & Gallery
+                </button>
+
                 <button
                   onClick={() => onOpenQuoteModal({ capacityNeeded: model.name })}
                   className="w-full py-3 bg-blue-50 hover:bg-blue-700 hover:text-white text-blue-900 border border-blue-200 font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center space-x-1.5"
