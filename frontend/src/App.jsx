@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LeadModal from './components/LeadModal';
 import DryerDetailModal from './components/DryerDetailModal';
+import Preloader from './components/Preloader';
 import LanguageWidget from './components/LanguageWidget';
 
 import HomePage from './pages/HomePage';
@@ -15,6 +16,7 @@ import GalleryPage from './pages/GalleryPage';
 import ContactUsPage from './pages/ContactUsPage';
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalInitialData, setModalInitialData] = useState({});
   const [detailModalOpen, setDetailModalOpen] = useState(false);
@@ -32,6 +34,9 @@ export default function App() {
 
   return (
     <LanguageProvider>
+      {/* Animated Splash Preloader on Page Open & Reload */}
+      {loading && <Preloader onComplete={() => setLoading(false)} />}
+
       <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-blue-600 selection:text-white">
         
         {/* Navigation Header */}
