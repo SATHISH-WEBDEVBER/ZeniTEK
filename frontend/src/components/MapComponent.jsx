@@ -54,7 +54,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
     fetchProjects();
   }, []);
 
-  const statesList = ['All', 'Tamil Nadu', 'Kerala', 'Andhra Pradesh', 'Karnataka'];
+  const statesList = ['All', 'Tamil Nadu', 'Karnataka', 'Assam'];
 
   const filteredProjects = selectedState === 'All'
     ? projects
@@ -175,6 +175,9 @@ export default function MapComponent({ onSelectProjectQuote }) {
                 eventHandlers={{
                   mouseover: (e) => {
                     e.target.openPopup();
+                  },
+                  mouseout: (e) => {
+                    e.target.closePopup();
                   },
                   click: () => {
                     setSelectedDetailProject(p);
