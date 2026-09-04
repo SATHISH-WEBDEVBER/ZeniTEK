@@ -33,8 +33,8 @@ export default function Navbar({ onOpenQuoteModal }) {
             <span className="flex items-center text-blue-900 font-semibold">
               <ShieldCheck className="w-4 h-4 mr-1 text-green-600" /> MNRE & ISO Certified
             </span>
-            <a href="tel:+919442589000" className="flex items-center text-slate-800 hover:text-blue-700 font-bold transition-colors">
-              <PhoneCall className="w-3.5 h-3.5 mr-1 text-blue-700" /> +91 94425 89000
+            <a href="tel:+918098613422" className="flex items-center text-slate-800 hover:text-blue-700 font-bold transition-colors">
+              <PhoneCall className="w-3.5 h-3.5 mr-1 text-blue-700" /> +91 80986 13422 (Balakrishnan)
             </a>
           </div>
 
