@@ -65,7 +65,7 @@ router.post(
       }
 
       // 2. Format custom WhatsApp API pre-filled text
-      const waNumber = process.env.WHATSAPP_NUMBER || '919442589000';
+      const waNumber = process.env.WHATSAPP_NUMBER || '918098613422';
       const waMessage = `Hi ZeniTEK Team! 👋\n\nI am *${name}* from *${district}, ${state}* (${clientType}).\nI am interested in a *${capacityNeeded}* Solar Thermal Dryer for *${cropType}*.\n\n*Phone:* ${phone}\n*Note:* ${message || 'Please send subsidy details & price quote.'}`;
       
       const whatsappUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;

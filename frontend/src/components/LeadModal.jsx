@@ -65,12 +65,12 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
         }, 3000);
       } else {
         const waMsg = `Hi ZeniTEK Team! 👋\nI am *${formData.name}* from *${formData.district}, ${formData.state}*.\nInterested in *${formData.capacityNeeded}* for *${formData.cropType}*.\nPhone: ${formData.phone}`;
-        window.open(`https://wa.me/919442589000?text=${encodeURIComponent(waMsg)}`, '_blank');
+        window.open(`https://wa.me/918098613422?text=${encodeURIComponent(waMsg)}`, '_blank');
         setTimeout(() => onClose(), 2500);
       }
     } catch (err) {
       const waMsg = `Hi ZeniTEK Team! 👋\nI am *${formData.name}* from *${formData.district}, ${formData.state}*.\nInterested in *${formData.capacityNeeded}* for *${formData.cropType}*.\nPhone: ${formData.phone}`;
-      window.open(`https://wa.me/919442589000?text=${encodeURIComponent(waMsg)}`, '_blank');
+      window.open(`https://wa.me/918098613422?text=${encodeURIComponent(waMsg)}`, '_blank');
       setTimeout(() => onClose(), 2500);
     } finally {
       setLoading(false);

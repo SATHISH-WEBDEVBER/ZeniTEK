@@ -39,7 +39,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
     } catch (err) {
       console.log('Client fallback submit:', err);
       const waMsg = `Hi ZeniTEK Team! 👋\nI am *${formData.name}* from *${formData.district}, ${formData.state}*.\nCategory: ${formData.clientType}\nCapacity: *${formData.capacityNeeded}* for *${formData.cropType}*.\nPhone: ${formData.phone}`;
-      window.open(`https://wa.me/919442589000?text=${encodeURIComponent(waMsg)}`, '_blank');
+      window.open(`https://wa.me/918098613422?text=${encodeURIComponent(waMsg)}`, '_blank');
       setSubmitted(true);
     } finally {
       setLoading(false);
@@ -92,8 +92,9 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 </div>
                 <div>
                   <div className="font-bold text-slate-900">{t('callUs')}</div>
-                  <p className="text-slate-700 font-semibold mt-1">+91 94425 89000 / +91 422 2689000</p>
-                  <p className="text-slate-500 text-[10px]">Mon - Sat: 9:00 AM - 7:00 PM IST</p>
+                  <p className="text-slate-800 font-bold mt-1 text-sm">+91 80986 13422</p>
+                  <p className="text-blue-900 font-extrabold text-[11px]">Balakrishnan (Sales & Engineering)</p>
+                  <p className="text-slate-500 text-[10px] mt-0.5">Mon - Sat: 9:00 AM - 7:00 PM IST</p>
                 </div>
               </div>
 
@@ -110,13 +111,13 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
 
             <div className="pt-2">
               <a
-                href="https://wa.me/919442589000?text=Hi%20ZeniTEK%20Team!%20I%20want%20a%20quote%20for%20a%20Solar%20Thermal%20Dryer."
+                href="https://wa.me/918098613422?text=Hi%20Balakrishnan%20Sir!%20I%20want%20a%20quote%20for%20a%20ZeniTEK%20Solar%20Thermal%20Dryer."
                 target="_blank"
                 rel="noreferrer"
                 className="w-full py-3.5 px-4 bg-green-600 hover:bg-green-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow flex items-center justify-center space-x-2 transition-all"
               >
                 <MessageCircle className="w-4 h-4 fill-current" />
-                <span>{t('chatWhatsapp')}</span>
+                <span>Chat Instantly on WhatsApp</span>
               </a>
             </div>
 
