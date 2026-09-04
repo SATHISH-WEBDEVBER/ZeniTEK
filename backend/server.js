@@ -78,7 +78,18 @@ mongoose
     console.warn('⚠️ MongoDB connection warning (app running in fallback mode):', err.message);
   });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`🚀 ZeniTEK Backend Server running on port ${PORT}`);
 });
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`⚠️ Port ${PORT} is already in use by another process.`);
+    console.error(`👉 Solution: Stop the existing node process running on port ${PORT} or set PORT=5001 in your .env file.`);
+    process.exit(1);
+  } else {
+    console.error('💥 Server error:', err);
+  }
+});
+
 

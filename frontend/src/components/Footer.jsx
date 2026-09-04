@@ -100,6 +100,17 @@ export default function Footer({ onOpenQuoteModal }) {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500">
           <p>© {new Date().getFullYear()} ZeniTEK Solar Thermal Solutions. All rights reserved.</p>
+          <p className="mt-2 md:mt-0 font-medium">
+            Designed by{' '}
+            <a
+              href="https://knowledgetointelligence.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-700 hover:text-blue-900 hover:underline font-bold transition-colors"
+            >
+              KnowledgeToIntelligence
+            </a>
+          </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <span className="hover:text-slate-900 cursor-pointer">Privacy Policy</span>
             <span className="hover:text-slate-900 cursor-pointer">Terms of Service</span>
@@ -108,5 +119,6 @@ export default function Footer({ onOpenQuoteModal }) {
         </div>
       </div>
     </footer>
+
   );
 }

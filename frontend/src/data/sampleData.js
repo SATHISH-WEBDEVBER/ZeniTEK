@@ -335,11 +335,12 @@ export const dryerModelsData = [
 
 export const cropMatrixData = [
   { crop: "Copra / Coconut", freshMoisture: "52%", targetMoisture: "6%", solarDays: "2.5 Days", openSunDays: "7 Days", benefit: "100% Grade-1 White Copra, zero fungus" },
-  { crop: "Moringa Leaves", freshMoisture: "80%", targetMoisture: "8%", solarDays: "1.2 Days", openSunDays: "4 Days", benefit: "Preserves 100% chlorophyll green & Vitamin C" },
+  { crop: "Moringa Leaves", freshMoisture: "88%", targetMoisture: "8%", solarDays: "1.2 Days", openSunDays: "4 Days", benefit: "Preserves 100% chlorophyll green & Vitamin C" },
   { crop: "Red Chillies", freshMoisture: "75%", targetMoisture: "10%", solarDays: "3.0 Days", openSunDays: "10 Days", benefit: "Zero aflatoxin, bright red glossy skin retain" },
   { crop: "Salted Fish & Shrimp", freshMoisture: "60%", targetMoisture: "15%", solarDays: "1.0 Day", openSunDays: "3 Days", benefit: "100% fly-free export sanitation quality" },
   { crop: "Cloves & Spices", freshMoisture: "70%", targetMoisture: "12%", solarDays: "2.0 Days", openSunDays: "6 Days", benefit: "High volatile essential oil content lock" }
 ];
+
 
 export const sampleGalleryItems = [
   {

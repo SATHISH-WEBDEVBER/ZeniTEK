@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ROICalculator from '../components/ROICalculator';
 import MapComponent from '../components/MapComponent';
-import { sampleReviews, dryerModelsData } from '../data/sampleData';
+import { sampleReviews, dryerModelsData, cropMatrixData } from '../data/sampleData';
 import { useLanguage } from '../context/LanguageContext';
 import {
-  Sun, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, TrendingUp, Zap, ChevronRight, MapPin
+  Sun, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, TrendingUp, Zap, ChevronRight, MapPin, Search
 } from 'lucide-react';
 
 export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
@@ -14,8 +14,16 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
     name: '',
     phone: '',
     district: '',
-    cropType: 'Copra/Coconut'
+    capacityNeeded: 'Commercial Polyhouse Tunnel Dryer (100-500 kg)',
+    cropType: 'Copra/Coconut',
+    message: ''
   });
+  const [matrixSearch, setMatrixSearch] = useState('');
+
+  const filteredCropMatrix = cropMatrixData.filter(item =>
+    item.crop.toLowerCase().includes(matrixSearch.toLowerCase()) ||
+    item.benefit.toLowerCase().includes(matrixSearch.toLowerCase())
+  );
 
   const handleQuickSubmit = (e) => {
     e.preventDefault();
@@ -220,6 +228,109 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       </section>
 
 
+      {/* SECTION 4.5: MODEL TECHNICAL COMPARISON MATRIX */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="text-center space-y-2">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-950">Model Technical Comparison Matrix</h2>
+          <p className="text-xs text-slate-500">Side-by-side specifications of ZeniTEK solar thermal dryer models.</p>
+        </div>
+
+        <div className="bg-white rounded-3xl overflow-x-auto border border-slate-200 shadow-md">
+          <table className="w-full text-left border-collapse min-w-[700px]">
+            <thead>
+              <tr className="bg-[#1e3a8a] text-white text-xs uppercase font-bold tracking-wider">
+                <th className="p-4 rounded-tl-3xl">SPECIFICATION PARAMETER</th>
+                <th className="p-4">PORTABLE DIY DRYER</th>
+                <th className="p-4 text-green-300">COMMERCIAL POLYHOUSE</th>
+                <th className="p-4 rounded-tr-3xl">MULTI-TUNNEL INDUSTRIAL</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-200 text-xs text-slate-700 font-medium">
+              <tr>
+                <td className="p-4 font-bold text-slate-900">Daily Batch Capacity</td>
+                <td className="p-4">10 – 50 kg</td>
+                <td className="p-4 font-bold text-blue-700">100 – 500 kg</td>
+                <td className="p-4 font-bold text-green-700">1 Ton to 10 Tons+</td>
+              </tr>
+              <tr>
+                <td className="p-4 font-bold text-slate-900">Drying Temperature Range</td>
+                <td className="p-4">40°C – 65°C</td>
+                <td className="p-4">45°C – 70°C</td>
+                <td className="p-4">50°C – 85°C (Hybrid)</td>
+              </tr>
+              <tr>
+                <td className="p-4 font-bold text-slate-900">Polycarbonate Sheet Thickness</td>
+                <td className="p-4">4 mm Twin-Wall UV</td>
+                <td className="p-4">6 mm Twin-Wall UV</td>
+                <td className="p-4">8-10 mm Multi-Wall UV</td>
+              </tr>
+              <tr>
+                <td className="p-4 font-bold text-slate-900">Heat Retention Rating</td>
+                <td className="p-4">Standard Solar Fan</td>
+                <td className="p-4">Thermal Storage Bed</td>
+                <td className="p-4 font-bold text-green-700">24/7 Thermal Mass Bed</td>
+              </tr>
+              <tr>
+                <td className="p-4 font-bold text-slate-900">Government Subsidy %</td>
+                <td className="p-4">Up to 40%</td>
+                <td className="p-4 font-bold text-green-700">Up to 50% State Agri</td>
+                <td className="p-4 font-bold text-blue-700">Up to 60% MNRE Grants</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+
+      {/* SECTION 4.6: CROP MOISTURE PARAMETER MATRIX */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-2xl font-extrabold text-blue-950">Crop Moisture Parameter Matrix</h2>
+            <p className="text-xs text-slate-500">Moisture targets & solar vs open sun drying days.</p>
+          </div>
+
+          <div className="relative w-full sm:w-72">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+            <input
+              type="text"
+              placeholder="Search crop or benefit..."
+              value={matrixSearch}
+              onChange={(e) => setMatrixSearch(e.target.value)}
+              className="w-full bg-white border border-slate-300 rounded-2xl pl-10 pr-4 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 shadow-sm"
+            />
+          </div>
+        </div>
+
+        <div className="bg-white rounded-3xl overflow-x-auto border border-slate-200 shadow-md">
+          <table className="w-full text-left border-collapse min-w-[750px]">
+            <thead>
+              <tr className="bg-[#1e3a8a] text-white text-xs uppercase font-bold tracking-wider">
+                <th className="p-4 rounded-tl-3xl">TARGET PRODUCE</th>
+                <th className="p-4">FRESH MOISTURE %</th>
+                <th className="p-4 text-green-300">DRIED MOISTURE %</th>
+                <th className="p-4">ZENITEK SOLAR TIME</th>
+                <th className="p-4">OPEN SUN TIME</th>
+                <th className="p-4 rounded-tr-3xl">KEY PROFIT BENEFIT</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-200 text-xs text-slate-700 font-medium">
+              {filteredCropMatrix.map((item, idx) => (
+                <tr key={idx} className="hover:bg-blue-50/50 transition-colors">
+                  <td className="p-4 font-bold text-slate-900">{item.crop}</td>
+                  <td className="p-4 text-rose-600 font-mono font-semibold">{item.freshMoisture}</td>
+                  <td className="p-4 text-green-700 font-mono font-bold">{item.targetMoisture}</td>
+                  <td className="p-4 font-bold text-blue-700">{item.solarDays}</td>
+                  <td className="p-4 text-slate-500">{item.openSunDays}</td>
+                  <td className="p-4 text-slate-800">{item.benefit}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+
       {/* SECTION 5: INTERACTIVE INSTALLATION MAP (BELOW SOLAR DRYERS) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-3xl mx-auto space-y-3">
@@ -331,57 +442,93 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
             <p className="text-xs text-blue-100">{t('quickFormDesc')}</p>
           </div>
 
-          <form onSubmit={handleQuickSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            <div>
-              <input
-                type="text"
-                required
-                placeholder={`${t('yourName')} *`}
-                value={quickForm.name}
-                onChange={(e) => setQuickForm({ ...quickForm, name: e.target.value })}
-                className="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-xs placeholder-slate-400 font-medium"
-              />
+          <form onSubmit={handleQuickSubmit} className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-[11px] font-bold text-blue-200 mb-1">{t('yourName')} *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder={`${t('yourName')} *`}
+                  value={quickForm.name}
+                  onChange={(e) => setQuickForm({ ...quickForm, name: e.target.value })}
+                  className="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-xs placeholder-slate-400 font-medium"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-blue-200 mb-1">{t('whatsappNum')} *</label>
+                <input
+                  type="tel"
+                  required
+                  placeholder={`${t('whatsappNum')} *`}
+                  value={quickForm.phone}
+                  onChange={(e) => setQuickForm({ ...quickForm, phone: e.target.value })}
+                  className="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-xs placeholder-slate-400 font-medium"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-blue-200 mb-1">{t('districtCity')} *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Tamil Nadu / Coimbatore *"
+                  value={quickForm.district}
+                  onChange={(e) => setQuickForm({ ...quickForm, district: e.target.value })}
+                  className="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-xs placeholder-slate-400 font-medium"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-blue-200 mb-1">Dryer Model *</label>
+                <select
+                  value={quickForm.capacityNeeded}
+                  onChange={(e) => setQuickForm({ ...quickForm, capacityNeeded: e.target.value })}
+                  className="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-xs font-medium cursor-pointer"
+                >
+                  <option value="Portable DIY Solar Dryer (10-50 kg)">Portable DIY Solar Dryer (10-50 kg)</option>
+                  <option value="Commercial Polyhouse Tunnel Dryer (100-500 kg)">Commercial Polyhouse Tunnel Dryer (100-500 kg)</option>
+                  <option value="Multi-Tunnel Industrial Hybrid Dryer (1 Ton+)">Multi-Tunnel Industrial Hybrid Dryer (1 Ton+)</option>
+                  <option value="Custom Dryer Sizing Consult">Custom Dryer Sizing Consult</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-blue-200 mb-1">{t('targetCrop')} *</label>
+                <select
+                  value={quickForm.cropType}
+                  onChange={(e) => setQuickForm({ ...quickForm, cropType: e.target.value })}
+                  className="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-xs font-medium cursor-pointer"
+                >
+                  <option value="Copra/Coconut">Copra / Coconut</option>
+                  <option value="Moringa/Herbs">Moringa / Herbs</option>
+                  <option value="Spices/Chillies">Spices / Chillies</option>
+                  <option value="Fruits/Veggies">Fruits / Veggies</option>
+                  <option value="Fish/Seafood">Fish / Marine</option>
+                  <option value="Other">Other Agricultural / Industrial</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-blue-200 mb-1">Description / Requirements</label>
+                <input
+                  type="text"
+                  placeholder="Mention target moisture, location details or questions..."
+                  value={quickForm.message}
+                  onChange={(e) => setQuickForm({ ...quickForm, message: e.target.value })}
+                  className="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-xs placeholder-slate-400 font-medium"
+                />
+              </div>
             </div>
-            <div>
-              <input
-                type="tel"
-                required
-                placeholder={`${t('whatsappNum')} *`}
-                value={quickForm.phone}
-                onChange={(e) => setQuickForm({ ...quickForm, phone: e.target.value })}
-                className="w-full bg-slate-300 border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-xs placeholder-slate-400 font-medium bg-white"
-              />
-            </div>
-            <div>
-              <input
-                type="text"
-                required
-                placeholder={`${t('districtCity')} *`}
-                value={quickForm.district}
-                onChange={(e) => setQuickForm({ ...quickForm, district: e.target.value })}
-                className="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-xs placeholder-slate-400 font-medium"
-              />
-            </div>
-            <div>
-              <select
-                value={quickForm.cropType}
-                onChange={(e) => setQuickForm({ ...quickForm, cropType: e.target.value })}
-                className="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-xs font-medium cursor-pointer"
-              >
-                <option value="Copra/Coconut">Copra / Coconut</option>
-                <option value="Moringa/Herbs">Moringa / Herbs</option>
-                <option value="Spices/Chillies">Spices / Chillies</option>
-                <option value="Fruits/Veggies">Fruits / Veggies</option>
-                <option value="Fish/Seafood">Fish / Marine</option>
-              </select>
-            </div>
-            <div>
+
+            <div className="pt-2 flex justify-center">
               <button
                 type="submit"
-                className="w-full py-3 px-4 bg-green-600 hover:bg-green-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow transition-all flex items-center justify-center space-x-1"
+                className="w-full sm:w-auto px-8 py-3.5 bg-green-600 hover:bg-green-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 hover:scale-105"
               >
-                <span>{t('getSubsidyQuote')}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <span>GET PRICING & SUBSIDY QUOTE</span>
+                <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </form>
