@@ -24,12 +24,47 @@ app.use('/api/projects', projectsRouter);
 app.use('/api/reviews', reviewsRouter);
 app.use('/api/seed', seedRouter);
 
+// API Index Endpoint
+app.get('/api', (req, res) => {
+  return res.json({
+    success: true,
+    service: 'ZeniTEK Solar Thermal API Server',
+    version: '1.0.0',
+    endpoints: [
+      { path: '/api/health', methods: ['GET'], description: 'Server and Database Health Status' },
+      { path: '/api/projects', methods: ['GET', 'POST', 'PUT', 'DELETE'], description: 'Solar Thermal Installation Projects' },
+      { path: '/api/reviews', methods: ['GET', 'POST', 'PUT', 'DELETE'], description: 'Client Testimonials & Case Reviews' },
+      { path: '/api/leads', methods: ['GET', 'POST', 'DELETE'], description: 'Quote & Subsidy Enquiry Leads' },
+      { path: '/api/seed', methods: ['GET', 'POST'], description: 'Database Seeding Endpoint' }
+    ],
+    mongoStatus: mongoose.connection.readyState === 1 ? 'Connected' : 'Standby / Fallback Mode'
+  });
+});
+
+// Health Check Endpoint
 app.get('/api/health', (req, res) => {
-  res.json({
+  return res.json({
     status: 'OK',
     service: 'ZeniTEK Solar Thermal API',
     mongoStatus: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected/Standby',
     timestamp: new Date()
+  });
+});
+
+// Catch-all for non-existent /api routes
+app.use('/api/*', (req, res) => {
+  return res.status(404).json({
+    success: false,
+    message: `API endpoint '${req.originalUrl}' not found.`
+  });
+});
+
+// Global Error Handler Middleware
+app.use((err, req, res, next) => {
+  console.error('💥 Unhandled API Error:', err);
+  return res.status(err.status || 500).json({
+    success: false,
+    message: err.message || 'Internal Server Error'
   });
 });
 
@@ -46,3 +81,4 @@ mongoose
 app.listen(PORT, () => {
   console.log(`🚀 ZeniTEK Backend Server running on port ${PORT}`);
 });
+

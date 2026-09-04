@@ -5,6 +5,9 @@ import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
+// In-memory fallback array for standby mode
+const inMemoryLeads = [];
+
 // Nodemailer Transporter Setup (Mock/Configurable)
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp.ethereal.email',
@@ -15,6 +18,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// POST /api/leads - Submit new lead enquiry
 router.post(
   '/',
   [
@@ -45,7 +49,7 @@ router.post(
         message = ''
       } = req.body;
 
-      // 1. Save to Database (if DB connected)
+      // 1. Save to Database or fallback array
       let lead = null;
       try {
         lead = await Lead.create({
@@ -60,8 +64,21 @@ router.post(
           message
         });
       } catch (dbErr) {
-        console.warn('MongoDB Lead Save skipped or failed:', dbErr.message);
-        lead = { _id: Date.now().toString(), name, phone, state, district, clientType, cropType, capacityNeeded, message, submittedAt: new Date() };
+        console.warn('MongoDB Lead Save skipped or failed, using in-memory fallback:', dbErr.message);
+        lead = {
+          _id: 'mem_' + Date.now().toString(),
+          name,
+          phone,
+          whatsappPreference,
+          state,
+          district,
+          clientType,
+          cropType,
+          capacityNeeded,
+          message,
+          submittedAt: new Date()
+        };
+        inMemoryLeads.unshift(lead);
       }
 
       // 2. Format custom WhatsApp API pre-filled text
@@ -95,14 +112,51 @@ router.post(
   }
 );
 
-// GET /api/leads - Admin list
+// GET /api/leads - Fetch all leads
 router.get('/', async (req, res) => {
   try {
     const leads = await Lead.find().sort({ submittedAt: -1 });
-    res.json({ success: true, leads });
+    return res.json({ success: true, count: leads.length, leads });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Failed to fetch leads' });
+    return res.json({ success: true, count: inMemoryLeads.length, leads: inMemoryLeads, fallback: true });
+  }
+});
+
+// GET /api/leads/:id - Fetch single lead by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    let lead = null;
+    try {
+      lead = await Lead.findById(id);
+    } catch (dbErr) {
+      lead = inMemoryLeads.find(l => l._id === id);
+    }
+
+    if (!lead) {
+      return res.status(404).json({ success: false, message: 'Lead not found' });
+    }
+    return res.json({ success: true, lead });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Error fetching lead' });
+  }
+});
+
+// DELETE /api/leads/:id - Delete lead by ID
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    try {
+      await Lead.findByIdAndDelete(id);
+    } catch (dbErr) {
+      const idx = inMemoryLeads.findIndex(l => l._id === id);
+      if (idx !== -1) inMemoryLeads.splice(idx, 1);
+    }
+    return res.json({ success: true, message: 'Lead deleted successfully' });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Error deleting lead' });
   }
 });
 
 export default router;
+

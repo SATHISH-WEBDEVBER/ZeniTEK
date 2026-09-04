@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Play, TrendingUp, ShieldCheck, Award, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { sampleReviews } from '../data/sampleData';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function FarmerStoriesPage({ onOpenQuoteModal }) {
   const { t } = useLanguage();
+  const [reviews, setReviews] = useState(sampleReviews);
+
+  useEffect(() => {
+    async function fetchReviews() {
+      try {
+        const res = await fetch('/api/reviews');
+        const data = await res.json();
+        if (data.success && data.reviews.length > 0) {
+          setReviews(data.reviews);
+        }
+      } catch (err) {
+        console.log('Using sample reviews fallback:', err);
+      }
+    }
+    fetchReviews();
+  }, []);
 
   return (
     <div className="space-y-16 pb-16 pt-6 bg-slate-50 text-slate-900">
@@ -57,7 +73,8 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {sampleReviews.map(rev => (
+          {reviews.map(rev => (
+
             <div key={rev._id} className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-md space-y-4">
               <div className="relative h-48 bg-slate-900 overflow-hidden">
                 <iframe
