@@ -12,16 +12,16 @@ export default function MapPage({ onOpenQuoteModal }) {
       {/* Header */}
       <div className="text-center space-y-3">
         <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 border border-green-200 px-3 py-1 rounded-full">
-          GEOGRAPHICAL WORK SHOWCASE
+          {t('mapShowcaseBadge')}
         </span>
         <h1 className="text-4xl sm:text-5xl font-black text-blue-950">
-          Active Solar Dryer Installations <br />
+          {t('mapTitle1')} <br />
           <span className="text-green-700">
-            Across South India & Beyond
+            {t('mapTitle2')}
           </span>
         </h1>
         <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto font-medium">
-          Explore our interactive project map. Click any marker or filter by state on the sidebar to view active polyhouse dryer installations, capacities, and crop moisture results.
+          {t('mapSubtitle')}
         </p>
       </div>
 
@@ -33,8 +33,8 @@ export default function MapPage({ onOpenQuoteModal }) {
         <div className="flex items-center space-x-3">
           <MapPin className="w-6 h-6 text-blue-700 shrink-0" />
           <div>
-            <div className="text-sm font-bold text-slate-900">Want to Visit an Active Solar Dryer Installation Near You?</div>
-            <div className="text-xs text-slate-500">We arrange live site visits for FPO directors, government officials, and farmers.</div>
+            <div className="text-sm font-bold text-slate-900">{t('visitTitle')}</div>
+            <div className="text-xs text-slate-500">{t('visitDesc')}</div>
           </div>
         </div>
 
@@ -42,7 +42,7 @@ export default function MapPage({ onOpenQuoteModal }) {
           onClick={() => onOpenQuoteModal()}
           className="py-2.5 px-5 bg-gradient-to-r from-blue-700 to-green-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:scale-105 transition-all shadow shrink-0"
         >
-          Book Live Site Visit
+          {t('bookVisitBtn')}
         </button>
       </div>
 

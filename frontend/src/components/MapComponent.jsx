@@ -75,7 +75,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
         
         <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto">
           <span className="text-[11px] font-bold text-slate-500 mr-1 flex items-center shrink-0">
-            <SlidersHorizontal className="w-3.5 h-3.5 mr-1" /> Filter State:
+            <SlidersHorizontal className="w-3.5 h-3.5 mr-1" /> {t('filterStateLabel')}
           </span>
           {statesList.map(st => (
             <button
@@ -95,14 +95,14 @@ export default function MapComponent({ onSelectProjectQuote }) {
             className={`flex-1 py-1.5 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center space-x-1 ${mobileTab === 'map' ? 'bg-blue-700 text-white shadow' : 'text-slate-700'}`}
           >
             <MapPin className="w-3.5 h-3.5" />
-            <span>Interactive Map</span>
+            <span>{t('interactiveMapTab')}</span>
           </button>
           <button
             onClick={() => setMobileTab('list')}
             className={`flex-1 py-1.5 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center space-x-1 ${mobileTab === 'list' ? 'bg-blue-700 text-white shadow' : 'text-slate-700'}`}
           >
             <Tag className="w-3.5 h-3.5" />
-            <span>Locations ({filteredProjects.length})</span>
+            <span>{t('projectListTab')} ({filteredProjects.length})</span>
           </button>
         </div>
 

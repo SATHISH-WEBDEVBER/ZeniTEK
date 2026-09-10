@@ -232,13 +232,13 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <span className="text-xs font-bold text-blue-700 uppercase tracking-widest bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200 inline-flex items-center shadow-sm">
-            <SlidersHorizontal className="w-3.5 h-3.5 mr-1.5 text-blue-600" /> TECHNICAL SPECIFICATION COMPARISON
+            <SlidersHorizontal className="w-3.5 h-3.5 mr-1.5 text-blue-600" /> {t('matrixModelBadge')}
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-950">
-            Model Technical Comparison Matrix
+            {t('matrixModelTitle')}
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 font-medium">
-            Side-by-side specifications, capacity ratings, heat retention performance, and government subsidy guidelines.
+            {t('matrixModelSubtitle')}
           </p>
         </div>
 
@@ -295,13 +295,13 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-100 pb-5">
             <div className="space-y-2">
               <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 px-3.5 py-1.5 rounded-full border border-green-200 inline-flex items-center shadow-sm">
-                <Sprout className="w-3.5 h-3.5 mr-1.5 text-green-600" /> CROP DEHYDRATION PROFILES
+                <Sprout className="w-3.5 h-3.5 mr-1.5 text-green-600" /> {t('matrixCropBadge')}
               </span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-950">
-                Crop Moisture Parameter Matrix
+                {t('matrixCropTitle')}
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 font-medium">
-                Target moisture retention and drying duration comparison: ZeniTEK Solar Thermal vs Open Sun Drying.
+                {t('matrixCropSubtitle')}
               </p>
             </div>
 
@@ -309,7 +309,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
               <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
               <input
                 type="text"
-                placeholder="Search crop or profit benefit..."
+                placeholder={t('searchPlaceholder')}
                 value={matrixSearch}
                 onChange={(e) => setMatrixSearch(e.target.value)}
                 className="w-full bg-slate-50 border border-slate-300 rounded-2xl pl-10 pr-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 shadow-inner"
@@ -497,7 +497,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-blue-200 mb-1">Dryer Model *</label>
+                <label className="block text-[11px] font-bold text-blue-200 mb-1">{t('dryerModel')} *</label>
                 <select
                   value={quickForm.capacityNeeded}
                   onChange={(e) => setQuickForm({ ...quickForm, capacityNeeded: e.target.value })}
@@ -527,7 +527,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-blue-200 mb-1">Description / Requirements</label>
+                <label className="block text-[11px] font-bold text-blue-200 mb-1">{t('descriptionReqs')}</label>
                 <input
                   type="text"
                   placeholder="Mention target moisture, location details or questions..."
@@ -543,7 +543,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                 type="submit"
                 className="w-full sm:w-auto px-8 py-3.5 bg-green-600 hover:bg-green-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 hover:scale-105"
               >
-                <span>GET PRICING & SUBSIDY QUOTE</span>
+                <span>{t('getPricingSubsidyQuote')}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>

@@ -13,16 +13,16 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
       {/* Hero Banner */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
         <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 border border-green-200 px-3 py-1 rounded-full">
-          SOLAR DRYER CATALOGUE
+          {t('catalogueBadge')}
         </span>
         <h1 className="text-4xl sm:text-5xl font-black text-blue-950">
-          100% Solar-Powered Dehydration. <br />
+          {t('catalogueTitle1')} <br />
           <span className="text-green-700">
-            5x Faster. Zero Operating Costs.
+            {t('catalogueTitle2')}
           </span>
         </h1>
         <p className="text-sm text-slate-600 max-w-2xl mx-auto">
-          Explore our range of UV-stabilized polycarbonate polyhouse solar thermal dryers engineered for maximum thermal heat retention. Click any model to view full technical specifications.
+          {t('catalogueSubtitle')}
         </p>
 
         <div className="flex items-center justify-center space-x-3 pt-4">
@@ -30,13 +30,13 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
             onClick={() => setFilterMode('capacity')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center ${filterMode === 'capacity' ? 'bg-blue-700 text-white shadow' : 'bg-white text-slate-700 hover:text-blue-700 border border-slate-300'}`}
           >
-            <Filter className="w-3.5 h-3.5 mr-1.5" /> Browse by Daily Capacity
+            <Filter className="w-3.5 h-3.5 mr-1.5" /> {t('browseCapacity')}
           </button>
           <button
             onClick={() => setFilterMode('crop')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center ${filterMode === 'crop' ? 'bg-blue-700 text-white shadow' : 'bg-white text-slate-700 hover:text-blue-700 border border-slate-300'}`}
           >
-            <Filter className="w-3.5 h-3.5 mr-1.5" /> Browse by Crop Type
+            <Filter className="w-3.5 h-3.5 mr-1.5" /> {t('browseCrop')}
           </button>
         </div>
       </section>
@@ -55,7 +55,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
               >
                 <img src={model.imageUrl} alt={model.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="px-3.5 py-1.5 bg-white/90 text-blue-950 text-xs font-extrabold rounded-xl shadow">Click for Full Specifications</span>
+                  <span className="px-3.5 py-1.5 bg-white/90 text-blue-950 text-xs font-extrabold rounded-xl shadow">{t('clickSpecs')}</span>
                 </div>
                 <span className="absolute top-3 left-3 bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-1 rounded-md shadow">
                   {model.badge}
@@ -80,19 +80,19 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
 
               <div className="grid grid-cols-2 gap-3 text-xs pt-2">
                 <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
-                  <div className="text-[10px] text-slate-500 uppercase font-semibold">Target Audience</div>
+                  <div className="text-[10px] text-slate-500 uppercase font-semibold">{t('targetAudienceLabel')}</div>
                   <div className="font-bold text-slate-900 mt-0.5">{model.targetAudience}</div>
                 </div>
                 <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
-                  <div className="text-[10px] text-slate-500 uppercase font-semibold">Build Material</div>
+                  <div className="text-[10px] text-slate-500 uppercase font-semibold">{t('buildMaterialLabel')}</div>
                   <div className="font-bold text-slate-900 mt-0.5">{model.buildMaterial}</div>
                 </div>
                 <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
-                  <div className="text-[10px] text-slate-500 uppercase font-semibold">Temp Range</div>
+                  <div className="text-[10px] text-slate-500 uppercase font-semibold">{t('tempRangeLabel')}</div>
                   <div className="font-bold text-blue-700 mt-0.5">{model.tempRange}</div>
                 </div>
                 <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
-                  <div className="text-[10px] text-slate-500 uppercase font-semibold">Subsidy Eligibility</div>
+                  <div className="text-[10px] text-slate-500 uppercase font-semibold">{t('subsidyEligibilityLabel')}</div>
                   <div className="font-bold text-green-700 mt-0.5">{model.subsidyEligibility}</div>
                 </div>
               </div>
@@ -102,14 +102,14 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                   onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
                   className="py-3 px-5 bg-white border border-blue-600 text-blue-700 hover:bg-blue-50 font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center space-x-1.5"
                 >
-                  <span>View Specifications & Photos</span>
+                  <span>{t('viewSpecsPhotos')}</span>
                 </button>
 
                 <button
                   onClick={() => onOpenQuoteModal({ capacityNeeded: model.name })}
                   className="py-3 px-6 bg-gradient-to-r from-blue-700 to-green-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow hover:scale-105 transition-all flex items-center space-x-1.5"
                 >
-                  <span>Check Subsidy & Pricing</span>
+                  <span>{t('checkSubsidyPricing')}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -121,18 +121,18 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
       {/* Comparison Matrix Table */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="text-center space-y-2">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-950">Model Technical Comparison Matrix</h2>
-          <p className="text-xs text-slate-500">Side-by-side specifications of ZeniTEK solar thermal dryer models.</p>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-950">{t('matrixModelTitle')}</h2>
+          <p className="text-xs text-slate-500">{t('matrixModelSubtitle')}</p>
         </div>
 
         <div className="bg-white rounded-3xl overflow-x-auto border border-slate-200 shadow-md">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-blue-900 text-white text-xs uppercase font-bold tracking-wider">
-                <th className="p-4">Specification Parameter</th>
-                <th className="p-4">Portable DIY Dryer</th>
-                <th className="p-4 text-green-300">Commercial Polyhouse</th>
-                <th className="p-4">Multi-Tunnel Industrial</th>
+                <th className="p-4">{t('thSpecParam')}</th>
+                <th className="p-4">{t('thPortable')}</th>
+                <th className="p-4 text-green-300">{t('thPolyhouse')}</th>
+                <th className="p-4">{t('thIndustrial')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 text-xs text-slate-700 font-medium">
@@ -176,11 +176,11 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
         <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-green-800 text-white p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">
             <span className="text-[10px] font-bold text-green-300 bg-blue-950 px-2.5 py-0.5 rounded uppercase">
-              STATE GOVERNMENT ASSISTANCE
+              {t('stateAssistance')}
             </span>
-            <h3 className="text-xl sm:text-2xl font-bold">Claim Up to 60% Government Subsidy on Your Solar Dryer</h3>
+            <h3 className="text-xl sm:text-2xl font-bold">{t('claimSubsidyTitle')}</h3>
             <p className="text-xs text-blue-100 max-w-xl">
-              We handle end-to-end documentation, NABARD application filing, and state agritech subsidy clearance.
+              {t('claimSubsidyDesc')}
             </p>
           </div>
 
@@ -188,7 +188,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
             onClick={() => onOpenQuoteModal()}
             className="py-3.5 px-6 bg-green-600 hover:bg-green-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow transition-all shrink-0"
           >
-            Check Subsidy Eligibility
+            {t('checkSubsidyBtn')}
           </button>
         </div>
       </section>

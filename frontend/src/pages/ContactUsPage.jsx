@@ -52,16 +52,16 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
       {/* Hero Header */}
       <div className="text-center space-y-4">
         <span className="text-xs font-bold text-blue-700 uppercase tracking-widest bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
-          DIRECT FACTORY CONTACT
+          {t('contactBadge')}
         </span>
         <h1 className="text-4xl sm:text-5xl font-black text-blue-950">
-          Let’s Build Your Sustainable <br />
+          {t('contactTitle1')} <br />
           <span className="text-green-700">
-            Drying Solution.
+            {t('contactTitle2')}
           </span>
         </h1>
         <p className="text-sm text-slate-600 max-w-2xl mx-auto font-medium">
-          Contact our thermal engineers in Coimbatore, Tamil Nadu for custom moisture analysis, subsidy assistance, and factory direct pricing.
+          {t('contactSubtitle')}
         </p>
       </div>
 
@@ -79,9 +79,9 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="font-bold text-slate-900">Factory & Office Address</div>
+                  <div className="font-bold text-slate-900">{t('factoryAddressLabel')}</div>
                   <p className="text-slate-600 mt-1 leading-relaxed">
-                    ZeniTEK Solar Works, SF 248/1, SIDCO Industrial Estate, Malumichampatti, Coimbatore, Tamil Nadu 641021
+                    {t('factoryAddressText')}
                   </p>
                 </div>
               </div>
@@ -94,7 +94,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                   <div className="font-bold text-slate-900">{t('callUs')}</div>
                   <p className="text-slate-800 font-bold mt-1 text-sm">+91 80986 13422</p>
                   <p className="text-blue-900 font-extrabold text-[11px]">Balakrishnan (Sales & Engineering)</p>
-                  <p className="text-slate-500 text-[10px] mt-0.5">Mon - Sat: 9:00 AM - 7:00 PM IST</p>
+                  <p className="text-slate-500 text-[10px] mt-0.5">{t('workingHours')}</p>
                 </div>
               </div>
 
@@ -117,7 +117,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 className="w-full py-3.5 px-4 bg-green-600 hover:bg-green-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow flex items-center justify-center space-x-2 transition-all"
               >
                 <MessageCircle className="w-4 h-4 fill-current" />
-                <span>Chat Instantly on WhatsApp</span>
+                <span>{t('chatWhatsapp')}</span>
               </a>
             </div>
 
@@ -127,7 +127,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
         {/* Right Column Form */}
         <div className="lg:col-span-7">
           <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-md space-y-6">
-            <h3 className="text-xl font-bold text-blue-950">Pre-Qualifying Quote & Sizing Enquiry</h3>
+            <h3 className="text-xl font-bold text-blue-950">{t('preQualTitle')}</h3>
 
             {submitted ? (
               <div className="p-6 rounded-2xl bg-green-50 border border-green-300 text-center space-y-3">
@@ -201,12 +201,12 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                     onChange={(e) => setFormData({ ...formData, cropType: e.target.value })}
                     className="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 cursor-pointer"
                   >
-                    <option value="Copra/Coconut">Copra / Coconut</option>
-                    <option value="Moringa/Herbs">Moringa / Herbs / Tea</option>
-                    <option value="Spices/Chillies">Spices / Chillies / Pepper</option>
-                    <option value="Fruits/Veggies">Fruits / Vegetables</option>
-                    <option value="Fish/Seafood">Fish / Marine Seafood</option>
-                    <option value="Other">Other Industrial / Sludge</option>
+                    <option value="Copra/Coconut">{t('cropCopra')}</option>
+                    <option value="Moringa/Herbs">{t('cropMoringa')}</option>
+                    <option value="Spices/Chillies">{t('cropSpices')}</option>
+                    <option value="Fruits/Veggies">{t('cropFruits')}</option>
+                    <option value="Fish/Seafood">{t('cropFish')}</option>
+                    <option value="Other">{t('cropOther')}</option>
                   </select>
                 </div>
 
@@ -241,15 +241,15 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
           <div className="flex items-center justify-center space-x-2 text-xs font-bold text-blue-700">
             <ShieldCheck className="w-5 h-5 shrink-0 text-green-600" />
-            <span>Free Government Subsidy Eligibility Check</span>
+            <span>{t('support1')}</span>
           </div>
           <div className="flex items-center justify-center space-x-2 text-xs font-bold text-green-700">
             <CheckCircle2 className="w-5 h-5 shrink-0 text-blue-700" />
-            <span>Custom Moisture-Analysis Sizing Consults</span>
+            <span>{t('support2')}</span>
           </div>
           <div className="flex items-center justify-center space-x-2 text-xs font-bold text-slate-900">
             <Building2 className="w-5 h-5 shrink-0 text-blue-700" />
-            <span>100% On-Farm Setup & Operator Training</span>
+            <span>{t('support3')}</span>
           </div>
         </div>
       </section>
@@ -258,11 +258,11 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
       <section className="bg-gradient-to-r from-blue-900 via-blue-800 to-green-800 text-white p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="space-y-2">
           <span className="text-[10px] font-bold text-green-300 bg-blue-950 px-2.5 py-0.5 rounded uppercase">
-            CSR & NGO PARTNERSHIP PORTAL
+            {t('csrBadge')}
           </span>
-          <h3 className="text-2xl font-bold">Partner with ZeniTEK for Rural Livelihood Projects</h3>
+          <h3 className="text-2xl font-bold">{t('csrTitle')}</h3>
           <p className="text-xs text-blue-100 max-w-xl">
-            We collaborate with CSR foundations, NABARD, and agricultural NGOs to deploy solar dryers for rural women self-help groups.
+            {t('csrDesc')}
           </p>
         </div>
 
@@ -270,7 +270,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
           onClick={() => onOpenQuoteModal({ clientType: 'NGO / CSR Partner' })}
           className="py-3 px-6 bg-green-600 hover:bg-green-500 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow transition-all shrink-0"
         >
-          Request CSR Partnership Pitch
+          {t('csrBtn')}
         </button>
       </section>
 

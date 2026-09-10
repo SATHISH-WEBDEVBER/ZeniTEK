@@ -13,11 +13,11 @@ export default function GalleryPage({ onOpenQuoteModal }) {
     : sampleGalleryItems.filter(item => item.category === activeCategory);
 
   const categories = [
-    { id: 'all', label: 'All Photos' },
-    { id: 'installations', label: 'Field Installations' },
-    { id: 'produce', label: 'Dried Produce Quality' },
-    { id: 'models', label: 'Dryer Models' },
-    { id: 'factory', label: 'Factory & Assembly' },
+    { id: 'all', label: t('catAll') },
+    { id: 'installations', label: t('catInstallations') },
+    { id: 'produce', label: t('catProduce') },
+    { id: 'models', label: t('catModels') },
+    { id: 'factory', label: t('catFactory') },
   ];
 
   return (
@@ -26,16 +26,16 @@ export default function GalleryPage({ onOpenQuoteModal }) {
       {/* Hero Banner */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
         <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 border border-green-200 px-3.5 py-1 rounded-full inline-flex items-center space-x-1.5">
-          <Camera className="w-3.5 h-3.5 mr-1" /> PROJECT & PRODUCE GALLERY
+          <Camera className="w-3.5 h-3.5 mr-1" /> {t('galleryBadge')}
         </span>
         <h1 className="text-4xl sm:text-5xl font-black text-blue-950">
-          Visual Tour of ZeniTEK Solar <br />
+          {t('galleryTitle1')} <br />
           <span className="text-green-700">
-            Thermal Dryers & Dried Produce
+            {t('galleryTitle2')}
           </span>
         </h1>
         <p className="text-sm text-slate-600 max-w-2xl mx-auto font-medium">
-          Explore real-world field installations across Tamil Nadu, Kerala, Andhra Pradesh, and Karnataka. See the 100% white copra, vibrant moringa powder, and hygienic dry fish produce.
+          {t('gallerySubtitle')}
         </p>
 
         {/* Category Filter Pills */}
@@ -71,7 +71,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                   <div className="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
                     <span className="px-4 py-2 bg-white/90 text-slate-900 font-bold text-xs rounded-xl shadow flex items-center space-x-1.5 transform translate-y-2 group-hover:translate-y-0 transition-transform">
                       <ZoomIn className="w-4 h-4 text-blue-700" />
-                      <span>View Enlarged Image</span>
+                      <span>{t('viewEnlarged')}</span>
                     </span>
                   </div>
 
@@ -98,7 +98,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
 
               <div className="px-5 pb-5 pt-0">
                 <div className="text-[11px] font-bold text-slate-400 group-hover:text-blue-600 flex items-center transition-colors">
-                  <span>Click for Full Specification</span>
+                  <span>{t('clickFullSpec')}</span>
                   <ArrowRight className="w-3.5 h-3.5 ml-1" />
                 </div>
               </div>
@@ -112,11 +112,11 @@ export default function GalleryPage({ onOpenQuoteModal }) {
         <div className="bg-gradient-to-r from-blue-950 via-blue-900 to-green-900 text-white rounded-3xl p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">
             <span className="text-[10px] font-bold text-green-300 bg-blue-950 px-2.5 py-0.5 rounded uppercase">
-              GET YOUR OWN CUSTOM SOLAR DRYER
+              {t('customDryerBadge')}
             </span>
-            <h3 className="text-xl sm:text-2xl font-bold">Want a Similar High-Yield Polyhouse Solar Dryer Setup?</h3>
+            <h3 className="text-xl sm:text-2xl font-bold">{t('customDryerTitle')}</h3>
             <p className="text-xs text-blue-100 max-w-xl">
-              We design, manufacture, and assemble solar dryers with end-to-end 40%-60% government subsidy filing support.
+              {t('customDryerDesc')}
             </p>
           </div>
 
@@ -163,7 +163,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
               <div className="space-y-2">
                 <div className="flex items-center text-xs font-bold text-blue-700">
                   <MapPin className="w-4 h-4 mr-1 text-green-600 shrink-0" />
-                  <span>Location: {selectedItem.location}</span>
+                  <span>{t('locationLabel')} {selectedItem.location}</span>
                 </div>
                 <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium bg-slate-50 p-4 rounded-xl border border-slate-200">
                   {selectedItem.caption}
@@ -190,7 +190,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                 }}
                 className="px-6 py-2.5 bg-gradient-to-r from-blue-700 via-blue-600 to-green-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow hover:scale-105 transition-all flex items-center space-x-1.5"
               >
-                <span>Request Quote for this Model</span>
+                <span>{t('requestQuoteForModel')}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
