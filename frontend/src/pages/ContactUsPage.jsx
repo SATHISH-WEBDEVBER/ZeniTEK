@@ -70,48 +70,103 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
         
         {/* Left Column */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-md space-y-6">
-            <h3 className="text-xl font-bold text-blue-950 border-b border-slate-100 pb-3">{t('factoryLocation')}</h3>
+          <div className="bg-white p-6 sm:p-7 rounded-3xl border border-slate-200 shadow-md space-y-6">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h3 className="text-xl font-bold text-blue-950">{t('factoryLocation')}</h3>
+              <span className="text-[10px] font-bold bg-green-50 text-green-700 border border-green-200 px-2 py-0.5 rounded-md">
+                Verified Hub
+              </span>
+            </div>
             
-            <div className="space-y-4 text-xs">
-              <div className="flex items-start space-x-3">
-                <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center shrink-0">
-                  <MapPin className="w-5 h-5" />
+            <div className="space-y-5 text-xs">
+              {/* 1. Registered Office (Main Address) */}
+              <div className="p-4 rounded-2xl bg-blue-50/50 border border-blue-100 space-y-2">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+                    <Building2 className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-700 bg-blue-100/70 px-2 py-0.5 rounded">
+                      Main Address
+                    </span>
+                    <h4 className="font-extrabold text-slate-900 text-xs mt-0.5">
+                      {t('regOfficeLabel')}
+                    </h4>
+                  </div>
                 </div>
-                <div>
-                  <div className="font-bold text-slate-900">{t('factoryAddressLabel')}</div>
-                  <p className="text-slate-600 mt-1 leading-relaxed">
-                    {t('factoryAddressText')}
-                  </p>
-                </div>
+                <p className="text-slate-700 font-medium leading-relaxed pl-10 text-[11px]">
+                  {t('regOfficeAddress')}
+                </p>
               </div>
 
-              <div className="flex items-start space-x-3">
+              {/* 2. Operation Address */}
+              <div className="p-4 rounded-2xl bg-green-50/40 border border-green-100 space-y-2">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 rounded-lg bg-green-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+                    <MapPin className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-green-700 bg-green-100/70 px-2 py-0.5 rounded">
+                      Incubation Center
+                    </span>
+                    <h4 className="font-extrabold text-slate-900 text-xs mt-0.5">
+                      {t('opOfficeLabel')}
+                    </h4>
+                  </div>
+                </div>
+                <p className="text-slate-700 font-medium leading-relaxed pl-10 text-[11px]">
+                  {t('opOfficeAddress')}
+                </p>
+              </div>
+
+              {/* 3. GSTIN Identification */}
+              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <div className="flex items-center space-x-2">
+                  <ShieldCheck className="w-4 h-4 text-blue-700 shrink-0" />
+                  <span className="font-bold text-slate-700 text-[11px]">GSTIN:</span>
+                </div>
+                <span className="font-mono font-bold text-blue-950 tracking-wider text-xs bg-white px-2.5 py-1 rounded border border-slate-200 shadow-sm">
+                  33AACFZ8530G1Z5
+                </span>
+              </div>
+
+              {/* 4. Contact Numbers */}
+              <div className="flex items-start space-x-3 pt-1">
                 <div className="w-9 h-9 rounded-xl bg-green-50 text-green-700 flex items-center justify-center shrink-0">
                   <Phone className="w-5 h-5" />
                 </div>
-                <div>
+                <div className="space-y-1">
                   <div className="font-bold text-slate-900">{t('callUs')}</div>
-                  <p className="text-slate-800 font-bold mt-1 text-sm">+91 80986 13422</p>
-                  <p className="text-blue-900 font-extrabold text-[11px]">Balakrishnan (Sales & Engineering)</p>
-                  <p className="text-slate-500 text-[10px] mt-0.5">{t('workingHours')}</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 text-slate-800 font-bold text-xs">
+                    <a href="tel:+918903852623" className="hover:text-blue-700 font-extrabold text-blue-900">+91-8903852623</a>
+                    <span className="hidden sm:inline text-slate-300">|</span>
+                    <a href="tel:+918098613422" className="hover:text-blue-700">+91 80986 13422</a>
+                  </div>
+                  <p className="text-blue-900 font-semibold text-[11px]">Balakrishnan (Sales & Engineering)</p>
+                  <p className="text-slate-500 text-[10px]">{t('workingHours')}</p>
                 </div>
               </div>
 
+              {/* 5. Email Addresses */}
               <div className="flex items-start space-x-3">
                 <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center shrink-0">
                   <Mail className="w-5 h-5" />
                 </div>
-                <div>
+                <div className="space-y-0.5">
                   <div className="font-bold text-slate-900">{t('emailUs')}</div>
-                  <p className="text-slate-700 mt-1">sales@zenitek.in / info@zenitek.in</p>
+                  <p className="text-slate-800 font-medium">
+                    <a href="mailto:zenitek2k@gmail.com" className="hover:text-blue-700 font-semibold text-blue-900">zenitek2k@gmail.com</a>
+                  </p>
+                  <p className="text-slate-600 text-[11px]">
+                    <a href="mailto:sales@zenitek.in" className="hover:text-blue-700">sales@zenitek.in</a> / <a href="mailto:info@zenitek.in" className="hover:text-blue-700">info@zenitek.in</a>
+                  </p>
                 </div>
               </div>
             </div>
 
             <div className="pt-2">
               <a
-                href="https://wa.me/918098613422?text=Hi%20Balakrishnan%20Sir!%20I%20want%20a%20quote%20for%20a%20ZeniTEK%20Solar%20Thermal%20Dryer."
+                href="https://wa.me/918098613422?text=Hi%20ZeniTEK%20Team!%20I%20want%20a%20quote%20for%20a%20ZeniTEK%20Solar%20Thermal%20Dryer."
                 target="_blank"
                 rel="noreferrer"
                 className="w-full py-3.5 px-4 bg-green-600 hover:bg-green-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow flex items-center justify-center space-x-2 transition-all"

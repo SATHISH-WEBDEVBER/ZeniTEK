@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Sun, Phone, Mail, MapPin, Download, ShieldCheck, ExternalLink, ArrowRight } from 'lucide-react';
+import { Sun, Phone, Mail, MapPin, Download, ShieldCheck, ExternalLink, ArrowRight, Building2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function Footer({ onOpenQuoteModal }) {
@@ -67,22 +67,50 @@ export default function Footer({ onOpenQuoteModal }) {
             </ul>
           </div>
 
-          {/* Col 4: Factory Address */}
+          {/* Col 4: Offices & Locations */}
           <div>
-            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">{t('footerCoimbatoreFactory')}</h4>
-            <div className="space-y-3 text-xs">
+            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">{t('footerOffices') || t('footerCoimbatoreFactory')}</h4>
+            <div className="space-y-3.5 text-xs">
               <div className="flex items-start space-x-2">
-                <MapPin className="w-4 h-4 text-blue-700 shrink-0 mt-0.5" />
-                <span>{t('factoryAddressText')}</span>
+                <Building2 className="w-4 h-4 text-blue-700 shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-bold text-slate-800 text-[11px] block">{t('regOfficeLabel')}:</span>
+                  <p className="text-slate-600 leading-relaxed text-[11px] mt-0.5">{t('regOfficeAddress')}</p>
+                </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <Phone className="w-4 h-4 text-green-700 shrink-0" />
-                <a href="tel:+918098613422" className="hover:text-blue-700 font-semibold">+91 80986 13422 (Balakrishnan)</a>
+
+              <div className="flex items-start space-x-2">
+                <MapPin className="w-4 h-4 text-green-700 shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-bold text-slate-800 text-[11px] block">{t('opOfficeLabel')}:</span>
+                  <p className="text-slate-600 leading-relaxed text-[11px] mt-0.5">{t('opOfficeAddress')}</p>
+                </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <Mail className="w-4 h-4 text-blue-700 shrink-0" />
-                <a href="mailto:sales@zenitek.in" className="hover:text-blue-700">sales@zenitek.in</a>
+
+              <div className="flex items-start space-x-2 pt-1">
+                <Phone className="w-4 h-4 text-green-700 shrink-0 mt-0.5" />
+                <div className="space-y-0.5 text-[11px]">
+                  <div>
+                    <a href="tel:+918903852623" className="hover:text-blue-700 font-bold text-blue-900">+91-8903852623</a>
+                  </div>
+                  <div>
+                    <a href="tel:+918098613422" className="hover:text-blue-700 font-semibold text-slate-700">+91 80986 13422</a>
+                  </div>
+                </div>
               </div>
+
+              <div className="flex items-start space-x-2">
+                <Mail className="w-4 h-4 text-blue-700 shrink-0 mt-0.5" />
+                <div className="space-y-0.5 text-[11px]">
+                  <div>
+                    <a href="mailto:zenitek2k@gmail.com" className="hover:text-blue-700 font-semibold text-blue-900">zenitek2k@gmail.com</a>
+                  </div>
+                  <div>
+                    <a href="mailto:sales@zenitek.in" className="hover:text-blue-700 text-slate-600">sales@zenitek.in</a>
+                  </div>
+                </div>
+              </div>
+
               <div className="pt-2">
                 <button
                   onClick={onOpenQuoteModal}
@@ -111,7 +139,10 @@ export default function Footer({ onOpenQuoteModal }) {
               KnowledgeToIntelligence
             </a>
           </p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
+          <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 md:mt-0 items-center">
+            <span className="font-mono text-blue-900 font-bold bg-blue-50 border border-blue-200 px-2 py-0.5 rounded text-[11px]">
+              GSTIN: 33AACFZ8530G1Z5
+            </span>
             <span className="hover:text-slate-900 cursor-pointer">{t('footerPrivacy')}</span>
             <span className="hover:text-slate-900 cursor-pointer">{t('footerTerms')}</span>
             <span className="hover:text-slate-900 cursor-pointer">ISO Certification: ZNK-9001-2026</span>
