@@ -1,44 +1,220 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { MapPin, ArrowRight, Tag, SlidersHorizontal, Info } from 'lucide-react';
+import { 
+  MapPin, 
+  ArrowRight, 
+  Tag, 
+  SlidersHorizontal, 
+  Plus, 
+  Minus, 
+  Maximize2, 
+  Search, 
+  Sparkles, 
+  Info,
+  Play
+} from 'lucide-react';
 import { sampleProjects } from '../data/sampleData';
 import { useLanguage } from '../context/LanguageContext';
 import ProjectDetailModal from './ProjectDetailModal';
 
-const createCustomIcon = () => {
+// Custom Marker Pin Icon Builder
+const createCustomIcon = (isSelected = false) => {
   return L.divIcon({
-    className: 'custom-map-marker',
+    className: 'custom-map-marker-container',
     html: `
-      <div class="relative flex items-center justify-center w-8 h-8 rounded-full bg-blue-700 border-2 border-white shadow-xl text-white font-bold transform hover:scale-125 transition-transform duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun text-green-300"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      <div class="relative flex items-center justify-center w-9 h-9 rounded-full ${
+        isSelected 
+          ? 'bg-amber-500 ring-4 ring-amber-300 shadow-amber-500/50 scale-110' 
+          : 'bg-blue-700 hover:bg-blue-800'
+      } border-2 border-white shadow-xl text-white font-bold transition-all duration-300 cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun ${isSelected ? 'text-white animate-spin' : 'text-green-300'}"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        ${isSelected ? '<span class="absolute -top-1 -right-1 flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span></span>' : ''}
       </div>
     `,
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
-    popupAnchor: [0, -16]
+    iconSize: [36, 36],
+    iconAnchor: [18, 18],
+    popupAnchor: [0, -18]
   });
 };
 
-function ChangeView({ center, zoom }) {
+// Map Subcontroller: Handles bounds, manual fit, and smooth flyTo on sidebar click
+function MapController({
+  filteredProjects,
+  selectedProject,
+  mobileTab,
+  triggerFitAll,
+  onResetFitTrigger,
+  markerRefs
+}) {
   const map = useMap();
+  const prevFilterKeyRef = useRef('');
+
+  // Auto-resize tiles when mobile tab changes or on mount
   useEffect(() => {
-    if (center) {
-      map.flyTo(center, zoom, { duration: 1.5 });
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [map, mobileTab]);
+
+  // Smoothly center ONLY when user explicitly clicks a project card in the sidebar list
+  useEffect(() => {
+    if (selectedProject) {
+      const latLng = [selectedProject.latitude, selectedProject.longitude];
+      map.flyTo(latLng, Math.max(map.getZoom(), 11), {
+        duration: 1.2
+      });
+
+      const timer = setTimeout(() => {
+        const marker = markerRefs.current[selectedProject._id || selectedProject.title];
+        if (marker) {
+          marker.openPopup();
+        }
+      }, 400);
+
+      return () => clearTimeout(timer);
     }
-  }, [center, zoom, map]);
+  }, [selectedProject, map, markerRefs]);
+
+  // Auto-fit bounds when state filter changes
+  useEffect(() => {
+    if (filteredProjects && filteredProjects.length > 0) {
+      const filterKey = filteredProjects.map(p => p._id || p.title).sort().join(',');
+      
+      if (filterKey === prevFilterKeyRef.current) return;
+      prevFilterKeyRef.current = filterKey;
+
+      if (filteredProjects.length === 1) {
+        map.flyTo([filteredProjects[0].latitude, filteredProjects[0].longitude], 11, {
+          duration: 1.2
+        });
+      } else {
+        const bounds = L.latLngBounds(filteredProjects.map(p => [p.latitude, p.longitude]));
+        map.flyToBounds(bounds, {
+          padding: [50, 50],
+          maxZoom: 11,
+          duration: 1.2
+        });
+      }
+    }
+  }, [filteredProjects, map]);
+
+  // Manual trigger to fit all visible markers
+  useEffect(() => {
+    if (triggerFitAll && filteredProjects.length > 0) {
+      if (filteredProjects.length === 1) {
+        map.flyTo([filteredProjects[0].latitude, filteredProjects[0].longitude], 11, { duration: 1.2 });
+      } else {
+        const bounds = L.latLngBounds(filteredProjects.map(p => [p.latitude, p.longitude]));
+        map.flyToBounds(bounds, {
+          padding: [50, 50],
+          maxZoom: 11,
+          duration: 1.2
+        });
+      }
+      onResetFitTrigger();
+    }
+  }, [triggerFitAll, filteredProjects, map, onResetFitTrigger]);
+
   return null;
+}
+
+// Custom Floating Map Controls UI (Zoom In, Zoom Out, Fit All)
+function MapOverlayControls({ onFitAll }) {
+  const map = useMap();
+
+  return (
+    <div className="leaflet-top leaflet-right" style={{ pointerEvents: 'auto', margin: '14px', zIndex: 1000 }}>
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-slate-200/90 p-1.5 flex flex-col gap-1.5">
+        <button
+          type="button"
+          title="Zoom In"
+          onClick={() => map.zoomIn()}
+          className="w-9 h-9 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-bold flex items-center justify-center transition-all border border-slate-200/70 active:scale-95 shadow-xs cursor-pointer"
+        >
+          <Plus className="w-4 h-4" />
+        </button>
+        <button
+          type="button"
+          title="Zoom Out"
+          onClick={() => map.zoomOut()}
+          className="w-9 h-9 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-bold flex items-center justify-center transition-all border border-slate-200/70 active:scale-95 shadow-xs cursor-pointer"
+        >
+          <Minus className="w-4 h-4" />
+        </button>
+        
+        <div className="h-px bg-slate-200 my-0.5" />
+
+        <button
+          type="button"
+          title="Fit All Sites in View"
+          onClick={onFitAll}
+          className="w-9 h-9 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 flex items-center justify-center transition-all border border-slate-200/70 active:scale-95 shadow-xs cursor-pointer"
+        >
+          <Maximize2 className="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default function MapComponent({ onSelectProjectQuote }) {
   const { t } = useLanguage();
   const [projects, setProjects] = useState(sampleProjects);
-  const [activeCenter, setActiveCenter] = useState([11.6854, 76.1320]);
-  const [activeZoom, setActiveZoom] = useState(7);
   const [selectedState, setSelectedState] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
   const [mobileTab, setMobileTab] = useState('map');
+  const [selectedProject, setSelectedProject] = useState(null);
   const [selectedDetailProject, setSelectedDetailProject] = useState(null);
+  const [triggerFitAll, setTriggerFitAll] = useState(false);
 
+  // References and timers for robust hover-card interactivity
+  const markerRefs = useRef({});
+  const hoverTimerRef = useRef(null);
+
+  const handleMarkerMouseOver = (markerInstance) => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+      hoverTimerRef.current = null;
+    }
+    // Close other open popups so only the active hovered card shows
+    Object.values(markerRefs.current).forEach(m => {
+      if (m && m !== markerInstance && m.isPopupOpen && m.isPopupOpen()) {
+        m.closePopup();
+      }
+    });
+    if (markerInstance) {
+      markerInstance.openPopup();
+    }
+  };
+
+  const handleMarkerMouseOut = (markerInstance) => {
+    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+    hoverTimerRef.current = setTimeout(() => {
+      if (markerInstance) {
+        markerInstance.closePopup();
+      }
+    }, 350);
+  };
+
+  const handleCardMouseEnter = () => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+      hoverTimerRef.current = null;
+    }
+  };
+
+  const handleCardMouseLeave = (markerInstance) => {
+    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+    hoverTimerRef.current = setTimeout(() => {
+      if (markerInstance) {
+        markerInstance.closePopup();
+      }
+    }, 350);
+  };
+
+  // Fetch from backend API if available, fallback cleanly to sample data
   useEffect(() => {
     async function fetchProjects() {
       try {
@@ -54,52 +230,119 @@ export default function MapComponent({ onSelectProjectQuote }) {
     fetchProjects();
   }, []);
 
-  const statesList = ['All', 'Tamil Nadu', 'Karnataka', 'Assam'];
+  // Dynamically compute states list with accurate project counts
+  const statesList = useMemo(() => {
+    const stateCounts = {};
+    projects.forEach(p => {
+      if (p.locationName) {
+        const parts = p.locationName.split(',').map(s => s.trim());
+        const stateName = parts[parts.length - 1];
+        if (stateName) {
+          stateCounts[stateName] = (stateCounts[stateName] || 0) + 1;
+        }
+      }
+    });
 
-  const filteredProjects = selectedState === 'All'
-    ? projects
-    : projects.filter(p => p.locationName.toLowerCase().includes(selectedState.toLowerCase()));
+    const preferredOrder = ['Tamil Nadu', 'Kerala', 'Karnataka', 'Andhra Pradesh', 'Assam'];
+    const sortedDiscovered = Object.keys(stateCounts).sort((a, b) => {
+      const idxA = preferredOrder.indexOf(a);
+      const idxB = preferredOrder.indexOf(b);
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+      return a.localeCompare(b);
+    });
 
-  const handleCenterProject = (project) => {
-    setActiveCenter([project.latitude, project.longitude]);
-    setActiveZoom(10);
+    const list = [{ name: 'All', count: projects.length }];
+    sortedDiscovered.forEach(st => {
+      list.push({ name: st, count: stateCounts[st] });
+    });
+
+    return list;
+  }, [projects]);
+
+  // Filtered projects by selected state and search query
+  const filteredProjects = useMemo(() => {
+    return projects.filter(p => {
+      const matchesState = selectedState === 'All' || p.locationName.toLowerCase().includes(selectedState.toLowerCase());
+      const query = searchQuery.trim().toLowerCase();
+      const matchesSearch = !query ||
+        p.title.toLowerCase().includes(query) ||
+        p.cropDrying.toLowerCase().includes(query) ||
+        p.locationName.toLowerCase().includes(query) ||
+        p.dryerType.toLowerCase().includes(query);
+      return matchesState && matchesSearch;
+    });
+  }, [projects, selectedState, searchQuery]);
+
+  // Handle user selecting a project from the sidebar list
+  const handleSelectProjectFromList = (project) => {
+    setSelectedProject(project);
     setMobileTab('map');
-    setSelectedDetailProject(project);
   };
+
+  const handleFitAllClick = useCallback(() => {
+    setSelectedProject(null);
+    setTriggerFitAll(true);
+  }, []);
+
+  const handleResetFitTrigger = useCallback(() => {
+    setTriggerFitAll(false);
+  }, []);
 
   return (
     <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-3 sm:p-5 space-y-4 w-full max-w-full overflow-hidden">
       
-      {/* Top Filter Bar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200">
+      {/* Top Filter & Control Bar */}
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200">
         
-        <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto">
+        {/* State Filter Chips */}
+        <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
           <span className="text-[11px] font-bold text-slate-500 mr-1 flex items-center shrink-0">
-            <SlidersHorizontal className="w-3.5 h-3.5 mr-1" /> {t('filterStateLabel')}
+            <SlidersHorizontal className="w-3.5 h-3.5 mr-1 text-blue-700" /> {t('filterStateLabel')}
           </span>
           {statesList.map(st => (
             <button
-              key={st}
-              onClick={() => setSelectedState(st)}
-              className={`text-[11px] px-3 py-1 rounded-xl font-bold transition-all shrink-0 ${selectedState === st ? 'bg-blue-700 text-white shadow' : 'bg-white text-slate-700 hover:text-blue-900 border border-slate-200'}`}
+              key={st.name}
+              type="button"
+              onClick={() => {
+                setSelectedState(st.name);
+                setSelectedProject(null);
+              }}
+              className={`text-[11px] px-3 py-1 rounded-xl font-bold transition-all shrink-0 flex items-center space-x-1.5 cursor-pointer ${
+                selectedState === st.name 
+                  ? 'bg-blue-700 text-white shadow-sm ring-2 ring-blue-300' 
+                  : 'bg-white text-slate-700 hover:text-blue-900 hover:bg-slate-100 border border-slate-200'
+              }`}
             >
-              {st}
+              <span>{st.name}</span>
+              <span className={`text-[9px] px-1.5 py-0.2 rounded-full ${
+                selectedState === st.name ? 'bg-blue-900 text-blue-100' : 'bg-slate-100 text-slate-600'
+              }`}>
+                {st.count}
+              </span>
             </button>
           ))}
         </div>
 
         {/* Mobile View Toggle */}
-        <div className="flex lg:hidden items-center justify-center p-1 bg-slate-200 rounded-xl">
+        <div className="flex lg:hidden items-center p-1 bg-slate-200 rounded-xl w-full sm:w-auto">
           <button
+            type="button"
             onClick={() => setMobileTab('map')}
-            className={`flex-1 py-1.5 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center space-x-1 ${mobileTab === 'map' ? 'bg-blue-700 text-white shadow' : 'text-slate-700'}`}
+            className={`flex-1 sm:flex-initial py-1.5 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center space-x-1 ${
+              mobileTab === 'map' ? 'bg-blue-700 text-white shadow' : 'text-slate-700'
+            }`}
           >
             <MapPin className="w-3.5 h-3.5" />
             <span>{t('interactiveMapTab')}</span>
           </button>
           <button
+            type="button"
             onClick={() => setMobileTab('list')}
-            className={`flex-1 py-1.5 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center space-x-1 ${mobileTab === 'list' ? 'bg-blue-700 text-white shadow' : 'text-slate-700'}`}
+            className={`flex-1 sm:flex-initial py-1.5 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center space-x-1 ${
+              mobileTab === 'list' ? 'bg-blue-700 text-white shadow' : 'text-slate-700'
+            }`}
           >
             <Tag className="w-3.5 h-3.5" />
             <span>{t('projectListTab')} ({filteredProjects.length})</span>
@@ -108,134 +351,226 @@ export default function MapComponent({ onSelectProjectQuote }) {
 
       </div>
 
-      {/* Main Workspace */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 h-[500px] sm:h-[600px] w-full">
+      {/* Main Workspace Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 h-[520px] sm:h-[620px] w-full">
         
-        {/* Sidebar */}
+        {/* Left Sidebar Directory */}
         <div className={`lg:col-span-4 flex-col h-full bg-slate-50 rounded-2xl p-3 border border-slate-200 overflow-hidden ${mobileTab === 'list' ? 'flex' : 'hidden lg:flex'}`}>
-          <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-200">
-            <h3 className="text-xs font-bold text-blue-950 flex items-center">
-              <MapPin className="w-4 h-4 text-green-700 mr-1.5" /> Installed Dryer Locations
-            </h3>
-            <span className="text-[10px] font-mono font-bold text-blue-800 bg-blue-100 px-2 py-0.5 rounded border border-blue-200">
-              {filteredProjects.length} Sites
-            </span>
+          
+          {/* Sidebar Header & Search */}
+          <div className="mb-3 space-y-2 pb-2 border-b border-slate-200 shrink-0">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-bold text-blue-950 flex items-center">
+                <MapPin className="w-4 h-4 text-green-700 mr-1.5" /> Installed Sites Directory
+              </h3>
+              <span className="text-[10px] font-mono font-bold text-blue-800 bg-blue-100 px-2 py-0.5 rounded border border-blue-200">
+                {filteredProjects.length} Sites
+              </span>
+            </div>
+
+            {/* Instant Search Bar */}
+            <div className="relative">
+              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search crop, district, or capacity..."
+                className="w-full pl-8 pr-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 hover:text-slate-600"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
           </div>
 
+          {/* Scrollable Project Cards */}
           <div className="flex-1 overflow-y-auto space-y-2.5 pr-1">
-            {filteredProjects.map(proj => (
-              <div
-                key={proj._id || proj.title}
-                onClick={() => handleCenterProject(proj)}
-                className="p-3 bg-white hover:bg-blue-50/50 rounded-xl border border-slate-200 hover:border-blue-500 cursor-pointer transition-all group shadow-sm"
-              >
-                <div className="flex justify-between items-start">
-                  <h4 className="text-xs font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
-                    {proj.title}
-                  </h4>
-                  <span className="text-[9px] font-bold text-green-800 bg-green-50 px-1.5 py-0.5 rounded border border-green-200 shrink-0">
-                    {proj.capacity}
-                  </span>
-                </div>
-                <p className="text-[10px] text-slate-500 mt-1 flex items-center">
-                  <MapPin className="w-3.5 h-3.5 text-slate-400 mr-1 shrink-0" /> {proj.locationName}
-                </p>
-                <div className="mt-2 flex items-center justify-between text-[10px]">
-                  <span className="text-blue-700 font-semibold flex items-center">
-                    <Tag className="w-3 h-3 mr-1" /> {proj.cropDrying}
-                  </span>
-                  <span className="text-slate-500 group-hover:text-blue-700 flex items-center font-bold">
-                    Target Map <ArrowRight className="w-2.5 h-2.5 ml-1" />
-                  </span>
-                </div>
+            {filteredProjects.length === 0 ? (
+              <div className="p-6 text-center text-slate-400 text-xs">
+                No solar dryer installations match your search.
               </div>
-            ))}
+            ) : (
+              filteredProjects.map(proj => {
+                const isSelected = (selectedProject?._id && selectedProject._id === proj._id) || selectedProject?.title === proj.title;
+                return (
+                  <div
+                    key={proj._id || proj.title}
+                    onClick={() => handleSelectProjectFromList(proj)}
+                    className={`p-3 rounded-xl border cursor-pointer transition-all group shadow-xs ${
+                      isSelected
+                        ? 'bg-blue-50/90 border-blue-500 ring-2 ring-blue-300'
+                        : 'bg-white hover:bg-slate-50 border-slate-200 hover:border-blue-400'
+                    }`}
+                  >
+                    <div className="flex justify-between items-start gap-2">
+                      <h4 className={`text-xs font-bold transition-colors line-clamp-1 ${
+                        isSelected ? 'text-blue-900' : 'text-slate-900 group-hover:text-blue-700'
+                      }`}>
+                        {proj.title}
+                      </h4>
+                      <span className="text-[9px] font-bold text-green-800 bg-green-50 px-1.5 py-0.5 rounded border border-green-200 shrink-0">
+                        {proj.capacity}
+                      </span>
+                    </div>
+
+                    <p className="text-[10px] text-slate-500 mt-1 flex items-center">
+                      <MapPin className="w-3.5 h-3.5 text-slate-400 mr-1 shrink-0" /> {proj.locationName}
+                    </p>
+
+                    <div className="mt-2 flex items-center justify-between text-[10px]">
+                      <span className="text-blue-700 font-semibold flex items-center line-clamp-1">
+                        <Tag className="w-3 h-3 mr-1 shrink-0" /> {proj.cropDrying}
+                      </span>
+                      
+                      <span className={`font-bold flex items-center text-[10px] ${
+                        isSelected ? 'text-blue-800 font-extrabold' : 'text-slate-500 group-hover:text-blue-700'
+                      }`}>
+                        Focus Map <ArrowRight className="w-2.5 h-2.5 ml-1" />
+                      </span>
+                    </div>
+                  </div>
+                );
+              })
+            )}
           </div>
         </div>
 
-        {/* Map Viewport */}
-        <div className={`lg:col-span-8 h-full rounded-2xl overflow-hidden relative border border-slate-200 ${mobileTab === 'map' ? 'block' : 'hidden lg:block'}`}>
+        {/* Map Viewport - Mouse scroll zoom ENABLED, Zero map movement on hover, Interactive Clickable Card */}
+        <div 
+          className={`lg:col-span-8 h-full rounded-2xl overflow-hidden relative border border-slate-200 ${
+            mobileTab === 'map' ? 'block' : 'hidden lg:block'
+          }`}
+        >
           <MapContainer
-            center={activeCenter}
-            zoom={activeZoom}
+            center={[12.5, 78.0]}
+            zoom={6}
+            minZoom={5}
+            maxZoom={16}
             scrollWheelZoom={true}
+            zoomControl={false}
             style={{ width: '100%', height: '100%' }}
           >
-            <ChangeView center={activeCenter} zoom={activeZoom} />
+            {/* Controller for bounds fitting & smooth flyTo on sidebar click */}
+            <MapController
+              filteredProjects={filteredProjects}
+              selectedProject={selectedProject}
+              mobileTab={mobileTab}
+              triggerFitAll={triggerFitAll}
+              onResetFitTrigger={handleResetFitTrigger}
+              markerRefs={markerRefs}
+            />
+
+            {/* Custom Floating Zoom & Fit Controls (Top-Right) */}
+            <MapOverlayControls onFitAll={handleFitAllClick} />
+
+            {/* Standard Leaflet Tiles */}
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
-            {filteredProjects.map(p => (
-              <Marker
-                key={p._id || p.title}
-                position={[p.latitude, p.longitude]}
-                icon={createCustomIcon()}
-                eventHandlers={{
-                  mouseover: (e) => {
-                    e.target.openPopup();
-                  },
-                  mouseout: (e) => {
-                    e.target.closePopup();
-                  },
-                  click: () => {
-                    setSelectedDetailProject(p);
-                  }
-                }}
-              >
-                <Popup className="custom-leaflet-popup">
-                  <div className="p-1 max-w-xs space-y-2">
-                    {p.imageUrl && (
-                      <div className="relative rounded-lg overflow-hidden border border-slate-200 h-28 bg-slate-100">
-                        <img
-                          src={p.imageUrl}
-                          alt={p.title}
-                          className="w-full h-full object-cover"
-                        />
-                        <span className="absolute top-1.5 right-1.5 text-[9px] font-extrabold bg-blue-700 text-white px-2 py-0.5 rounded shadow">
-                          {p.capacity}
-                        </span>
-                      </div>
-                    )}
-                    <div>
-                      <div className="text-[10px] uppercase font-bold text-blue-700">{p.dryerType}</div>
-                      <h4 className="text-sm font-bold text-slate-900">{p.title}</h4>
-                      <p className="text-[11px] text-slate-600 flex items-center mt-0.5">
-                        <MapPin className="w-3 h-3 text-green-600 mr-1 shrink-0" /> {p.locationName}
-                      </p>
-                    </div>
-                    <p className="text-[10px] text-slate-500 italic line-clamp-2">{p.description}</p>
-                    
-                    {/* Popup Actions */}
-                    <div className="pt-2 border-t border-slate-200 flex flex-col gap-1.5">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedDetailProject(p);
-                        }}
-                        className="w-full text-[10px] font-extrabold text-white bg-blue-700 hover:bg-blue-800 py-1.5 rounded shadow-sm text-center flex items-center justify-center space-x-1"
-                      >
-                        <Info className="w-3 h-3" />
-                        <span>View Case Study, Photos & Video</span>
-                      </button>
+            {/* Location Markers with Interactive Hover & Clickable Card */}
+            {filteredProjects.map(p => {
+              const isSelected = (selectedProject?._id && selectedProject._id === p._id) || selectedProject?.title === p.title;
 
-                      {onSelectProjectQuote && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onSelectProjectQuote(p);
-                          }}
-                          className="w-full text-[10px] font-bold text-blue-900 bg-blue-50 hover:bg-blue-100 border border-blue-200 py-1 rounded shadow-sm text-center"
+              return (
+                <Marker
+                  key={p._id || p.title}
+                  position={[p.latitude, p.longitude]}
+                  icon={createCustomIcon(isSelected)}
+                  ref={(el) => {
+                    if (el) {
+                      markerRefs.current[p._id || p.title] = el;
+                    }
+                  }}
+                  eventHandlers={{
+                    mouseover: (e) => {
+                      handleMarkerMouseOver(e.target);
+                    },
+                    mouseout: (e) => {
+                      handleMarkerMouseOut(e.target);
+                    },
+                    click: () => {
+                      setSelectedDetailProject(p);
+                    }
+                  }}
+                >
+                  {/* Interactive Compact Details Card: Displays on hover, DOES NOT MOVE MAP */}
+                  <Popup
+                    autoPan={false}
+                    closeButton={false}
+                    closeOnClick={false}
+                    offset={[0, -10]}
+                    className="custom-leaflet-popup"
+                  >
+                    <div 
+                      onMouseEnter={handleCardMouseEnter}
+                      onMouseLeave={() => handleCardMouseLeave(markerRefs.current[p._id || p.title])}
+                      className="p-2 w-52 space-y-1.5 text-slate-800 cursor-default"
+                    >
+                      {/* Compact Thumbnail Image (64px height) */}
+                      {p.imageUrl && (
+                        <div 
+                          onClick={() => setSelectedDetailProject(p)}
+                          className="relative rounded-md overflow-hidden h-16 bg-slate-100 border border-slate-200 cursor-pointer group"
                         >
-                          {t('enquireSetup')}
-                        </button>
+                          <img
+                            src={p.imageUrl}
+                            alt={p.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                            loading="lazy"
+                          />
+                          <span className="absolute top-1 right-1 text-[8px] font-bold bg-blue-700 text-white px-1.5 py-0.5 rounded shadow-2xs">
+                            {p.capacity}
+                          </span>
+                        </div>
                       )}
+                      
+                      {/* Title & Location */}
+                      <div onClick={() => setSelectedDetailProject(p)} className="cursor-pointer space-y-0.5">
+                        <div className="text-[8.5px] uppercase font-extrabold text-blue-700 tracking-wider leading-none">
+                          {p.dryerType}
+                        </div>
+                        <h4 className="text-[11px] font-bold text-slate-900 leading-snug line-clamp-1 hover:text-blue-700 transition-colors">
+                          {p.title}
+                        </h4>
+                        <p className="text-[9.5px] text-slate-500 flex items-center">
+                          <MapPin className="w-2.5 h-2.5 text-green-600 mr-1 shrink-0" /> {p.locationName}
+                        </p>
+                      </div>
+
+                      {/* 1-Line Description */}
+                      <p className="text-[9px] text-slate-500 italic line-clamp-1 leading-tight">
+                        {p.description}
+                      </p>
+
+                      {/* Compact Action Button */}
+                      <div className="pt-1 border-t border-slate-100">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setSelectedDetailProject(p);
+                          }}
+                          className="w-full text-[9.5px] font-bold text-white bg-blue-700 hover:bg-blue-800 py-1 px-2 rounded-md shadow-2xs text-center flex items-center justify-center space-x-1 transition-colors cursor-pointer active:scale-98"
+                        >
+                          <Info className="w-2.5 h-2.5" />
+                          <span>View Case Study & Video</span>
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </Popup>
-              </Marker>
-            ))}
+                  </Popup>
+                </Marker>
+              );
+            })}
           </MapContainer>
         </div>
 
