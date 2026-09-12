@@ -3,14 +3,58 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (min-width: 640px) {
+    html {
+      font-size: 16.5px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      font-size: 17px;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    html {
+      font-size: 17.5px;
+    }
+  }
+
   body {
     @apply bg-slate-50 text-slate-900 antialiased overflow-x-hidden;
     font-family: 'Inter', sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.65;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Outfit', sans-serif;
   }
+
+  p {
+    line-height: 1.65;
+  }
+
+  input, select, textarea {
+    font-size: 1rem !important;
+  }
+}
+
+/* Micro-text elevated sizing for optimal visibility across devices */
+.text-\[10px\] {
+  font-size: 0.8125rem !important; /* ~13.5px-14px instead of 10px */
+  line-height: 1.25rem !important;
+}
+
+.text-\[11px\] {
+  font-size: 0.875rem !important; /* ~14.5px-15px instead of 11px */
+  line-height: 1.35rem !important;
 }
 
 /* Light Theme Clean Glass & Cards */
