@@ -1,198 +1,114 @@
-import React, { useState } from 'react';
-import { dryerModelsData, cropMatrixData } from '../data/sampleData';
-import { CheckCircle2, ArrowRight, ShieldCheck, Filter, Download, Zap, Sun } from 'lucide-react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Sparkles, PhoneCall, ArrowRight, ShieldCheck, Wrench, FileCheck2, Clock } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
-export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal }) {
-  const [filterMode, setFilterMode] = useState('capacity');
-  const { t } = useLanguage();
+export default function SolarDryersPage({ onOpenQuoteModal }) {
+  const { t, lang } = useLanguage();
+
+  const isTamil = lang === 'ta';
 
   return (
-    <div className="space-y-16 pb-16 pt-6 bg-slate-50 text-slate-900">
-      
-      {/* Hero Banner */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-        <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 border border-green-200 px-3 py-1 rounded-full">
-          {t('catalogueBadge')}
-        </span>
-        <h1 className="text-4xl sm:text-5xl font-black text-blue-950">
-          {t('catalogueTitle1')} <br />
-          <span className="text-green-700">
-            {t('catalogueTitle2')}
+    <div className="min-h-[75vh] flex flex-col justify-center py-16 px-4 sm:px-6 lg:px-8 bg-slate-50 text-slate-900">
+      <div className="max-w-4xl mx-auto w-full text-center space-y-8">
+        
+        {/* Badge */}
+        <div className="inline-flex items-center space-x-2 text-xs font-bold text-blue-700 uppercase tracking-widest bg-blue-50 border border-blue-200 px-4 py-1.5 rounded-full shadow-sm">
+          <Clock className="w-3.5 h-3.5 text-blue-600 animate-spin-slow" />
+          <span>
+            {isTamil ? 'அட்டவணை புதுப்பித்தல் பணியில் உள்ளது' : 'Catalogue Update In Progress'}
           </span>
-        </h1>
-        <p className="text-sm text-slate-600 max-w-2xl mx-auto">
-          {t('catalogueSubtitle')}
-        </p>
-
-        <div className="flex items-center justify-center space-x-3 pt-4">
-          <button
-            onClick={() => setFilterMode('capacity')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center ${filterMode === 'capacity' ? 'bg-blue-700 text-white shadow' : 'bg-white text-slate-700 hover:text-blue-700 border border-slate-300'}`}
-          >
-            <Filter className="w-3.5 h-3.5 mr-1.5" /> {t('browseCapacity')}
-          </button>
-          <button
-            onClick={() => setFilterMode('crop')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center ${filterMode === 'crop' ? 'bg-blue-700 text-white shadow' : 'bg-white text-slate-700 hover:text-blue-700 border border-slate-300'}`}
-          >
-            <Filter className="w-3.5 h-3.5 mr-1.5" /> {t('browseCrop')}
-          </button>
-        </div>
-      </section>
-
-      {/* Product Specifications Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        {dryerModelsData.map((model, index) => (
-          <div
-            key={model.id}
-            className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-md p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center hover:border-blue-400 transition-all"
-          >
-            <div className={`lg:col-span-5 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-              <div
-                onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
-                className="relative rounded-2xl overflow-hidden border border-slate-200 h-72 cursor-pointer group"
-              >
-                <img src={model.imageUrl} alt={model.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-blue-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="px-3.5 py-1.5 bg-white/90 text-blue-950 text-xs font-extrabold rounded-xl shadow">{t('clickSpecs')}</span>
-                </div>
-                <span className="absolute top-3 left-3 bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-1 rounded-md shadow">
-                  {model.badge}
-                </span>
-              </div>
-            </div>
-
-            <div className="lg:col-span-7 space-y-4">
-              <div className="flex items-center justify-between">
-                <h2
-                  onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
-                  className="text-2xl font-bold text-slate-900 cursor-pointer hover:text-blue-700 transition-colors"
-                >
-                  {model.name}
-                </h2>
-                <span className="text-xs font-bold text-green-800 bg-green-50 border border-green-200 px-3 py-1 rounded-lg">
-                  {model.capacityRange}
-                </span>
-              </div>
-
-              <p className="text-xs text-slate-600 leading-relaxed">{model.description}</p>
-
-              <div className="grid grid-cols-2 gap-3 text-xs pt-2">
-                <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
-                  <div className="text-[10px] text-slate-500 uppercase font-semibold">{t('targetAudienceLabel')}</div>
-                  <div className="font-bold text-slate-900 mt-0.5">{model.targetAudience}</div>
-                </div>
-                <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
-                  <div className="text-[10px] text-slate-500 uppercase font-semibold">{t('buildMaterialLabel')}</div>
-                  <div className="font-bold text-slate-900 mt-0.5">{model.buildMaterial}</div>
-                </div>
-                <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
-                  <div className="text-[10px] text-slate-500 uppercase font-semibold">{t('tempRangeLabel')}</div>
-                  <div className="font-bold text-blue-700 mt-0.5">{model.tempRange}</div>
-                </div>
-                <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
-                  <div className="text-[10px] text-slate-500 uppercase font-semibold">{t('subsidyEligibilityLabel')}</div>
-                  <div className="font-bold text-green-700 mt-0.5">{model.subsidyEligibility}</div>
-                </div>
-              </div>
-
-              <div className="pt-2 flex flex-wrap gap-3 items-center">
-                <button
-                  onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
-                  className="py-3 px-5 bg-white border border-blue-600 text-blue-700 hover:bg-blue-50 font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center space-x-1.5"
-                >
-                  <span>{t('viewSpecsPhotos')}</span>
-                </button>
-
-                <button
-                  onClick={() => onOpenQuoteModal({ capacityNeeded: model.name })}
-                  className="py-3 px-6 bg-gradient-to-r from-blue-700 to-green-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow hover:scale-105 transition-all flex items-center space-x-1.5"
-                >
-                  <span>{t('checkSubsidyPricing')}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </section>
-
-      {/* Comparison Matrix Table */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="text-center space-y-2">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-950">{t('matrixModelTitle')}</h2>
-          <p className="text-xs text-slate-500">{t('matrixModelSubtitle')}</p>
         </div>
 
-        <div className="bg-white rounded-3xl overflow-x-auto border border-slate-200 shadow-md">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-blue-900 text-white text-xs uppercase font-bold tracking-wider">
-                <th className="p-4">{t('thSpecParam')}</th>
-                <th className="p-4">{t('thPortable')}</th>
-                <th className="p-4 text-green-300">{t('thPolyhouse')}</th>
-                <th className="p-4">{t('thIndustrial')}</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-200 text-xs text-slate-700 font-medium">
-              <tr>
-                <td className="p-4 font-bold text-slate-900">Daily Batch Capacity</td>
-                <td className="p-4">10 – 50 kg</td>
-                <td className="p-4 font-bold text-blue-700">100 – 500 kg</td>
-                <td className="p-4 font-bold text-green-700">1 Ton to 10 Tons+</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-slate-900">Drying Temperature Range</td>
-                <td className="p-4">40°C – 65°C</td>
-                <td className="p-4">45°C – 70°C</td>
-                <td className="p-4">50°C – 85°C (Hybrid)</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-slate-900">Polycarbonate Sheet Thickness</td>
-                <td className="p-4">4 mm Twin-Wall UV</td>
-                <td className="p-4">6 mm Twin-Wall UV</td>
-                <td className="p-4">8-10 mm Multi-Wall UV</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-slate-900">Heat Retention Rating</td>
-                <td className="p-4">Standard Solar Fan</td>
-                <td className="p-4">Thermal Storage Bed</td>
-                <td className="p-4 font-bold text-green-700">24/7 Thermal Mass Bed</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-slate-900">Government Subsidy %</td>
-                <td className="p-4">Up to 40%</td>
-                <td className="p-4 font-bold text-green-700">Up to 50% State Agri</td>
-                <td className="p-4 font-bold text-blue-700">Up to 60% MNRE Grants</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* Subsidy Banner */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-green-800 text-white p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-2 text-center md:text-left">
-            <span className="text-[10px] font-bold text-green-300 bg-blue-950 px-2.5 py-0.5 rounded uppercase">
-              {t('stateAssistance')}
+        {/* Headings */}
+        <div className="space-y-4">
+          <h1 className="text-3xl sm:text-5xl font-black text-blue-950 tracking-tight">
+            {isTamil ? 'சோலார் உலர்த்தி மாடல்கள்' : 'Solar Dryer Models & Specifications'}
+            <span className="block text-green-700 mt-2 text-2xl sm:text-3xl font-extrabold">
+              {isTamil ? 'விரைவில் புதிய 2026 பதிப்புகளுடன்' : 'New 2026 Models Coming Soon'}
             </span>
-            <h3 className="text-xl sm:text-2xl font-bold">{t('claimSubsidyTitle')}</h3>
-            <p className="text-xs text-blue-100 max-w-xl">
-              {t('claimSubsidyDesc')}
+          </h1>
+
+          <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed font-medium">
+            {isTamil
+              ? 'எங்கள் சோலார் உலர்த்திகளின் புதிய மாடல்கள், தொழில்நுட்ப விவரக்குறிப்புகள் மற்றும் அரசு மானிய வழிகாட்டிகள் தற்போது புதுப்பிக்கப்பட்டு வருகின்றன. உற்பத்தி மற்றும் தனிப்பயனாக்கப்பட்ட தயாரிப்பு சேவைகள் வழக்கம் போல் செயல்படுகின்றன.'
+              : 'Our complete solar thermal dryer catalogue is currently being updated with new high-efficiency UV models, enhanced capacity ranges, and updated 2026 MNRE & State Agriculture subsidy schemes.'}
+          </p>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+          <button
+            onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: 'Custom Solar Dryer Inquiry' })}
+            className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-700 via-blue-600 to-green-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center space-x-2"
+          >
+            <span>{t('getQuote')}</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+
+          <Link
+            to="/contact"
+            className="w-full sm:w-auto px-8 py-4 bg-white border border-slate-300 hover:border-blue-600 text-slate-800 hover:text-blue-700 font-bold text-xs rounded-2xl transition-all flex items-center justify-center space-x-2 shadow-sm"
+          >
+            <PhoneCall className="w-4 h-4 text-blue-700" />
+            <span>{t('callUs')}</span>
+          </Link>
+        </div>
+
+        {/* Info Cards */}
+        <div className="pt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
+          <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-2">
+            <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold">
+              <Wrench className="w-5 h-5" />
+            </div>
+            <h2 className="text-sm font-bold text-slate-900">
+              {isTamil ? 'தனிப்பயன் வடிவமைப்பு' : 'Custom Sizing & Fabrication'}
+            </h2>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              {isTamil
+                ? 'உங்கள் பண்ணை விளைச்சலுக்கு ஏற்ப 10 கி.கி முதல் 10 டன் வரை தனிப்பயனாக்கப்பட்ட உலர்த்திகள்.'
+                : 'Engineered polyhouse and walk-in tunnel dryers tailored to your crop type and daily harvest capacity.'}
             </p>
           </div>
 
-          <button
-            onClick={() => onOpenQuoteModal()}
-            className="py-3.5 px-6 bg-green-600 hover:bg-green-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow transition-all shrink-0"
-          >
-            {t('checkSubsidyBtn')}
-          </button>
-        </div>
-      </section>
+          <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-2">
+            <div className="w-9 h-9 rounded-xl bg-green-50 text-green-700 flex items-center justify-center font-bold">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <h2 className="text-sm font-bold text-slate-900">
+              {isTamil ? '40% - 60% அரசு மானியம்' : '40% - 60% Govt Subsidy'}
+            </h2>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              {isTamil
+                ? 'MNRE, நபார்டு மற்றும் தோட்டக்கலைத்துறை மானிய அனுமதிகளுக்கான முழுமையான உதவி.'
+                : 'End-to-end documentation support for MNRE, NABARD, and State Agriculture subsidy schemes.'}
+            </p>
+          </div>
 
+          <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-2">
+            <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold">
+              <FileCheck2 className="w-5 h-5" />
+            </div>
+            <h2 className="text-sm font-bold text-slate-900">
+              {isTamil ? 'நேரடி நிறுவல் & பயிற்சி' : 'On-Farm Installation'}
+            </h2>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              {isTamil
+                ? 'எங்கள் பொறியாளர்களின் நேரடி கள நிறுவல் மற்றும் உலர்த்தும் அளவுரு பயிற்சிகள்.'
+                : 'Complete structural erection at your farm with operator training and moisture testing support.'}
+            </p>
+          </div>
+        </div>
+
+        {/* Direct Helpline Note */}
+        <div className="pt-4 text-xs text-slate-500 font-medium">
+          {isTamil ? 'உடனடி உதவி மற்றும் விலை விவரங்களுக்கு அழைக்கவும்: ' : 'For immediate consultation and quote inquiries: '}
+          <a href="tel:+918098613422" className="text-blue-700 font-bold hover:underline">
+            +91 80986 13422
+          </a>
+        </div>
+
+      </div>
     </div>
   );
 }
