@@ -83,177 +83,91 @@ export const cropCalculations = {
   }
 };
 
-export const dryerModelsData = [
-  {
-    id: "portable",
-    name: "Portable DIY Solar Dryer",
-    capacityRange: "10 to 50 kg batch",
-    targetAudience: "Smallholder Farmers & Home Food Entrepreneurs",
-    buildMaterial: "UV-Stabilized Polycarbonate Sheet + Galvanized Frame",
-    tempRange: "40°C - 65°C",
-    dimensions: "2.4m (L) x 1.2m (W) x 1.8m (H)",
-    trays: "12 Food-grade Stainless Steel SS304 Trays",
-    airflow: "Dual 12V DC Solar Fans (20W Monocrystalline Panel)",
-    heatRetention: "Absorbent Black Thermal Bed Collector",
-    paybackPeriod: "4 to 6 Months ROI",
-    subsidyEligibility: "Eligible for 40% Micro-Agri Subsidy",
-    badge: "Domestic / Entry",
-    description: "Compact, easy-to-assemble cabinet solar thermal dryer designed for home-scale herb, fruit, and spice processing.",
-    imageUrl: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=800&q=80",
-    gallery: [
-      "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80"
-    ],
-    features: [
-      "Zero electricity required (Dual 12V Solar Fans)",
-      "Food-grade Stainless Steel SS304 Trays",
-      "Portable design with heavy-duty caster wheels",
-      "Plug & play 2-hour self assembly"
-    ],
-    compatibleCrops: ["Herbs & Tea Leaves", "Cardamom & Spices", "Sliced Mango & Fruits", "Medicinal Leaves"]
-  },
-  {
-    id: "polyhouse",
-    name: "Commercial Polyhouse Tunnel Dryer",
-    capacityRange: "100 to 500 kg batch",
-    targetAudience: "Self Help Groups (SHGs), FPOs & Mid-Scale Farmers",
-    buildMaterial: "Multi-Wall Polycarbonate Arc Structure + SS Mesh",
-    tempRange: "45°C - 70°C",
-    dimensions: "10m (L) x 4m (W) x 3m (Center Height)",
-    trays: "Ground Thermal Floor / 80 SS Wire Mesh Trays",
-    airflow: "4x 50W Solar DC High-CFM Exhaust Blowers",
-    heatRetention: "Thermal Storage Bed + Natural Chimney Draft",
-    paybackPeriod: "6 to 8 Months ROI",
-    subsidyEligibility: "Eligible for 50% State Agriculture Subsidy",
-    badge: "Most Popular",
-    description: "Walk-in greenhouse polyhouse solar tunnel dryer optimized for copra, moringa, chillies, and spice drying.",
-    imageUrl: "https://images.unsplash.com/photo-1546554137-f86b9593a222?auto=format&fit=crop&w=800&q=80",
-    gallery: [
-      "https://images.unsplash.com/photo-1546554137-f86b9593a222?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80"
-    ],
-    features: [
-      "100% rain proof & storm resistant structure",
-      "Continuous airflow exhaust with solar DC blowers",
-      "Walk-in ergonomics for fast loading & unloading",
-      "Protects crop from birds, dust, and insects"
-    ],
-    compatibleCrops: ["Copra / Coconut", "Moringa Leaves", "Red Chillies", "Salted Fish & Marine"]
-  },
-  {
-    id: "industrial",
-    name: "Multi-Tunnel Industrial Hybrid Dryer",
-    capacityRange: "1 Ton+ batch (Customizable)",
-    targetAudience: "Large Food Exporters, Industrial Sludge & Rubber Processors",
-    buildMaterial: "Heavy Galvanized Structural Steel + Solar Collectors",
-    tempRange: "50°C - 85°C",
-    dimensions: "25m (L) x 8m (W) x 3.5m (H) (Modular Extension)",
-    trays: "Automated Trolley Carts / Continuous Conveyor Mesh",
-    airflow: "PLC Variable Speed Automated Humidity Exhaust Fan Grid",
-    heatRetention: "Thermal Mass Storage + Hybrid Biomass/Steam Backup",
-    paybackPeriod: "8 to 12 Months ROI",
-    subsidyEligibility: "Eligible for MNRE & NABARD Industrial Grants",
-    badge: "Industrial Grade",
-    description: "Heavy-duty modular multi-tunnel drying plant with automated humidity sensors and optional biomass thermal backup.",
-    imageUrl: "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&w=800&q=80",
-    gallery: [
-      "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546554137-f86b9593a222?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80"
-    ],
-    features: [
-      "PLC Smart controller for precision temperature monitoring",
-      "24/7 continuous operation with hybrid biomass heat backup",
-      "Up to 80% weight reduction for industrial sludge & waste",
-      "Custom conveyor or tray cart material handling systems"
-    ],
-    compatibleCrops: ["Bulk Copra", "Turmeric & Ginger", "Export Grade Chillies", "Industrial Rubber & Sludge"]
-  }
-];
+import { officialDryerModels } from './zenitekBrochureData';
+
+export const dryerModelsData = officialDryerModels;
 
 export const cropMatrixData = [
-  { crop: "Copra / Coconut", freshMoisture: "52%", targetMoisture: "6%", solarDays: "2.5 Days", openSunDays: "7 Days", benefit: "100% Grade-1 White Copra, zero fungus" },
-  { crop: "Moringa Leaves", freshMoisture: "88%", targetMoisture: "8%", solarDays: "1.2 Days", openSunDays: "4 Days", benefit: "Preserves 100% chlorophyll green & Vitamin C" },
-  { crop: "Red Chillies", freshMoisture: "75%", targetMoisture: "10%", solarDays: "3.0 Days", openSunDays: "10 Days", benefit: "Zero aflatoxin, bright red glossy skin retain" },
-  { crop: "Salted Fish & Shrimp", freshMoisture: "60%", targetMoisture: "15%", solarDays: "1.0 Day", openSunDays: "3 Days", benefit: "100% fly-free export sanitation quality" },
-  { crop: "Cloves & Spices", freshMoisture: "70%", targetMoisture: "12%", solarDays: "2.0 Days", openSunDays: "6 Days", benefit: "High volatile essential oil content lock" }
+  { crop: "Copra / Coconut", freshMoisture: "52%", targetMoisture: "6%", solarDays: "2.5 Days", openSunDays: "7 Days", benefit: "100% Grade-1 White Copra, zero fungus, 28% higher price" },
+  { crop: "Moringa Leaves", freshMoisture: "88%", targetMoisture: "8%", solarDays: "1.2 Days", openSunDays: "4 Days", benefit: "Preserves 100% chlorophyll green, Vitamin C & active nutrients" },
+  { crop: "Red Chillies", freshMoisture: "75%", targetMoisture: "10%", solarDays: "3.0 Days", openSunDays: "10 Days", benefit: "Zero aflatoxin mold, bright natural gloss, high oleoresin" },
+  { crop: "Salted Fish & Shrimp", freshMoisture: "60%", targetMoisture: "15%", solarDays: "1.0 Day", openSunDays: "3 Days", benefit: "100% fly-free sealed coastal export sanitation quality" },
+  { crop: "Turmeric & Ginger", freshMoisture: "80%", targetMoisture: "10%", solarDays: "2.5 Days", openSunDays: "8 Days", benefit: "Maximum curcumin & essential volatile oil retention" },
+  { crop: "Flowers & Tea/Herbs", freshMoisture: "80%", targetMoisture: "8%", solarDays: "1.0 Day", openSunDays: "3.5 Days", benefit: "Vibrant petal color without UV discoloration" }
 ];
-
 
 export const sampleGalleryItems = [
   {
     id: "g1",
-    title: "500kg Copra Drying Polyhouse Tunnel",
+    title: "SOLDRY 1210 - 150 Walk-In Tunnel Dryer",
     category: "installations",
-    location: "Pollachi, Tamil Nadu",
-    modelName: "Commercial Polyhouse Tunnel Dryer",
-    imageUrl: "https://images.unsplash.com/photo-1546554137-f86b9593a222?auto=format&fit=crop&w=800&q=80",
-    caption: "Full walk-in polyhouse solar tunnel dryer setup producing Grade-1 White Copra for oil extraction."
+    location: "Komarapalayam, Tamil Nadu",
+    modelName: "SOLDRY 1210 - 150",
+    imageUrl: "/pdf-products/brochure_p1.png",
+    caption: "Walk-in polyhouse solar tunnel dryer with 9 trolleys and 36 SS304 trays for commercial drying."
   },
   {
     id: "g2",
-    title: "Organic Cardamom & Black Pepper Drying Unit",
+    title: "SOLDRY 1709 - 200 Inverted Parabolic Arch",
     category: "installations",
-    location: "Wayanad, Kerala",
-    modelName: "Hybrid Solar Thermal Dryer",
-    imageUrl: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80",
-    caption: "Preserving natural essential oils and vibrant green color in premium exported spices."
+    location: "Sathyamangalam, Tamil Nadu",
+    modelName: "SOLDRY 1709 - 200",
+    imageUrl: "/pdf-products/brochure_p2.png",
+    caption: "Aerodynamic 17 ft wide parabolic profile combining tray trolleys and floor drying bed."
   },
   {
     id: "g3",
-    title: "Grade-1 White Copra Kernels",
-    category: "produce",
-    location: "Coimbatore, Tamil Nadu",
-    modelName: "Polyhouse Tunnel Dryer",
-    imageUrl: "https://images.unsplash.com/photo-1546554137-f86b9593a222?auto=format&fit=crop&w=800&q=80",
-    caption: "Moisture reduced from 52% to 6% in 2.5 days. Zero fungal spores, zero dust contamination."
+    title: "SOLDRY 1210 - 300 Industrial Tunnel Plant",
+    category: "installations",
+    location: "Pollachi, Tamil Nadu",
+    modelName: "SOLDRY 1210 - 300",
+    imageUrl: "/pdf-products/brochure_p9.png",
+    caption: "High-capacity commercial system with 18 trolleys, 72 food-grade trays, and 450 sq.ft tray drying area."
   },
   {
     id: "g4",
-    title: "Export Grade Dehydrated Moringa Leaf Powder",
-    category: "produce",
-    location: "Madurai, Tamil Nadu",
-    modelName: "Multi-Tier Polyhouse Dryer",
-    imageUrl: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80",
-    caption: "100% chlorophyll green color retention with UV-shielded solar drying."
+    title: "SUNDRY 50 Commercial 8-Tray Box Dryer",
+    category: "models",
+    location: "ZeniTEK Works, Erode",
+    modelName: "SUNDRY 50",
+    imageUrl: "/pdf-products/brochure_p6.png",
+    caption: "50 sq.ft tray area on heavy-duty 4\" caster wheels with 24V solar battery storage and SMPS."
   },
   {
     id: "g5",
-    title: "Portable DIY 50kg Herb & Fruit Cabinet Dryer",
+    title: "SUNDRY 12 Dual-Tier Compact Box Dryer",
     category: "models",
-    location: "Ooty, Tamil Nadu",
-    modelName: "Portable DIY Solar Dryer",
-    imageUrl: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=800&q=80",
-    caption: "Compact entry-level solar dryer operating on 12V solar DC fans."
+    location: "Erode, Tamil Nadu",
+    modelName: "SUNDRY 12",
+    imageUrl: "/pdf-products/brochure_p5.png",
+    caption: "12 sq.ft SS304 perforated food-grade trays with 20W solar fan and 500W night heater."
   },
   {
     id: "g6",
-    title: "High-Gloss Export Red Chillies",
-    category: "produce",
-    location: "Guntur, Andhra Pradesh",
-    modelName: "Multi-Tunnel Industrial Dryer",
-    imageUrl: "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&w=800&q=80",
-    caption: "Rainproof chili drying eliminating aflatoxin mold risk and maintaining bright red glossy skin."
+    title: "SUNDRY 6 Household Smart Solar Dryer",
+    category: "models",
+    location: "Erode, Tamil Nadu",
+    modelName: "SUNDRY 6",
+    imageUrl: "/pdf-products/brochure_p4.png",
+    caption: "Compact box solar dryer for households, small entrepreneurs, and farm kitchens."
   },
   {
     id: "g7",
-    title: "Coimbatore Manufacturing Facility & Assembly",
-    category: "factory",
-    location: "Coimbatore Works, Tamil Nadu",
-    modelName: "ZeniTEK Production Hub",
-    imageUrl: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
-    caption: "Precision fabrication of UV-stabilized multi-wall polycarbonate arcs and food-grade SS304 tray frames."
+    title: "Commercial Operational Field Installation",
+    category: "installations",
+    location: "Field Site, Tamil Nadu",
+    modelName: "Commercial Polyhouse Tunnel",
+    imageUrl: "/pdf-gallery/gallery_20a_p1.jpg",
+    caption: "Active operational solar polyhouse tunnel installation in farm fields."
   },
   {
     id: "g8",
-    title: "Hygienic Marine Fish & Shrimp Drying Setup",
-    category: "installations",
-    location: "Mangalore, Karnataka",
-    modelName: "Sealed Polyhouse Solar Dryer",
-    imageUrl: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80",
-    caption: "100% fly-free sealed coastal drying setup compliant with international export standards."
+    title: "Precision Fabrication & CNC Assembly",
+    category: "factory",
+    location: "Manufacturing Hub, Erode",
+    modelName: "ZeniTEK Works",
+    imageUrl: "/pdf-gallery/gallery_13_p1.jpg",
+    caption: "GI steel laser cut and CNC folded frame with double-walled UV polycarbonate glazing."
   }
 ];
 

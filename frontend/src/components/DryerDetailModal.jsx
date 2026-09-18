@@ -99,7 +99,7 @@ export default function DryerDetailModal({ isOpen, onClose, model, onOpenQuoteMo
 
           </div>
 
-          {/* Detailed Technical Specifications Grid */}
+          {/* Detailed Technical Specifications Grid (Direct from PDF Brochure) */}
           <div className="space-y-3">
             <h5 className="text-xs font-bold text-blue-950 uppercase tracking-wider flex items-center">
               <Layers className="w-4 h-4 mr-1.5 text-blue-700" /> Technical Specifications Breakdown
@@ -108,49 +108,58 @@ export default function DryerDetailModal({ isOpen, onClose, model, onOpenQuoteMo
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
               <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
                 <div className="text-[10px] text-slate-500 font-bold uppercase flex items-center">
-                  <Thermometer className="w-3.5 h-3.5 text-blue-600 mr-1" /> Temp Range
+                  <Grid className="w-3.5 h-3.5 text-blue-600 mr-1" /> Floor & Tray Area
                 </div>
-                <div className="font-black text-slate-900 mt-1 text-sm">{model.tempRange}</div>
+                <div className="font-black text-slate-900 mt-1 text-xs">Floor: {model.floorArea || 'Custom'}</div>
+                <div className="text-[11px] text-blue-700 font-bold">Tray Area: {model.totalTrayArea || model.trays || 'Food-grade Trays'}</div>
               </div>
 
               <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
                 <div className="text-[10px] text-slate-500 font-bold uppercase flex items-center">
-                  <Wind className="w-3.5 h-3.5 text-green-600 mr-1" /> Airflow System
+                  <Layers className="w-3.5 h-3.5 text-emerald-600 mr-1" /> Trays & Trolleys
                 </div>
-                <div className="font-bold text-slate-800 mt-1 leading-snug">{model.airflow || 'Solar DC Exhaust Fan System'}</div>
+                <div className="font-bold text-slate-800 mt-1 text-xs">{model.trayCount || 'SS304 Trays'}</div>
+                {model.trayTrolleys && <div className="text-[10.5px] text-slate-500 font-medium">Trolleys: {model.trayTrolleys}</div>}
               </div>
 
               <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
                 <div className="text-[10px] text-slate-500 font-bold uppercase flex items-center">
-                  <Grid className="w-3.5 h-3.5 text-amber-600 mr-1" /> Tray Configuration
+                  <Sun className="w-3.5 h-3.5 text-amber-500 mr-1" /> Solar Power & Battery
                 </div>
-                <div className="font-bold text-slate-800 mt-1 leading-snug">{model.trays || 'SS304 Food-grade Mesh Trays'}</div>
+                <div className="font-bold text-slate-800 mt-1 text-xs">{model.solarPower || 'Solar DC System'}</div>
               </div>
 
               <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-                <div className="text-[10px] text-slate-500 font-bold uppercase">Dimensions</div>
-                <div className="font-bold text-slate-800 mt-1">{model.dimensions || 'Standard Modular Build'}</div>
+                <div className="text-[10px] text-slate-500 font-bold uppercase flex items-center">
+                  <Wind className="w-3.5 h-3.5 text-green-600 mr-1" /> Airflow & Fans
+                </div>
+                <div className="font-bold text-slate-800 mt-1 text-xs">Exhaust: {model.exhaustFans || 'Automated'}</div>
+                <div className="text-[10.5px] text-slate-500">Circulation: {model.circulationFans || 'Convection'}</div>
               </div>
 
               <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-                <div className="text-[10px] text-slate-500 font-bold uppercase">Build Material</div>
-                <div className="font-bold text-slate-800 mt-1 leading-snug">{model.buildMaterial}</div>
+                <div className="text-[10px] text-slate-500 font-bold uppercase flex items-center">
+                  <Zap className="w-3.5 h-3.5 text-purple-600 mr-1" /> Heater & Grid Backup
+                </div>
+                <div className="font-bold text-slate-800 mt-1 text-xs">{model.electricalHeater || 'Thermostat Heater'}</div>
+                <div className="text-[10.5px] text-slate-500">Grid: {model.gridBackup || '24V DC SMPS'}</div>
               </div>
 
               <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-                <div className="text-[10px] text-slate-500 font-bold uppercase">Heat Retention</div>
-                <div className="font-bold text-slate-800 mt-1 leading-snug">{model.heatRetention}</div>
+                <div className="text-[10px] text-slate-500 font-bold uppercase">Dimensions & Structure</div>
+                <div className="font-bold text-slate-800 mt-1 text-xs">{model.dimensions || 'Modular Standard'}</div>
+                <div className="text-[10px] text-slate-500 leading-tight mt-0.5">{model.structure || model.buildMaterial || 'GI Steel & UV Polycarbonate'}</div>
               </div>
             </div>
           </div>
 
           {/* Key Features List */}
           <div className="space-y-2 bg-slate-50 p-4 rounded-2xl border border-slate-200">
-            <h5 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Key Engineering Advantages</h5>
+            <h5 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Key Engineering Advantages (Official Brochure)</h5>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-              {model.features.map((feat, idx) => (
-                <div key={idx} className="flex items-center text-slate-800 font-medium">
-                  <CheckCircle2 className="w-4 h-4 text-green-600 mr-2 shrink-0" />
+              {(model.keyFeatures || model.features || []).map((feat, idx) => (
+                <div key={idx} className="flex items-start text-slate-800 font-medium">
+                  <CheckCircle2 className="w-4 h-4 text-green-600 mr-2 shrink-0 mt-0.5" />
                   <span>{feat}</span>
                 </div>
               ))}

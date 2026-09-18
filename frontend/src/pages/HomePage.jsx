@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import ROICalculator from '../components/ROICalculator';
 import MapComponent from '../components/MapComponent';
 import { sampleReviews, dryerModelsData, cropMatrixData } from '../data/sampleData';
+import { workingPrincipleSteps } from '../data/zenitekBrochureData';
 import { useLanguage } from '../context/LanguageContext';
 import {
-  Sun, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, TrendingUp, Zap, ChevronRight, MapPin, Search, SlidersHorizontal, Sprout
+  Sun, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, TrendingUp, Zap, ChevronRight, MapPin, Search, SlidersHorizontal, Sprout, Wind, Droplets, Cpu, Shield, Sparkles
 } from 'lucide-react';
 
 export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
@@ -175,31 +176,37 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {dryerModelsData.map(model => (
+          {dryerModelsData.slice(0, 6).map(model => (
             <div key={model.id} className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-blue-500 transition-all duration-300 flex flex-col justify-between shadow-sm hover:shadow-lg group">
               <div className="cursor-pointer" onClick={() => onOpenDetailModal && onOpenDetailModal(model)}>
-                <div className="relative h-48 overflow-hidden">
-                  <img src={model.imageUrl} alt={model.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="relative h-52 overflow-hidden bg-slate-100 border-b border-slate-200">
+                  <img src={model.imageUrl} alt={model.name} className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-blue-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="px-3 py-1 bg-white/90 text-blue-950 text-xs font-extrabold rounded-lg shadow">View Full Specs</span>
+                    <span className="px-3.5 py-1.5 bg-white/95 text-blue-950 text-xs font-black rounded-xl shadow-md backdrop-blur-sm">View Technical Specs</span>
                   </div>
                   <span className="absolute top-3 right-3 bg-blue-700 text-white font-bold text-[10px] uppercase px-2.5 py-1 rounded-md shadow">
                     {model.badge}
                   </span>
+                  {model.floorArea && (
+                    <span className="absolute bottom-3 left-3 bg-blue-950/90 backdrop-blur-md text-green-300 font-extrabold text-[10px] px-2.5 py-1 rounded-lg">
+                      Floor: {model.floorArea}
+                    </span>
+                  )}
                 </div>
                 
                 <div className="p-6 space-y-4">
                   <div>
-                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-700 transition-colors">{model.name}</h3>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{model.category}</span>
+                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-700 transition-colors mt-0.5">{model.name}</h3>
                     <p className="text-xs font-bold text-green-700 mt-0.5">{model.capacityRange}</p>
                   </div>
-                  <p className="text-xs text-slate-600 leading-relaxed">{model.description}</p>
+                  <p className="text-xs text-slate-600 leading-relaxed line-clamp-2">{model.description}</p>
                   
                   <div className="space-y-2 pt-2 border-t border-slate-100 text-xs">
-                    {model.features.slice(0, 3).map((feat, idx) => (
-                      <div key={idx} className="flex items-center text-slate-700 font-medium">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-green-600 mr-2 shrink-0" />
-                        <span>{feat}</span>
+                    {(model.keyFeatures || model.features || []).slice(0, 3).map((feat, idx) => (
+                      <div key={idx} className="flex items-start text-slate-700 font-medium">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-green-600 mr-2 shrink-0 mt-0.5" />
+                        <span className="line-clamp-1">{feat}</span>
                       </div>
                     ))}
                   </div>
@@ -209,14 +216,14 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
               <div className="p-6 pt-0 space-y-2">
                 <button
                   onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
-                  className="w-full py-2.5 bg-white border border-blue-600 text-blue-700 font-bold text-xs uppercase tracking-wider rounded-xl hover:bg-blue-50 transition-all"
+                  className="w-full py-2.5 bg-white border border-blue-600 text-blue-700 font-bold text-xs uppercase tracking-wider rounded-xl hover:bg-blue-50 transition-all cursor-pointer"
                 >
-                  View Details & Gallery
+                  View Details & Brochure
                 </button>
 
                 <button
                   onClick={() => onOpenQuoteModal({ capacityNeeded: model.name })}
-                  className="w-full py-3 bg-blue-50 hover:bg-blue-700 hover:text-white text-blue-900 border border-blue-200 font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center space-x-1.5"
+                  className="w-full py-3 bg-blue-50 hover:bg-blue-700 hover:text-white text-blue-900 border border-blue-200 font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
                 >
                   <span>{t('reqQuote')}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -225,63 +232,181 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
             </div>
           ))}
         </div>
+
+        <div className="text-center pt-2">
+          <Link
+            to="/dryers"
+            className="inline-flex items-center space-x-2 px-6 py-3 bg-blue-900 hover:bg-blue-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow transition-all hover:scale-105"
+          >
+            <span>Explore All Models & Profile Comparisons</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
       </section>
 
 
-      {/* SECTION 4.5: MODEL TECHNICAL COMPARISON MATRIX */}
+      {/* SECTION 4.25: 7-STEP SOLAR DRYER WORKING PRINCIPLE (DIRECT FROM PDF PAGE 8) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="bg-gradient-to-br from-blue-950 via-slate-900 to-blue-900 text-white p-6 sm:p-10 rounded-3xl shadow-xl space-y-8 border border-blue-800/40">
+          
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-blue-800/50 pb-6">
+            <div className="space-y-2">
+              <span className="text-[11px] font-bold text-green-300 uppercase tracking-widest bg-green-950/80 border border-green-500/30 px-3 py-1 rounded-full inline-flex items-center">
+                <Sun className="w-3.5 h-3.5 mr-1.5 text-amber-400 animate-spin-slow" /> PDF Technical Guide • Page 8
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black tracking-tight">
+                Solar Dryer Working Principle
+              </h2>
+              <p className="text-xs sm:text-sm text-blue-200 font-medium max-w-2xl">
+                Smart, Efficient, Sustainable — 7-step thermodynamic cycle engineered by ZeniTEK for 40% faster moisture reduction with zero contamination.
+              </p>
+            </div>
+
+            <div className="flex items-center space-x-2 text-xs font-extrabold text-green-300 bg-blue-900/60 px-4 py-2 rounded-2xl border border-blue-700/50 shrink-0">
+              <Sparkles className="w-4 h-4 text-green-400" />
+              <span>40% Faster Than Open-Sun</span>
+            </div>
+          </div>
+
+          {/* 7 Process Steps Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {workingPrincipleSteps.map((stepItem) => (
+              <div
+                key={stepItem.step}
+                className={`p-5 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
+                  stepItem.step === 7
+                    ? 'bg-gradient-to-br from-green-900/60 to-emerald-950/80 border-green-500/40 shadow-lg md:col-span-2 lg:col-span-2'
+                    : 'bg-white/5 hover:bg-white/10 border-white/10 hover:border-blue-400/40'
+                }`}
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="w-8 h-8 rounded-xl bg-blue-600/80 text-white font-black text-xs flex items-center justify-center shadow">
+                      {stepItem.step}
+                    </span>
+                    <span className="text-[10px] uppercase font-bold text-blue-300 tracking-wider">
+                      {stepItem.subtitle}
+                    </span>
+                  </div>
+
+                  <h4 className="text-sm font-bold text-white leading-snug">
+                    {stepItem.title}
+                  </h4>
+
+                  <p className="text-xs text-blue-100/80 leading-relaxed font-normal">
+                    {stepItem.description}
+                  </p>
+                </div>
+
+                <div className="pt-3 mt-3 border-t border-white/10 flex items-center text-[10px] text-green-300 font-semibold">
+                  <CheckCircle2 className="w-3 h-3 mr-1 text-green-400" /> Step {stepItem.step} of 7
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Diagram Preview Banner */}
+          <div className="bg-blue-900/40 p-4 rounded-2xl border border-blue-700/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-xl shrink-0">
+                ☀️
+              </div>
+              <div className="text-xs">
+                <div className="font-bold text-white">Need Engineering Consultation for Your Farm Crop?</div>
+                <div className="text-blue-200">Our engineers custom-calculate airflow CFM, tray loading, and solar panel arrays for your exact daily tonnage.</div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => onOpenQuoteModal({ capacityNeeded: 'Technical Engineering Sizing' })}
+              className="px-5 py-2.5 bg-green-600 hover:bg-green-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow shrink-0 cursor-pointer"
+            >
+              Get Free Sizing Sizing Report
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* SECTION 4.5: MODEL TECHNICAL COMPARISON MATRIX (AUTHENTIC PDF SPECIFICATIONS) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <span className="text-xs font-bold text-blue-700 uppercase tracking-widest bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200 inline-flex items-center shadow-sm">
-            <SlidersHorizontal className="w-3.5 h-3.5 mr-1.5 text-blue-600" /> {t('matrixModelBadge')}
+            <SlidersHorizontal className="w-3.5 h-3.5 mr-1.5 text-blue-600" /> Official Specification Matrix
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-950">
-            {t('matrixModelTitle')}
+            ZeniTEK Model Lineup Comparison
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 font-medium">
-            {t('matrixModelSubtitle')}
+            Side-by-side engineering specifications from our official technical product brochures
           </p>
         </div>
 
         <div className="bg-white rounded-3xl overflow-x-auto border border-slate-200 shadow-md">
-          <table className="w-full text-left border-collapse min-w-[700px]">
+          <table className="w-full text-left border-collapse min-w-[760px]">
             <thead>
               <tr className="bg-[#1e3a8a] text-white text-xs uppercase font-bold tracking-wider">
                 <th className="p-4 rounded-tl-3xl">SPECIFICATION PARAMETER</th>
-                <th className="p-4">PORTABLE DIY DRYER</th>
-                <th className="p-4 text-green-300">COMMERCIAL POLYHOUSE</th>
-                <th className="p-4 rounded-tr-3xl">MULTI-TUNNEL INDUSTRIAL</th>
+                <th className="p-4 text-blue-100">SUNDRY 50 (BOX TYPE)</th>
+                <th className="p-4 text-green-300">SOLDRY 1210 - 150 (TUNNEL)</th>
+                <th className="p-4 rounded-tr-3xl text-amber-300">SOLDRY 1210 - 300 (COMMERCIAL)</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 text-xs text-slate-700 font-medium">
-              <tr>
-                <td className="p-4 font-bold text-slate-900">Daily Batch Capacity</td>
-                <td className="p-4">10 – 50 kg</td>
-                <td className="p-4 font-bold text-blue-700">100 – 500 kg</td>
-                <td className="p-4 font-bold text-green-700">1 Ton to 10 Tons+</td>
+              <tr className="hover:bg-slate-50 transition-colors">
+                <td className="p-4 font-bold text-slate-900">Floor Footprint Area</td>
+                <td className="p-4 font-semibold text-slate-800">16 sq.ft (4x4 ft)</td>
+                <td className="p-4 font-bold text-blue-700">150 sq.ft (12.5x12.5 ft)</td>
+                <td className="p-4 font-bold text-green-700">300 sq.ft (12.5x24.5 ft)</td>
               </tr>
-              <tr>
-                <td className="p-4 font-bold text-slate-900">Drying Temperature Range</td>
-                <td className="p-4">40°C – 65°C</td>
-                <td className="p-4">45°C – 70°C</td>
-                <td className="p-4">50°C – 85°C (Hybrid)</td>
+              <tr className="hover:bg-slate-50 transition-colors">
+                <td className="p-4 font-bold text-slate-900">Food-Grade Tray Drying Area</td>
+                <td className="p-4 font-semibold text-slate-800">50 sq.ft (8 SS304 Trays)</td>
+                <td className="p-4 font-bold text-blue-700">225 sq.ft (36 Trays)</td>
+                <td className="p-4 font-bold text-green-700">450 sq.ft (72 Trays)</td>
               </tr>
-              <tr>
-                <td className="p-4 font-bold text-slate-900">Polycarbonate Sheet Thickness</td>
-                <td className="p-4">4 mm Twin-Wall UV</td>
-                <td className="p-4">6 mm Twin-Wall UV</td>
-                <td className="p-4">8-10 mm Multi-Wall UV</td>
+              <tr className="hover:bg-slate-50 transition-colors">
+                <td className="p-4 font-bold text-slate-900">Batch Loading Capacity</td>
+                <td className="p-4">20 kg – 100 kg</td>
+                <td className="p-4 font-bold text-blue-700">60 kg – 300 kg</td>
+                <td className="p-4 font-bold text-green-700">180 kg – 900 kg</td>
               </tr>
-              <tr>
-                <td className="p-4 font-bold text-slate-900">Heat Retention Rating</td>
-                <td className="p-4">Standard Solar Fan</td>
-                <td className="p-4">Thermal Storage Bed</td>
-                <td className="p-4 font-bold text-green-700">24/7 Thermal Mass Bed</td>
+              <tr className="hover:bg-slate-50 transition-colors">
+                <td className="p-4 font-bold text-slate-900">Trolley & Material Handling</td>
+                <td className="p-4">Fixed Tray Racks with 4" Casters</td>
+                <td className="p-4">9 Trolleys (4 trays each, 2" casters)</td>
+                <td className="p-4">18 Trolleys (4 trays each, 2" casters)</td>
               </tr>
-              <tr>
-                <td className="p-4 font-bold text-slate-900">Government Subsidy %</td>
-                <td className="p-4">Up to 40%</td>
-                <td className="p-4 font-bold text-green-700">Up to 50% State Agri</td>
-                <td className="p-4 font-bold text-blue-700">Up to 60% MNRE Grants</td>
+              <tr className="hover:bg-slate-50 transition-colors">
+                <td className="p-4 font-bold text-slate-900">Solar Power System</td>
+                <td className="p-4">20W 24V DC + Battery</td>
+                <td className="p-4">110W 24V DC + Victron MPPT</td>
+                <td className="p-4">220W 24V DC + Victron MPPT</td>
+              </tr>
+              <tr className="hover:bg-slate-50 transition-colors">
+                <td className="p-4 font-bold text-slate-900">Airflow & Ventilation</td>
+                <td className="p-4">4 Circulation + 2 Exhaust Fans</td>
+                <td className="p-4">4 Circulation + 2 Exhaust Fans</td>
+                <td className="p-4">4 Circulation + 3 Exhaust Fans</td>
+              </tr>
+              <tr className="hover:bg-slate-50 transition-colors">
+                <td className="p-4 font-bold text-slate-900">Auxiliary Heating Backup</td>
+                <td className="p-4">750W Heater with Thermostat</td>
+                <td className="p-4">1 kW to 6 kW with Fan & Thermostat</td>
+                <td className="p-4">1 kW to 6 kW with Fan & Thermostat</td>
+              </tr>
+              <tr className="hover:bg-slate-50 transition-colors">
+                <td className="p-4 font-bold text-slate-900">Automation & Control</td>
+                <td className="p-4">Temp & Timer Control</td>
+                <td className="p-4 font-bold text-blue-700">PLC with 4" Touchscreen HMI</td>
+                <td className="p-4 font-bold text-green-700">PLC with 4" Touchscreen HMI</td>
+              </tr>
+              <tr className="hover:bg-slate-50 transition-colors">
+                <td className="p-4 font-bold text-slate-900">Government Subsidy Eligibility</td>
+                <td className="p-4">40% Micro-Enterprise Subsidy</td>
+                <td className="p-4 font-bold text-green-700">50% - 60% State Agri/Horti</td>
+                <td className="p-4 font-bold text-blue-700">50% - 60% State Agri/Horti</td>
               </tr>
             </tbody>
           </table>
