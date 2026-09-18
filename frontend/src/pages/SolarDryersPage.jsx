@@ -4,8 +4,8 @@ import { projectGalleryData } from '../data/projectGalleryData';
 import { useLanguage } from '../context/LanguageContext';
 import {
   MapPin, Calendar, Search, Filter, Sparkles, ArrowRight, ShieldCheck,
-  CheckCircle2, X, PhoneCall, ChevronLeft, ChevronRight, SlidersHorizontal,
-  Eye, LayoutGrid
+  CheckCircle2, X, PhoneCall, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight,
+  SlidersHorizontal, Eye, LayoutGrid
 } from 'lucide-react';
 
 export default function SolarDryersPage({ onOpenQuoteModal }) {
@@ -18,7 +18,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
   const [selectedState, setSelectedState] = useState('All');
   const [selectedYear, setSelectedYear] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6; // 6 cards per page keeps the UI clean, fast, and traffic-free!
+  const [itemsPerPage, setItemsPerPage] = useState(6); // Configurable rows per page matching table controls
 
   const stateOptions = [
     { label: 'All States', value: 'All', count: 25 },
@@ -226,40 +226,38 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
               >
                 
                 <div>
-                  {/* Image Container with Badge Overlay */}
-                  <div className="relative h-56 overflow-hidden bg-slate-900 cursor-pointer" onClick={() => navigate(`/dryers/${project.id}`)}>
+                  {/* FULL IMAGE FIRST - NO TEXT, NO BADGES OR OVERLAYS ON THE IMAGE */}
+                  <div
+                    className="h-56 sm:h-64 w-full overflow-hidden bg-slate-100 cursor-pointer rounded-t-3xl"
+                    onClick={() => navigate(`/dryers/${project.id}`)}
+                  >
                     <img
                       src={project.image}
                       alt={`${project.title} - ${project.locality}`}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
+                  </div>
 
-                    {/* Top Badges */}
-                    <div className="absolute top-3 left-3 flex items-center space-x-1.5">
-                      <span className="px-2.5 py-1 bg-blue-950/90 text-white font-black text-xs rounded-lg shadow border border-blue-800 backdrop-blur-md">
-                        #{project.id}
-                      </span>
-                      <span className="px-2.5 py-1 bg-emerald-800/90 text-white font-bold text-[11px] rounded-lg shadow border border-emerald-700 backdrop-blur-md">
-                        {project.year}
-                      </span>
-                    </div>
-
-                    {/* Model Code Chip */}
-                    <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl shadow border border-slate-200 flex items-center justify-between">
-                      <div className="flex items-center space-x-1.5 text-xs">
-                        <span className="text-[10px] font-bold text-slate-500 uppercase">MODEL:</span>
-                        <span className="font-mono font-bold text-blue-900 text-xs">{project.dryerCode}</span>
+                  {/* Card Body - All Information & Badges placed cleanly below the image */}
+                  <div className="p-5 space-y-3.5">
+                    
+                    {/* Identification Badges Row (Placed outside the image) */}
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center space-x-1.5">
+                        <span className="px-2.5 py-1 bg-blue-950 text-white font-mono font-black text-xs rounded-lg shadow-sm">
+                          #{project.id}
+                        </span>
+                        <span className="px-2.5 py-1 bg-emerald-700 text-white font-bold text-[11px] rounded-lg shadow-sm">
+                          {project.year}
+                        </span>
                       </div>
-                      <span className="text-[10px] font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded border border-green-200">
+
+                      <span className="text-[10px] font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200 truncate">
                         {project.category}
                       </span>
                     </div>
-                  </div>
 
-                  {/* Card Body */}
-                  <div className="p-5 space-y-3.5">
-                    
                     {/* Title & Locality */}
                     <div>
                       <h2
@@ -268,10 +266,20 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                       >
                         {project.title}
                       </h2>
-                      <div className="text-xs font-semibold text-slate-500 flex items-center mt-0.5">
+                      <div className="text-xs font-semibold text-slate-500 flex items-center mt-1">
                         <MapPin className="w-3.5 h-3.5 text-rose-500 mr-1 shrink-0" />
                         <span className="truncate">{project.locality}</span>
                       </div>
+                    </div>
+
+                    {/* Model Code Banner (Cleanly styled below title) */}
+                    <div className="flex items-center justify-between text-xs py-1.5 px-3 bg-blue-50/70 border border-blue-100 rounded-xl">
+                      <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">
+                        MODEL:
+                      </span>
+                      <span className="font-mono font-bold text-blue-900 text-xs">
+                        {project.dryerCode}
+                      </span>
                     </div>
 
                     {/* Target Application & Produce Icon */}
@@ -328,45 +336,95 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
       </section>
 
 
-      {/* SECTION 4: NUMBERED PAGINATION BAR */}
-      {totalPages > 1 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-          <div className="flex items-center justify-center space-x-2">
-            
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className={`p-2.5 rounded-xl border text-xs font-bold transition-all flex items-center space-x-1 ${currentPage === 1 ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed' : 'bg-white text-slate-700 border-slate-300 hover:border-blue-600 hover:text-blue-700 shadow-sm'}`}
-            >
-              <ChevronLeft className="w-4 h-4" />
-              <span className="hidden sm:inline">Previous</span>
-            </button>
+      {/* SECTION 4: DATA-TABLE STYLE PAGINATION BAR (MATCHING USER SCREENSHOT) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <div className="bg-slate-950 text-slate-300 border border-slate-800 rounded-2xl px-4 sm:px-6 py-3.5 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
+          
+          {/* Left: Row Selection / Project Count Status */}
+          <div className="text-xs sm:text-sm text-slate-400 font-medium">
+            {filteredProjects.length > 0 ? (
+              <span>
+                <span className="text-slate-200 font-semibold">{startIndex + 1}–{Math.min(startIndex + itemsPerPage, filteredProjects.length)}</span> of{' '}
+                <span className="text-slate-200 font-semibold">{filteredProjects.length}</span> row(s) selected.
+              </span>
+            ) : (
+              <span>0 of 0 row(s) selected.</span>
+            )}
+          </div>
 
-            {/* Page Number Pills */}
-            <div className="flex items-center space-x-1.5">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                <button
-                  key={pageNum}
-                  onClick={() => handlePageChange(pageNum)}
-                  className={`w-9 h-9 rounded-xl text-xs font-bold transition-all ${currentPage === pageNum ? 'bg-blue-800 text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'}`}
+          {/* Right: Rows per page, Page indicator, and Navigation Controls */}
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-4 sm:gap-6">
+            
+            {/* Rows Per Page Selector */}
+            <div className="flex items-center space-x-2.5">
+              <span className="text-xs sm:text-sm text-slate-300 font-medium">Rows per page</span>
+              <div className="relative">
+                <select
+                  value={itemsPerPage}
+                  onChange={(e) => {
+                    setItemsPerPage(Number(e.target.value));
+                    setCurrentPage(1);
+                  }}
+                  className="bg-slate-900 border border-slate-700 text-slate-100 text-xs font-semibold rounded-lg px-3 py-1.5 pr-7 focus:outline-none focus:border-blue-500 cursor-pointer appearance-none shadow-sm hover:border-slate-600 transition-colors"
                 >
-                  {pageNum}
-                </button>
-              ))}
+                  <option value={6}>6</option>
+                  <option value={9}>9</option>
+                  <option value={12}>12</option>
+                  <option value={20}>20</option>
+                  <option value={25}>25</option>
+                </select>
+                <ChevronRight className="w-3.5 h-3.5 text-slate-400 absolute right-2 top-2.5 pointer-events-none rotate-90" />
+              </div>
             </div>
 
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className={`p-2.5 rounded-xl border text-xs font-bold transition-all flex items-center space-x-1 ${currentPage === totalPages ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed' : 'bg-white text-slate-700 border-slate-300 hover:border-blue-600 hover:text-blue-700 shadow-sm'}`}
-            >
-              <span className="hidden sm:inline">Next</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
+            {/* Page X of Y */}
+            <div className="text-xs sm:text-sm text-slate-200 font-semibold min-w-[75px] text-center">
+              Page {currentPage} of {totalPages}
+            </div>
+
+            {/* Pagination Navigation Buttons: << < > >> */}
+            <div className="flex items-center space-x-1.5">
+              <button
+                onClick={() => handlePageChange(1)}
+                disabled={currentPage === 1}
+                className="p-1.5 rounded-lg border border-slate-700 hover:bg-slate-800 text-slate-200 disabled:opacity-25 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-all shadow-sm"
+                title="First Page"
+              >
+                <ChevronsLeft className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="p-1.5 rounded-lg border border-slate-700 hover:bg-slate-800 text-slate-200 disabled:opacity-25 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-all shadow-sm"
+                title="Previous Page"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="p-1.5 rounded-lg border border-slate-700 hover:bg-slate-800 text-slate-200 disabled:opacity-25 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-all shadow-sm"
+                title="Next Page"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={() => handlePageChange(totalPages)}
+                disabled={currentPage === totalPages}
+                className="p-1.5 rounded-lg border border-slate-700 hover:bg-slate-800 text-slate-200 disabled:opacity-25 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-all shadow-sm"
+                title="Last Page"
+              >
+                <ChevronsRight className="w-4 h-4" />
+              </button>
+            </div>
 
           </div>
-        </section>
-      )}
+
+        </div>
+      </section>
 
 
       {/* SECTION 5: CLEAN BOTTOM CALL TO ACTION */}

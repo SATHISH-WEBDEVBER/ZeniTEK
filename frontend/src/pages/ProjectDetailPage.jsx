@@ -95,51 +95,53 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
           {/* Left Column: Big Image Display + Story */}
           <div className="lg:col-span-7 space-y-6">
             
-            {/* Main Photo Card with badges */}
-            <div className="relative rounded-3xl overflow-hidden bg-white border border-slate-200 shadow-xl group">
-              <div className="relative h-[360px] sm:h-[460px] overflow-hidden bg-slate-900">
+            {/* Main Photo Card - 100% Clean Image with no text or badges overlaid */}
+            <div className="rounded-3xl overflow-hidden bg-white border border-slate-200 shadow-xl p-4 sm:p-5 space-y-4">
+              
+              {/* Badges Header Bar (Outside and above the image) */}
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center space-x-2">
+                  <span className="px-3.5 py-1.5 bg-blue-950 text-white font-black text-xs rounded-xl shadow-sm">
+                    PROJECT #{project.id}
+                  </span>
+                  <span className="px-3 py-1.5 bg-emerald-700 text-white font-extrabold text-xs rounded-xl shadow-sm flex items-center space-x-1">
+                    <Calendar className="w-3.5 h-3.5 mr-1" />
+                    <span>COMMISSIONED {project.year}</span>
+                  </span>
+                </div>
+
+                <span className="px-3 py-1.5 bg-slate-100 text-slate-800 font-bold text-xs rounded-xl border border-slate-200">
+                  {project.state}
+                </span>
+              </div>
+
+              {/* 100% Clean, Full Image Display */}
+              <div className="relative h-[360px] sm:h-[460px] overflow-hidden rounded-2xl bg-slate-900 border border-slate-200">
                 <img
                   src={project.id === '06' && activePhoto === 'interior' ? project.interiorImage : project.image}
                   alt={`${project.title} - ${project.dryerCode}`}
-                  className="w-full h-full object-cover transition-all duration-500"
+                  className="w-full h-full object-cover"
                 />
-                
-                {/* Top Badges */}
-                <div className="absolute top-4 left-4 flex items-center space-x-2">
-                  <span className="px-3.5 py-1.5 bg-blue-950/90 text-white font-black text-sm rounded-xl shadow-lg border border-blue-800 backdrop-blur-md">
-                    PROJECT {project.id}
-                  </span>
-                  <span className="px-3.5 py-1.5 bg-emerald-700/90 text-white font-extrabold text-xs rounded-xl shadow-lg border border-emerald-600 backdrop-blur-md flex items-center space-x-1">
-                    <Calendar className="w-3.5 h-3.5 mr-1" />
-                    <span>YEAR {project.year}</span>
-                  </span>
-                </div>
-
-                {/* State Tag */}
-                <div className="absolute top-4 right-4">
-                  <span className="px-3 py-1.5 bg-slate-900/80 backdrop-blur-md text-white font-bold text-xs rounded-xl border border-white/20 shadow">
-                    {project.state}
-                  </span>
-                </div>
-
-                {/* Mulbagal Special Interior/Exterior View Switcher */}
-                {project.id === '06' && (
-                  <div className="absolute bottom-4 left-4 flex items-center space-x-1.5 bg-slate-900/90 backdrop-blur-md p-1.5 rounded-2xl shadow-xl border border-white/20">
-                    <button
-                      onClick={() => setActivePhoto('main')}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${activePhoto === 'main' ? 'bg-blue-600 text-white shadow' : 'text-slate-300 hover:text-white'}`}
-                    >
-                      Exterior Walk-In View
-                    </button>
-                    <button
-                      onClick={() => setActivePhoto('interior')}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${activePhoto === 'interior' ? 'bg-blue-600 text-white shadow' : 'text-slate-300 hover:text-white'}`}
-                    >
-                      Interior Tiered Racks
-                    </button>
-                  </div>
-                )}
               </div>
+
+              {/* Mulbagal Special Interior/Exterior View Switcher (Cleanly placed below the image) */}
+              {project.id === '06' && (
+                <div className="flex items-center justify-center space-x-2 pt-1">
+                  <span className="text-xs font-bold text-slate-500 mr-2">Switch View:</span>
+                  <button
+                    onClick={() => setActivePhoto('main')}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activePhoto === 'main' ? 'bg-blue-800 text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+                  >
+                    Exterior Walk-In View
+                  </button>
+                  <button
+                    onClick={() => setActivePhoto('interior')}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activePhoto === 'interior' ? 'bg-blue-800 text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+                  >
+                    Interior Tiered Racks
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Produce & Crop Highlight Card */}
