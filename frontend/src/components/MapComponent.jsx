@@ -15,26 +15,28 @@ import {
   Play
 } from 'lucide-react';
 import { sampleProjects } from '../data/sampleData';
+import { activeLocationsData } from '../data/mapLocationsData';
 import { useLanguage } from '../context/LanguageContext';
 import ProjectDetailModal from './ProjectDetailModal';
 
-// Custom Marker Pin Icon Builder
+// Custom ZeniTEK Map Pin Marker (Zomato / Swiggy style teardrop badge with ZeniTEK emblem)
 const createCustomIcon = (isSelected = false) => {
   return L.divIcon({
-    className: 'custom-map-marker-container',
+    className: 'zenitek-custom-marker',
     html: `
-      <div class="relative flex items-center justify-center w-9 h-9 rounded-full ${
-        isSelected 
-          ? 'bg-amber-500 ring-4 ring-amber-300 shadow-amber-500/50 scale-110' 
-          : 'bg-blue-700 hover:bg-blue-800'
-      } border-2 border-white shadow-xl text-white font-bold transition-all duration-300 cursor-pointer">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun ${isSelected ? 'text-white animate-spin' : 'text-green-300'}"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-        ${isSelected ? '<span class="absolute -top-1 -right-1 flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span></span>' : ''}
+      <div class="zenitek-map-pin-root ${isSelected ? 'is-selected' : ''}">
+        <div class="zenitek-pin-pulse"></div>
+        <div class="zenitek-pin-body">
+          <div class="zenitek-pin-emblem-wrap">
+            <img src="/emblem.png" alt="ZeniTEK" class="zenitek-pin-emblem-img" />
+          </div>
+        </div>
+        <div class="zenitek-pin-tip"></div>
       </div>
     `,
-    iconSize: [36, 36],
-    iconAnchor: [18, 18],
-    popupAnchor: [0, -18]
+    iconSize: [44, 54],
+    iconAnchor: [22, 54],
+    popupAnchor: [0, -56]
   });
 };
 
@@ -161,7 +163,7 @@ function MapOverlayControls({ onFitAll }) {
 
 export default function MapComponent({ onSelectProjectQuote }) {
   const { t } = useLanguage();
-  const [projects, setProjects] = useState(sampleProjects);
+  const [projects, setProjects] = useState(activeLocationsData);
   const [selectedState, setSelectedState] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [mobileTab, setMobileTab] = useState('map');
@@ -214,17 +216,20 @@ export default function MapComponent({ onSelectProjectQuote }) {
     }, 350);
   };
 
-  // Fetch from backend API if available, fallback cleanly to sample data
+  // Fetch from backend API if available, fallback cleanly to active 35 locations
   useEffect(() => {
     async function fetchProjects() {
       try {
         const res = await fetch('/api/projects');
         const data = await res.json();
-        if (data.success && data.projects.length > 0) {
+        if (data.success && Array.isArray(data.projects) && data.projects.length >= 35) {
           setProjects(data.projects);
+        } else {
+          setProjects(activeLocationsData);
         }
       } catch (err) {
-        console.log('Using sample project map data fallback:', err);
+        console.log('Using 35 active locations map data fallback:', err);
+        setProjects(activeLocationsData);
       }
     }
     fetchProjects();
@@ -243,7 +248,17 @@ export default function MapComponent({ onSelectProjectQuote }) {
       }
     });
 
-    const preferredOrder = ['Tamil Nadu', 'Kerala', 'Karnataka', 'Andhra Pradesh', 'Assam'];
+    const preferredOrder = [
+      'Tamil Nadu',
+      'Karnataka',
+      'Mizoram',
+      'Assam',
+      'Maharashtra',
+      'Chhattisgarh',
+      'Kerala',
+      'Gujarat',
+      'Odisha'
+    ];
     const sortedDiscovered = Object.keys(stateCounts).sort((a, b) => {
       const idxA = preferredOrder.indexOf(a);
       const idxB = preferredOrder.indexOf(b);
@@ -449,9 +464,9 @@ export default function MapComponent({ onSelectProjectQuote }) {
           }`}
         >
           <MapContainer
-            center={[12.5, 78.0]}
+            center={[14.5, 78.5]}
             zoom={6}
-            minZoom={5}
+            minZoom={4}
             maxZoom={16}
             scrollWheelZoom={true}
             zoomControl={false}

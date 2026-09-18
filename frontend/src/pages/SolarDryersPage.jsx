@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { projectGalleryData } from '../data/projectGalleryData';
 import { useLanguage } from '../context/LanguageContext';
+import MapComponent from '../components/MapComponent';
 import {
   MapPin, Calendar, Search, Filter, Sparkles, ArrowRight, ShieldCheck,
   CheckCircle2, X, PhoneCall, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight,
@@ -426,6 +427,28 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         </div>
       </section>
 
+      {/* SECTION 4.5: OPERATIONAL INSTALLATIONS MAP (35 ACTIVE SITES ACROSS INDIA) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 pt-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-200 pb-3">
+          <div>
+            <span className="text-[11px] font-bold text-green-700 uppercase tracking-wider bg-green-50 px-2.5 py-1 rounded-full border border-green-200 inline-flex items-center">
+              <Sparkles className="w-3 h-3 mr-1 text-green-600" /> Pan-India Installations
+            </span>
+            <h2 className="text-xl sm:text-2xl font-black text-blue-950 mt-1.5">
+              Verified Operational Solar Dryers Map
+            </h2>
+            <p className="text-xs text-slate-500">
+              Interactive map of all 35 operational ZeniTEK commercial polyhouse dryer installations across India
+            </p>
+          </div>
+          <div className="flex items-center space-x-2 text-xs font-bold text-blue-800 bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-200 shrink-0">
+            <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>35 Verified Coordinates Active</span>
+          </div>
+        </div>
+
+        <MapComponent onSelectProjectQuote={(project) => onOpenQuoteModal && onOpenQuoteModal({ cropType: project.cropDrying, capacityNeeded: project.capacity, district: project.locationName })} />
+      </section>
 
       {/* SECTION 5: CLEAN BOTTOM CALL TO ACTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
