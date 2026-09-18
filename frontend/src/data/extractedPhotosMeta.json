@@ -1,0 +1,452 @@
+[
+  {
+    "id": "zp-1",
+    "filename": "zenitek_photo_01.jpeg",
+    "path": "/real-photos/zenitek_photo_01.jpeg",
+    "sourcePdf": "pdf13",
+    "sourcePage": 1,
+    "width": 1240,
+    "height": 1240,
+    "sizeBytes": 135924
+  },
+  {
+    "id": "zp-2",
+    "filename": "zenitek_photo_02.jpeg",
+    "path": "/real-photos/zenitek_photo_02.jpeg",
+    "sourcePdf": "pdf13",
+    "sourcePage": 2,
+    "width": 1240,
+    "height": 933,
+    "sizeBytes": 143847
+  },
+  {
+    "id": "zp-3",
+    "filename": "zenitek_photo_03.jpeg",
+    "path": "/real-photos/zenitek_photo_03.jpeg",
+    "sourcePdf": "pdf13",
+    "sourcePage": 4,
+    "width": 1240,
+    "height": 559,
+    "sizeBytes": 124041
+  },
+  {
+    "id": "zp-4",
+    "filename": "zenitek_photo_04.jpeg",
+    "path": "/real-photos/zenitek_photo_04.jpeg",
+    "sourcePdf": "pdf13",
+    "sourcePage": 5,
+    "width": 1240,
+    "height": 930,
+    "sizeBytes": 121604
+  },
+  {
+    "id": "zp-5",
+    "filename": "zenitek_photo_05.jpeg",
+    "path": "/real-photos/zenitek_photo_05.jpeg",
+    "sourcePdf": "pdf13",
+    "sourcePage": 6,
+    "width": 1240,
+    "height": 933,
+    "sizeBytes": 103879
+  },
+  {
+    "id": "zp-6",
+    "filename": "zenitek_photo_06.jpeg",
+    "path": "/real-photos/zenitek_photo_06.jpeg",
+    "sourcePdf": "pdf13",
+    "sourcePage": 7,
+    "width": 1240,
+    "height": 933,
+    "sizeBytes": 79090
+  },
+  {
+    "id": "zp-7",
+    "filename": "zenitek_photo_07.jpeg",
+    "path": "/real-photos/zenitek_photo_07.jpeg",
+    "sourcePdf": "pdf13",
+    "sourcePage": 8,
+    "width": 1240,
+    "height": 933,
+    "sizeBytes": 54698
+  },
+  {
+    "id": "zp-8",
+    "filename": "zenitek_photo_08.jpeg",
+    "path": "/real-photos/zenitek_photo_08.jpeg",
+    "sourcePdf": "pdf13",
+    "sourcePage": 9,
+    "width": 1240,
+    "height": 559,
+    "sizeBytes": 138810
+  },
+  {
+    "id": "zp-9",
+    "filename": "zenitek_photo_09.jpeg",
+    "path": "/real-photos/zenitek_photo_09.jpeg",
+    "sourcePdf": "pdf13",
+    "sourcePage": 11,
+    "width": 1176,
+    "height": 1338,
+    "sizeBytes": 119489
+  },
+  {
+    "id": "zp-10",
+    "filename": "zenitek_photo_10.jpeg",
+    "path": "/real-photos/zenitek_photo_10.jpeg",
+    "sourcePdf": "pdf13",
+    "sourcePage": 12,
+    "width": 1240,
+    "height": 930,
+    "sizeBytes": 115250
+  },
+  {
+    "id": "zp-11",
+    "filename": "zenitek_photo_11.jpeg",
+    "path": "/real-photos/zenitek_photo_11.jpeg",
+    "sourcePdf": "pdf13",
+    "sourcePage": 13,
+    "width": 1240,
+    "height": 787,
+    "sizeBytes": 95396
+  },
+  {
+    "id": "zp-12",
+    "filename": "zenitek_photo_12.jpeg",
+    "path": "/real-photos/zenitek_photo_12.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 1,
+    "width": 1240,
+    "height": 933,
+    "sizeBytes": 107797
+  },
+  {
+    "id": "zp-13",
+    "filename": "zenitek_photo_13.jpeg",
+    "path": "/real-photos/zenitek_photo_13.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 2,
+    "width": 963,
+    "height": 1280,
+    "sizeBytes": 89987
+  },
+  {
+    "id": "zp-14",
+    "filename": "zenitek_photo_14.jpeg",
+    "path": "/real-photos/zenitek_photo_14.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 3,
+    "width": 963,
+    "height": 1280,
+    "sizeBytes": 117000
+  },
+  {
+    "id": "zp-15",
+    "filename": "zenitek_photo_15.jpeg",
+    "path": "/real-photos/zenitek_photo_15.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 4,
+    "width": 963,
+    "height": 1280,
+    "sizeBytes": 118605
+  },
+  {
+    "id": "zp-16",
+    "filename": "zenitek_photo_16.jpeg",
+    "path": "/real-photos/zenitek_photo_16.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 5,
+    "width": 963,
+    "height": 1280,
+    "sizeBytes": 117474
+  },
+  {
+    "id": "zp-17",
+    "filename": "zenitek_photo_17.jpeg",
+    "path": "/real-photos/zenitek_photo_17.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 6,
+    "width": 1240,
+    "height": 583,
+    "sizeBytes": 71530
+  },
+  {
+    "id": "zp-18",
+    "filename": "zenitek_photo_18.jpeg",
+    "path": "/real-photos/zenitek_photo_18.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 7,
+    "width": 1240,
+    "height": 629,
+    "sizeBytes": 73674
+  },
+  {
+    "id": "zp-19",
+    "filename": "zenitek_photo_19.jpeg",
+    "path": "/real-photos/zenitek_photo_19.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 8,
+    "width": 1240,
+    "height": 560,
+    "sizeBytes": 59370
+  },
+  {
+    "id": "zp-20",
+    "filename": "zenitek_photo_20.jpeg",
+    "path": "/real-photos/zenitek_photo_20.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 9,
+    "width": 1240,
+    "height": 559,
+    "sizeBytes": 69192
+  },
+  {
+    "id": "zp-21",
+    "filename": "zenitek_photo_21.jpeg",
+    "path": "/real-photos/zenitek_photo_21.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 10,
+    "width": 1240,
+    "height": 826,
+    "sizeBytes": 111218
+  },
+  {
+    "id": "zp-22",
+    "filename": "zenitek_photo_22.jpeg",
+    "path": "/real-photos/zenitek_photo_22.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 11,
+    "width": 1240,
+    "height": 933,
+    "sizeBytes": 67965
+  },
+  {
+    "id": "zp-23",
+    "filename": "zenitek_photo_23.jpeg",
+    "path": "/real-photos/zenitek_photo_23.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 12,
+    "width": 1240,
+    "height": 933,
+    "sizeBytes": 145906
+  },
+  {
+    "id": "zp-24",
+    "filename": "zenitek_photo_24.jpeg",
+    "path": "/real-photos/zenitek_photo_24.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 13,
+    "width": 1204,
+    "height": 1600,
+    "sizeBytes": 94037
+  },
+  {
+    "id": "zp-25",
+    "filename": "zenitek_photo_25.jpeg",
+    "path": "/real-photos/zenitek_photo_25.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 14,
+    "width": 1240,
+    "height": 939,
+    "sizeBytes": 86298
+  },
+  {
+    "id": "zp-26",
+    "filename": "zenitek_photo_26.jpeg",
+    "path": "/real-photos/zenitek_photo_26.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 16,
+    "width": 1240,
+    "height": 930,
+    "sizeBytes": 94213
+  },
+  {
+    "id": "zp-27",
+    "filename": "zenitek_photo_27.jpeg",
+    "path": "/real-photos/zenitek_photo_27.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 17,
+    "width": 1086,
+    "height": 1448,
+    "sizeBytes": 144074
+  },
+  {
+    "id": "zp-28",
+    "filename": "zenitek_photo_28.jpeg",
+    "path": "/real-photos/zenitek_photo_28.jpeg",
+    "sourcePdf": "pdf20a",
+    "sourcePage": 18,
+    "width": 1199,
+    "height": 1600,
+    "sizeBytes": 210417
+  },
+  {
+    "id": "zp-29",
+    "filename": "zenitek_photo_29.jpeg",
+    "path": "/real-photos/zenitek_photo_29.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 1,
+    "width": 1240,
+    "height": 1258,
+    "sizeBytes": 168936
+  },
+  {
+    "id": "zp-30",
+    "filename": "zenitek_photo_30.jpeg",
+    "path": "/real-photos/zenitek_photo_30.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 2,
+    "width": 1240,
+    "height": 1177,
+    "sizeBytes": 149707
+  },
+  {
+    "id": "zp-31",
+    "filename": "zenitek_photo_31.jpeg",
+    "path": "/real-photos/zenitek_photo_31.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 3,
+    "width": 1240,
+    "height": 933,
+    "sizeBytes": 246905
+  },
+  {
+    "id": "zp-32",
+    "filename": "zenitek_photo_32.jpeg",
+    "path": "/real-photos/zenitek_photo_32.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 4,
+    "width": 1240,
+    "height": 933,
+    "sizeBytes": 160830
+  },
+  {
+    "id": "zp-33",
+    "filename": "zenitek_photo_33.jpeg",
+    "path": "/real-photos/zenitek_photo_33.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 5,
+    "width": 1240,
+    "height": 1034,
+    "sizeBytes": 175980
+  },
+  {
+    "id": "zp-34",
+    "filename": "zenitek_photo_34.jpeg",
+    "path": "/real-photos/zenitek_photo_34.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 6,
+    "width": 1240,
+    "height": 812,
+    "sizeBytes": 86939
+  },
+  {
+    "id": "zp-35",
+    "filename": "zenitek_photo_35.jpeg",
+    "path": "/real-photos/zenitek_photo_35.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 7,
+    "width": 1240,
+    "height": 933,
+    "sizeBytes": 249536
+  },
+  {
+    "id": "zp-36",
+    "filename": "zenitek_photo_36.jpeg",
+    "path": "/real-photos/zenitek_photo_36.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 8,
+    "width": 1240,
+    "height": 697,
+    "sizeBytes": 151598
+  },
+  {
+    "id": "zp-37",
+    "filename": "zenitek_photo_37.jpeg",
+    "path": "/real-photos/zenitek_photo_37.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 9,
+    "width": 1240,
+    "height": 933,
+    "sizeBytes": 226141
+  },
+  {
+    "id": "zp-38",
+    "filename": "zenitek_photo_38.jpeg",
+    "path": "/real-photos/zenitek_photo_38.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 12,
+    "width": 1240,
+    "height": 1129,
+    "sizeBytes": 103067
+  },
+  {
+    "id": "zp-39",
+    "filename": "zenitek_photo_39.jpeg",
+    "path": "/real-photos/zenitek_photo_39.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 13,
+    "width": 1240,
+    "height": 933,
+    "sizeBytes": 133726
+  },
+  {
+    "id": "zp-40",
+    "filename": "zenitek_photo_40.jpeg",
+    "path": "/real-photos/zenitek_photo_40.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 14,
+    "width": 963,
+    "height": 1280,
+    "sizeBytes": 115051
+  },
+  {
+    "id": "zp-41",
+    "filename": "zenitek_photo_41.jpeg",
+    "path": "/real-photos/zenitek_photo_41.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 15,
+    "width": 1240,
+    "height": 933,
+    "sizeBytes": 151185
+  },
+  {
+    "id": "zp-42",
+    "filename": "zenitek_photo_42.jpeg",
+    "path": "/real-photos/zenitek_photo_42.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 16,
+    "width": 1060,
+    "height": 795,
+    "sizeBytes": 83395
+  },
+  {
+    "id": "zp-43",
+    "filename": "zenitek_photo_43.jpeg",
+    "path": "/real-photos/zenitek_photo_43.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 18,
+    "width": 1240,
+    "height": 910,
+    "sizeBytes": 120713
+  },
+  {
+    "id": "zp-44",
+    "filename": "zenitek_photo_44.jpeg",
+    "path": "/real-photos/zenitek_photo_44.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 19,
+    "width": 1240,
+    "height": 935,
+    "sizeBytes": 117813
+  },
+  {
+    "id": "zp-45",
+    "filename": "zenitek_photo_45.jpeg",
+    "path": "/real-photos/zenitek_photo_45.jpeg",
+    "sourcePdf": "pdf20b",
+    "sourcePage": 20,
+    "width": 1240,
+    "height": 933,
+    "sizeBytes": 106957
+  }
+]
