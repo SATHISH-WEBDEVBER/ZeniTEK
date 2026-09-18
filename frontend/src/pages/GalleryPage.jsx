@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import { sampleGalleryItems } from '../data/sampleData';
-import { Camera, Filter, MapPin, X, ArrowRight, Sun, ZoomIn, ShieldCheck } from 'lucide-react';
+import { brochurePages } from '../data/zenitekBrochureData';
+import { Camera, Filter, MapPin, X, ArrowRight, Sun, ZoomIn, ShieldCheck, FileText } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function GalleryPage({ onOpenQuoteModal }) {
@@ -8,15 +8,29 @@ export default function GalleryPage({ onOpenQuoteModal }) {
   const [selectedItem, setSelectedItem] = useState(null);
   const { t } = useLanguage();
 
+  const allGalleryItems = React.useMemo(() => {
+    const brochureItems = brochurePages.map(bp => ({
+      id: `brochure-${bp.page}`,
+      title: `Page ${bp.page}: ${bp.title}`,
+      category: 'brochure',
+      location: 'Official Technical Brochure',
+      modelName: bp.category,
+      imageUrl: bp.image,
+      caption: bp.summary
+    }));
+    return [...sampleGalleryItems, ...brochureItems];
+  }, []);
+
   const filteredItems = activeCategory === 'all'
-    ? sampleGalleryItems
-    : sampleGalleryItems.filter(item => item.category === activeCategory);
+    ? allGalleryItems
+    : allGalleryItems.filter(item => item.category === activeCategory);
 
   const categories = [
     { id: 'all', label: t('catAll') },
+    { id: 'brochure', label: 'Official PDF Brochure (9 Pages)' },
     { id: 'installations', label: t('catInstallations') },
-    { id: 'produce', label: t('catProduce') },
     { id: 'models', label: t('catModels') },
+    { id: 'produce', label: t('catProduce') },
     { id: 'factory', label: t('catFactory') },
   ];
 
