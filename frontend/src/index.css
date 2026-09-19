@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --zenitek-green: #00FB00;
+  --zenitek-blue: #002DC2;
+  --zenitek-navy: #123B92;
+  --zenitek-black: #000000;
+  --zenitek-white: #FFFFFF;
+}
+
 @layer base {
   /* Fluid Root Typography Scaling across all 7 target screen sizes */
   html {
@@ -53,15 +61,19 @@
   }
 
   body {
-    @apply bg-slate-50 text-slate-900 antialiased overflow-x-hidden;
+    background-color: #FFFFFF;
+    color: #000000;
     font-family: 'Inter', sans-serif;
     font-size: 0.9375rem;
     line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Outfit', sans-serif;
     letter-spacing: -0.015em;
+    color: #123B92;
   }
 
   p {
@@ -83,46 +95,65 @@
   }
 }
 
-/* Alternating Section Background & Break Line System */
+/* Alternating Section Background & Break Line System (Strict 5-Color Palette) */
 .section-odd {
-  background-color: #ffffff !important;
+  background-color: #FFFFFF !important;
   position: relative;
 }
 
 .section-even {
-  background-color: #e2e8f0 !important; /* Unmistakably distinct, soft architectural cool-slate */
-  border-top: 2px solid #94a3b8 !important; /* Clearly defined, visible break line */
-  border-bottom: 2px solid #94a3b8 !important; /* Clearly defined, visible break line */
+  background-color: #F0F4FD !important; /* Soft, elegant architectural light tint derived from #123B92 */
+  border-top: 2px solid #123B92 !important; /* Unmistakable #123B92 Navy break line */
+  border-bottom: 2px solid #123B92 !important; /* Unmistakable #123B92 Navy break line */
   position: relative;
-  box-shadow: inset 0 3px 6px -2px rgba(15, 23, 42, 0.05), inset 0 -3px 6px -2px rgba(15, 23, 42, 0.05);
+  box-shadow: inset 0 3px 6px -2px rgba(18, 59, 146, 0.05), inset 0 -3px 6px -2px rgba(18, 59, 146, 0.05);
 }
 
 .section-break-line {
   width: 100%;
   height: 2px;
-  background: #94a3b8;
+  background: #123B92;
 }
 
 /* Light Theme Clean Glass & Cards */
 .glass-panel {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+  background: #FFFFFF;
+  border: 1px solid rgba(18, 59, 146, 0.15);
+  box-shadow: 0 10px 30px -10px rgba(18, 59, 146, 0.08);
 }
 
 .glass-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.03);
+  background: #FFFFFF;
+  border: 1px solid rgba(18, 59, 146, 0.15);
+  box-shadow: 0 4px 15px -2px rgba(18, 59, 146, 0.05);
 }
 
 .glow-blue {
-  box-shadow: 0 0 25px -5px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 0 25px -5px rgba(0, 45, 194, 0.35);
 }
 
 .glow-green {
-  box-shadow: 0 0 25px -5px rgba(21, 128, 61, 0.2);
+  box-shadow: 0 0 25px -5px rgba(0, 251, 0, 0.4);
 }
+
+/* Explicit 5-Color Class Utilities */
+.bg-zenitek-green { background-color: #00FB00 !important; }
+.bg-zenitek-blue { background-color: #002DC2 !important; }
+.bg-zenitek-navy { background-color: #123B92 !important; }
+.bg-zenitek-black { background-color: #000000 !important; }
+.bg-zenitek-white { background-color: #FFFFFF !important; }
+
+.text-zenitek-green { color: #00FB00 !important; }
+.text-zenitek-blue { color: #002DC2 !important; }
+.text-zenitek-navy { color: #123B92 !important; }
+.text-zenitek-black { color: #000000 !important; }
+.text-zenitek-white { color: #FFFFFF !important; }
+
+.border-zenitek-green { border-color: #00FB00 !important; }
+.border-zenitek-blue { border-color: #002DC2 !important; }
+.border-zenitek-navy { border-color: #123B92 !important; }
+.border-zenitek-black { border-color: #000000 !important; }
+.border-zenitek-white { border-color: #FFFFFF !important; }
 
 /* Leaflet Map Custom Fixes & Z-Index Scope */
 .leaflet-container {

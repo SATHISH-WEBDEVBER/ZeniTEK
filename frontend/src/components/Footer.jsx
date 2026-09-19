@@ -21,11 +21,11 @@ export default function Footer({ onOpenQuoteModal }) {
   const [legalModal, setLegalModal] = useState(null); // 'privacy' | 'terms' | null
 
   return (
-    <footer className="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-10">
+    <footer className="bg-white border-t-2 border-[#123B92] text-black pt-16 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main 12-Column Responsive Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-12 border-b border-slate-200">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-12 border-b border-[#123B92]/15">
           
           {/* Col 1: Brand Info & Accreditations (4 cols on desktop) */}
           <div className="lg:col-span-4 space-y-4">
@@ -36,14 +36,14 @@ export default function Footer({ onOpenQuoteModal }) {
                 className="h-10 w-auto object-contain"
               />
             </div>
-            <p className="text-xs leading-relaxed text-slate-600 max-w-sm">
+            <p className="text-xs leading-relaxed text-black max-w-sm">
               {t('footerAbout')}
             </p>
             <div className="flex flex-wrap items-center gap-2 pt-1">
-              <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold bg-green-50 text-green-800 border border-green-200 shadow-2xs">
-                <ShieldCheck className="w-3.5 h-3.5 mr-1 text-green-600 shrink-0" /> {t('mnreBadge')}
+              <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold bg-[#F0F4FD] text-[#123B92] border border-[#002DC2] shadow-2xs">
+                <ShieldCheck className="w-3.5 h-3.5 mr-1 text-[#002DC2] shrink-0" /> {t('mnreBadge')}
               </span>
-              <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold bg-blue-50 text-blue-800 border border-blue-200 shadow-2xs">
+              <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold bg-[#F0F4FD] text-[#123B92] border border-[#002DC2] shadow-2xs">
                 {t('isoBadge')}
               </span>
             </div>
@@ -51,30 +51,30 @@ export default function Footer({ onOpenQuoteModal }) {
 
           {/* Col 2: Dryer Models (2 cols on desktop) */}
           <div className="lg:col-span-2">
-            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">{t('footerDryerModels')}</h4>
+            <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4">{t('footerDryerModels')}</h4>
             <ul className="space-y-2.5 text-xs font-medium">
               <li>
-                <Link to="/dryers?model=portable" className="hover:text-blue-700 transition-colors block">
-                  {t('modelPortable')} <span className="text-[10px] text-slate-400 block sm:inline">(10-50 kg)</span>
+                <Link to="/dryers?model=portable" className="hover:text-[#002DC2] text-black transition-colors block">
+                  {t('modelPortable')} <span className="text-[10px] text-black/60 block sm:inline">(10-50 kg)</span>
                 </Link>
               </li>
               <li>
-                <Link to="/dryers?model=polyhouse" className="hover:text-blue-700 transition-colors block">
-                  {t('modelPolyhouse')} <span className="text-[10px] text-slate-400 block sm:inline">(100-500 kg)</span>
+                <Link to="/dryers?model=polyhouse" className="hover:text-[#002DC2] text-black transition-colors block">
+                  {t('modelPolyhouse')} <span className="text-[10px] text-black/60 block sm:inline">(100-500 kg)</span>
                 </Link>
               </li>
               <li>
-                <Link to="/dryers?model=industrial" className="hover:text-blue-700 transition-colors block">
-                  {t('modelIndustrial')} <span className="text-[10px] text-slate-400 block sm:inline">(1 Ton+)</span>
+                <Link to="/dryers?model=industrial" className="hover:text-[#002DC2] text-black transition-colors block">
+                  {t('modelIndustrial')} <span className="text-[10px] text-black/60 block sm:inline">(1 Ton+)</span>
                 </Link>
               </li>
               <li>
-                <Link to="/applications" className="hover:text-blue-700 transition-colors block">
+                <Link to="/applications" className="hover:text-[#002DC2] text-black transition-colors block">
                   {t('matrixCropTitle')}
                 </Link>
               </li>
               <li>
-                <Link to="/gallery" className="hover:text-blue-700 transition-colors block">
+                <Link to="/gallery" className="hover:text-[#002DC2] text-black transition-colors block">
                   {t('galleryBadge')}
                 </Link>
               </li>
@@ -83,15 +83,15 @@ export default function Footer({ onOpenQuoteModal }) {
 
           {/* Col 3: Downloads & Resources (2 cols on desktop) */}
           <div className="lg:col-span-2">
-            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">{t('footerDownloads')}</h4>
+            <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4">{t('footerDownloads')}</h4>
             <ul className="space-y-2.5 text-xs font-medium">
               <li>
                 <a 
                   href="#download-catalog" 
                   onClick={(e) => { e.preventDefault(); alert('Downloading ZeniTEK Solar Dryer Product Catalog PDF...'); }} 
-                  className="inline-flex items-center text-blue-700 hover:text-blue-900 hover:underline transition-colors"
+                  className="inline-flex items-center text-[#002DC2] hover:underline font-bold transition-colors"
                 >
-                  <Download className="w-3.5 h-3.5 mr-1.5 shrink-0" /> 
+                  <Download className="w-3.5 h-3.5 mr-1.5 shrink-0 text-[#002DC2]" /> 
                   <span>{t('footerCatalog')}</span>
                 </a>
               </li>
@@ -99,9 +99,9 @@ export default function Footer({ onOpenQuoteModal }) {
                 <a 
                   href="#download-subsidy" 
                   onClick={(e) => { e.preventDefault(); alert('Downloading State Agriculture Subsidy Guide PDF...'); }} 
-                  className="inline-flex items-center text-green-700 hover:text-green-900 hover:underline transition-colors"
+                  className="inline-flex items-center text-[#123B92] hover:text-[#002DC2] hover:underline font-bold transition-colors"
                 >
-                  <Download className="w-3.5 h-3.5 mr-1.5 shrink-0" /> 
+                  <Download className="w-3.5 h-3.5 mr-1.5 shrink-0 text-[#002DC2]" /> 
                   <span>{t('footerSubsidyGuide')}</span>
                 </a>
               </li>
@@ -109,9 +109,9 @@ export default function Footer({ onOpenQuoteModal }) {
                 <a 
                   href="#copra-report" 
                   onClick={(e) => { e.preventDefault(); alert('Downloading Copra Drying Lab Report PDF...'); }} 
-                  className="inline-flex items-center text-slate-700 hover:text-slate-900 hover:underline transition-colors"
+                  className="inline-flex items-center text-black hover:text-[#002DC2] hover:underline transition-colors"
                 >
-                  <ExternalLink className="w-3.5 h-3.5 mr-1.5 text-slate-400 shrink-0" /> 
+                  <ExternalLink className="w-3.5 h-3.5 mr-1.5 text-[#002DC2] shrink-0" /> 
                   <span>{t('footerLabReport')}</span>
                 </a>
               </li>
@@ -120,39 +120,39 @@ export default function Footer({ onOpenQuoteModal }) {
 
           {/* Col 4: Registered & Operations Hubs, Direct Contacts (4 cols on desktop) */}
           <div className="lg:col-span-4 space-y-4">
-            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">{t('footerOffices') || t('footerCoimbatoreFactory')}</h4>
+            <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-3">{t('footerOffices') || t('footerCoimbatoreFactory')}</h4>
             <div className="space-y-3 text-xs">
               
               <div className="flex items-start space-x-2.5">
-                <Building2 className="w-4 h-4 text-blue-700 shrink-0 mt-0.5" />
+                <Building2 className="w-4 h-4 text-[#002DC2] shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-bold text-slate-800 text-[11px] block">{t('regOfficeLabel')}:</span>
-                  <p className="text-slate-600 leading-relaxed text-[11px] mt-0.5">{t('regOfficeAddress')}</p>
+                  <span className="font-bold text-[#123B92] text-[11px] block">{t('regOfficeLabel')}:</span>
+                  <p className="text-black leading-relaxed text-[11px] mt-0.5">{t('regOfficeAddress')}</p>
                 </div>
               </div>
 
               <div className="flex items-start space-x-2.5">
-                <MapPin className="w-4 h-4 text-green-700 shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-[#002DC2] shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-bold text-slate-800 text-[11px] block">{t('opOfficeLabel')}:</span>
-                  <p className="text-slate-600 leading-relaxed text-[11px] mt-0.5">{t('opOfficeAddress')}</p>
+                  <span className="font-bold text-[#123B92] text-[11px] block">{t('opOfficeLabel')}:</span>
+                  <p className="text-black leading-relaxed text-[11px] mt-0.5">{t('opOfficeAddress')}</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                 <div className="flex items-center space-x-2">
-                  <Phone className="w-3.5 h-3.5 text-green-700 shrink-0" />
+                  <Phone className="w-3.5 h-3.5 text-[#002DC2] shrink-0" />
                   <div className="text-[11px]">
-                    <a href="tel:+918903852623" className="hover:text-blue-700 font-bold text-blue-900 block">+91-8903852623</a>
-                    <a href="tel:+918098613422" className="hover:text-blue-700 font-medium text-slate-600 block">+91 80986 13422</a>
+                    <a href="tel:+918903852623" className="hover:text-[#002DC2] font-bold text-[#123B92] block">+91-8903852623</a>
+                    <a href="tel:+918098613422" className="hover:text-[#002DC2] font-medium text-black block">+91 80986 13422</a>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-2">
-                  <Mail className="w-3.5 h-3.5 text-blue-700 shrink-0" />
+                  <Mail className="w-3.5 h-3.5 text-[#002DC2] shrink-0" />
                   <div className="text-[11px]">
-                    <a href="mailto:zenitek2k@gmail.com" className="hover:text-blue-700 font-semibold text-blue-900 block">zenitek2k@gmail.com</a>
-                    <a href="mailto:sales@zenitek.in" className="hover:text-blue-700 text-slate-600 block">sales@zenitek.in</a>
+                    <a href="mailto:zenitek2k@gmail.com" className="hover:text-[#002DC2] font-semibold text-[#123B92] block">zenitek2k@gmail.com</a>
+                    <a href="mailto:sales@zenitek.in" className="hover:text-[#002DC2] text-black block">sales@zenitek.in</a>
                   </div>
                 </div>
               </div>
@@ -161,7 +161,7 @@ export default function Footer({ onOpenQuoteModal }) {
                 <button
                   type="button"
                   onClick={onOpenQuoteModal}
-                  className="w-full py-2 px-4 bg-gradient-to-r from-blue-700 to-green-700 hover:from-blue-800 hover:to-green-800 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-1.5 transition-all shadow-sm hover:shadow-md cursor-pointer active:scale-98"
+                  className="w-full py-2.5 px-4 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center space-x-1.5 transition-all shadow cursor-pointer active:scale-98"
                 >
                   <span>{t('getQuote')}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -174,27 +174,27 @@ export default function Footer({ onOpenQuoteModal }) {
         </div>
 
         {/* Clean, Perfectly Aligned Bottom Bar */}
-        <div className="pt-6 border-t border-slate-200 mt-2 space-y-4">
+        <div className="pt-6 border-t border-[#123B92]/15 mt-2 space-y-4">
           
           {/* Row 1: Copyright & Regulatory Badges */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-500">
-            <p className="text-slate-600 font-medium text-center md:text-left">
-              © {new Date().getFullYear()} <strong className="font-bold text-slate-900">ZeniTEK Solar Thermal Solutions</strong>. {t('footerRights')}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-black">
+            <p className="text-black font-medium text-center md:text-left">
+              © {new Date().getFullYear()} <strong className="font-bold text-[#123B92]">ZeniTEK Solar Thermal Solutions</strong>. {t('footerRights')}
             </p>
 
             <div className="flex items-center justify-center md:justify-end space-x-3 text-[11px]">
               <button
                 type="button"
                 onClick={() => setLegalModal('privacy')}
-                className="text-slate-600 hover:text-blue-700 font-medium transition-colors cursor-pointer"
+                className="text-black hover:text-[#002DC2] font-medium transition-colors cursor-pointer"
               >
                 {t('footerPrivacy')}
               </button>
-              <span className="text-slate-300">•</span>
+              <span className="text-[#123B92]/30">•</span>
               <button
                 type="button"
                 onClick={() => setLegalModal('terms')}
-                className="text-slate-600 hover:text-blue-700 font-medium transition-colors cursor-pointer"
+                className="text-black hover:text-[#002DC2] font-medium transition-colors cursor-pointer"
               >
                 {t('footerTerms')}
               </button>

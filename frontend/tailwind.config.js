@@ -18,19 +18,29 @@ export default {
     },
     extend: {
       colors: {
+        zenitek: {
+          green: '#00FB00',
+          blue: '#002DC2',
+          navy: '#123B92',
+          black: '#000000',
+          white: '#FFFFFF',
+        },
         brand: {
           blue: {
-            DEFAULT: '#1e40af', // Ocean Blue
-            light: '#3b82f6',
-            dark: '#1e3a8a',
-            bright: '#2563eb'
+            DEFAULT: '#002DC2', // Vibrant Royal Blue
+            light: '#002DC2',
+            dark: '#123B92',   // Deep Navy Blue
+            bright: '#002DC2'
           },
           green: {
-            DEFAULT: '#15803d', // Agri Green
-            light: '#22c55e',
-            dark: '#166534',
-            deep: '#14532d'
-          }
+            DEFAULT: '#00FB00', // Electric Green
+            light: '#00FB00',
+            dark: '#008f00',
+            deep: '#006600'
+          },
+          navy: '#123B92',
+          black: '#000000',
+          white: '#FFFFFF'
         }
       },
       fontFamily: {

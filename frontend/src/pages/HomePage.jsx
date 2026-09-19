@@ -42,26 +42,26 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
             {/* Left Content */}
             <div className="lg:col-span-7 space-y-6">
               
-              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-xs font-bold max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
-                <Sun className="w-4 h-4 text-blue-600 animate-spin-slow shrink-0" />
+              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#F0F4FD] border border-[#123B92]/30 text-[#123B92] text-xs font-bold max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+                <Sun className="w-4 h-4 text-[#002DC2] animate-spin-slow shrink-0" />
                 <span className="truncate">{t('heroBadge')}</span>
               </div>
 
-              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-blue-950 leading-tight">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#123B92] leading-tight">
                 {t('heroTitle1')} <br />
-                <span className="text-green-700">
+                <span className="text-[#002DC2]">
                   {t('heroTitle2')}
                 </span>
               </h1>
 
-              <p className="text-xs sm:text-base text-slate-600 leading-relaxed font-medium max-w-2xl">
+              <p className="text-xs sm:text-base text-black leading-relaxed font-medium max-w-2xl">
                 {t('heroSubtitle')}
               </p>
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2.5 sm:space-y-0 sm:space-x-4 pt-2">
                 <a
                   href="#roi-calculator"
-                  className="px-5 py-3.5 sm:px-6 sm:py-3.5 bg-gradient-to-r from-blue-700 via-blue-600 to-green-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-md hover:shadow-lg transition-all text-center flex items-center justify-center space-x-2"
+                  className="px-5 py-3.5 sm:px-6 sm:py-3.5 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-black text-xs uppercase tracking-wider rounded-2xl shadow transition-all text-center flex items-center justify-center space-x-2 cursor-pointer"
                 >
                   <span>{t('calcSavings')}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -69,25 +69,25 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
                 <Link
                   to="/dryers"
-                  className="px-5 py-3.5 sm:px-6 sm:py-3.5 bg-white border border-slate-300 hover:border-blue-600 text-slate-800 hover:text-blue-700 font-bold text-xs rounded-2xl transition-all text-center flex items-center justify-center space-x-2 shadow-sm"
+                  className="px-5 py-3.5 sm:px-6 sm:py-3.5 bg-white border-2 border-[#123B92] text-[#123B92] hover:bg-[#002DC2] hover:text-white hover:border-[#002DC2] font-black text-xs rounded-2xl transition-all text-center flex items-center justify-center space-x-2 shadow-sm"
                 >
                   <span>{t('exploreModels')}</span>
                   <ChevronRight className="w-4 h-4" />
                 </Link>
               </div>
 
-              <div className="pt-5 border-t border-slate-200 grid grid-cols-3 gap-2 sm:gap-4">
+              <div className="pt-5 border-t border-[#123B92]/20 grid grid-cols-3 gap-2 sm:gap-4">
                 <div>
-                  <div className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-black text-blue-900">1,200+</div>
-                  <div className="text-[10px] xs:text-[11px] sm:text-xs text-slate-500 font-semibold mt-0.5">{t('dryersInstalled')}</div>
+                  <div className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-black text-[#123B92]">1,200+</div>
+                  <div className="text-[10px] xs:text-[11px] sm:text-xs text-black/70 font-semibold mt-0.5">{t('dryersInstalled')}</div>
                 </div>
                 <div>
-                  <div className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-black text-green-700">500+ MT</div>
-                  <div className="text-[10px] xs:text-[11px] sm:text-xs text-slate-500 font-semibold mt-0.5">{t('foodSaved')}</div>
+                  <div className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-black text-[#002DC2]">500+ MT</div>
+                  <div className="text-[10px] xs:text-[11px] sm:text-xs text-black/70 font-semibold mt-0.5">{t('foodSaved')}</div>
                 </div>
                 <div>
-                  <div className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-black text-slate-900">40-60%</div>
-                  <div className="text-[10px] xs:text-[11px] sm:text-xs text-slate-500 font-semibold mt-0.5">{t('subsidyHelp')}</div>
+                  <div className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-black text-black">40-60%</div>
+                  <div className="text-[10px] xs:text-[11px] sm:text-xs text-black/70 font-semibold mt-0.5">{t('subsidyHelp')}</div>
                 </div>
               </div>
 
@@ -129,27 +129,27 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       <section className="w-full section-even py-10 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 text-center">
-            <div className="flex items-center justify-center space-x-3 p-4 bg-white rounded-2xl border border-slate-200 shadow-sm">
-              <ShieldCheck className="w-6 h-6 text-blue-700 shrink-0" />
+            <div className="flex items-center justify-center space-x-3 p-4 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm">
+              <ShieldCheck className="w-6 h-6 text-[#002DC2] shrink-0" />
               <div className="text-left">
-                <div className="text-sm font-bold text-slate-900">{t('mnreBadge')}</div>
-                <div className="text-xs text-slate-500">Government Ministry Approved</div>
+                <div className="text-sm font-bold text-[#123B92]">{t('mnreBadge')}</div>
+                <div className="text-xs text-black/70">Government Ministry Approved</div>
               </div>
             </div>
 
-            <div className="flex items-center justify-center space-x-3 p-4 bg-white rounded-2xl border border-slate-200 shadow-sm">
-              <Award className="w-6 h-6 text-green-700 shrink-0" />
+            <div className="flex items-center justify-center space-x-3 p-4 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm">
+              <Award className="w-6 h-6 text-[#002DC2] shrink-0" />
               <div className="text-left">
-                <div className="text-sm font-bold text-slate-900">{t('isoBadge')}</div>
-                <div className="text-xs text-slate-500">Precision Engineering Standard</div>
+                <div className="text-sm font-bold text-[#123B92]">{t('isoBadge')}</div>
+                <div className="text-xs text-black/70">Precision Engineering Standard</div>
               </div>
             </div>
 
-            <div className="flex items-center justify-center space-x-3 p-4 bg-white rounded-2xl border border-slate-200 shadow-sm">
-              <Zap className="w-6 h-6 text-blue-700 shrink-0" />
+            <div className="flex items-center justify-center space-x-3 p-4 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm">
+              <Zap className="w-6 h-6 text-[#002DC2] shrink-0" />
               <div className="text-left">
-                <div className="text-sm font-bold text-slate-900">{t('subsidyBadge2')}</div>
-                <div className="text-xs text-slate-500">Agri & NABARD Subsidies</div>
+                <div className="text-sm font-bold text-[#123B92]">{t('subsidyBadge2')}</div>
+                <div className="text-xs text-black/70">Agri & NABARD Subsidies</div>
               </div>
             </div>
           </div>
@@ -169,52 +169,52 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       <section className="w-full section-even py-14 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-bold text-blue-700 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+            <span className="text-xs font-bold text-[#123B92] uppercase tracking-widest bg-white px-3 py-1 rounded-full border border-[#123B92]/30">
               SOLAR DRYER MODELS
             </span>
-            <h2 className="text-2xl xs:text-3xl sm:text-4xl font-extrabold text-blue-950">
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black text-[#123B92]">
               {t('modelsHeading')}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600">
+            <p className="text-xs sm:text-sm text-black/70">
               {t('modelsSubtitle')} (Click any model for complete specifications & photos)
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {dryerModelsData.slice(0, 6).map(model => (
-              <div key={model.id} className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-blue-500 transition-all duration-300 flex flex-col justify-between shadow-sm hover:shadow-lg group">
+              <div key={model.id} className="bg-white rounded-3xl overflow-hidden border border-[#123B92]/20 hover:border-[#002DC2] transition-all duration-300 flex flex-col justify-between shadow-sm hover:shadow-lg group">
                 <div className="cursor-pointer" onClick={() => onOpenDetailModal && onOpenDetailModal(model)}>
                   {/* Clean Image Container (Zero text overlay on the image) */}
-                  <div className="h-52 overflow-hidden bg-slate-50 border-b border-slate-200 flex items-center justify-center p-3">
+                  <div className="h-52 overflow-hidden bg-[#F0F4FD] border-b border-[#123B92]/20 flex items-center justify-center p-3">
                     <img src={model.imageUrl} alt={model.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   
                   <div className="p-5 sm:p-6 space-y-3.5">
                     {/* Badge and specs placed cleanly below the image */}
                     <div className="flex items-center justify-between gap-2 flex-wrap">
-                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{model.category}</span>
+                      <span className="text-[10px] font-bold text-black/60 uppercase tracking-wider">{model.category}</span>
                       <div className="flex items-center gap-1.5">
                         {model.floorArea && (
-                          <span className="bg-slate-100 text-slate-700 font-bold text-[10px] px-2 py-0.5 rounded border border-slate-200">
+                          <span className="bg-[#F0F4FD] text-[#123B92] font-bold text-[10px] px-2 py-0.5 rounded border border-[#123B92]/20">
                             {model.floorArea}
                           </span>
                         )}
-                        <span className="bg-blue-700 text-white font-bold text-[10px] uppercase px-2 py-0.5 rounded shadow-xs">
+                        <span className="bg-[#123B92] text-white font-bold text-[10px] uppercase px-2 py-0.5 rounded shadow-xs">
                           {model.badge}
                         </span>
                       </div>
                     </div>
 
                     <div>
-                      <h3 className="text-base font-bold text-slate-900 group-hover:text-blue-700 transition-colors mt-0.5">{model.name}</h3>
-                      <p className="text-xs font-bold text-green-700 mt-0.5">{model.capacityRange}</p>
+                      <h3 className="text-base font-bold text-black group-hover:text-[#002DC2] transition-colors mt-0.5">{model.name}</h3>
+                      <p className="text-xs font-black text-[#002DC2] mt-0.5">{model.capacityRange}</p>
                     </div>
-                    <p className="text-xs text-slate-600 leading-relaxed line-clamp-2">{model.description}</p>
+                    <p className="text-xs text-black/70 leading-relaxed line-clamp-2">{model.description}</p>
                     
-                    <div className="space-y-2 pt-2 border-t border-slate-100 text-xs">
+                    <div className="space-y-2 pt-2 border-t border-[#123B92]/10 text-xs">
                       {(model.keyFeatures || model.features || []).slice(0, 3).map((feat, idx) => (
-                        <div key={idx} className="flex items-start text-slate-700 font-medium">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-green-600 mr-2 shrink-0 mt-0.5" />
+                        <div key={idx} className="flex items-start text-black font-medium">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#002DC2] mr-2 shrink-0 mt-0.5" />
                           <span className="line-clamp-1">{feat}</span>
                         </div>
                       ))}
@@ -225,14 +225,14 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                 <div className="p-5 sm:p-6 pt-0 space-y-2">
                   <button
                     onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
-                    className="w-full py-2.5 bg-white border border-blue-600 text-blue-700 font-bold text-xs uppercase tracking-wider rounded-xl hover:bg-blue-50 transition-all cursor-pointer"
+                    className="w-full py-2.5 bg-white border-2 border-[#002DC2] text-[#002DC2] hover:bg-[#002DC2] hover:text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer"
                   >
                     View Details & Brochure
                   </button>
 
                   <button
                     onClick={() => onOpenQuoteModal({ capacityNeeded: model.name })}
-                    className="w-full py-2.5 sm:py-3 bg-blue-50 hover:bg-blue-700 hover:text-white text-blue-900 border border-blue-200 font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+                    className="w-full py-2.5 sm:py-3 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
                   >
                     <span>{t('reqQuote')}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -245,7 +245,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
           <div className="text-center pt-2">
             <Link
               to="/dryers"
-              className="inline-flex items-center space-x-2 px-6 py-3 bg-blue-900 hover:bg-blue-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow transition-all hover:scale-105"
+              className="inline-flex items-center space-x-2 px-6 py-3 bg-[#123B92] hover:bg-[#002DC2] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow transition-all hover:scale-105"
             >
               <span>Explore All Models & Profile Comparisons</span>
               <ArrowRight className="w-4 h-4" />
@@ -260,22 +260,22 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           {/* Working Principle */}
-          <div className="bg-gradient-to-br from-blue-950 via-slate-900 to-blue-900 text-white p-6 sm:p-10 rounded-3xl shadow-xl space-y-8 border border-blue-800/40">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-blue-800/50 pb-6">
+          <div className="bg-white text-black p-6 sm:p-10 rounded-3xl shadow-md space-y-8 border border-[#123B92]/20">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#123B92]/20 pb-6">
               <div className="space-y-2">
-                <span className="text-[11px] font-bold text-green-300 uppercase tracking-widest bg-green-950/80 border border-green-500/30 px-3 py-1 rounded-full inline-flex items-center">
-                  <Sun className="w-3.5 h-3.5 mr-1.5 text-amber-400 animate-spin-slow" /> PDF Technical Guide • Page 8
+                <span className="text-[11px] font-bold text-[#123B92] uppercase tracking-widest bg-[#F0F4FD] border border-[#123B92]/30 px-3 py-1 rounded-full inline-flex items-center">
+                  <Sun className="w-3.5 h-3.5 mr-1.5 text-[#002DC2] animate-spin-slow" /> PDF Technical Guide • Page 8
                 </span>
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-[#123B92]">
                   Solar Dryer Working Principle
                 </h2>
-                <p className="text-xs sm:text-sm text-blue-200 font-medium max-w-2xl">
+                <p className="text-xs sm:text-sm text-black/70 font-medium max-w-2xl">
                   Smart, Efficient, Sustainable — 7-step thermodynamic cycle engineered by ZeniTEK for 40% faster moisture reduction with zero contamination.
                 </p>
               </div>
 
-              <div className="flex items-center space-x-2 text-xs font-extrabold text-green-300 bg-blue-900/60 px-4 py-2 rounded-2xl border border-blue-700/50 shrink-0">
-                <Sparkles className="w-4 h-4 text-green-400" />
+              <div className="flex items-center space-x-2 text-xs font-black text-black bg-[#00FB00] px-4 py-2 rounded-2xl border border-[#00FB00] shrink-0">
+                <Sparkles className="w-4 h-4 text-black" />
                 <span>40% Faster Than Open-Sun</span>
               </div>
             </div>
@@ -287,51 +287,51 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                   key={stepItem.step}
                   className={`p-5 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
                     stepItem.step === 7
-                      ? 'bg-gradient-to-br from-green-900/60 to-emerald-950/80 border-green-500/40 shadow-lg md:col-span-2 lg:col-span-2'
-                      : 'bg-white/5 hover:bg-white/10 border-white/10 hover:border-blue-400/40'
+                      ? 'bg-white border-2 border-[#00FB00] shadow-sm md:col-span-2 lg:col-span-2'
+                      : 'bg-[#F0F4FD] hover:bg-white border-[#123B92]/20 hover:border-[#002DC2]'
                   }`}
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="w-8 h-8 rounded-xl bg-blue-600/80 text-white font-black text-xs flex items-center justify-center shadow">
+                      <span className="w-8 h-8 rounded-xl bg-[#123B92] text-white font-black text-xs flex items-center justify-center shadow">
                         {stepItem.step}
                       </span>
-                      <span className="text-[10px] uppercase font-bold text-blue-300 tracking-wider">
+                      <span className="text-[10px] uppercase font-bold text-[#123B92] tracking-wider">
                         {stepItem.subtitle}
                       </span>
                     </div>
 
-                    <h4 className="text-sm font-bold text-white leading-snug">
+                    <h4 className="text-sm font-bold text-black leading-snug">
                       {stepItem.title}
                     </h4>
 
-                    <p className="text-xs text-blue-100/80 leading-relaxed font-normal">
+                    <p className="text-xs text-black/70 leading-relaxed font-normal">
                       {stepItem.description}
                     </p>
                   </div>
 
-                  <div className="pt-3 mt-3 border-t border-white/10 flex items-center text-[10px] text-green-300 font-semibold">
-                    <CheckCircle2 className="w-3 h-3 mr-1 text-green-400" /> Step {stepItem.step} of 7
+                  <div className="pt-3 mt-3 border-t border-[#123B92]/10 flex items-center text-[10px] text-[#002DC2] font-bold">
+                    <CheckCircle2 className="w-3 h-3 mr-1 text-[#002DC2]" /> Step {stepItem.step} of 7
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Diagram Preview Banner */}
-            <div className="bg-blue-900/40 p-4 rounded-2xl border border-blue-700/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="bg-[#F0F4FD] p-4 rounded-2xl border border-[#123B92]/20 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-xl shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-white border border-[#123B92]/20 flex items-center justify-center text-xl shrink-0">
                   ☀️
                 </div>
                 <div className="text-xs">
-                  <div className="font-bold text-white">Need Engineering Consultation for Your Farm Crop?</div>
-                  <div className="text-blue-200">Our engineers custom-calculate airflow CFM, tray loading, and solar panel arrays for your exact daily tonnage.</div>
+                  <div className="font-bold text-[#123B92]">Need Engineering Consultation for Your Farm Crop?</div>
+                  <div className="text-black/70">Our engineers custom-calculate airflow CFM, tray loading, and solar panel arrays for your exact daily tonnage.</div>
                 </div>
               </div>
 
               <button
                 onClick={() => onOpenQuoteModal({ capacityNeeded: 'Technical Engineering Sizing' })}
-                className="px-5 py-2.5 bg-green-600 hover:bg-green-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow shrink-0 cursor-pointer"
+                className="px-5 py-2.5 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow shrink-0 cursor-pointer"
               >
                 Get Free Sizing Report
               </button>
@@ -599,47 +599,47 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       {/* SECTION 8: LEAD CAPTURE ENQUIRY FORM (EVEN SECTION - SOFT OFF-WHITE) */}
       <section className="w-full section-even py-14 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-green-800 text-white rounded-3xl p-6 sm:p-10 shadow-xl">
+          <div className="bg-white rounded-3xl p-6 sm:p-10 border-2 border-[#123B92] shadow-xl text-black">
             <div className="max-w-4xl mx-auto text-center space-y-3 mb-8">
-              <h2 className="text-2xl sm:text-3xl font-extrabold">{t('quickFormTitle')}</h2>
-              <p className="text-xs text-blue-100">{t('quickFormDesc')}</p>
+              <h2 className="text-2xl sm:text-3xl font-black text-[#123B92]">{t('quickFormTitle')}</h2>
+              <p className="text-xs text-black/70">{t('quickFormDesc')}</p>
             </div>
 
             <form onSubmit={handleQuickSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-[11px] font-bold text-blue-200 mb-1">{t('yourName')} *</label>
+                  <label className="block text-[11px] font-bold text-[#123B92] mb-1">{t('yourName')} *</label>
                   <input
                     type="text"
                     required
                     placeholder={`${t('yourName')} *`}
                     value={quickForm.name}
                     onChange={(e) => setQuickForm({ ...quickForm, name: e.target.value })}
-                    className="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-xs placeholder-slate-400 font-medium"
+                    className="w-full bg-[#F0F4FD] border border-[#123B92]/30 text-black rounded-xl px-4 py-3 text-xs placeholder-black/50 font-medium focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-blue-200 mb-1">{t('whatsappNum')} *</label>
+                  <label className="block text-[11px] font-bold text-[#123B92] mb-1">{t('whatsappNum')} *</label>
                   <input
                     type="tel"
                     required
                     placeholder={`${t('whatsappNum')} *`}
                     value={quickForm.phone}
                     onChange={(e) => setQuickForm({ ...quickForm, phone: e.target.value })}
-                    className="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-xs placeholder-slate-400 font-medium"
+                    className="w-full bg-[#F0F4FD] border border-[#123B92]/30 text-black rounded-xl px-4 py-3 text-xs placeholder-black/50 font-medium focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-blue-200 mb-1">{t('districtCity')} *</label>
+                  <label className="block text-[11px] font-bold text-[#123B92] mb-1">{t('districtCity')} *</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. Tamil Nadu / Coimbatore *"
                     value={quickForm.district}
                     onChange={(e) => setQuickForm({ ...quickForm, district: e.target.value })}
-                    className="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-xs placeholder-slate-400 font-medium"
+                    className="w-full bg-[#F0F4FD] border border-[#123B92]/30 text-black rounded-xl px-4 py-3 text-xs placeholder-black/50 font-medium focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2]"
                   />
                 </div>
 

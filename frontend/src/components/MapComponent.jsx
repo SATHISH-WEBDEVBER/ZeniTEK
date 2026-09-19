@@ -128,12 +128,12 @@ function MapOverlayControls({ onFitAll }) {
 
   return (
     <div className="leaflet-top leaflet-right" style={{ pointerEvents: 'auto', margin: '14px', zIndex: 1000 }}>
-      <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-slate-200/90 p-1.5 flex flex-col gap-1.5">
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-[#123B92]/30 p-1.5 flex flex-col gap-1.5">
         <button
           type="button"
           title="Zoom In"
           onClick={() => map.zoomIn()}
-          className="w-9 h-9 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-bold flex items-center justify-center transition-all border border-slate-200/70 active:scale-95 shadow-xs cursor-pointer"
+          className="w-9 h-9 rounded-xl bg-white hover:bg-[#F0F4FD] text-[#123B92] hover:text-[#002DC2] font-bold flex items-center justify-center transition-all border border-[#123B92]/20 active:scale-95 shadow-xs cursor-pointer"
         >
           <Plus className="w-4 h-4" />
         </button>
@@ -141,18 +141,18 @@ function MapOverlayControls({ onFitAll }) {
           type="button"
           title="Zoom Out"
           onClick={() => map.zoomOut()}
-          className="w-9 h-9 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-bold flex items-center justify-center transition-all border border-slate-200/70 active:scale-95 shadow-xs cursor-pointer"
+          className="w-9 h-9 rounded-xl bg-white hover:bg-[#F0F4FD] text-[#123B92] hover:text-[#002DC2] font-bold flex items-center justify-center transition-all border border-[#123B92]/20 active:scale-95 shadow-xs cursor-pointer"
         >
           <Minus className="w-4 h-4" />
         </button>
         
-        <div className="h-px bg-slate-200 my-0.5" />
+        <div className="h-px bg-[#123B92]/20 my-0.5" />
 
         <button
           type="button"
           title="Fit All Sites in View"
           onClick={onFitAll}
-          className="w-9 h-9 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 flex items-center justify-center transition-all border border-slate-200/70 active:scale-95 shadow-xs cursor-pointer"
+          className="w-9 h-9 rounded-xl bg-white hover:bg-[#F0F4FD] text-[#123B92] hover:text-[#002DC2] flex items-center justify-center transition-all border border-[#123B92]/20 active:scale-95 shadow-xs cursor-pointer"
         >
           <Maximize2 className="w-4 h-4" />
         </button>
