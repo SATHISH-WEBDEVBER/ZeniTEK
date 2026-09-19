@@ -108,9 +108,9 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
       
       {/* SECTION 1: HERO HEADER WITH DIRECT PDF HIGHLIGHTS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative bg-gradient-to-br from-blue-950 via-blue-900 to-slate-950 text-white rounded-3xl p-6 sm:p-10 overflow-hidden shadow-2xl border border-blue-800/60">
+        <div className="relative bg-gradient-to-br from-blue-950 via-blue-900 to-slate-950 text-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 overflow-hidden shadow-2xl border border-blue-800/60">
           
-          <div className="relative z-10 space-y-6">
+          <div className="relative z-10 space-y-5 sm:space-y-6">
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-green-500/20 border border-green-400/40 text-green-300 text-xs font-extrabold uppercase tracking-wider">
                 <Sun className="w-3.5 h-3.5 text-amber-400 animate-spin-slow" />
@@ -121,9 +121,9 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
               </span>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
               <div className="lg:col-span-8 space-y-4">
-                <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+                <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
                   High-Performance Solar Dryers <br />
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-emerald-300 to-teal-200">
                     Engineered for Agriculture & Food

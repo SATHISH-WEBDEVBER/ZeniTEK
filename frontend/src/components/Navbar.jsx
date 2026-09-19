@@ -16,20 +16,20 @@ export default function Navbar({ onOpenQuoteModal }) {
     <header className="sticky top-0 z-40 bg-white shadow-sm w-full max-w-full overflow-x-hidden">
       
       {/* 1. MAIN NAVBAR (TOP HEADER): LOGO, INFO & GET FREE QUOTE CTA */}
-      <div className="border-b border-slate-200 py-2.5 bg-white w-full">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div className="border-b border-slate-200 py-2 sm:py-2.5 bg-white w-full">
+        <div className="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8 flex items-center justify-between">
           
           {/* Logo (New Official ZeniTEK Logo) */}
           <Link to="/" className="flex items-center shrink-0">
             <img
               src="/logo.png"
               alt="ZeniTEK - Towards Sustainable Future"
-              className="h-10 sm:h-12 w-auto object-contain py-0.5"
+              className="h-8 xs:h-9 sm:h-11 md:h-12 w-auto object-contain py-0.5"
             />
           </Link>
 
           {/* Center Info (Desktop Only) */}
-          <div className="hidden md:flex items-center space-x-6 text-xs text-slate-600 font-medium">
+          <div className="hidden md:flex items-center space-x-4 lg:space-x-6 text-xs text-slate-600 font-medium">
             <span className="flex items-center text-blue-900 font-semibold">
               <ShieldCheck className="w-4 h-4 mr-1 text-green-600" /> MNRE & ISO Certified
             </span>
@@ -44,7 +44,7 @@ export default function Navbar({ onOpenQuoteModal }) {
             {/* Quote CTA Button */}
             <button
               onClick={onOpenQuoteModal}
-              className="px-2.5 py-1.5 sm:px-4 sm:py-2 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-blue-700 via-blue-600 to-green-700 rounded-lg sm:rounded-xl shadow hover:shadow-md transition-all flex items-center shrink-0 max-w-[140px] sm:max-w-none text-ellipsis overflow-hidden whitespace-nowrap"
+              className="px-2 py-1.5 xs:px-2.5 xs:py-1.5 sm:px-4 sm:py-2 text-[10px] xs:text-[11px] sm:text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-blue-700 via-blue-600 to-green-700 rounded-lg sm:rounded-xl shadow hover:shadow-md transition-all flex items-center shrink-0 max-w-[125px] xs:max-w-[140px] sm:max-w-none text-ellipsis overflow-hidden whitespace-nowrap"
             >
               <span className="truncate">{t('getQuote')}</span>
               <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 ml-1 shrink-0 hidden sm:inline" />
@@ -66,29 +66,29 @@ export default function Navbar({ onOpenQuoteModal }) {
       {/* 2. SUB-NAVBAR (BELOW MAIN NAVBAR): DEDICATED NAV ITEMS */}
       <nav className="hidden lg:block bg-blue-950 border-b border-blue-900 text-white w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-2 w-full">
+          <div className="flex items-center justify-between py-1.5 lg:py-2 w-full">
             
-            <Link to="/" className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${location.pathname === '/' ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
+            <Link to="/" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname === '/' ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
               {t('navHome')}
             </Link>
 
-            <Link to="/about" className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/about') ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
+            <Link to="/about" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/about') ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
               {t('navAbout')}
             </Link>
 
-            <Link to="/dryers" className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/dryers') ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
+            <Link to="/dryers" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/dryers') ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
               {t('navDryers')}
             </Link>
 
-            <Link to="/applications" className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/applications') ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
+            <Link to="/applications" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/applications') ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
               {t('navApplications')}
             </Link>
 
-            <Link to="/gallery" className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/gallery') ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
+            <Link to="/gallery" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/gallery') ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
               {t('navGallery')}
             </Link>
 
-            <Link to="/contact" className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${location.pathname === '/contact' ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
+            <Link to="/contact" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname === '/contact' ? 'text-white bg-blue-800 shadow border border-blue-700' : 'text-blue-100 hover:text-white hover:bg-blue-900/80'}`}>
               {t('navContact')}
             </Link>
 

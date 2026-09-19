@@ -78,40 +78,40 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-2xl bg-white rounded-3xl border border-slate-200 shadow-2xl overflow-hidden max-h-[92vh] flex flex-col">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2.5 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+      <div className="relative w-full max-w-2xl bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-2xl overflow-hidden max-h-[94vh] flex flex-col">
         
         {/* Modal Header */}
-        <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-blue-900 via-blue-800 to-green-800 text-white">
+        <div className="px-4 py-3 sm:px-6 sm:py-5 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-blue-900 via-blue-800 to-green-800 text-white shrink-0">
           <div>
             <div className="flex items-center space-x-2">
-              <span className="bg-green-600 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
+              <span className="bg-green-600 text-white text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
                 Official Enquiry
               </span>
             </div>
-            <h3 className="text-xl font-bold mt-1">{t('getQuote')} & Subsidy Sizing</h3>
+            <h3 className="text-base sm:text-xl font-bold mt-0.5">{t('getQuote')} & Subsidy Sizing</h3>
           </div>
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors shrink-0"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
 
         {/* Success Alert */}
         {successMsg && (
-          <div className="m-6 p-4 rounded-2xl bg-green-50 border border-green-300 text-green-800 text-sm flex items-center space-x-3">
-            <CheckCircle className="w-6 h-6 text-green-600 shrink-0" />
+          <div className="m-4 sm:m-6 p-3 sm:p-4 rounded-2xl bg-green-50 border border-green-300 text-green-800 text-xs sm:text-sm flex items-center space-x-3">
+            <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 shrink-0" />
             <div>
               <p className="font-bold">{successMsg}</p>
-              <p className="text-xs text-green-700">Redirecting to WhatsApp for engineer response...</p>
+              <p className="text-[11px] sm:text-xs text-green-700">Redirecting to WhatsApp for engineer response...</p>
             </div>
           </div>
         )}
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-3 sm:space-y-4 overflow-y-auto">
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             

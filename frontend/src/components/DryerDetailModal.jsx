@@ -11,28 +11,28 @@ export default function DryerDetailModal({ isOpen, onClose, model, onOpenQuoteMo
   const images = model.gallery && model.gallery.length > 0 ? model.gallery : [model.imageUrl];
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-slate-900/75 backdrop-blur-md animate-fade-in overflow-y-auto">
-      <div className="relative w-full max-w-4xl bg-white rounded-3xl border border-slate-200 shadow-2xl overflow-hidden max-h-[92vh] flex flex-col my-auto">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2.5 sm:p-4 bg-slate-900/75 backdrop-blur-md animate-fade-in overflow-y-auto">
+      <div className="relative w-full max-w-4xl bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-2xl overflow-hidden max-h-[94vh] flex flex-col my-auto">
         
         {/* Modal Header */}
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-blue-950 via-blue-900 to-green-900 text-white shrink-0">
+        <div className="px-4 py-3 sm:px-6 sm:py-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-blue-950 via-blue-900 to-green-900 text-white shrink-0">
           <div className="flex items-center space-x-2">
-            <span className="text-[10px] font-extrabold text-green-300 bg-blue-950 border border-green-400/30 px-2.5 py-0.5 rounded uppercase tracking-wider">
+            <span className="text-[9px] sm:text-[10px] font-extrabold text-green-300 bg-blue-950 border border-green-400/30 px-2 sm:px-2.5 py-0.5 rounded uppercase tracking-wider">
               {model.badge}
             </span>
-            <h3 className="text-lg sm:text-xl font-black text-white">{model.name}</h3>
+            <h3 className="text-sm sm:text-base lg:text-xl font-black text-white line-clamp-1">{model.name}</h3>
           </div>
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors shrink-0"
             aria-label="Close"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
 
         {/* Modal Scrollable Body */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1">
+        <div className="p-3.5 sm:p-6 overflow-y-auto space-y-4 sm:space-y-6 flex-1">
           
           {/* Main Visual & Key Highlights */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">

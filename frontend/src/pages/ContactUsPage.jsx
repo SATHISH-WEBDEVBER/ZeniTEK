@@ -54,7 +54,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
         <span className="text-xs font-bold text-blue-700 uppercase tracking-widest bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
           {t('contactBadge')}
         </span>
-        <h1 className="text-4xl sm:text-5xl font-black text-blue-950">
+        <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-blue-950">
           {t('contactTitle1')} <br />
           <span className="text-green-700">
             {t('contactTitle2')}

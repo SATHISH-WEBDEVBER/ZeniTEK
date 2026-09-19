@@ -30,7 +30,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
         <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 border border-green-200 px-3 py-1 rounded-full">
           {t('storiesBadge')}
         </span>
-        <h1 className="text-4xl sm:text-5xl font-black text-blue-950">
+        <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-blue-950">
           {t('storiesTitle1')} <br />
           <span className="text-green-700">
             {t('storiesTitle2')}

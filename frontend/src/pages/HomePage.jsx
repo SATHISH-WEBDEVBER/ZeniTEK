@@ -47,21 +47,21 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                 <span className="truncate">{t('heroBadge')}</span>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-blue-950 leading-tight">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-blue-950 leading-tight">
                 {t('heroTitle1')} <br />
                 <span className="text-green-700">
                   {t('heroTitle2')}
                 </span>
               </h1>
 
-              <p className="text-sm sm:text-lg text-slate-600 leading-relaxed font-medium max-w-2xl">
+              <p className="text-xs sm:text-base text-slate-600 leading-relaxed font-medium max-w-2xl">
                 {t('heroSubtitle')}
               </p>
 
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 pt-2">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2.5 sm:space-y-0 sm:space-x-4 pt-2">
                 <a
                   href="#roi-calculator"
-                  className="px-6 py-4 bg-gradient-to-r from-blue-700 via-blue-600 to-green-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all text-center flex items-center justify-center space-x-2"
+                  className="px-5 py-3.5 sm:px-6 sm:py-3.5 bg-gradient-to-r from-blue-700 via-blue-600 to-green-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-md hover:shadow-lg transition-all text-center flex items-center justify-center space-x-2"
                 >
                   <span>{t('calcSavings')}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -69,25 +69,25 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
                 <Link
                   to="/dryers"
-                  className="px-6 py-4 bg-white border border-slate-300 hover:border-blue-600 text-slate-800 hover:text-blue-700 font-bold text-xs rounded-2xl transition-all text-center flex items-center justify-center space-x-2 shadow-sm"
+                  className="px-5 py-3.5 sm:px-6 sm:py-3.5 bg-white border border-slate-300 hover:border-blue-600 text-slate-800 hover:text-blue-700 font-bold text-xs rounded-2xl transition-all text-center flex items-center justify-center space-x-2 shadow-sm"
                 >
                   <span>{t('exploreModels')}</span>
                   <ChevronRight className="w-4 h-4" />
                 </Link>
               </div>
 
-              <div className="pt-6 border-t border-slate-200 grid grid-cols-3 gap-4">
+              <div className="pt-5 border-t border-slate-200 grid grid-cols-3 gap-2 sm:gap-4">
                 <div>
-                  <div className="text-xl sm:text-3xl font-black text-blue-900">1,200+</div>
-                  <div className="text-[11px] sm:text-xs text-slate-500 font-semibold mt-0.5">{t('dryersInstalled')}</div>
+                  <div className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-black text-blue-900">1,200+</div>
+                  <div className="text-[10px] xs:text-[11px] sm:text-xs text-slate-500 font-semibold mt-0.5">{t('dryersInstalled')}</div>
                 </div>
                 <div>
-                  <div className="text-xl sm:text-3xl font-black text-green-700">500+ MT</div>
-                  <div className="text-[11px] sm:text-xs text-slate-500 font-semibold mt-0.5">{t('foodSaved')}</div>
+                  <div className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-black text-green-700">500+ MT</div>
+                  <div className="text-[10px] xs:text-[11px] sm:text-xs text-slate-500 font-semibold mt-0.5">{t('foodSaved')}</div>
                 </div>
                 <div>
-                  <div className="text-xl sm:text-3xl font-black text-slate-900">40-60%</div>
-                  <div className="text-[11px] sm:text-xs text-slate-500 font-semibold mt-0.5">{t('subsidyHelp')}</div>
+                  <div className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-black text-slate-900">40-60%</div>
+                  <div className="text-[10px] xs:text-[11px] sm:text-xs text-slate-500 font-semibold mt-0.5">{t('subsidyHelp')}</div>
                 </div>
               </div>
 

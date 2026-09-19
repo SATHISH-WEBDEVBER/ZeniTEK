@@ -70,7 +70,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
           <span>Authentic Field & Manufacturing Gallery</span>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl font-black text-blue-950 tracking-tight leading-tight">
+        <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-blue-950 tracking-tight leading-tight">
           ZeniTEK Solar Drying Systems <br />
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-600">
             Real Installation & Product Photographs
@@ -103,20 +103,20 @@ export default function GalleryPage({ onOpenQuoteModal }) {
         </div>
 
         {/* Filter Chips */}
-        <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 pt-2">
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 cursor-pointer shadow-xs ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 cursor-pointer ${
                 activeCategory === cat.id
-                  ? 'bg-blue-800 text-white shadow-md ring-2 ring-blue-300 scale-102'
-                  : 'bg-white text-slate-700 hover:text-blue-700 hover:bg-slate-100 border border-slate-200'
+                  ? 'bg-blue-900 text-white shadow-md'
+                  : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
               }`}
             >
               <span>{cat.label}</span>
               <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                activeCategory === cat.id ? 'bg-blue-950 text-blue-100' : 'bg-slate-100 text-slate-500'
+                activeCategory === cat.id ? 'bg-blue-800 text-blue-100' : 'bg-slate-100 text-slate-500'
               }`}>
                 {cat.count}
               </span>
@@ -132,7 +132,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
             No photographs match your current filter. Try selecting "All Photographs" or clearing search.
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 4k:grid-cols-4 gap-4 sm:gap-6">
             {filteredItems.map((item) => (
               <div
                 key={item.id}
@@ -239,11 +239,11 @@ export default function GalleryPage({ onOpenQuoteModal }) {
       {/* LIGHTBOX MODAL: FULL HIGH-RES PHOTO VIEWER WITH COMPLETE SPECS */}
       {selectedPhoto && (
         <div 
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 bg-slate-950/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-2.5 sm:p-4 lg:p-6 bg-slate-950/85 backdrop-blur-md animate-fade-in"
           onClick={() => setSelectedPhoto(null)}
         >
           <div 
-            className="relative bg-white rounded-3xl max-w-5xl w-full max-h-[95vh] flex flex-col overflow-hidden shadow-2xl border border-slate-200"
+            className="relative bg-white rounded-2xl sm:rounded-3xl max-w-5xl 4k:max-w-6xl w-full max-h-[95vh] flex flex-col overflow-hidden shadow-2xl border border-slate-200"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}

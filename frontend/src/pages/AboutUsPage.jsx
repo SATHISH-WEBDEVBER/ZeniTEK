@@ -13,20 +13,20 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
         <span className="text-xs font-bold text-blue-700 uppercase tracking-widest bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
           {t('aboutBadge')}
         </span>
-        <h1 className="text-4xl sm:text-5xl font-black text-blue-950">
+        <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-blue-950">
           {t('aboutTitle1')} <br />
           <span className="text-green-700">
             {t('aboutTitle2')}
           </span>
         </h1>
-        <p className="text-sm sm:text-base text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
+        <p className="text-xs sm:text-base text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
           {t('aboutSubtitle')}
         </p>
       </section>
 
       {/* Section 2: Roots & Journey */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-white p-8 sm:p-12 rounded-3xl border border-slate-200 shadow-md">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-white p-5 sm:p-8 lg:p-12 rounded-3xl border border-slate-200 shadow-md">
           
           <div className="lg:col-span-6 space-y-4">
             <span className="text-xs font-bold text-green-700 uppercase tracking-wider">{t('aboutHub')}</span>
