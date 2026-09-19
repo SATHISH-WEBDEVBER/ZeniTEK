@@ -306,15 +306,15 @@ export default function MapComponent({ onSelectProjectQuote }) {
   }, []);
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-3 sm:p-5 space-y-4 w-full max-w-full overflow-hidden">
+    <div className="bg-white rounded-3xl border-2 border-[#123B92]/30 shadow-xl p-3 sm:p-5 space-y-4 w-full max-w-full overflow-hidden">
       
       {/* Top Filter & Control Bar */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200">
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-[#F0F4FD] p-3 rounded-2xl border border-[#123B92]/20">
         
         {/* State Filter Chips */}
         <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
-          <span className="text-[11px] font-bold text-slate-500 mr-1 flex items-center shrink-0">
-            <SlidersHorizontal className="w-3.5 h-3.5 mr-1 text-blue-700" /> {t('filterStateLabel')}
+          <span className="text-[11px] font-bold text-[#123B92] mr-1 flex items-center shrink-0">
+            <SlidersHorizontal className="w-3.5 h-3.5 mr-1 text-[#002DC2]" /> {t('filterStateLabel')}
           </span>
           {statesList.map(st => (
             <button
@@ -326,13 +326,13 @@ export default function MapComponent({ onSelectProjectQuote }) {
               }}
               className={`text-[11px] px-3 py-1 rounded-xl font-bold transition-all shrink-0 flex items-center space-x-1.5 cursor-pointer ${
                 selectedState === st.name 
-                  ? 'bg-blue-700 text-white shadow-sm ring-2 ring-blue-300' 
-                  : 'bg-white text-slate-700 hover:text-blue-900 hover:bg-slate-100 border border-slate-200'
+                  ? 'bg-[#002DC2] text-white shadow-sm ring-2 ring-[#00FB00]' 
+                  : 'bg-white text-black hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/20'
               }`}
             >
               <span>{st.name}</span>
-              <span className={`text-[9px] px-1.5 py-0.2 rounded-full ${
-                selectedState === st.name ? 'bg-blue-900 text-blue-100' : 'bg-slate-100 text-slate-600'
+              <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-bold ${
+                selectedState === st.name ? 'bg-[#123B92] text-white' : 'bg-[#F0F4FD] text-[#123B92]'
               }`}>
                 {st.count}
               </span>
@@ -341,12 +341,12 @@ export default function MapComponent({ onSelectProjectQuote }) {
         </div>
 
         {/* Mobile View Toggle */}
-        <div className="flex lg:hidden items-center p-1 bg-slate-200 rounded-xl w-full sm:w-auto">
+        <div className="flex lg:hidden items-center p-1 bg-[#123B92]/10 rounded-xl w-full sm:w-auto">
           <button
             type="button"
             onClick={() => setMobileTab('map')}
             className={`flex-1 sm:flex-initial py-1.5 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center space-x-1 ${
-              mobileTab === 'map' ? 'bg-blue-700 text-white shadow' : 'text-slate-700'
+              mobileTab === 'map' ? 'bg-[#002DC2] text-white shadow' : 'text-black'
             }`}
           >
             <MapPin className="w-3.5 h-3.5" />
@@ -356,7 +356,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
             type="button"
             onClick={() => setMobileTab('list')}
             className={`flex-1 sm:flex-initial py-1.5 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center space-x-1 ${
-              mobileTab === 'list' ? 'bg-blue-700 text-white shadow' : 'text-slate-700'
+              mobileTab === 'list' ? 'bg-[#002DC2] text-white shadow' : 'text-black'
             }`}
           >
             <Tag className="w-3.5 h-3.5" />
@@ -370,34 +370,34 @@ export default function MapComponent({ onSelectProjectQuote }) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 h-[520px] sm:h-[620px] w-full">
         
         {/* Left Sidebar Directory */}
-        <div className={`lg:col-span-4 flex-col h-full bg-slate-50 rounded-2xl p-3 border border-slate-200 overflow-hidden ${mobileTab === 'list' ? 'flex' : 'hidden lg:flex'}`}>
+        <div className={`lg:col-span-4 flex-col h-full bg-[#F0F4FD] rounded-2xl p-3 border border-[#123B92]/20 overflow-hidden ${mobileTab === 'list' ? 'flex' : 'hidden lg:flex'}`}>
           
           {/* Sidebar Header & Search */}
-          <div className="mb-3 space-y-2 pb-2 border-b border-slate-200 shrink-0">
+          <div className="mb-3 space-y-2 pb-2 border-b border-[#123B92]/20 shrink-0">
             <div className="flex items-center justify-between">
-              <h3 className="text-xs font-bold text-blue-950 flex items-center">
-                <MapPin className="w-4 h-4 text-green-700 mr-1.5" /> Installed Sites Directory
+              <h3 className="text-xs font-bold text-[#123B92] flex items-center">
+                <MapPin className="w-4 h-4 text-[#002DC2] mr-1.5" /> Installed Sites Directory
               </h3>
-              <span className="text-[10px] font-mono font-bold text-blue-800 bg-blue-100 px-2 py-0.5 rounded border border-blue-200">
+              <span className="text-[10px] font-mono font-bold text-white bg-[#123B92] px-2 py-0.5 rounded border border-[#123B92]">
                 {filteredProjects.length} Sites
               </span>
             </div>
 
             {/* Instant Search Bar */}
             <div className="relative">
-              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-3.5 h-3.5 text-black/50 absolute left-2.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search crop, district, or capacity..."
-                className="w-full pl-8 pr-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                className="w-full pl-8 pr-3 py-1.5 bg-white border border-[#123B92]/30 rounded-xl text-xs text-black placeholder-black/40 focus:outline-none focus:ring-2 focus:ring-[#002DC2] focus:border-transparent transition-all"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 hover:text-slate-600"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-black/60 hover:text-black"
                 >
                   Clear
                 </button>
@@ -408,7 +408,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
           {/* Scrollable Project Cards */}
           <div className="flex-1 overflow-y-auto space-y-2.5 pr-1">
             {filteredProjects.length === 0 ? (
-              <div className="p-6 text-center text-slate-400 text-xs">
+              <div className="p-6 text-center text-black/60 text-xs">
                 No solar dryer installations match your search.
               </div>
             ) : (
@@ -420,32 +420,32 @@ export default function MapComponent({ onSelectProjectQuote }) {
                     onClick={() => handleSelectProjectFromList(proj)}
                     className={`p-3 rounded-xl border cursor-pointer transition-all group shadow-xs ${
                       isSelected
-                        ? 'bg-blue-50/90 border-blue-500 ring-2 ring-blue-300'
-                        : 'bg-white hover:bg-slate-50 border-slate-200 hover:border-blue-400'
+                        ? 'bg-white border-[#002DC2] ring-2 ring-[#00FB00]'
+                        : 'bg-white hover:bg-white border-[#123B92]/20 hover:border-[#002DC2]'
                     }`}
                   >
                     <div className="flex justify-between items-start gap-2">
                       <h4 className={`text-xs font-bold transition-colors line-clamp-1 ${
-                        isSelected ? 'text-blue-900' : 'text-slate-900 group-hover:text-blue-700'
+                        isSelected ? 'text-[#002DC2]' : 'text-[#123B92] group-hover:text-[#002DC2]'
                       }`}>
                         {proj.title}
                       </h4>
-                      <span className="text-[9px] font-bold text-green-800 bg-green-50 px-1.5 py-0.5 rounded border border-green-200 shrink-0">
+                      <span className="text-[9px] font-bold text-black bg-[#00FB00] px-1.5 py-0.5 rounded border border-[#00FB00] shrink-0">
                         {proj.capacity}
                       </span>
                     </div>
 
-                    <p className="text-[10px] text-slate-500 mt-1 flex items-center">
-                      <MapPin className="w-3.5 h-3.5 text-slate-400 mr-1 shrink-0" /> {proj.locationName}
+                    <p className="text-[10px] text-black/70 mt-1 flex items-center">
+                      <MapPin className="w-3.5 h-3.5 text-[#002DC2] mr-1 shrink-0" /> {proj.locationName}
                     </p>
 
                     <div className="mt-2 flex items-center justify-between text-[10px]">
-                      <span className="text-blue-700 font-semibold flex items-center line-clamp-1">
+                      <span className="text-[#002DC2] font-semibold flex items-center line-clamp-1">
                         <Tag className="w-3 h-3 mr-1 shrink-0" /> {proj.cropDrying}
                       </span>
                       
                       <span className={`font-bold flex items-center text-[10px] ${
-                        isSelected ? 'text-blue-800 font-extrabold' : 'text-slate-500 group-hover:text-blue-700'
+                        isSelected ? 'text-[#002DC2] font-extrabold' : 'text-black/60 group-hover:text-[#002DC2]'
                       }`}>
                         Focus Map <ArrowRight className="w-2.5 h-2.5 ml-1" />
                       </span>
@@ -528,13 +528,13 @@ export default function MapComponent({ onSelectProjectQuote }) {
                     <div 
                       onMouseEnter={handleCardMouseEnter}
                       onMouseLeave={() => handleCardMouseLeave(markerRefs.current[p._id || p.title])}
-                      className="p-2 w-52 space-y-1.5 text-slate-800 cursor-default"
+                      className="p-2 w-52 space-y-1.5 text-black cursor-default bg-white"
                     >
                       {/* Compact Thumbnail Image (64px height) */}
                       {p.imageUrl && (
                         <div 
                           onClick={() => setSelectedDetailProject(p)}
-                          className="relative rounded-md overflow-hidden h-16 bg-slate-100 border border-slate-200 cursor-pointer group shrink-0"
+                          className="relative rounded-md overflow-hidden h-16 bg-white border border-[#123B92]/20 cursor-pointer group shrink-0"
                         >
                           <img
                             src={p.imageUrl}
@@ -547,27 +547,27 @@ export default function MapComponent({ onSelectProjectQuote }) {
                       
                       {/* Title & Location */}
                       <div onClick={() => setSelectedDetailProject(p)} className="cursor-pointer space-y-0.5 min-w-0">
-                        <div className="flex items-center justify-between text-[8.5px] uppercase font-extrabold text-blue-700 tracking-wider leading-none">
+                        <div className="flex items-center justify-between text-[8.5px] uppercase font-extrabold text-[#002DC2] tracking-wider leading-none">
                           <span>{p.dryerType}</span>
-                          <span className="text-[8px] font-bold text-green-700 bg-green-50 px-1 py-0.2 rounded border border-green-200">
+                          <span className="text-[8px] font-bold text-black bg-[#00FB00] px-1 py-0.2 rounded border border-[#00FB00]">
                             {p.capacity}
                           </span>
                         </div>
-                        <h4 className="text-[11px] font-bold text-slate-900 leading-snug line-clamp-1 hover:text-blue-700 transition-colors">
+                        <h4 className="text-[11px] font-bold text-[#123B92] leading-snug line-clamp-1 hover:text-[#002DC2] transition-colors">
                           {p.title}
                         </h4>
-                        <p className="text-[9.5px] text-slate-500 flex items-center">
-                          <MapPin className="w-2.5 h-2.5 text-green-600 mr-1 shrink-0" /> {p.locationName}
+                        <p className="text-[9.5px] text-black/70 flex items-center">
+                          <MapPin className="w-2.5 h-2.5 text-[#002DC2] mr-1 shrink-0" /> {p.locationName}
                         </p>
                       </div>
 
                       {/* 1-Line Description */}
-                      <p className="text-[9px] text-slate-500 italic line-clamp-1 leading-tight">
+                      <p className="text-[9px] text-black/70 italic line-clamp-1 leading-tight">
                         {p.description}
                       </p>
 
                       {/* Compact Action Button */}
-                      <div className="pt-1 border-t border-slate-100">
+                      <div className="pt-1 border-t border-[#123B92]/10">
                         <button
                           type="button"
                           onClick={(e) => {
@@ -575,7 +575,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                             e.stopPropagation();
                             setSelectedDetailProject(p);
                           }}
-                          className="w-full text-[9.5px] font-bold text-white bg-blue-700 hover:bg-blue-800 py-1 px-2 rounded-md shadow-2xs text-center flex items-center justify-center space-x-1 transition-colors cursor-pointer active:scale-98"
+                          className="w-full text-[9.5px] font-bold text-black bg-[#00FB00] hover:bg-[#002DC2] hover:text-white py-1 px-2 rounded-md shadow-2xs text-center flex items-center justify-center space-x-1 transition-colors cursor-pointer active:scale-98"
                         >
                           <Info className="w-2.5 h-2.5" />
                           <span>View Case Study & Video</span>

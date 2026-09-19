@@ -78,22 +78,22 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2.5 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-2xl bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-2xl overflow-hidden max-h-[94vh] flex flex-col">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2.5 sm:p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+      <div className="relative w-full max-w-2xl bg-white rounded-2xl sm:rounded-3xl border-2 border-[#123B92] shadow-2xl overflow-hidden max-h-[94vh] flex flex-col">
         
         {/* Modal Header */}
-        <div className="px-4 py-3 sm:px-6 sm:py-5 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-blue-900 via-blue-800 to-green-800 text-white shrink-0">
+        <div className="px-4 py-3 sm:px-6 sm:py-5 border-b-2 border-[#00FB00] flex items-center justify-between bg-[#123B92] text-white shrink-0">
           <div>
             <div className="flex items-center space-x-2">
-              <span className="bg-green-600 text-white text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
+              <span className="bg-black/40 text-[#00FB00] border border-[#00FB00]/50 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
                 Official Enquiry
               </span>
             </div>
-            <h3 className="text-base sm:text-xl font-bold mt-0.5">{t('getQuote')} & Subsidy Sizing</h3>
+            <h3 className="text-base sm:text-xl font-bold mt-0.5 text-white">{t('getQuote')} & Subsidy Sizing</h3>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors shrink-0"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors shrink-0 cursor-pointer"
           >
             <X className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
@@ -101,23 +101,23 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
 
         {/* Success Alert */}
         {successMsg && (
-          <div className="m-4 sm:m-6 p-3 sm:p-4 rounded-2xl bg-green-50 border border-green-300 text-green-800 text-xs sm:text-sm flex items-center space-x-3">
-            <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 shrink-0" />
+          <div className="m-4 sm:m-6 p-3 sm:p-4 rounded-2xl bg-[#F0F4FD] border-2 border-[#00FB00] text-black text-xs sm:text-sm flex items-center space-x-3">
+            <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-[#002DC2] shrink-0" />
             <div>
-              <p className="font-bold">{successMsg}</p>
-              <p className="text-[11px] sm:text-xs text-green-700">Redirecting to WhatsApp for engineer response...</p>
+              <p className="font-bold text-[#123B92]">{successMsg}</p>
+              <p className="text-[11px] sm:text-xs text-black/70">Redirecting to WhatsApp for engineer response...</p>
             </div>
           </div>
         )}
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-3 sm:space-y-4 overflow-y-auto">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-3 sm:space-y-4 overflow-y-auto bg-white">
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
-                {t('yourName')} <span className="text-blue-600">*</span>
+              <label className="block text-xs font-bold text-black mb-1">
+                {t('yourName')} <span className="text-[#002DC2]">*</span>
               </label>
               <input
                 type="text"
@@ -126,13 +126,13 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
                 placeholder="e.g. Ramesh Kumar"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900"
+                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
-                {t('whatsappNum')} <span className="text-blue-600">*</span>
+              <label className="block text-xs font-bold text-black mb-1">
+                {t('whatsappNum')} <span className="text-[#002DC2]">*</span>
               </label>
               <input
                 type="tel"
@@ -141,12 +141,12 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
                 placeholder="+91 98765 43210"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900"
+                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">State *</label>
+              <label className="block text-xs font-bold text-black mb-1">State *</label>
               <input
                 type="text"
                 name="state"
@@ -154,13 +154,13 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
                 placeholder="e.g. Tamil Nadu"
                 value={formData.state}
                 onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900"
+                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
-                {t('districtCity')} <span className="text-blue-600">*</span>
+              <label className="block text-xs font-bold text-black mb-1">
+                {t('districtCity')} <span className="text-[#002DC2]">*</span>
               </label>
               <input
                 type="text"
@@ -169,17 +169,17 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
                 placeholder="e.g. Pollachi / Coimbatore"
                 value={formData.district}
                 onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900"
+                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">{t('userCategory')} *</label>
+              <label className="block text-xs font-bold text-black mb-1">{t('userCategory')} *</label>
               <select
                 name="clientType"
                 value={formData.clientType}
                 onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 cursor-pointer"
+                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black cursor-pointer"
               >
                 <option value="Individual Farmer">Individual Farmer</option>
                 <option value="FPO / Cooperative Group">FPO / Farmer Cooperative</option>
@@ -190,12 +190,12 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">{t('targetCrop')} *</label>
+              <label className="block text-xs font-bold text-black mb-1">{t('targetCrop')} *</label>
               <select
                 name="cropType"
                 value={formData.cropType}
                 onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 cursor-pointer"
+                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black cursor-pointer"
               >
                 <option value="Copra/Coconut">Copra / Coconut</option>
                 <option value="Moringa/Herbs">Moringa / Herbs / Tea</option>
@@ -209,12 +209,12 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">{t('desiredCapacity')} *</label>
+            <label className="block text-xs font-bold text-black mb-1">{t('desiredCapacity')} *</label>
             <select
               name="capacityNeeded"
               value={formData.capacityNeeded}
               onChange={handleChange}
-              className="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 cursor-pointer"
+              className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black cursor-pointer"
             >
               <option value="Under 50 kg (Portable)">Under 50 kg (Portable DIY)</option>
               <option value="100 to 500 kg (Commercial)">100 to 500 kg (Commercial Polyhouse)</option>
@@ -223,25 +223,25 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">{t('additionalReqs')}</label>
+            <label className="block text-xs font-bold text-black mb-1">{t('additionalReqs')}</label>
             <textarea
               name="message"
               rows="3"
               placeholder="e.g. Please share subsidy documents and estimated installation time."
               value={formData.message}
               onChange={handleChange}
-              className="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900"
+              className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black"
             ></textarea>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-            <div className="text-[10px] text-slate-500 flex items-center">
-              <ShieldCheck className="w-3.5 h-3.5 text-green-600 mr-1" /> 100% Confidential
+          <div className="pt-4 border-t border-[#123B92]/20 flex items-center justify-between">
+            <div className="text-[10px] text-black/60 flex items-center">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#002DC2] mr-1" /> 100% Confidential
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="py-3 px-6 bg-gradient-to-r from-blue-700 via-blue-600 to-green-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md hover:scale-105 transition-all flex items-center space-x-2 disabled:opacity-50"
+              className="py-3 px-6 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md hover:scale-105 transition-all flex items-center space-x-2 disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <>

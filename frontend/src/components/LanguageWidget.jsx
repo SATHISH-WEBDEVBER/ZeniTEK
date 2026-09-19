@@ -21,10 +21,10 @@ export default function LanguageWidget() {
     <div className="fixed bottom-4 right-4 z-50">
       {/* Dropdown Popup */}
       {isOpen && (
-        <div className="mb-2 w-56 bg-white rounded-2xl border border-slate-200 shadow-2xl p-2 animate-fade-in space-y-1">
-          <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider px-3 py-1.5 border-b border-slate-100 flex items-center justify-between">
+        <div className="mb-2 w-56 bg-white rounded-2xl border-2 border-[#123B92] shadow-2xl p-2 animate-fade-in space-y-1">
+          <div className="text-[11px] font-bold text-[#123B92] uppercase tracking-wider px-3 py-1.5 border-b border-[#123B92]/20 flex items-center justify-between">
             <span>Select Language</span>
-            <Globe className="w-3.5 h-3.5 text-blue-600" />
+            <Globe className="w-3.5 h-3.5 text-[#002DC2]" />
           </div>
           {languages.map((l) => (
             <button
@@ -33,13 +33,13 @@ export default function LanguageWidget() {
                 setLang(l.code);
                 setIsOpen(false);
               }}
-              className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between font-medium transition-colors ${lang === l.code ? 'bg-blue-50 text-blue-800 font-bold' : 'text-slate-700 hover:bg-slate-50'}`}
+              className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between font-medium transition-colors cursor-pointer ${lang === l.code ? 'bg-[#F0F4FD] text-[#002DC2] font-bold' : 'text-black hover:bg-[#F0F4FD]'}`}
             >
               <div className="flex items-center space-x-2">
-                <span className="font-semibold text-slate-900">{l.native}</span>
-                <span className="text-[10px] text-slate-500 font-normal">({l.label})</span>
+                <span className="font-semibold text-black">{l.native}</span>
+                <span className="text-[10px] text-black/60 font-normal">({l.label})</span>
               </div>
-              {lang === l.code && <Check className="w-4 h-4 text-blue-600" />}
+              {lang === l.code && <Check className="w-4 h-4 text-[#002DC2]" />}
             </button>
           ))}
         </div>
@@ -48,9 +48,9 @@ export default function LanguageWidget() {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 bg-blue-900 hover:bg-blue-800 text-white px-4 py-2.5 rounded-full shadow-lg hover:shadow-xl border border-blue-700 hover:scale-105 transition-all text-xs font-bold"
+        className="flex items-center space-x-2 bg-[#123B92] hover:bg-[#002DC2] text-white px-4 py-2.5 rounded-full shadow-lg hover:shadow-xl border-2 border-[#00FB00] hover:scale-105 transition-all text-xs font-bold cursor-pointer"
       >
-        <Globe className="w-4 h-4 text-green-400 animate-spin-slow" />
+        <Globe className="w-4 h-4 text-[#00FB00] animate-spin-slow" />
         <span>{currentLang.native}</span>
         <ChevronUp className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
