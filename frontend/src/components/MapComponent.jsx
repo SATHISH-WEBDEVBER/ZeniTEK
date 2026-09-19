@@ -534,7 +534,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                       {p.imageUrl && (
                         <div 
                           onClick={() => setSelectedDetailProject(p)}
-                          className="relative rounded-md overflow-hidden h-16 bg-slate-100 border border-slate-200 cursor-pointer group"
+                          className="relative rounded-md overflow-hidden h-16 bg-slate-100 border border-slate-200 cursor-pointer group shrink-0"
                         >
                           <img
                             src={p.imageUrl}
@@ -542,16 +542,16 @@ export default function MapComponent({ onSelectProjectQuote }) {
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                             loading="lazy"
                           />
-                          <span className="absolute top-1 right-1 text-[8px] font-bold bg-blue-700 text-white px-1.5 py-0.5 rounded shadow-2xs">
-                            {p.capacity}
-                          </span>
                         </div>
                       )}
                       
                       {/* Title & Location */}
-                      <div onClick={() => setSelectedDetailProject(p)} className="cursor-pointer space-y-0.5">
-                        <div className="text-[8.5px] uppercase font-extrabold text-blue-700 tracking-wider leading-none">
-                          {p.dryerType}
+                      <div onClick={() => setSelectedDetailProject(p)} className="cursor-pointer space-y-0.5 min-w-0">
+                        <div className="flex items-center justify-between text-[8.5px] uppercase font-extrabold text-blue-700 tracking-wider leading-none">
+                          <span>{p.dryerType}</span>
+                          <span className="text-[8px] font-bold text-green-700 bg-green-50 px-1 py-0.2 rounded border border-green-200">
+                            {p.capacity}
+                          </span>
                         </div>
                         <h4 className="text-[11px] font-bold text-slate-900 leading-snug line-clamp-1 hover:text-blue-700 transition-colors">
                           {p.title}

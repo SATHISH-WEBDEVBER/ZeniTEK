@@ -75,9 +75,6 @@ export default function ProjectDetailModal({ isOpen, onClose, project, onEnquire
                       alt={project.title}
                       className="w-full h-full object-cover"
                     />
-                    <span className="absolute top-3 left-3 bg-blue-700 text-white font-bold text-[10px] uppercase px-2.5 py-1 rounded shadow">
-                      {project.dryerType}
-                    </span>
                   </div>
 
                   {photos.length > 1 && (
@@ -97,8 +94,13 @@ export default function ProjectDetailModal({ isOpen, onClose, project, onEnquire
 
                 <div className="md:col-span-6 space-y-4">
                   <div>
-                    <div className="text-xs font-bold text-blue-700 flex items-center">
-                      <MapPin className="w-3.5 h-3.5 mr-1 text-green-600 shrink-0" /> {project.locationName}
+                    <div className="flex items-center space-x-2">
+                      <span className="bg-blue-700 text-white font-bold text-[10px] uppercase px-2.5 py-0.5 rounded shadow-2xs">
+                        {project.dryerType}
+                      </span>
+                      <span className="text-xs font-bold text-blue-700 flex items-center">
+                        <MapPin className="w-3.5 h-3.5 mr-1 text-green-600 shrink-0" /> {project.locationName}
+                      </span>
                     </div>
                     <h4 className="text-xl font-extrabold text-slate-900 mt-1">{project.title}</h4>
                   </div>

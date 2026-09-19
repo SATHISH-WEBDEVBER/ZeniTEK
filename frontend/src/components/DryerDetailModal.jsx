@@ -45,9 +45,6 @@ export default function DryerDetailModal({ isOpen, onClose, model, onOpenQuoteMo
                   alt={model.name}
                   className="w-full h-full object-cover transition-all duration-300"
                 />
-                <span className="absolute bottom-3 left-3 bg-blue-900/90 backdrop-blur-md text-white font-bold text-[11px] px-3 py-1 rounded-lg">
-                  {model.capacityRange}
-                </span>
               </div>
 
               {/* Thumbnails */}
@@ -69,8 +66,13 @@ export default function DryerDetailModal({ isOpen, onClose, model, onOpenQuoteMo
             {/* Right: Key Specs & Target Audience */}
             <div className="lg:col-span-6 space-y-4">
               <div>
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">PRODUCT DESCRIPTION</span>
-                <h4 className="text-xl font-black text-slate-900 mt-0.5">{model.name}</h4>
+                <div className="flex items-center space-x-2">
+                  <span className="bg-blue-900 text-white font-bold text-[10px] px-2.5 py-0.5 rounded shadow-2xs">
+                    {model.capacityRange}
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">PRODUCT SPECIFICATION</span>
+                </div>
+                <h4 className="text-xl font-black text-slate-900 mt-1">{model.name}</h4>
                 <p className="text-xs text-slate-600 leading-relaxed mt-2 font-medium">{model.description}</p>
               </div>
 
