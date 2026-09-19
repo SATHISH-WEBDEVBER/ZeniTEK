@@ -61,7 +61,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2.5 sm:space-y-0 sm:space-x-4 pt-2">
                 <a
                   href="#roi-calculator"
-                  className="px-5 py-3.5 sm:px-6 sm:py-3.5 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-black text-xs uppercase tracking-wider rounded-2xl shadow transition-all text-center flex items-center justify-center space-x-2 cursor-pointer"
+                  className="px-5 py-3.5 sm:px-6 sm:py-3.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-2xl shadow transition-all text-center flex items-center justify-center space-x-2 cursor-pointer"
                 >
                   <span>{t('calcSavings')}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -232,7 +232,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
                   <button
                     onClick={() => onOpenQuoteModal({ capacityNeeded: model.name })}
-                    className="w-full py-2.5 sm:py-3 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+                    className="w-full py-2.5 sm:py-3 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
                   >
                     <span>{t('reqQuote')}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -274,8 +274,8 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                 </p>
               </div>
 
-              <div className="flex items-center space-x-2 text-xs font-black text-black bg-[#00FB00] px-4 py-2 rounded-2xl border border-[#00FB00] shrink-0">
-                <Sparkles className="w-4 h-4 text-black" />
+              <div className="flex items-center space-x-2 text-xs font-bold text-white bg-[#23AC39] px-4 py-2 rounded-2xl border border-[#23AC39] shrink-0">
+                <Sparkles className="w-4 h-4 text-white" />
                 <span>40% Faster Than Open-Sun</span>
               </div>
             </div>
@@ -287,7 +287,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                   key={stepItem.step}
                   className={`p-5 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
                     stepItem.step === 7
-                      ? 'bg-white border-2 border-[#00FB00] shadow-sm md:col-span-2 lg:col-span-2'
+                      ? 'bg-white border-2 border-[#23AC39] shadow-sm md:col-span-2 lg:col-span-2'
                       : 'bg-[#F0F4FD] hover:bg-white border-[#123B92]/20 hover:border-[#002DC2]'
                   }`}
                 >
@@ -331,7 +331,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
               <button
                 onClick={() => onOpenQuoteModal({ capacityNeeded: 'Technical Engineering Sizing' })}
-                className="px-5 py-2.5 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow shrink-0 cursor-pointer"
+                className="px-5 py-2.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow shrink-0 cursor-pointer"
               >
                 Get Free Sizing Report
               </button>

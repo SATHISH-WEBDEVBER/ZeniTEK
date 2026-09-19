@@ -91,7 +91,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
                 <div className="p-5 sm:p-6 space-y-3">
                   <div className="flex items-center justify-between">
                     <h3 className="text-base font-bold text-[#123B92]">{rev.name}</h3>
-                    <span className="text-[10px] font-bold text-black bg-[#00FB00] px-2 py-0.5 rounded border border-[#00FB00]">
+                    <span className="text-[10px] font-bold text-white bg-[#23AC39] px-2 py-0.5 rounded border border-[#23AC39]">
                       ★ {rev.rating}.0
                     </span>
                   </div>
@@ -165,7 +165,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
           <div className="pt-4">
             <button
               onClick={() => onOpenQuoteModal()}
-              className="px-8 py-3.5 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl hover:scale-105 transition-all shadow-md inline-flex items-center space-x-2 cursor-pointer"
+              className="px-8 py-3.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl hover:scale-105 transition-all shadow-md inline-flex items-center space-x-2 cursor-pointer"
             >
               <span>{t('startProsperityBtn')}</span>
               <ArrowRight className="w-4 h-4" />

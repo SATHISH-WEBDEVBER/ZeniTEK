@@ -349,7 +349,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                 <button
                   type="button"
                   onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: model.name })}
-                  className="w-full py-3 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow hover:scale-102 flex items-center justify-center space-x-1.5 cursor-pointer"
+                  className="w-full py-3 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow hover:scale-102 flex items-center justify-center space-x-1.5 cursor-pointer"
                 >
                   <span>Request Price Quote</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -588,7 +588,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                     <span className="bg-[#123B92] text-white font-black text-[10px] px-2.5 py-0.5 rounded shadow-xs">
                       PAGE {bPage.page}
                     </span>
-                    <span className="bg-[#00FB00] text-black font-black text-[10px] px-2.5 py-0.5 rounded shadow-xs">
+                    <span className="bg-[#23AC39] text-white font-black text-[10px] px-2.5 py-0.5 rounded shadow-xs">
                       {bPage.category}
                     </span>
                   </div>

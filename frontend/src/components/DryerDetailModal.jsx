@@ -15,9 +15,9 @@ export default function DryerDetailModal({ isOpen, onClose, model, onOpenQuoteMo
       <div className="relative w-full max-w-4xl bg-white rounded-2xl sm:rounded-3xl border-2 border-[#123B92] shadow-2xl overflow-hidden max-h-[94vh] flex flex-col my-auto">
         
         {/* Modal Header */}
-        <div className="px-4 py-3 sm:px-6 sm:py-4 border-b-2 border-[#00FB00] flex items-center justify-between bg-[#123B92] text-white shrink-0">
+        <div className="px-4 py-3 sm:px-6 sm:py-4 border-b-2 border-[#23AC39] flex items-center justify-between bg-[#123B92] text-white shrink-0">
           <div className="flex items-center space-x-2">
-            <span className="text-[9px] sm:text-[10px] font-extrabold text-[#00FB00] bg-black/40 border border-[#00FB00]/50 px-2 sm:px-2.5 py-0.5 rounded uppercase tracking-wider">
+            <span className="text-[9px] sm:text-[10px] font-extrabold text-[#23AC39] bg-black/40 border border-[#23AC39]/50 px-2 sm:px-2.5 py-0.5 rounded uppercase tracking-wider">
               {model.badge}
             </span>
             <h3 className="text-sm sm:text-base lg:text-xl font-black text-white line-clamp-1">{model.name}</h3>
@@ -54,7 +54,7 @@ export default function DryerDetailModal({ isOpen, onClose, model, onOpenQuoteMo
                     <button
                       key={idx}
                       onClick={() => setSelectedImg(idx)}
-                      className={`w-16 h-12 rounded-lg overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${selectedImg === idx ? 'border-[#002DC2] shadow-md scale-105 ring-2 ring-[#00FB00]' : 'border-[#123B92]/20 opacity-70 hover:opacity-100'}`}
+                      className={`w-16 h-12 rounded-lg overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${selectedImg === idx ? 'border-[#002DC2] shadow-md scale-105 ring-2 ring-[#23AC39]' : 'border-[#123B92]/20 opacity-70 hover:opacity-100'}`}
                     >
                       <img src={img} alt="" className="w-full h-full object-cover" />
                     </button>
@@ -198,7 +198,7 @@ export default function DryerDetailModal({ isOpen, onClose, model, onOpenQuoteMo
               onClose();
               if (onOpenQuoteModal) onOpenQuoteModal({ capacityNeeded: model.name });
             }}
-            className="w-full sm:w-auto px-6 py-3 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer"
+            className="w-full sm:w-auto px-6 py-3 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer"
           >
             <span>Request Price Quote for {model.name}</span>
             <ArrowRight className="w-4 h-4" />

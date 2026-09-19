@@ -36,19 +36,19 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
           <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
             <button
               onClick={() => setActiveTab('agri')}
-              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === 'agri' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#00FB00]' : 'bg-white text-black hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
+              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === 'agri' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#23AC39]' : 'bg-white text-black hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
             >
               {t('tabAgri')}
             </button>
             <button
               onClick={() => setActiveTab('marine')}
-              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === 'marine' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#00FB00]' : 'bg-white text-black hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
+              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === 'marine' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#23AC39]' : 'bg-white text-black hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
             >
               {t('tabMarine')}
             </button>
             <button
               onClick={() => setActiveTab('industrial')}
-              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === 'industrial' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#00FB00]' : 'bg-white text-black hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
+              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === 'industrial' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#23AC39]' : 'bg-white text-black hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
             >
               {t('tabIndustrial')}
             </button>
@@ -163,7 +163,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
                 <tr className="bg-[#123B92] text-white text-xs uppercase font-bold tracking-wider">
                   <th className="p-4">{t('thTargetProduce')}</th>
                   <th className="p-4">{t('thFreshMoisture')}</th>
-                  <th className="p-4 text-[#00FB00]">{t('thDriedMoisture')}</th>
+                  <th className="p-4 text-[#23AC39]">{t('thDriedMoisture')}</th>
                   <th className="p-4">{t('thSolarTime')}</th>
                   <th className="p-4">{t('thSunTime')}</th>
                   <th className="p-4">{t('thProfitBenefit')}</th>

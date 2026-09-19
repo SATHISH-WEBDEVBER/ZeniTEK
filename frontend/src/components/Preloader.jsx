@@ -50,7 +50,7 @@ export default function Preloader({ onComplete }) {
               <linearGradient id="circleProgressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#123B92" />
                 <stop offset="50%" stopColor="#002DC2" />
-                <stop offset="100%" stopColor="#00FB00" />
+                <stop offset="100%" stopColor="#23AC39" />
               </linearGradient>
             </defs>
 
@@ -91,7 +91,7 @@ export default function Preloader({ onComplete }) {
 
         {/* Circular Format Percentage Pill */}
         <div className="inline-flex items-center space-x-2 px-5 py-2 rounded-full bg-[#F0F4FD] border border-[#123B92]/30 shadow-sm text-black text-xs font-extrabold font-mono tracking-wide">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#00FB00] animate-pulse"></span>
+          <span className="w-2.5 h-2.5 rounded-full bg-[#23AC39] animate-pulse"></span>
           <span>{Math.round(progress)}%</span>
         </div>
 
@@ -100,7 +100,7 @@ export default function Preloader({ onComplete }) {
           <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-[#123B92] flex items-center justify-center">
             <span>Zeni</span>
             <span className="text-[#002DC2]">TEK</span>
-            <span className="ml-2.5 text-[11px] font-extrabold uppercase tracking-widest text-black bg-[#00FB00] px-2.5 py-0.5 rounded border border-[#00FB00]">
+            <span className="ml-2.5 text-[11px] font-extrabold uppercase tracking-widest text-white bg-[#23AC39] px-2.5 py-0.5 rounded border border-[#23AC39]">
               Solar
             </span>
           </h1>

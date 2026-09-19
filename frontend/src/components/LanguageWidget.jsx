@@ -48,9 +48,9 @@ export default function LanguageWidget() {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 bg-[#123B92] hover:bg-[#002DC2] text-white px-4 py-2.5 rounded-full shadow-lg hover:shadow-xl border-2 border-[#00FB00] hover:scale-105 transition-all text-xs font-bold cursor-pointer"
+        className="flex items-center space-x-2 bg-[#123B92] hover:bg-[#002DC2] text-white px-4 py-2.5 rounded-full shadow-lg hover:shadow-xl border-2 border-[#23AC39] hover:scale-105 transition-all text-xs font-bold cursor-pointer"
       >
-        <Globe className="w-4 h-4 text-[#00FB00] animate-spin-slow" />
+        <Globe className="w-4 h-4 text-[#23AC39] animate-spin-slow" />
         <span>{currentLang.native}</span>
         <ChevronUp className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>

@@ -24,9 +24,9 @@ export default function ProjectDetailModal({ isOpen, onClose, project, onEnquire
       <div className="relative w-full max-w-4xl bg-white rounded-2xl sm:rounded-3xl border-2 border-[#123B92] shadow-2xl overflow-hidden max-h-[94vh] flex flex-col">
         
         {/* Modal Header */}
-        <div className="px-4 py-3 sm:px-6 sm:py-4 border-b-2 border-[#00FB00] flex items-center justify-between bg-[#123B92] text-white shrink-0">
+        <div className="px-4 py-3 sm:px-6 sm:py-4 border-b-2 border-[#23AC39] flex items-center justify-between bg-[#123B92] text-white shrink-0">
           <div>
-            <span className="text-[9px] sm:text-[10px] font-bold text-[#00FB00] bg-black/40 px-2 py-0.5 rounded uppercase tracking-wider border border-[#00FB00]/50">
+            <span className="text-[9px] sm:text-[10px] font-bold text-[#23AC39] bg-black/40 px-2 py-0.5 rounded uppercase tracking-wider border border-[#23AC39]/50">
               INSTALLATION CASE STUDY
             </span>
             <h3 className="text-sm sm:text-lg lg:text-xl font-black mt-0.5 text-white line-clamp-1">{project.title}</h3>
@@ -83,7 +83,7 @@ export default function ProjectDetailModal({ isOpen, onClose, project, onEnquire
                         <button
                           key={idx}
                           onClick={() => setSelectedPhoto(idx)}
-                          className={`w-16 h-12 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${selectedPhoto === idx ? 'border-[#002DC2] scale-105 shadow ring-2 ring-[#00FB00]' : 'border-[#123B92]/20 opacity-70 hover:opacity-100'}`}
+                          className={`w-16 h-12 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${selectedPhoto === idx ? 'border-[#002DC2] scale-105 shadow ring-2 ring-[#23AC39]' : 'border-[#123B92]/20 opacity-70 hover:opacity-100'}`}
                         >
                           <img src={img} alt="" className="w-full h-full object-cover" />
                         </button>
@@ -185,7 +185,7 @@ export default function ProjectDetailModal({ isOpen, onClose, project, onEnquire
               onClose();
               if (onEnquire) onEnquire(project);
             }}
-            className="px-6 py-2.5 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center space-x-1.5 cursor-pointer"
+            className="px-6 py-2.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center space-x-1.5 cursor-pointer"
           >
             <span>{t('enquireSetup')}</span>
             <ArrowRight className="w-3.5 h-3.5" />

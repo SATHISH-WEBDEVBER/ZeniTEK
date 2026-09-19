@@ -82,10 +82,10 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
       <div className="relative w-full max-w-2xl bg-white rounded-2xl sm:rounded-3xl border-2 border-[#123B92] shadow-2xl overflow-hidden max-h-[94vh] flex flex-col">
         
         {/* Modal Header */}
-        <div className="px-4 py-3 sm:px-6 sm:py-5 border-b-2 border-[#00FB00] flex items-center justify-between bg-[#123B92] text-white shrink-0">
+        <div className="px-4 py-3 sm:px-6 sm:py-5 border-b-2 border-[#23AC39] flex items-center justify-between bg-[#123B92] text-white shrink-0">
           <div>
             <div className="flex items-center space-x-2">
-              <span className="bg-black/40 text-[#00FB00] border border-[#00FB00]/50 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
+              <span className="bg-black/40 text-[#23AC39] border border-[#23AC39]/50 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
                 Official Enquiry
               </span>
             </div>
@@ -101,7 +101,7 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
 
         {/* Success Alert */}
         {successMsg && (
-          <div className="m-4 sm:m-6 p-3 sm:p-4 rounded-2xl bg-[#F0F4FD] border-2 border-[#00FB00] text-black text-xs sm:text-sm flex items-center space-x-3">
+          <div className="m-4 sm:m-6 p-3 sm:p-4 rounded-2xl bg-[#F0F4FD] border-2 border-[#23AC39] text-black text-xs sm:text-sm flex items-center space-x-3">
             <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-[#002DC2] shrink-0" />
             <div>
               <p className="font-bold text-[#123B92]">{successMsg}</p>
@@ -241,7 +241,7 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
             <button
               type="submit"
               disabled={loading}
-              className="py-3 px-6 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md hover:scale-105 transition-all flex items-center space-x-2 disabled:opacity-50 cursor-pointer"
+              className="py-3 px-6 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md hover:scale-105 transition-all flex items-center space-x-2 disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <>

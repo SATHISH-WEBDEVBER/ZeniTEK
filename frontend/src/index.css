@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --zenitek-green: #00FB00;
+  --zenitek-green: #23AC39;
   --zenitek-blue: #002DC2;
   --zenitek-navy: #123B92;
   --zenitek-black: #000000;
@@ -133,23 +133,23 @@
 }
 
 .glow-green {
-  box-shadow: 0 0 25px -5px rgba(0, 251, 0, 0.4);
+  box-shadow: 0 0 25px -5px rgba(35, 172, 57, 0.35);
 }
 
 /* Explicit 5-Color Class Utilities */
-.bg-zenitek-green { background-color: #00FB00 !important; }
+.bg-zenitek-green { background-color: #23AC39 !important; }
 .bg-zenitek-blue { background-color: #002DC2 !important; }
 .bg-zenitek-navy { background-color: #123B92 !important; }
 .bg-zenitek-black { background-color: #000000 !important; }
 .bg-zenitek-white { background-color: #FFFFFF !important; }
 
-.text-zenitek-green { color: #00FB00 !important; }
+.text-zenitek-green { color: #23AC39 !important; }
 .text-zenitek-blue { color: #002DC2 !important; }
 .text-zenitek-navy { color: #123B92 !important; }
 .text-zenitek-black { color: #000000 !important; }
 .text-zenitek-white { color: #FFFFFF !important; }
 
-.border-zenitek-green { border-color: #00FB00 !important; }
+.border-zenitek-green { border-color: #23AC39 !important; }
 .border-zenitek-blue { border-color: #002DC2 !important; }
 .border-zenitek-navy { border-color: #123B92 !important; }
 .border-zenitek-black { border-color: #000000 !important; }

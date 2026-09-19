@@ -137,7 +137,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
           <div className="pt-4">
             <button
               onClick={() => onOpenQuoteModal()}
-              className="px-8 py-3.5 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl hover:scale-105 transition-all shadow-md inline-flex items-center space-x-2 cursor-pointer"
+              className="px-8 py-3.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl hover:scale-105 transition-all shadow-md inline-flex items-center space-x-2 cursor-pointer"
             >
               <span>{t('consultEngineers')}</span>
               <ArrowRight className="w-4 h-4" />

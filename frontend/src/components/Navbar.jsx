@@ -44,7 +44,7 @@ export default function Navbar({ onOpenQuoteModal }) {
             {/* Quote CTA Button */}
             <button
               onClick={onOpenQuoteModal}
-              className="px-2 py-1.5 xs:px-2.5 xs:py-1.5 sm:px-4 sm:py-2 text-[10px] xs:text-[11px] sm:text-xs font-black uppercase tracking-wider text-black bg-[#00FB00] hover:bg-[#002DC2] hover:text-white rounded-lg sm:rounded-xl shadow transition-all flex items-center shrink-0 max-w-[125px] xs:max-w-[140px] sm:max-w-none text-ellipsis overflow-hidden whitespace-nowrap cursor-pointer"
+              className="px-2 py-1.5 xs:px-2.5 xs:py-1.5 sm:px-4 sm:py-2 text-[10px] xs:text-[11px] sm:text-xs font-black uppercase tracking-wider text-white bg-[#23AC39] hover:bg-[#002DC2] rounded-lg sm:rounded-xl shadow transition-all flex items-center shrink-0 max-w-[125px] xs:max-w-[140px] sm:max-w-none text-ellipsis overflow-hidden whitespace-nowrap cursor-pointer"
             >
               <span className="truncate">{t('getQuote')}</span>
               <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 ml-1 shrink-0 hidden sm:inline" />
@@ -68,27 +68,27 @@ export default function Navbar({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-1.5 lg:py-2 w-full">
             
-            <Link to="/" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname === '/' ? 'text-white bg-[#002DC2] shadow border border-[#00FB00]' : 'text-white/90 hover:text-white hover:bg-[#002DC2]/60'}`}>
+            <Link to="/" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname === '/' ? 'text-white bg-[#002DC2] shadow border border-[#23AC39]' : 'text-white/90 hover:text-white hover:bg-[#002DC2]/60'}`}>
               {t('navHome')}
             </Link>
 
-            <Link to="/about" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/about') ? 'text-white bg-[#002DC2] shadow border border-[#00FB00]' : 'text-white/90 hover:text-white hover:bg-[#002DC2]/60'}`}>
+            <Link to="/about" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/about') ? 'text-white bg-[#002DC2] shadow border border-[#23AC39]' : 'text-white/90 hover:text-white hover:bg-[#002DC2]/60'}`}>
               {t('navAbout')}
             </Link>
 
-            <Link to="/dryers" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/dryers') ? 'text-white bg-[#002DC2] shadow border border-[#00FB00]' : 'text-white/90 hover:text-white hover:bg-[#002DC2]/60'}`}>
+            <Link to="/dryers" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/dryers') ? 'text-white bg-[#002DC2] shadow border border-[#23AC39]' : 'text-white/90 hover:text-white hover:bg-[#002DC2]/60'}`}>
               {t('navDryers')}
             </Link>
 
-            <Link to="/applications" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/applications') ? 'text-white bg-[#002DC2] shadow border border-[#00FB00]' : 'text-white/90 hover:text-white hover:bg-[#002DC2]/60'}`}>
+            <Link to="/applications" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/applications') ? 'text-white bg-[#002DC2] shadow border border-[#23AC39]' : 'text-white/90 hover:text-white hover:bg-[#002DC2]/60'}`}>
               {t('navApplications')}
             </Link>
 
-            <Link to="/gallery" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/gallery') ? 'text-white bg-[#002DC2] shadow border border-[#00FB00]' : 'text-white/90 hover:text-white hover:bg-[#002DC2]/60'}`}>
+            <Link to="/gallery" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname.startsWith('/gallery') ? 'text-white bg-[#002DC2] shadow border border-[#23AC39]' : 'text-white/90 hover:text-white hover:bg-[#002DC2]/60'}`}>
               {t('navGallery')}
             </Link>
 
-            <Link to="/contact" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname === '/contact' ? 'text-white bg-[#002DC2] shadow border border-[#00FB00]' : 'text-white/90 hover:text-white hover:bg-[#002DC2]/60'}`}>
+            <Link to="/contact" className={`px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 rounded-xl text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${location.pathname === '/contact' ? 'text-white bg-[#002DC2] shadow border border-[#23AC39]' : 'text-white/90 hover:text-white hover:bg-[#002DC2]/60'}`}>
               {t('navContact')}
             </Link>
 
@@ -109,7 +109,7 @@ export default function Navbar({ onOpenQuoteModal }) {
           <div className="pt-3">
             <button
               onClick={onOpenQuoteModal}
-              className="w-full py-3 text-center text-xs font-black uppercase tracking-wider text-black bg-[#00FB00] hover:bg-[#002DC2] hover:text-white rounded-xl shadow cursor-pointer transition-all"
+              className="w-full py-3 text-center text-xs font-black uppercase tracking-wider text-white bg-[#23AC39] hover:bg-[#002DC2] rounded-xl shadow cursor-pointer transition-all"
             >
               {t('getQuote')}
             </button>

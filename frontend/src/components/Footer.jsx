@@ -161,7 +161,7 @@ export default function Footer({ onOpenQuoteModal }) {
                 <button
                   type="button"
                   onClick={onOpenQuoteModal}
-                  className="w-full py-2.5 px-4 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center space-x-1.5 transition-all shadow cursor-pointer active:scale-98"
+                  className="w-full py-2.5 px-4 bg-[#23AC39] hover:bg-[#002DC2] text-white rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center space-x-1.5 transition-all shadow cursor-pointer active:scale-98"
                 >
                   <span>{t('getQuote')}</span>
                   <ArrowRight className="w-3.5 h-3.5" />

@@ -95,7 +95,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
               <div className="text-[11px] text-black/70 font-medium mt-1">High rain & mold risk</div>
             </div>
 
-            <div className="p-4 rounded-2xl bg-[#F0F4FD] border-2 border-[#00FB00]">
+            <div className="p-4 rounded-2xl bg-[#F0F4FD] border-2 border-[#23AC39]">
               <div className="text-[11px] font-extrabold text-[#123B92] uppercase tracking-wider mb-1 flex items-center">
                 <Sparkles className="w-3.5 h-3.5 text-[#002DC2] mr-1" /> {t('solarDrying')}
               </div>
@@ -110,14 +110,14 @@ export default function ROICalculator({ onSelectModelQuote }) {
         <div className="lg:col-span-5 bg-[#123B92] text-white p-6 rounded-2xl border border-[#002DC2] shadow-lg flex flex-col justify-between space-y-6">
           
           <div>
-            <span className="text-[10px] font-black tracking-widest text-black bg-[#00FB00] px-2.5 py-1 rounded-full uppercase">
+            <span className="text-[10px] font-black tracking-widest text-white bg-[#23AC39] px-2.5 py-1 rounded-full uppercase">
               ESTIMATED RETURN ON INVESTMENT
             </span>
             
             <div className="mt-4 space-y-4">
               <div>
                 <div className="text-xs text-white/80">{t('priceIncrease')}</div>
-                <div className="text-2xl font-black text-[#00FB00]">+{cropData.premiumPercent}% Price Premium</div>
+                <div className="text-2xl font-black text-[#23AC39]">+{cropData.premiumPercent}% Price Premium</div>
               </div>
 
               <div className="pt-2 border-t border-[#002DC2]/50">
@@ -129,7 +129,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
 
               <div>
                 <div className="text-[11px] text-white/80">Est. Annual Value Addition (45 batches)</div>
-                <div className="text-lg font-bold text-[#00FB00]">₹{totalAnnualValueGain.toLocaleString('en-IN')} / year</div>
+                <div className="text-lg font-bold text-[#23AC39]">₹{totalAnnualValueGain.toLocaleString('en-IN')} / year</div>
               </div>
             </div>
           </div>
@@ -137,13 +137,13 @@ export default function ROICalculator({ onSelectModelQuote }) {
           <div className="p-3 bg-black/40 rounded-xl border border-[#002DC2]">
             <div className="text-[10px] font-bold uppercase text-white/80 tracking-wider">{t('recSetup')}</div>
             <div className="text-xs font-bold text-white mt-0.5 flex items-center">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#00FB00] mr-1 shrink-0" /> {recommendedModel}
+              <CheckCircle2 className="w-3.5 h-3.5 text-[#23AC39] mr-1 shrink-0" /> {recommendedModel}
             </div>
           </div>
 
           <button
             onClick={() => onSelectModelQuote(modelKey, harvestKg, selectedCrop)}
-            className="w-full py-3 px-4 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+            className="w-full py-3 px-4 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
           >
             <span>{t('getQuoteSetup')}</span>
             <ArrowRight className="w-4 h-4" />

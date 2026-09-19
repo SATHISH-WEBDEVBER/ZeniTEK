@@ -169,7 +169,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 href="https://wa.me/918098613422?text=Hi%20ZeniTEK%20Team!%20I%20want%20a%20quote%20for%20a%20ZeniTEK%20Solar%20Thermal%20Dryer."
                 target="_blank"
                 rel="noreferrer"
-                className="w-full py-3.5 px-4 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow flex items-center justify-center space-x-2 transition-all cursor-pointer"
+                className="w-full py-3.5 px-4 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow flex items-center justify-center space-x-2 transition-all cursor-pointer"
               >
                 <MessageCircle className="w-4 h-4 fill-current" />
                 <span>{t('chatWhatsapp')}</span>
@@ -185,7 +185,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
             <h3 className="text-xl font-bold text-[#123B92]">{t('preQualTitle')}</h3>
 
             {submitted ? (
-              <div className="p-6 rounded-2xl bg-[#F0F4FD] border-2 border-[#00FB00] text-center space-y-3">
+              <div className="p-6 rounded-2xl bg-[#F0F4FD] border-2 border-[#23AC39] text-center space-y-3">
                 <CheckCircle2 className="w-10 h-10 text-[#002DC2] mx-auto" />
                 <h4 className="text-lg font-bold text-[#123B92]">Thank You for Reaching Out!</h4>
                 <p className="text-xs text-black/70">
@@ -279,7 +279,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3.5 px-6 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow transition-all flex items-center justify-center space-x-2 cursor-pointer"
+                  className="w-full py-3.5 px-6 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow transition-all flex items-center justify-center space-x-2 cursor-pointer"
                 >
                   {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <span>{t('submitProposal')}</span>}
                 </button>
@@ -310,9 +310,9 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
       </section>
 
       {/* CSR Banner */}
-      <section className="bg-[#123B92] text-white p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border-2 border-[#00FB00]">
+      <section className="bg-[#123B92] text-white p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border-2 border-[#23AC39]">
         <div className="space-y-2">
-          <span className="text-[10px] font-bold text-[#00FB00] bg-black/40 px-2.5 py-0.5 rounded uppercase border border-[#00FB00]/50">
+          <span className="text-[10px] font-bold text-[#23AC39] bg-black/40 px-2.5 py-0.5 rounded uppercase border border-[#23AC39]/50">
             {t('csrBadge')}
           </span>
           <h3 className="text-2xl font-bold text-white">{t('csrTitle')}</h3>
@@ -323,7 +323,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
 
         <button
           onClick={() => onOpenQuoteModal({ clientType: 'NGO / CSR Partner' })}
-          className="py-3 px-6 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow transition-all shrink-0 cursor-pointer"
+          className="py-3 px-6 bg-[#23AC39] hover:bg-[#002DC2] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow transition-all shrink-0 cursor-pointer"
         >
           {t('csrBtn')}
         </button>

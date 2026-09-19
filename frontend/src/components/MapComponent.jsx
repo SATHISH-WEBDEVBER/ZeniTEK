@@ -326,7 +326,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
               }}
               className={`text-[11px] px-3 py-1 rounded-xl font-bold transition-all shrink-0 flex items-center space-x-1.5 cursor-pointer ${
                 selectedState === st.name 
-                  ? 'bg-[#002DC2] text-white shadow-sm ring-2 ring-[#00FB00]' 
+                  ? 'bg-[#002DC2] text-white shadow-sm ring-2 ring-[#23AC39]' 
                   : 'bg-white text-black hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/20'
               }`}
             >
@@ -420,7 +420,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                     onClick={() => handleSelectProjectFromList(proj)}
                     className={`p-3 rounded-xl border cursor-pointer transition-all group shadow-xs ${
                       isSelected
-                        ? 'bg-white border-[#002DC2] ring-2 ring-[#00FB00]'
+                        ? 'bg-white border-[#002DC2] ring-2 ring-[#23AC39]'
                         : 'bg-white hover:bg-white border-[#123B92]/20 hover:border-[#002DC2]'
                     }`}
                   >
@@ -430,7 +430,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                       }`}>
                         {proj.title}
                       </h4>
-                      <span className="text-[9px] font-bold text-black bg-[#00FB00] px-1.5 py-0.5 rounded border border-[#00FB00] shrink-0">
+                      <span className="text-[9px] font-bold text-white bg-[#23AC39] px-1.5 py-0.5 rounded border border-[#23AC39] shrink-0">
                         {proj.capacity}
                       </span>
                     </div>
@@ -549,7 +549,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                       <div onClick={() => setSelectedDetailProject(p)} className="cursor-pointer space-y-0.5 min-w-0">
                         <div className="flex items-center justify-between text-[8.5px] uppercase font-extrabold text-[#002DC2] tracking-wider leading-none">
                           <span>{p.dryerType}</span>
-                          <span className="text-[8px] font-bold text-black bg-[#00FB00] px-1 py-0.2 rounded border border-[#00FB00]">
+                          <span className="text-[8px] font-bold text-white bg-[#23AC39] px-1 py-0.2 rounded border border-[#23AC39]">
                             {p.capacity}
                           </span>
                         </div>
@@ -575,7 +575,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                             e.stopPropagation();
                             setSelectedDetailProject(p);
                           }}
-                          className="w-full text-[9.5px] font-bold text-black bg-[#00FB00] hover:bg-[#002DC2] hover:text-white py-1 px-2 rounded-md shadow-2xs text-center flex items-center justify-center space-x-1 transition-colors cursor-pointer active:scale-98"
+                          className="w-full text-[9.5px] font-bold text-white bg-[#23AC39] hover:bg-[#002DC2] py-1 px-2 rounded-md shadow-2xs text-center flex items-center justify-center space-x-1 transition-colors cursor-pointer active:scale-98"
                         >
                           <Info className="w-2.5 h-2.5" />
                           <span>View Case Study & Video</span>

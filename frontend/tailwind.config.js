@@ -19,7 +19,7 @@ export default {
     extend: {
       colors: {
         zenitek: {
-          green: '#00FB00',
+          green: '#23AC39',
           blue: '#002DC2',
           navy: '#123B92',
           black: '#000000',
@@ -33,10 +33,10 @@ export default {
             bright: '#002DC2'
           },
           green: {
-            DEFAULT: '#00FB00', // Electric Green
-            light: '#00FB00',
-            dark: '#008f00',
-            deep: '#006600'
+            DEFAULT: '#23AC39', // Official Logo Green
+            light: '#23AC39',
+            dark: '#1a822b',
+            deep: '#125c1e'
           },
           navy: '#123B92',
           black: '#000000',

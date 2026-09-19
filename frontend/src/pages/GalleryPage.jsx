@@ -111,7 +111,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                 onClick={() => setActiveCategory(cat.id)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 cursor-pointer ${
                   activeCategory === cat.id
-                    ? 'bg-[#002DC2] text-white shadow-md ring-2 ring-[#00FB00]'
+                    ? 'bg-[#002DC2] text-white shadow-md ring-2 ring-[#23AC39]'
                     : 'bg-white text-black hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/20'
                 }`}
               >
@@ -173,7 +173,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                           <span>{item.location}{item.state ? `, ${item.state}` : ''}</span>
                         </div>
                         {item.capacity && (
-                          <span className="text-[10px] text-black bg-[#00FB00] px-2 py-0.5 rounded border border-[#00FB00] font-bold shrink-0">
+                          <span className="text-[10px] text-white bg-[#23AC39] px-2 py-0.5 rounded border border-[#23AC39] font-bold shrink-0">
                             {item.capacity}
                           </span>
                         )}
@@ -207,9 +207,9 @@ export default function GalleryPage({ onOpenQuoteModal }) {
       {/* SECTION 3: SUBSIDY ASSISTANCE CTA BANNER (ODD: WHITE) */}
       <section className="w-full section-odd py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#123B92] text-white rounded-3xl p-6 sm:p-10 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border-2 border-[#00FB00]">
+          <div className="bg-[#123B92] text-white rounded-3xl p-6 sm:p-10 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border-2 border-[#23AC39]">
             <div className="space-y-2 text-center md:text-left">
-              <span className="text-[10px] font-bold text-[#00FB00] bg-black/40 px-3 py-1 rounded-full uppercase tracking-wider border border-[#00FB00]/50">
+              <span className="text-[10px] font-bold text-[#23AC39] bg-black/40 px-3 py-1 rounded-full uppercase tracking-wider border border-[#23AC39]/50">
                 Turnkey Manufacturing & Field Commissioning
               </span>
               <h3 className="text-xl sm:text-2xl font-black text-white">
@@ -223,7 +223,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
             <div className="flex items-center space-x-3 shrink-0">
               <button
                 onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: 'Complete Turnkey Dryer Project' })}
-                className="py-3.5 px-6 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all hover:scale-105 cursor-pointer"
+                className="py-3.5 px-6 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all hover:scale-105 cursor-pointer"
               >
                 Get Turnkey Quote
               </button>
@@ -243,9 +243,9 @@ export default function GalleryPage({ onOpenQuoteModal }) {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="px-5 py-3.5 bg-[#123B92] text-white flex items-center justify-between border-b-2 border-[#00FB00] shrink-0">
+            <div className="px-5 py-3.5 bg-[#123B92] text-white flex items-center justify-between border-b-2 border-[#23AC39] shrink-0">
               <div className="flex items-center space-x-2">
-                <span className="text-[10px] font-black uppercase bg-black/40 text-[#00FB00] border border-[#00FB00]/50 px-2.5 py-0.5 rounded">
+                <span className="text-[10px] font-black uppercase bg-black/40 text-[#23AC39] border border-[#23AC39]/50 px-2.5 py-0.5 rounded">
                   {selectedPhoto.categoryLabel || selectedPhoto.category}
                 </span>
                 <h3 className="text-sm font-bold text-white line-clamp-1">
@@ -300,7 +300,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                   setSelectedPhoto(null);
                   if (onOpenQuoteModal) onOpenQuoteModal({ capacityNeeded: targetItem.productModel || targetItem.title });
                 }}
-                className="px-5 py-2.5 bg-[#00FB00] hover:bg-[#002DC2] text-black hover:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md cursor-pointer shrink-0"
+                className="px-5 py-2.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md cursor-pointer shrink-0"
               >
                 Enquire About This Setup
               </button>
