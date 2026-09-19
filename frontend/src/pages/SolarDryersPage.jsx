@@ -14,7 +14,8 @@ import MapComponent from '../components/MapComponent';
 import {
   MapPin, Calendar, Search, Filter, Sparkles, ArrowRight, ShieldCheck,
   CheckCircle2, X, PhoneCall, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight,
-  SlidersHorizontal, Eye, LayoutGrid, Sun, Wind, Droplets, Cpu, Shield, Zap, Maximize2, Download, Layers, Grid, FileText
+  SlidersHorizontal, Eye, LayoutGrid, Sun, Wind, Droplets, Cpu, Shield, Zap, Maximize2, Download, Layers, Grid, FileText,
+  Camera, Image as ImageIcon
 } from 'lucide-react';
 
 export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal }) {
@@ -208,6 +209,12 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                 className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-white font-bold shrink-0 transition-colors"
               >
                 📑 Official PDF Catalog
+              </button>
+              <button
+                onClick={() => scrollToSection('real-photos-section')}
+                className="px-3 py-1.5 rounded-xl bg-amber-500/30 hover:bg-amber-500/50 border border-amber-400/40 text-amber-200 font-bold shrink-0 transition-colors"
+              >
+                📷 Real Photos Gallery (45)
               </button>
               <button
                 onClick={() => scrollToSection('map-section')}
@@ -605,6 +612,105 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
           ))}
         </div>
 
+      </section>
+
+
+      {/* SECTION 5.5: AUTHENTIC REAL OPERATIONAL FIELD PHOTOGRAPHY (45 MASTER REAL PHOTOS) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6" id="real-photos-section">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-4">
+          <div className="space-y-1">
+            <span className="text-[11px] font-bold text-amber-800 uppercase tracking-widest bg-amber-50 px-3 py-1 rounded-full border border-amber-200 inline-flex items-center">
+              <Camera className="w-3.5 h-3.5 mr-1 text-amber-600" /> 100% Authentic Field Photography
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-blue-950">
+              Real Operational Solar Dryers in Action
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 font-medium">
+              Real high-resolution photographs of commercial walk-in polyhouse tunnels, compact box dryers, SS304 food-grade trays, and produce drying.
+            </p>
+          </div>
+
+          <Link
+            to="/gallery"
+            className="inline-flex items-center space-x-2 px-5 py-2.5 bg-gradient-to-r from-blue-900 to-blue-800 hover:from-blue-800 hover:to-blue-700 text-white font-bold text-xs rounded-2xl shadow-md hover:shadow-lg transition-all shrink-0 group"
+          >
+            <ImageIcon className="w-4 h-4 text-green-400 group-hover:scale-110 transition-transform" />
+            <span>Open All 45 Real Photos Gallery</span>
+            <ArrowRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+
+        {/* Highlighted Real Photo Grid (8 Distinct Shots) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {zenitekRealGallery.slice(0, 8).map((photo) => (
+            <div
+              key={photo.id}
+              onClick={() => navigate('/gallery')}
+              className="bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-blue-500 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col justify-between"
+            >
+              <div>
+                <div className="relative h-48 bg-slate-900 overflow-hidden">
+                  <img
+                    src={photo.image}
+                    alt={photo.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <span className="absolute top-2 left-2 bg-blue-950/90 text-white font-bold text-[9px] px-2 py-0.5 rounded backdrop-blur-sm">
+                    {photo.category.replace('_', ' ').toUpperCase()}
+                  </span>
+                  {photo.crop && (
+                    <span className="absolute top-2 right-2 bg-green-700/90 text-white font-bold text-[9px] px-2 py-0.5 rounded backdrop-blur-sm">
+                      {photo.crop}
+                    </span>
+                  )}
+                  <div className="absolute inset-0 bg-blue-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="px-3 py-1.5 bg-white/95 text-blue-950 font-black text-[11px] rounded-lg shadow flex items-center space-x-1 backdrop-blur-sm">
+                      <Maximize2 className="w-3 h-3" />
+                      <span>View in HD Gallery</span>
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-3.5 space-y-1">
+                  <h4 className="text-xs font-black text-slate-900 group-hover:text-blue-700 transition-colors line-clamp-1">
+                    {photo.title}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 line-clamp-2 leading-relaxed">
+                    {photo.description}
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-3.5 pt-0 border-t border-slate-100 mt-2 flex items-center justify-between text-[10px] text-slate-500 font-semibold">
+                <span>{photo.productModel}</span>
+                <span className="text-blue-700 font-bold group-hover:underline flex items-center">
+                  Full View <ArrowRight className="w-2.5 h-2.5 ml-0.5" />
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Gallery CTA Banner */}
+        <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white p-6 rounded-3xl border border-blue-800/40 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="space-y-1 text-center sm:text-left">
+            <h3 className="text-lg font-black text-white flex items-center justify-center sm:justify-start gap-2">
+              <Sparkles className="w-5 h-5 text-amber-400" />
+              Looking for More Site Photos & Factory Trays?
+            </h3>
+            <p className="text-xs text-blue-200">
+              Browse all 45 real photographs filtered by Polyhouse Tunnels, Internal Trolleys & Trays, Box Dryers, SS304 Trays, and Packaging.
+            </p>
+          </div>
+          <Link
+            to="/gallery"
+            className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-black text-xs rounded-2xl shadow-lg hover:shadow-xl transition-all shrink-0 flex items-center space-x-2"
+          >
+            <span>Browse Full Gallery (45 Photos)</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
       </section>
 
 
