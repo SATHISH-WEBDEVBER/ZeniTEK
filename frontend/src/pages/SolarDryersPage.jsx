@@ -8,6 +8,7 @@ import {
   brochurePages, 
   brochureKeyBenefits 
 } from '../data/zenitekBrochureData';
+import { zenitekRealGallery } from '../data/zenitekRealGalleryData';
 import { useLanguage } from '../context/LanguageContext';
 import MapComponent from '../components/MapComponent';
 import {

@@ -45,8 +45,8 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
           <div className="lg:col-span-6 relative">
             <img
-              src="https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&w=800&q=80"
-              alt="Coimbatore Factory Facility"
+              src="/real-photos/zenitek_photo_19.jpeg"
+              alt="ZeniTEK Solar Polyhouse Facility"
               className="w-full h-80 object-cover rounded-2xl border border-slate-200 shadow-md"
             />
           </div>

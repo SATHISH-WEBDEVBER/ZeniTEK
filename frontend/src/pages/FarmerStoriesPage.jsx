@@ -109,7 +109,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
 
         <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-md grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-4">
-            <img src="https://images.unsplash.com/photo-1546554137-f86b9593a222?auto=format&fit=crop&w=600&q=80" alt="Pollachi Copra Case" className="w-full h-56 object-cover rounded-2xl border border-slate-200" />
+            <img src="/real-photos/zenitek_photo_02.jpeg" alt="Commercial Field Case Study" className="w-full h-56 object-cover rounded-2xl border border-slate-200" />
           </div>
           <div className="lg:col-span-8 space-y-3">
             <span className="text-[10px] font-bold text-green-800 bg-green-50 border border-green-200 px-2.5 py-0.5 rounded uppercase">

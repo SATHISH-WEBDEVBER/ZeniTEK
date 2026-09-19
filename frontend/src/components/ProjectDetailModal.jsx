@@ -9,7 +9,7 @@ export default function ProjectDetailModal({ isOpen, onClose, project, onEnquire
 
   if (!isOpen || !project) return null;
 
-  const photos = project.photos && project.photos.length > 0 ? project.photos : [project.imageUrl || "https://images.unsplash.com/photo-1546554137-f86b9593a222?auto=format&fit=crop&w=800&q=80"];
+  const photos = project.photos && project.photos.length > 0 ? project.photos : [project.imageUrl || "/real-photos/zenitek_photo_18.jpeg"];
   const stats = project.dryingStats || {
     originalDays: "7 Days Open Sun",
     solarDays: "2.5 Days Solar",

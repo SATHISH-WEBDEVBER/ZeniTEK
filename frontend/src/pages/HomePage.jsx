@@ -97,8 +97,8 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-xl group">
                 <img
-                  src="https://images.unsplash.com/photo-1546554137-f86b9593a222?auto=format&fit=crop&w=1000&q=80"
-                  alt="ZeniTEK Polyhouse Solar Dryer"
+                  src="/real-photos/zenitek_photo_18.jpeg"
+                  alt="ZeniTEK Commercial Solar Polyhouse Dryer"
                   className="w-full h-[380px] sm:h-[400px] object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
@@ -109,8 +109,8 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                       <ShieldCheck className="w-5 h-5" />
                     </div>
                     <div>
-                      <div className="text-xs font-bold text-slate-900">Polyhouse Green House Dryer</div>
-                      <div className="text-[10px] text-green-700 font-semibold">Coimbatore Manufacturing Hub</div>
+                      <div className="text-xs font-bold text-slate-900">Commercial Solar Polyhouse Tunnel</div>
+                      <div className="text-[10px] text-green-700 font-semibold">ZeniTEK Manufacturing & Field Site</div>
                     </div>
                   </div>
                   <span className="text-[9px] bg-green-700 text-white font-bold px-2 py-1 rounded uppercase shrink-0">

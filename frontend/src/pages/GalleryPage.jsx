@@ -1,211 +1,312 @@
-import { sampleGalleryItems } from '../data/sampleData';
+import React, { useState, useMemo } from 'react';
+import { zenitekRealGallery } from '../data/zenitekRealGalleryData';
 import { brochurePages } from '../data/zenitekBrochureData';
-import { Camera, Filter, MapPin, X, ArrowRight, Sun, ZoomIn, ShieldCheck, FileText } from 'lucide-react';
+import { 
+  Camera, Filter, MapPin, X, ArrowRight, Sun, ZoomIn, ShieldCheck, 
+  Download, Layers, Grid, Sparkles, CheckCircle2, SlidersHorizontal, Info, Tag
+} from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function GalleryPage({ onOpenQuoteModal }) {
   const [activeCategory, setActiveCategory] = useState('all');
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const { t } = useLanguage();
 
-  const allGalleryItems = React.useMemo(() => {
-    const brochureItems = brochurePages.map(bp => ({
-      id: `brochure-${bp.page}`,
-      title: `Page ${bp.page}: ${bp.title}`,
+  // Combine real master photographs with brochure pages into a single gallery
+  const masterGalleryItems = useMemo(() => {
+    const brochureItems = brochurePages.map((bp) => ({
+      id: `brochure-p${bp.page}`,
+      title: `Brochure Page ${bp.page}: ${bp.title}`,
       category: 'brochure',
-      location: 'Official Technical Brochure',
-      modelName: bp.category,
-      imageUrl: bp.image,
-      caption: bp.summary
+      categoryLabel: 'Official PDF Brochure',
+      image: bp.image,
+      thumbnail: bp.image,
+      location: 'Official Documentation',
+      state: 'All India',
+      productModel: bp.category,
+      dimensions: bp.floorArea,
+      capacity: bp.trayArea,
+      crop: 'Technical Guide',
+      description: bp.summary
     }));
-    return [...sampleGalleryItems, ...brochureItems];
+
+    return [...zenitekRealGallery, ...brochureItems];
   }, []);
 
-  const filteredItems = activeCategory === 'all'
-    ? allGalleryItems
-    : allGalleryItems.filter(item => item.category === activeCategory);
+  // Filter items by category and search
+  const filteredItems = useMemo(() => {
+    return masterGalleryItems.filter((item) => {
+      const matchesCat = activeCategory === 'all' || item.category === activeCategory;
+      const q = searchQuery.trim().toLowerCase();
+      const matchesSearch = !q ||
+        item.title.toLowerCase().includes(q) ||
+        (item.location && item.location.toLowerCase().includes(q)) ||
+        (item.state && item.state.toLowerCase().includes(q)) ||
+        (item.productModel && item.productModel.toLowerCase().includes(q)) ||
+        (item.crop && item.crop.toLowerCase().includes(q));
+
+      return matchesCat && matchesSearch;
+    });
+  }, [masterGalleryItems, activeCategory, searchQuery]);
 
   const categories = [
-    { id: 'all', label: t('catAll') },
-    { id: 'brochure', label: 'Official PDF Brochure (9 Pages)' },
-    { id: 'installations', label: t('catInstallations') },
-    { id: 'models', label: t('catModels') },
-    { id: 'produce', label: t('catProduce') },
-    { id: 'factory', label: t('catFactory') },
+    { id: 'all', label: 'All Photographs', count: masterGalleryItems.length },
+    { id: 'tunnel_external', label: 'Polyhouse Tunnels', count: masterGalleryItems.filter(i => i.category === 'tunnel_external').length },
+    { id: 'tunnel_internal', label: 'Tunnel Interior & Trays', count: masterGalleryItems.filter(i => i.category === 'tunnel_internal').length },
+    { id: 'box_dryers', label: 'Box Type Dryers', count: masterGalleryItems.filter(i => i.category === 'box_dryers').length },
+    { id: 'trays_produce', label: 'Produce & SS304 Trays', count: masterGalleryItems.filter(i => i.category === 'trays_produce').length },
+    { id: 'engineering', label: 'Engineering & Packaging', count: masterGalleryItems.filter(i => i.category === 'engineering').length },
+    { id: 'brochure', label: 'Official PDF Brochure (9)', count: 9 },
   ];
 
   return (
-    <div className="space-y-16 pb-16 pt-6 bg-slate-50 text-slate-900">
+    <div className="space-y-12 pb-20 pt-6 bg-slate-50 text-slate-900 min-h-screen">
       
-      {/* Hero Banner */}
+      {/* SECTION 1: HERO BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-        <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 border border-green-200 px-3.5 py-1 rounded-full inline-flex items-center space-x-1.5">
-          <Camera className="w-3.5 h-3.5 mr-1" /> {t('galleryBadge')}
-        </span>
-        <h1 className="text-4xl sm:text-5xl font-black text-blue-950">
-          {t('galleryTitle1')} <br />
-          <span className="text-green-700">
-            {t('galleryTitle2')}
+        <div className="inline-flex items-center space-x-1.5 px-3.5 py-1 rounded-full bg-green-50 border border-green-200 text-green-700 text-xs font-bold uppercase tracking-widest shadow-xs">
+          <Camera className="w-3.5 h-3.5" />
+          <span>Authentic Field & Manufacturing Gallery</span>
+        </div>
+
+        <h1 className="text-3xl sm:text-5xl font-black text-blue-950 tracking-tight leading-tight">
+          ZeniTEK Solar Drying Systems <br />
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-600">
+            Real Installation & Product Photographs
           </span>
         </h1>
-        <p className="text-sm text-slate-600 max-w-2xl mx-auto font-medium">
-          {t('gallerySubtitle')}
+
+        <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
+          Explore authentic photographs of our commercial walk-in solar polyhouses, SS304 food-grade trolley trays, portable box dryers, and manufacturing craftsmanship across India.
         </p>
 
-        {/* Category Filter Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-2 pt-4">
-          {categories.map(cat => (
+        {/* Quick Search & Category Bar */}
+        <div className="max-w-md mx-auto pt-2">
+          <div className="relative">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by crop, model, location, or state..."
+              className="w-full bg-white border border-slate-300 rounded-2xl px-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 shadow-sm"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3.5 top-2.5 text-xs font-bold text-slate-400 hover:text-slate-600"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Filter Chips */}
+        <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+          {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center shadow-sm ${activeCategory === cat.id ? 'bg-blue-700 text-white shadow-md scale-105' : 'bg-white text-slate-700 hover:text-blue-700 border border-slate-300'}`}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 cursor-pointer shadow-xs ${
+                activeCategory === cat.id
+                  ? 'bg-blue-800 text-white shadow-md ring-2 ring-blue-300 scale-102'
+                  : 'bg-white text-slate-700 hover:text-blue-700 hover:bg-slate-100 border border-slate-200'
+              }`}
             >
-              {cat.label}
+              <span>{cat.label}</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                activeCategory === cat.id ? 'bg-blue-950 text-blue-100' : 'bg-slate-100 text-slate-500'
+              }`}>
+                {cat.count}
+              </span>
             </button>
           ))}
         </div>
       </section>
 
-      {/* Gallery Grid */}
+      {/* SECTION 2: GALLERY GRID (AUTHENTIC PHOTOGRAPHS WITH SPECS) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredItems.map(item => (
-            <div
-              key={item.id}
-              onClick={() => setSelectedItem(item)}
-              className="group bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
-            >
-              <div>
-                <div className="relative h-64 overflow-hidden bg-slate-100">
-                  <img
-                    src={item.imageUrl}
-                    alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
-                    <span className="px-4 py-2 bg-white/90 text-slate-900 font-bold text-xs rounded-xl shadow flex items-center space-x-1.5 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                      <ZoomIn className="w-4 h-4 text-blue-700" />
-                      <span>{t('viewEnlarged')}</span>
+        {filteredItems.length === 0 ? (
+          <div className="p-12 text-center bg-white rounded-3xl border border-slate-200 text-slate-500 text-xs">
+            No photographs match your current filter. Try selecting "All Photographs" or clearing search.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredItems.map((item) => (
+              <div
+                key={item.id}
+                onClick={() => setSelectedPhoto(item)}
+                className="group bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
+              >
+                <div>
+                  {/* Photo Container */}
+                  <div className="relative h-64 overflow-hidden bg-slate-900 border-b border-slate-200">
+                    <img
+                      src={item.thumbnail || item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+
+                    <div className="absolute inset-0 bg-slate-950/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                      <span className="px-4 py-2 bg-white/95 text-slate-900 font-extrabold text-xs rounded-xl shadow-lg flex items-center space-x-1.5 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                        <ZoomIn className="w-3.5 h-3.5 text-blue-700" />
+                        <span>View High-Res Photo</span>
+                      </span>
+                    </div>
+
+                    <span className="absolute top-3 left-3 bg-blue-900/90 backdrop-blur-md text-white font-black text-[10px] uppercase px-2.5 py-1 rounded-md shadow">
+                      {item.categoryLabel || item.category}
                     </span>
+
+                    {item.productModel && (
+                      <span className="absolute top-3 right-3 bg-emerald-700 text-white font-bold text-[10px] px-2 py-0.5 rounded shadow">
+                        {item.productModel}
+                      </span>
+                    )}
                   </div>
 
-                  <span className="absolute top-3 left-3 bg-blue-900/90 backdrop-blur-md text-white font-bold text-[10px] uppercase px-2.5 py-1 rounded-md shadow">
-                    {item.modelName}
-                  </span>
-                </div>
+                  {/* Photo Details */}
+                  <div className="p-5 space-y-2.5">
+                    <div className="flex items-center justify-between text-[11px] font-bold text-blue-800">
+                      <div className="flex items-center line-clamp-1">
+                        <MapPin className="w-3.5 h-3.5 mr-1 text-green-600 shrink-0" />
+                        <span>{item.location}{item.state ? `, ${item.state}` : ''}</span>
+                      </div>
+                      {item.capacity && (
+                        <span className="text-[10px] text-green-700 bg-green-50 px-2 py-0.5 rounded border border-green-200 shrink-0">
+                          {item.capacity}
+                        </span>
+                      )}
+                    </div>
 
-                <div className="p-5 space-y-2">
-                  <div className="flex items-center text-[11px] font-bold text-blue-700">
-                    <MapPin className="w-3.5 h-3.5 mr-1 text-green-600 shrink-0" />
-                    <span>{item.location}</span>
+                    <h3 className="text-sm font-black text-slate-900 group-hover:text-blue-700 transition-colors leading-snug line-clamp-1">
+                      {item.title}
+                    </h3>
+
+                    <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                      {item.description}
+                    </p>
+
+                    {item.crop && (
+                      <div className="pt-2 border-t border-slate-100 flex items-center text-[10.5px] text-slate-500 font-semibold">
+                        <Tag className="w-3 h-3 mr-1 text-slate-400" />
+                        <span className="line-clamp-1">{item.crop}</span>
+                      </div>
+                    )}
                   </div>
+                </div>
 
-                  <h3 className="text-base font-extrabold text-slate-900 group-hover:text-blue-700 transition-colors">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
-                    {item.caption}
-                  </p>
+                <div className="px-5 pb-4 pt-0">
+                  <div className="text-[11px] font-bold text-blue-700 group-hover:text-blue-800 flex items-center transition-colors">
+                    <span>Click to Inspect Specifications</span>
+                    <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                  </div>
                 </div>
               </div>
-
-              <div className="px-5 pb-5 pt-0">
-                <div className="text-[11px] font-bold text-slate-400 group-hover:text-blue-600 flex items-center transition-colors">
-                  <span>{t('clickFullSpec')}</span>
-                  <ArrowRight className="w-3.5 h-3.5 ml-1" />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
 
-      {/* Subsidy CTA Banner */}
+      {/* SECTION 3: SUBSIDY ASSISTANCE CTA BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-blue-950 via-blue-900 to-green-900 text-white rounded-3xl p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="bg-gradient-to-r from-blue-950 via-blue-900 to-green-900 text-white rounded-3xl p-6 sm:p-10 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border border-blue-800/40">
           <div className="space-y-2 text-center md:text-left">
-            <span className="text-[10px] font-bold text-green-300 bg-blue-950 px-2.5 py-0.5 rounded uppercase">
-              {t('customDryerBadge')}
+            <span className="text-[10px] font-bold text-green-300 bg-blue-950 px-3 py-1 rounded-full uppercase tracking-wider border border-green-500/30">
+              Turnkey Manufacturing & Field Commissioning
             </span>
-            <h3 className="text-xl sm:text-2xl font-bold">{t('customDryerTitle')}</h3>
-            <p className="text-xs text-blue-100 max-w-xl">
-              {t('customDryerDesc')}
+            <h3 className="text-xl sm:text-2xl font-black">
+              Looking for a Complete Commercial Polyhouse Dryer Installation?
+            </h3>
+            <p className="text-xs sm:text-sm text-blue-100 max-w-xl">
+              ZeniTEK handles structural engineering, CNC fabrication, food-grade SS304 tray carts, and government subsidy paperwork end-to-end.
             </p>
           </div>
 
-          <button
-            onClick={() => onOpenQuoteModal()}
-            className="py-3.5 px-6 bg-green-600 hover:bg-green-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all shrink-0"
-          >
-            {t('getQuote')}
-          </button>
+          <div className="flex items-center space-x-3 shrink-0">
+            <button
+              onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: 'Complete Turnkey Dryer Project' })}
+              className="py-3.5 px-6 bg-green-600 hover:bg-green-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all hover:scale-105 cursor-pointer"
+            >
+              Get Turnkey Quote
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* Lightbox / Modal */}
-      {selectedItem && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-4xl bg-white rounded-3xl border border-slate-200 shadow-2xl overflow-hidden max-h-[92vh] flex flex-col">
-            
+      {/* LIGHTBOX MODAL: FULL HIGH-RES PHOTO VIEWER WITH COMPLETE SPECS */}
+      {selectedPhoto && (
+        <div 
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 bg-slate-950/85 backdrop-blur-md animate-fade-in"
+          onClick={() => setSelectedPhoto(null)}
+        >
+          <div 
+            className="relative bg-white rounded-3xl max-w-5xl w-full max-h-[95vh] flex flex-col overflow-hidden shadow-2xl border border-slate-200"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-blue-950 via-blue-900 to-green-900 text-white">
-              <div>
-                <span className="text-[10px] font-bold text-green-300 bg-blue-950 px-2 py-0.5 rounded uppercase tracking-wider">
-                  {selectedItem.modelName}
+            <div className="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800 shrink-0">
+              <div className="flex items-center space-x-2">
+                <span className="text-[10px] font-black uppercase bg-green-600 text-white px-2.5 py-0.5 rounded">
+                  {selectedPhoto.categoryLabel || selectedPhoto.category}
                 </span>
-                <h3 className="text-lg sm:text-xl font-bold mt-0.5">{selectedItem.title}</h3>
+                <h3 className="text-sm font-bold text-white line-clamp-1">
+                  {selectedPhoto.title}
+                </h3>
               </div>
-              <button
-                onClick={() => setSelectedItem(null)}
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
+
+              <div className="flex items-center space-x-2">
+                <a
+                  href={selectedPhoto.image}
+                  download={selectedPhoto.title.replace(/\s+/g, '_') + '.jpg'}
+                  className="px-3 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-xs font-bold text-white flex items-center space-x-1 transition-colors"
+                  title="Download High-Res Master Image"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Save Image</span>
+                </a>
+                <button
+                  onClick={() => setSelectedPhoto(null)}
+                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
-            {/* Modal Body */}
-            <div className="p-6 overflow-y-auto space-y-4">
-              <div className="relative rounded-2xl overflow-hidden border border-slate-200 h-80 sm:h-96 bg-slate-950">
-                <img
-                  src={selectedItem.imageUrl}
-                  alt={selectedItem.title}
-                  className="w-full h-full object-contain"
-                />
-              </div>
+            {/* Photo Viewport */}
+            <div className="p-2 sm:p-4 overflow-auto flex-1 bg-slate-950 flex items-center justify-center">
+              <img
+                src={selectedPhoto.image}
+                alt={selectedPhoto.title}
+                className="max-w-full max-h-[70vh] object-contain rounded-xl shadow-lg border border-slate-800"
+              />
+            </div>
 
-              <div className="space-y-2">
-                <div className="flex items-center text-xs font-bold text-blue-700">
-                  <MapPin className="w-4 h-4 mr-1 text-green-600 shrink-0" />
-                  <span>{t('locationLabel')} {selectedItem.location}</span>
+            {/* Specifications & Location Bar */}
+            <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 shrink-0 text-xs">
+              <div className="space-y-1 text-center sm:text-left">
+                <div className="flex flex-wrap items-center gap-2 justify-center sm:justify-start">
+                  <span className="font-extrabold text-blue-950">{selectedPhoto.productModel || selectedPhoto.title}</span>
+                  {selectedPhoto.dimensions && <span className="text-slate-500">• Dimensions: {selectedPhoto.dimensions}</span>}
+                  {selectedPhoto.capacity && <span className="text-green-700 font-bold">• Capacity: {selectedPhoto.capacity}</span>}
                 </div>
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium bg-slate-50 p-4 rounded-xl border border-slate-200">
-                  {selectedItem.caption}
+                <p className="text-[11.5px] text-slate-600 leading-relaxed font-medium">
+                  {selectedPhoto.description}
                 </p>
               </div>
-            </div>
-
-            {/* Modal Footer */}
-            <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between bg-slate-50">
-              <button
-                onClick={() => setSelectedItem(null)}
-                className="px-4 py-2 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-xl text-xs font-bold transition-colors"
-              >
-                {t('close')}
-              </button>
 
               <button
                 onClick={() => {
-                  const item = selectedItem;
-                  setSelectedItem(null);
-                  if (onOpenQuoteModal) {
-                    onOpenQuoteModal({ capacityNeeded: item.modelName, district: item.location });
-                  }
+                  const targetItem = selectedPhoto;
+                  setSelectedPhoto(null);
+                  if (onOpenQuoteModal) onOpenQuoteModal({ capacityNeeded: targetItem.productModel || targetItem.title });
                 }}
-                className="px-6 py-2.5 bg-gradient-to-r from-blue-700 via-blue-600 to-green-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow hover:scale-105 transition-all flex items-center space-x-1.5"
+                className="px-5 py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow cursor-pointer shrink-0"
               >
-                <span>{t('requestQuoteForModel')}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                Enquire About This Setup
               </button>
             </div>
 
