@@ -420,3 +420,34 @@
 .animate-progress-5s {
   animation: progress5s 5000ms linear forwards;
 }
+
+/* Continuous Horizontal Right-to-Left Infinite Marquee */
+@keyframes marqueeLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-continuous {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marqueeLeft 35s linear infinite;
+}
+
+.animate-marquee-continuous-fast {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marqueeLeft 28s linear infinite;
+}
+
+.animate-marquee-continuous,
+.animate-marquee-continuous:hover,
+.animate-marquee-continuous-fast,
+.animate-marquee-continuous-fast:hover {
+  animation-play-state: running !important;
+}

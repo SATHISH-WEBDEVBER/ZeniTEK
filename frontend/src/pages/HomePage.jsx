@@ -582,6 +582,167 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       </section>
 
 
+      {/* SECTION 6.5: ABOUT ZENITEK (TOWARDS A SUSTAINABLE FUTURE) */}
+      <section className="w-full section-odd py-16 sm:py-24 bg-gradient-to-b from-white via-[#F0F4FD]/40 to-white border-y border-slate-200/80">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            
+            {/* Left 6 cols: About Info */}
+            <div className="lg:col-span-6 space-y-6 text-left">
+              <span className="text-sm font-black text-[#002DC2] uppercase tracking-wider bg-white border border-[#002DC2]/25 px-4 py-2 rounded-full inline-flex items-center shadow-xs">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#23AC39] animate-pulse mr-2" />
+                About ZeniTEK • Erode, Tamil Nadu
+              </span>
+              
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
+                Towards a <span className="text-[#002DC2]">Sustainable Future</span>
+              </h2>
+
+              <p className="text-base sm:text-lg text-slate-700 font-medium leading-relaxed">
+                Established in 2021 in Erode, Tamil Nadu, ZeniTEK is a renewable-energy engineering pioneer. We design, manufacture, and erect high-efficiency systems combining thermal engineering, solar power, automation, and applied research.
+              </p>
+
+              {/* 4 Core Pillars Pills */}
+              <div className="grid grid-cols-2 gap-3.5 pt-1">
+                <div className="p-3.5 bg-white rounded-2xl border border-slate-200/90 shadow-xs flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center font-bold shrink-0">
+                    <Zap className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-black text-slate-900">Solar Thermal</div>
+                    <div className="text-xs text-slate-500 font-semibold">PTC & Scheffler</div>
+                  </div>
+                </div>
+
+                <div className="p-3.5 bg-white rounded-2xl border border-slate-200/90 shadow-xs flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#23AC39] flex items-center justify-center font-bold shrink-0">
+                    <Sprout className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-black text-slate-900">Agri-Solar</div>
+                    <div className="text-xs text-slate-500 font-semibold">Dryers & Storage</div>
+                  </div>
+                </div>
+
+                <div className="p-3.5 bg-white rounded-2xl border border-slate-200/90 shadow-xs flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold shrink-0">
+                    <Cpu className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-black text-slate-900">Photovoltaics</div>
+                    <div className="text-xs text-slate-500 font-semibold">Lab Test Rigs</div>
+                  </div>
+                </div>
+
+                <div className="p-3.5 bg-white rounded-2xl border border-slate-200/90 shadow-xs flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center font-bold shrink-0">
+                    <Sparkles className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-black text-slate-900">Applied R&D</div>
+                    <div className="text-xs text-slate-500 font-semibold">IIT / Anna Univ</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Link to /about */}
+              <div className="pt-2">
+                <Link
+                  to="/about"
+                  className="inline-flex items-center space-x-2.5 px-7 py-3.5 bg-[#002DC2] hover:bg-[#123B92] text-white font-extrabold text-sm uppercase tracking-wider rounded-2xl shadow-md transition-all hover:scale-102"
+                >
+                  <span>Explore Our History & Landmark Installations</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Right 6 cols: Dual Photo Collage with floating client badge */}
+            <div className="lg:col-span-6 relative">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-4">
+                  <div className="rounded-2xl overflow-hidden shadow-md border border-slate-200 group">
+                    <img
+                      src="/real-photos/zenitek_photo_18.jpeg"
+                      alt="Parabolic Solar Thermal Installation"
+                      className="w-full h-44 sm:h-52 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="p-3 bg-white text-center">
+                      <div className="text-sm font-black text-slate-900">37.5 Sq.m Parabolic Trough</div>
+                      <div className="text-xs text-slate-500 font-semibold mt-0.5">Anna Univ & DST Funded</div>
+                    </div>
+                  </div>
+                  <div className="rounded-2xl overflow-hidden shadow-md border border-slate-200 group">
+                    <img
+                      src="/real-photos/zenitek_photo_27.jpeg"
+                      alt="SUNDRY 50 Clean Box Dryer"
+                      className="w-full h-40 sm:h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="p-3 bg-white text-center">
+                      <div className="text-sm font-black text-slate-900">SUNDRY 50 Box Dryer</div>
+                      <div className="text-xs text-slate-500 font-semibold mt-0.5">Commercial Food Drying</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4 pt-6">
+                  <div className="rounded-2xl overflow-hidden shadow-md border border-slate-200 group">
+                    <img
+                      src="/real-photos/zenitek_photo_04.jpeg"
+                      alt="SOLDRY 1210 Polyhouse Tunnel"
+                      className="w-full h-40 sm:h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="p-3 bg-white text-center">
+                      <div className="text-sm font-black text-slate-900">192 Sq.m Solar Dryer</div>
+                      <div className="text-xs text-slate-500 font-semibold mt-0.5">SELCO Foundation Partner</div>
+                    </div>
+                  </div>
+                  <div className="rounded-2xl overflow-hidden shadow-md border border-slate-200 group">
+                    <img
+                      src="/real-photos/zenitek_photo_23.jpeg"
+                      alt="Active Dehydration Trays"
+                      className="w-full h-44 sm:h-52 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="p-3 bg-white text-center">
+                      <div className="text-sm font-black text-slate-900">Internal Solar Polyhouse</div>
+                      <div className="text-xs text-slate-500 font-semibold mt-0.5">Zero Contamination</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating Verified Client Pill */}
+              <div className="absolute -bottom-4 right-4 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl shadow-xl border border-slate-200 flex items-center space-x-3">
+                <Award className="w-6 h-6 text-[#002DC2] shrink-0" />
+                <div className="text-left">
+                  <div className="text-sm font-black text-slate-900">Trusted By Premier Institutes</div>
+                  <div className="text-xs font-bold text-[#23AC39]">IIT Bhubaneswar • Anna University • Mitsui</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Institutional Partner Logos Banner */}
+          <div className="pt-6 border-t border-slate-200">
+            <div className="text-center text-sm font-black text-slate-500 uppercase tracking-wider pb-4">
+              Collaborative Deployments & Key Industry Clients
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-slate-900 text-sm sm:text-base font-black">
+              <span className="px-5 py-2.5 bg-white rounded-2xl border border-slate-200 shadow-xs">IIT Bhubaneswar</span>
+              <span className="px-5 py-2.5 bg-white rounded-2xl border border-slate-200 shadow-xs">Anna University</span>
+              <span className="px-5 py-2.5 bg-white rounded-2xl border border-slate-200 shadow-xs">SRM University</span>
+              <span className="px-5 py-2.5 bg-white rounded-2xl border border-slate-200 shadow-xs">Mitsui Chemicals</span>
+              <span className="px-5 py-2.5 bg-white rounded-2xl border border-slate-200 shadow-xs">Indo-MIM</span>
+              <span className="px-5 py-2.5 bg-white rounded-2xl border border-slate-200 shadow-xs">SELCO Foundation</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
       {/* SECTION 7: FARMER STORIES & TESTIMONIALS (ODD SECTION - CRISP WHITE) */}
       <section className="w-full section-odd py-14 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">

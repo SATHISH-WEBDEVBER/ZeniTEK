@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 80" width="240" height="80">
+  <rect width="100%" height="100%" rx="12" fill="#F8FAFC" />
+  <!-- Sun / Solar collector motif -->
+  <circle cx="36" cy="40" r="18" fill="#F59E0B" />
+  <circle cx="36" cy="40" r="13" fill="#D97706" />
+  <path d="M 26 40 Q 36 28 46 40 Q 36 52 26 40 Z" fill="#FFFFFF" opacity="0.9" />
+  <path d="M 36 20 L 36 14 M 36 60 L 36 66 M 16 40 L 10 40 M 56 40 L 62 40" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" />
+  <!-- Text -->
+  <text x="68" y="34" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="14" fill="#0F172A" letter-spacing="0.5">PRO-TARGET</text>
+  <text x="68" y="47" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="10" fill="#002DC2" letter-spacing="1.5">&amp; NISE (MNRE)</text>
+  <text x="68" y="59" font-family="system-ui, -apple-system, sans-serif" font-weight="600" font-size="8" fill="#64748B">Germany • Govt of India</text>
+</svg>
