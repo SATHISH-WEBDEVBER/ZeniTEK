@@ -706,9 +706,9 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
           </div>
 
           {/* Academic Partners Continuous Marquee Rail */}
-          <div className="space-y-4">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center space-x-2 text-sm sm:text-base font-black uppercase tracking-wider text-slate-700">
-              <GraduationCap className="w-5 h-5 text-[#002DC2]" />
+          <div className="space-y-5">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center space-x-2.5 text-sm sm:text-base lg:text-lg font-black uppercase tracking-wider text-slate-800 text-center">
+              <GraduationCap className="w-6 h-6 text-[#002DC2]" />
               <span>Academic Institutions</span>
             </div>
 
@@ -719,28 +719,28 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
               <div className="animate-marquee-continuous flex items-center">
                 {/* Track Half 1 */}
-                <div className="flex items-center gap-5 pr-5 shrink-0">
+                <div className="flex items-center gap-6 pr-6 shrink-0">
                   {academicClients.map((client, idx) => (
                     <div
                       key={`acad-h1-${idx}`}
-                      className="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow flex items-center space-x-4 w-[340px] sm:w-[420px] shrink-0"
+                      className="bg-white p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-lg transition-shadow flex items-center space-x-5 w-[380px] sm:w-[470px] shrink-0"
                     >
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white border border-slate-100 shadow-xs p-2 flex items-center justify-center shrink-0">
+                      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white border border-slate-200 shadow-xs p-2.5 sm:p-3 flex items-center justify-center shrink-0">
                         <img
                           src={client.logo}
                           alt={client.name}
-                          className="max-h-full max-w-full object-contain"
+                          className="w-full h-full object-contain"
                           loading="lazy"
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <span className="text-xs font-bold text-[#002DC2] uppercase tracking-wider block truncate">
+                        <span className="text-xs sm:text-sm font-bold text-[#002DC2] uppercase tracking-wider block truncate">
                           {client.tag}
                         </span>
-                        <div className="text-base sm:text-lg font-black text-slate-900 truncate mt-0.5">
+                        <div className="text-lg sm:text-xl font-black text-slate-900 truncate mt-1">
                           {client.name}
                         </div>
-                        <div className="text-xs sm:text-sm text-slate-600 font-medium truncate mt-0.5">
+                        <div className="text-xs sm:text-sm text-slate-600 font-medium truncate mt-1">
                           {client.branch}
                         </div>
                       </div>
@@ -749,28 +749,28 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 </div>
 
                 {/* Track Half 2 (Identical duplicate for seamless continuous motion) */}
-                <div className="flex items-center gap-5 pr-5 shrink-0" aria-hidden="true">
+                <div className="flex items-center gap-6 pr-6 shrink-0" aria-hidden="true">
                   {academicClients.map((client, idx) => (
                     <div
                       key={`acad-h2-${idx}`}
-                      className="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow flex items-center space-x-4 w-[340px] sm:w-[420px] shrink-0"
+                      className="bg-white p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-lg transition-shadow flex items-center space-x-5 w-[380px] sm:w-[470px] shrink-0"
                     >
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white border border-slate-100 shadow-xs p-2 flex items-center justify-center shrink-0">
+                      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white border border-slate-200 shadow-xs p-2.5 sm:p-3 flex items-center justify-center shrink-0">
                         <img
                           src={client.logo}
                           alt={client.name}
-                          className="max-h-full max-w-full object-contain"
+                          className="w-full h-full object-contain"
                           loading="lazy"
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <span className="text-xs font-bold text-[#002DC2] uppercase tracking-wider block truncate">
+                        <span className="text-xs sm:text-sm font-bold text-[#002DC2] uppercase tracking-wider block truncate">
                           {client.tag}
                         </span>
-                        <div className="text-base sm:text-lg font-black text-slate-900 truncate mt-0.5">
+                        <div className="text-lg sm:text-xl font-black text-slate-900 truncate mt-1">
                           {client.name}
                         </div>
-                        <div className="text-xs sm:text-sm text-slate-600 font-medium truncate mt-0.5">
+                        <div className="text-xs sm:text-sm text-slate-600 font-medium truncate mt-1">
                           {client.branch}
                         </div>
                       </div>
@@ -782,9 +782,9 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
           </div>
 
           {/* Industry Clients Continuous Marquee Rail */}
-          <div className="space-y-4 pt-4">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center space-x-2 text-sm sm:text-base font-black uppercase tracking-wider text-slate-700">
-              <Factory className="w-5 h-5 text-[#23AC39]" />
+          <div className="space-y-5 pt-5">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center space-x-2.5 text-sm sm:text-base lg:text-lg font-black uppercase tracking-wider text-slate-800 text-center">
+              <Factory className="w-6 h-6 text-[#23AC39]" />
               <span>Industry Clients & Mentors</span>
             </div>
 
@@ -795,28 +795,28 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
               <div className="animate-marquee-continuous-fast flex items-center">
                 {/* Track Half 1 */}
-                <div className="flex items-center gap-5 pr-5 shrink-0">
+                <div className="flex items-center gap-6 pr-6 shrink-0">
                   {industryClients.map((client, idx) => (
                     <div
                       key={`ind-h1-${idx}`}
-                      className="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow flex items-center space-x-4 w-[340px] sm:w-[420px] shrink-0"
+                      className="bg-white p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-lg transition-shadow flex items-center space-x-5 w-[380px] sm:w-[470px] shrink-0"
                     >
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white border border-slate-100 shadow-xs p-2 flex items-center justify-center shrink-0">
+                      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white border border-slate-200 shadow-xs p-2.5 sm:p-3 flex items-center justify-center shrink-0">
                         <img
                           src={client.logo}
                           alt={client.name}
-                          className="max-h-full max-w-full object-contain"
+                          className="w-full h-full object-contain"
                           loading="lazy"
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <span className="text-xs font-bold text-[#23AC39] uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block truncate">
+                        <span className="text-xs sm:text-sm font-bold text-[#23AC39] uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block truncate">
                           {client.tag}
                         </span>
-                        <div className="text-base sm:text-lg font-black text-slate-900 truncate mt-1">
+                        <div className="text-lg sm:text-xl font-black text-slate-900 truncate mt-1.5">
                           {client.name}
                         </div>
-                        <div className="text-xs sm:text-sm text-slate-600 font-medium truncate mt-0.5">
+                        <div className="text-xs sm:text-sm text-slate-600 font-medium truncate mt-1">
                           {client.detail}
                         </div>
                       </div>
@@ -825,28 +825,28 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 </div>
 
                 {/* Track Half 2 (Identical duplicate for seamless continuous motion) */}
-                <div className="flex items-center gap-5 pr-5 shrink-0" aria-hidden="true">
+                <div className="flex items-center gap-6 pr-6 shrink-0" aria-hidden="true">
                   {industryClients.map((client, idx) => (
                     <div
                       key={`ind-h2-${idx}`}
-                      className="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow flex items-center space-x-4 w-[340px] sm:w-[420px] shrink-0"
+                      className="bg-white p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-lg transition-shadow flex items-center space-x-5 w-[380px] sm:w-[470px] shrink-0"
                     >
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white border border-slate-100 shadow-xs p-2 flex items-center justify-center shrink-0">
+                      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white border border-slate-200 shadow-xs p-2.5 sm:p-3 flex items-center justify-center shrink-0">
                         <img
                           src={client.logo}
                           alt={client.name}
-                          className="max-h-full max-w-full object-contain"
+                          className="w-full h-full object-contain"
                           loading="lazy"
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <span className="text-xs font-bold text-[#23AC39] uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block truncate">
+                        <span className="text-xs sm:text-sm font-bold text-[#23AC39] uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block truncate">
                           {client.tag}
                         </span>
-                        <div className="text-base sm:text-lg font-black text-slate-900 truncate mt-1">
+                        <div className="text-lg sm:text-xl font-black text-slate-900 truncate mt-1.5">
                           {client.name}
                         </div>
-                        <div className="text-xs sm:text-sm text-slate-600 font-medium truncate mt-0.5">
+                        <div className="text-xs sm:text-sm text-slate-600 font-medium truncate mt-1">
                           {client.detail}
                         </div>
                       </div>
