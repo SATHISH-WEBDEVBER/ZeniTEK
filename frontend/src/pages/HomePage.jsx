@@ -219,32 +219,49 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
 
       {/* SECTION 2: TRUST BAR (EVEN SECTION - SOFT OFF-WHITE WITH BREAK LINES) */}
-      <section className="w-full section-even py-10 sm:py-12">
+      <section className="w-full section-even py-8 sm:py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 text-center">
-            <div className="flex items-center justify-center space-x-3 p-4 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm">
-              <ShieldCheck className="w-6 h-6 text-[#002DC2] shrink-0" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+            
+            {/* Card 1: MNRE Approved & Enlisted */}
+            <div className="flex items-center space-x-4 px-6 py-5 bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all">
+              <ShieldCheck className="w-7 h-7 text-[#123B92] stroke-[1.8] shrink-0" />
               <div className="text-left">
-                <div className="text-sm font-bold text-[#123B92]">{t('mnreBadge')}</div>
-                <div className="text-xs text-black/70">Government Ministry Approved</div>
+                <div className="text-sm sm:text-[15px] font-bold text-[#123B92] tracking-tight leading-snug">
+                  {t('mnreBadge')}
+                </div>
+                <div className="text-xs text-slate-500 font-medium mt-0.5">
+                  Government Ministry Approved
+                </div>
               </div>
             </div>
 
-            <div className="flex items-center justify-center space-x-3 p-4 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm">
-              <Award className="w-6 h-6 text-[#002DC2] shrink-0" />
+            {/* Card 2: ISO 9001:2015 Certified Quality */}
+            <div className="flex items-center space-x-4 px-6 py-5 bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all">
+              <Award className="w-7 h-7 text-[#123B92] stroke-[1.8] shrink-0" />
               <div className="text-left">
-                <div className="text-sm font-bold text-[#123B92]">{t('isoBadge')}</div>
-                <div className="text-xs text-black/70">Precision Engineering Standard</div>
+                <div className="text-sm sm:text-[15px] font-bold text-[#123B92] tracking-tight leading-snug">
+                  {t('isoBadge')}
+                </div>
+                <div className="text-xs text-slate-500 font-medium mt-0.5">
+                  Precision Engineering Standard
+                </div>
               </div>
             </div>
 
-            <div className="flex items-center justify-center space-x-3 p-4 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm">
-              <Zap className="w-6 h-6 text-[#002DC2] shrink-0" />
+            {/* Card 3: 100% Eligible for State Subsidies */}
+            <div className="flex items-center space-x-4 px-6 py-5 bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all">
+              <Zap className="w-7 h-7 text-[#123B92] stroke-[1.8] shrink-0" />
               <div className="text-left">
-                <div className="text-sm font-bold text-[#123B92]">{t('subsidyBadge2')}</div>
-                <div className="text-xs text-black/70">Agri & NABARD Subsidies</div>
+                <div className="text-sm sm:text-[15px] font-bold text-[#123B92] tracking-tight leading-snug">
+                  {t('subsidyBadge2')}
+                </div>
+                <div className="text-xs text-slate-500 font-medium mt-0.5">
+                  Agri & NABARD Subsidies
+                </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>
