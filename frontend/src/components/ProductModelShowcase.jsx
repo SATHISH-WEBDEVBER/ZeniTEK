@@ -162,9 +162,9 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
         </h2>
       </div>
 
-      {/* FULL-BLEED ZERO-PADDING TESLA STAGE */}
+      {/* FULL-BLEED ZERO-PADDING TESLA STAGE WITH EXACT 20PX GAP */}
       <div className="relative w-full overflow-hidden px-0 mx-0 py-1">
-        <div className="flex items-center justify-center gap-3 sm:gap-4 w-full px-0 mx-0">
+        <div className="flex items-center justify-center gap-[20px] w-full px-0 mx-0">
           
           {/* ================= LEFT PEEK CARD (PREVIOUS PRODUCT) - 100% OPACITY, ZERO BLUR ================= */}
           <div 
