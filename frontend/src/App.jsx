@@ -14,6 +14,7 @@ import ProjectDetailPage from './pages/ProjectDetailPage';
 import ApplicationsPage from './pages/ApplicationsPage';
 import GalleryPage from './pages/GalleryPage';
 import ContactUsPage from './pages/ContactUsPage';
+import SubsidiesPage from './pages/SubsidiesPage';
 import { useLocation } from 'react-router-dom';
 
 function ScrollToTop() {
@@ -89,6 +90,7 @@ export default function App() {
               <Route path="/dryers/:id" element={<ProjectDetailPage onOpenQuoteModal={handleOpenQuoteModal} />} />
               <Route path="/applications" element={<ApplicationsPage onOpenQuoteModal={handleOpenQuoteModal} />} />
               <Route path="/gallery" element={<GalleryPage onOpenQuoteModal={handleOpenQuoteModal} />} />
+              <Route path="/subsidies" element={<SubsidiesPage onOpenQuoteModal={handleOpenQuoteModal} />} />
               <Route path="/contact" element={<ContactUsPage onOpenQuoteModal={handleOpenQuoteModal} />} />
             </Routes>
           </main>

@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { zenitekRealGallery } from '../data/zenitekRealGalleryData';
 import { brochurePages } from '../data/zenitekBrochureData';
 import { 
@@ -8,7 +9,15 @@ import {
 import { useLanguage } from '../context/LanguageContext';
 
 export default function GalleryPage({ onOpenQuoteModal }) {
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [searchParams] = useSearchParams();
+  const catParam = searchParams.get('cat');
+  const [activeCategory, setActiveCategory] = useState(catParam || 'all');
+
+  useEffect(() => {
+    if (catParam) {
+      setActiveCategory(catParam);
+    }
+  }, [catParam]);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const { t } = useLanguage();
