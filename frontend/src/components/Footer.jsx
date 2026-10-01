@@ -20,19 +20,22 @@ export default function Footer({ onOpenQuoteModal }) {
   const { t } = useLanguage();
   const [legalModal, setLegalModal] = useState(null); // 'privacy' | 'terms' | null
 
-  // Ensure "Tamil Nadu" never breaks across lines
+  // Ensure "Tamil Nadu - 000 000" never breaks across lines
   const formatAddress = (text) => {
     if (!text || typeof text !== 'string') return text;
-    if (!text.includes('Tamil Nadu')) return text;
-    const parts = text.split('Tamil Nadu');
-    return parts.map((part, idx) => (
-      <React.Fragment key={idx}>
-        {part}
-        {idx < parts.length - 1 && (
-          <span className="whitespace-nowrap font-medium">Tamil Nadu</span>
-        )}
-      </React.Fragment>
-    ));
+    const regex = /(Tamil Nadu\s*-\s*\d{3}\s*\d{3}|Tamil Nadu)/;
+    const parts = text.split(regex);
+    if (parts.length <= 1) return text;
+    return parts.map((part, idx) => {
+      if (/Tamil Nadu/.test(part)) {
+        return (
+          <span key={idx} className="whitespace-nowrap font-medium">
+            {part}
+          </span>
+        );
+      }
+      return part;
+    });
   };
 
   return (
@@ -52,7 +55,7 @@ export default function Footer({ onOpenQuoteModal }) {
               />
             </div>
             <p className="text-xs leading-relaxed text-black max-w-sm font-medium">
-              ZeniTEK is India's leading designer &amp; manufacturer of high-efficiency polyhouse greenhouse solar thermal dryers. Engineered in Coimbatore to eliminate post-harvest waste for farmers, FPOs, and exporters.
+              ZeniTEK manufactures high-efficiency solar thermal collectors and commercial polyhouse dryers, delivering sustainable clean energy solutions to eliminate post-harvest crop loss for farmers, FPOs, and industries.
             </p>
             <div className="flex flex-wrap items-center gap-2 pt-1">
               <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold bg-[#F0F4FD] text-[#123B92] border border-[#002DC2] shadow-2xs">

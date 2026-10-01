@@ -250,7 +250,7 @@ export const translations = {
     bookVisitBtn: "Book Live Site Visit",
 
     // Footer
-    footerAbout: "ZeniTEK is India's leading designer & manufacturer of high-efficiency polyhouse greenhouse solar thermal dryers. Engineered in Coimbatore to eliminate post-harvest waste for farmers, FPOs, and exporters.",
+    footerAbout: "ZeniTEK manufactures high-efficiency solar thermal collectors and commercial polyhouse dryers, delivering sustainable clean energy solutions to eliminate post-harvest crop loss for farmers, FPOs, and industries.",
     footerDryerModels: "Dryer Models",
     footerDownloads: "Downloads & Guides",
     footerCatalog: "Product Catalog (PDF)",
