@@ -295,7 +295,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
           
           {/* Working Principle */}
           <div className="bg-white text-black p-6 sm:p-10 rounded-3xl shadow-md space-y-8 border border-[#123B92]/20">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#123B92]/20 pb-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6">
               <div className="space-y-2">
                 <span className="text-[11px] font-bold text-[#123B92] uppercase tracking-widest bg-[#F0F4FD] border border-[#123B92]/30 px-3 py-1 rounded-full inline-flex items-center">
                   <Sun className="w-3.5 h-3.5 mr-1.5 text-[#002DC2] animate-spin-slow" /> PDF Technical Guide • Page 8
@@ -464,7 +464,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       <section className="w-full section-even py-14 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-md space-y-6">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-100 pb-5">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-5">
               <div className="space-y-2">
                 <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 px-3.5 py-1.5 rounded-full border border-green-200 inline-flex items-center shadow-sm">
                   <Sprout className="w-3.5 h-3.5 mr-1.5 text-green-600" /> {t('matrixCropBadge')}
@@ -543,7 +543,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       {/* SECTION 6: APPLICATIONS SHOWCASE (EVEN SECTION - SOFT OFF-WHITE) */}
       <section className="w-full section-even py-14 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-slate-200 pb-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between pb-6">
             <div>
               <span className="text-xs font-bold text-green-700 uppercase tracking-widest">VERSATILE PERFORMANCE</span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-950 mt-1">{t('whatCanYouDry')}</h2>
@@ -725,7 +725,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
           </div>
 
           {/* Institutional Partner Logos Banner */}
-          <div className="pt-6 border-t border-slate-200">
+          <div className="pt-6">
             <div className="text-center text-sm font-black text-slate-500 uppercase tracking-wider pb-4">
               Collaborative Deployments & Key Industry Clients
             </div>

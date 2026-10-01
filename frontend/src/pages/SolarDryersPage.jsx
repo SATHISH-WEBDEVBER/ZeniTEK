@@ -249,7 +249,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
       <section className="w-full section-even py-14 sm:py-20" id="models-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-blue-700 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
               Complete Product Engineering Lineup
@@ -413,7 +413,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="bg-white p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-xl space-y-8">
           
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-5">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-5">
             <div className="space-y-1">
               <span className="text-[11px] font-bold text-green-700 uppercase tracking-widest bg-green-50 px-3 py-1 rounded-full border border-green-200 inline-flex items-center">
                 <SlidersHorizontal className="w-3.5 h-3.5 mr-1 text-green-600" /> Engineering Profile Architecture • Page 3
@@ -509,7 +509,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="bg-white text-slate-900 p-6 sm:p-10 rounded-3xl shadow-xl space-y-8 border border-slate-200">
           
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6">
             <div className="space-y-2">
               <span className="text-[11px] font-bold text-green-700 uppercase tracking-widest bg-green-50 border border-green-200 px-3 py-1 rounded-full inline-flex items-center">
                 <Sun className="w-3.5 h-3.5 mr-1.5 text-amber-500 animate-spin-slow" /> PDF Technical Guide • Page 8
@@ -590,7 +590,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
       <section className="w-full section-odd py-14 sm:py-20" id="pdf-catalog-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-200 pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-4">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-blue-700 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full border border-blue-200 inline-flex items-center">
               <FileText className="w-3.5 h-3.5 mr-1 text-blue-600" /> Authentic Manufacturer Documentation
@@ -700,7 +700,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
       {/* SECTION 6: REAL PHOTOS GALLERY (EVEN SECTION - SOFT OFF-WHITE) */}
       <section className="w-full section-even py-14 sm:py-20" id="real-photos-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-amber-800 uppercase tracking-widest bg-amber-50 px-3 py-1 rounded-full border border-amber-200 inline-flex items-center">
               <Camera className="w-3.5 h-3.5 mr-1 text-amber-600" /> 100% Authentic Field Photography
@@ -800,7 +800,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
       <section className="w-full section-odd py-14 sm:py-20" id="installations-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-green-700 uppercase tracking-widest bg-green-50 px-3 py-1 rounded-full border border-green-200 inline-flex items-center">
               <Sparkles className="w-3.5 h-3.5 mr-1 text-green-600" /> Operational Installations • 2023 - 2026
@@ -1039,7 +1039,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
       {/* SECTION 8: 35 OPERATIONAL LOCATIONS MAP (EVEN SECTION - SOFT OFF-WHITE) */}
       <section className="w-full section-even py-14 sm:py-20" id="map-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-200 pb-3">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-3">
             <div>
               <span className="text-[11px] font-bold text-green-700 uppercase tracking-wider bg-green-50 px-2.5 py-1 rounded-full border border-green-200 inline-flex items-center">
                 <Sparkles className="w-3 h-3 mr-1 text-green-600" /> Pan-India GPS Footprint
