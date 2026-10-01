@@ -41,93 +41,91 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
   return (
     <div className="bg-slate-50 text-slate-900 w-full max-w-full overflow-x-hidden">
       
-      {/* SECTION 1: HERO SECTION (ODD SECTION - CRISP WHITE) */}
-      <section className="relative pt-8 pb-12 lg:pt-14 lg:pb-16 section-odd w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      {/* SECTION 1: HERO SECTION WITH ULTRA-HD BACKGROUND (TESLA-INSPIRED MINIMALIST AESTHETIC) */}
+      <section className="relative pt-12 pb-16 lg:pt-20 lg:pb-24 section-odd w-full overflow-hidden min-h-[580px] lg:min-h-[660px] flex items-center">
+        
+        {/* Pure Ultra-HD Background Image - 100% Full Opacity, Zero Blurs, Zero Gradient Washes */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <img
+            src="/hero-solar-dryer-hd.jpg"
+            alt="ZeniTEK Commercial Industrial Solar Polyhouse Dryer"
+            className="w-full h-full object-cover object-[78%_center] lg:object-[86%_center] select-none"
+          />
+        </div>
+
+        {/* Foreground Content (Left-Aligned with z-10) */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-xl lg:max-w-2xl xl:max-w-3xl space-y-6">
             
-            {/* Left Content */}
-            <div className="lg:col-span-7 space-y-6">
-              
-              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#F0F4FD] border border-[#123B92]/30 text-[#123B92] text-xs font-bold max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
-                <Sun className="w-4 h-4 text-[#002DC2] animate-spin-slow shrink-0" />
-                <span className="truncate">{t('heroBadge')}</span>
-              </div>
-
-              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#123B92] leading-tight">
-                {t('heroTitle1')} <br />
-                <span className="text-[#002DC2]">
-                  {t('heroTitle2')}
-                </span>
-              </h1>
-
-              <p className="text-xs sm:text-base text-black leading-relaxed font-medium max-w-2xl">
-                {t('heroSubtitle')}
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2.5 sm:space-y-0 sm:space-x-4 pt-2">
-                <a
-                  href="#roi-calculator"
-                  className="px-5 py-3.5 sm:px-6 sm:py-3.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-2xl shadow transition-all text-center flex items-center justify-center space-x-2 cursor-pointer"
-                >
-                  <span>{t('calcSavings')}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-
-                <Link
-                  to="/dryers"
-                  className="px-5 py-3.5 sm:px-6 sm:py-3.5 bg-white border-2 border-[#123B92] text-[#123B92] hover:bg-[#002DC2] hover:text-white hover:border-[#002DC2] font-black text-xs rounded-2xl transition-all text-center flex items-center justify-center space-x-2 shadow-sm"
-                >
-                  <span>{t('exploreModels')}</span>
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              </div>
-
-              <div className="pt-5 border-t border-[#123B92]/20 grid grid-cols-3 gap-2 sm:gap-4">
-                <div>
-                  <div className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-black text-[#123B92]">1,200+</div>
-                  <div className="text-[10px] xs:text-[11px] sm:text-xs text-black/70 font-semibold mt-0.5">{t('dryersInstalled')}</div>
-                </div>
-                <div>
-                  <div className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-black text-[#002DC2]">500+ MT</div>
-                  <div className="text-[10px] xs:text-[11px] sm:text-xs text-black/70 font-semibold mt-0.5">{t('foodSaved')}</div>
-                </div>
-                <div>
-                  <div className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-black text-black">40-60%</div>
-                  <div className="text-[10px] xs:text-[11px] sm:text-xs text-black/70 font-semibold mt-0.5">{t('subsidyHelp')}</div>
-                </div>
-              </div>
-
+            {/* Top Badge */}
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white border border-[#123B92]/30 text-[#123B92] text-xs font-bold shadow-sm max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+              <Sun className="w-4 h-4 text-[#002DC2] animate-spin-slow shrink-0" />
+              <span className="truncate">{t('heroBadge')}</span>
             </div>
 
-            {/* Right Visual Image (Unobstructed full image, zero text on image) */}
-            <div className="lg:col-span-5 space-y-3">
-              <div className="rounded-3xl overflow-hidden border border-slate-200 shadow-xl group bg-slate-100">
-                <img
-                  src="/real-photos/zenitek_photo_18.jpeg"
-                  alt="ZeniTEK Commercial Solar Polyhouse Dryer"
-                  className="w-full h-[280px] xs:h-[340px] sm:h-[380px] object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-              </div>
+            {/* Main Headline */}
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#123B92] leading-tight drop-shadow-xs">
+              {t('heroTitle1')} <br />
+              <span className="text-[#002DC2]">
+                {t('heroTitle2')}
+              </span>
+            </h1>
 
-              {/* Informational Details Card (Neatly below image, NOT covering the image) */}
-              <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 font-bold shrink-0">
-                    <ShieldCheck className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900">Commercial Solar Polyhouse Tunnel</div>
-                    <div className="text-[11px] text-green-700 font-semibold">ZeniTEK Manufacturing & Field Site</div>
-                  </div>
-                </div>
-                <span className="text-[10px] bg-green-700 text-white font-bold px-2.5 py-1 rounded uppercase shrink-0">
-                  MNRE Enlisted
-                </span>
+            {/* Subtitle */}
+            <p className="text-sm sm:text-base lg:text-lg text-slate-800 leading-relaxed font-bold max-w-xl">
+              {t('heroSubtitle')}
+            </p>
+
+            {/* CTA Buttons - Tesla-Style High-Impact Controls */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2.5 sm:space-y-0 sm:space-x-4 pt-2">
+              <a
+                href="#roi-calculator"
+                className="px-6 py-3.5 sm:px-8 sm:py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-lg transition-all text-center flex items-center justify-center space-x-2 cursor-pointer hover:shadow-xl active:scale-95"
+              >
+                <span>{t('calcSavings')}</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+
+              <Link
+                to="/dryers"
+                className="px-6 py-3.5 sm:px-8 sm:py-4 bg-white hover:bg-slate-50 border-2 border-[#123B92] text-[#123B92] font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl transition-all text-center flex items-center justify-center space-x-2 shadow-sm active:scale-95"
+              >
+                <span>{t('exploreModels')}</span>
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* Stat Highlights Row - Clean Solid Glass Cards */}
+            <div className="pt-6 border-t border-[#123B92]/20 grid grid-cols-3 gap-3 sm:gap-6 max-w-lg bg-white/80 sm:bg-transparent p-3 sm:p-0 rounded-xl sm:rounded-none">
+              <div>
+                <div className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-black text-[#123B92]">1,200+</div>
+                <div className="text-[10px] xs:text-[11px] sm:text-xs text-slate-900 font-bold mt-0.5">{t('dryersInstalled')}</div>
+              </div>
+              <div>
+                <div className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-black text-[#002DC2]">500+ MT</div>
+                <div className="text-[10px] xs:text-[11px] sm:text-xs text-slate-900 font-bold mt-0.5">{t('foodSaved')}</div>
+              </div>
+              <div>
+                <div className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900">40-60%</div>
+                <div className="text-[10px] xs:text-[11px] sm:text-xs text-slate-900 font-bold mt-0.5">{t('subsidyHelp')}</div>
               </div>
             </div>
 
           </div>
+        </div>
+
+        {/* Floating Verified Site Badge in Bottom Right - Crisp & Blur-Free */}
+        <div className="absolute bottom-6 right-6 lg:right-16 z-10 hidden sm:flex items-center space-x-3 bg-white px-4 py-2.5 rounded-2xl border border-slate-300 shadow-xl">
+          <div className="w-8 h-8 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 font-bold shrink-0">
+            <ShieldCheck className="w-4 h-4" />
+          </div>
+          <div>
+            <div className="text-xs font-bold text-slate-900">Commercial Solar Polyhouse Tunnel</div>
+            <div className="text-[10px] text-green-700 font-bold">ZeniTEK Manufacturing & Field Site</div>
+          </div>
+          <span className="text-[10px] bg-green-700 text-white font-bold px-2 py-0.5 rounded uppercase shrink-0">
+            MNRE Enlisted
+          </span>
         </div>
       </section>
 

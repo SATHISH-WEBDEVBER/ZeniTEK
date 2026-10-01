@@ -33,7 +33,7 @@ export default function Footer({ onOpenQuoteModal }) {
               <img
                 src="/logo.png"
                 alt="ZeniTEK - Towards Sustainable Future"
-                className="h-10 w-auto object-contain"
+                className="h-12 sm:h-14 w-auto object-contain"
               />
             </div>
             <p className="text-xs leading-relaxed text-black max-w-sm">
