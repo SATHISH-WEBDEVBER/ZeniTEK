@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ROICalculator from '../components/ROICalculator';
 import MapComponent from '../components/MapComponent';
@@ -6,7 +6,7 @@ import { sampleReviews, dryerModelsData, cropMatrixData } from '../data/sampleDa
 import { workingPrincipleSteps } from '../data/zenitekBrochureData';
 import { useLanguage } from '../context/LanguageContext';
 import {
-  Sun, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, TrendingUp, Zap, ChevronRight, MapPin, Search, SlidersHorizontal, Sprout, Wind, Droplets, Cpu, Shield, Sparkles,
+  Sun, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, TrendingUp, Zap, ChevronRight, ChevronLeft, MapPin, Search, SlidersHorizontal, Sprout, Wind, Droplets, Cpu, Shield, Sparkles,
   ChevronDown, ChevronUp, Eye
 } from 'lucide-react';
 
@@ -27,6 +27,54 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
     message: ''
   });
   const [matrixSearch, setMatrixSearch] = useState('');
+  const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
+
+  const heroSlides = [
+    {
+      image: '/hero-carousel/slide-1.jpg',
+      title: 'Commercial Solar Polyhouse Tunnel',
+      subtitle: 'Twin Parabolic Clean Airflow Architecture',
+      badge: 'MNRE Enlisted',
+      objectPos: 'object-cover object-[80%_center] lg:object-right',
+    },
+    {
+      image: '/hero-carousel/slide-2.jpg',
+      title: 'High-Tech Solar Dehydration Plant',
+      subtitle: 'Photovoltaic Automated Ventilation System',
+      badge: 'ISO 9001:2015 Quality',
+      objectPos: 'object-cover object-[80%_center] lg:object-right',
+    },
+    {
+      image: '/hero-carousel/slide-3.jpg',
+      title: 'Parabolic Solar Dehydration Station',
+      subtitle: 'Clean Airway Continuous Heat Collection',
+      badge: 'Govt Subsidy Eligible',
+      objectPos: 'object-cover object-[80%_center] lg:object-right',
+    },
+    {
+      image: '/hero-carousel/slide-4.jpg',
+      title: 'Industrial Multi-Bay Harvest Drying',
+      subtitle: 'Food-Grade Stainless Steel Multi-Tier Trays',
+      badge: 'MNRE Enlisted',
+      objectPos: 'object-cover object-[80%_center] lg:object-right',
+    },
+  ];
+
+  // Auto-swap every 5 seconds in continuous loop (Tesla style)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentHeroSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [heroSlides.length]);
+
+  const handlePrevSlide = () => {
+    setCurrentHeroSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  };
+
+  const handleNextSlide = () => {
+    setCurrentHeroSlide((prev) => (prev + 1) % heroSlides.length);
+  };
 
   const filteredCropMatrix = cropMatrixData.filter(item =>
     item.crop.toLowerCase().includes(matrixSearch.toLowerCase()) ||
@@ -41,17 +89,46 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
   return (
     <div className="bg-slate-50 text-slate-900 w-full max-w-full overflow-x-hidden">
       
-      {/* SECTION 1: HERO SECTION WITH ULTRA-HD BACKGROUND (TESLA-INSPIRED MINIMALIST AESTHETIC) */}
-      <section className="relative pt-12 pb-16 lg:pt-20 lg:pb-24 section-odd w-full overflow-hidden min-h-[580px] lg:min-h-[660px] flex items-center">
+      {/* SECTION 1: HERO SECTION WITH 4-IMAGE TESLA-STYLE AUTO-CAROUSEL (5S LOOP) */}
+      <section className="relative pt-12 pb-16 lg:pt-20 lg:pb-24 section-odd w-full overflow-hidden min-h-[580px] lg:min-h-[660px] flex items-center select-none">
         
-        {/* Pure Ultra-HD Background Image - 100% Full Opacity, Zero Blurs, Zero Gradient Washes */}
-        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          <img
-            src="/hero-solar-dryer-hd.jpg"
-            alt="ZeniTEK Commercial Industrial Solar Polyhouse Dryer"
-            className="w-full h-full object-cover object-[78%_center] lg:object-[86%_center] select-none"
-          />
+        {/* Carousel Background Images (Smooth Cross-fade, 100% HD View) */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          {heroSlides.map((slide, idx) => (
+            <div
+              key={slide.image}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                idx === currentHeroSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
+            >
+              <img
+                src={slide.image}
+                alt={slide.title}
+                className={`w-full h-full ${slide.objectPos} select-none`}
+              />
+            </div>
+          ))}
+
+          {/* Minimal Soft Left-Gradient on Mobile only, Transparent on Large Desktop where Left is Open Courtyard/Sky */}
+          <div className="absolute inset-0 z-15 bg-gradient-to-r from-white/95 via-white/80 to-transparent sm:from-white/70 sm:via-white/30 sm:to-transparent lg:from-transparent pointer-events-none" />
         </div>
+
+        {/* Tesla-Style Left & Right Navigation Controls */}
+        <button
+          onClick={handlePrevSlide}
+          aria-label="Previous Slide"
+          className="absolute left-3 sm:left-6 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/85 hover:bg-white text-slate-800 hover:text-[#123B92] border border-slate-200 shadow-xl flex items-center justify-center transition-all active:scale-90 cursor-pointer"
+        >
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
+
+        <button
+          onClick={handleNextSlide}
+          aria-label="Next Slide"
+          className="absolute right-3 sm:right-6 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/85 hover:bg-white text-slate-800 hover:text-[#123B92] border border-slate-200 shadow-xl flex items-center justify-center transition-all active:scale-90 cursor-pointer"
+        >
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
 
         {/* Foreground Content (Left-Aligned with z-10) */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -114,18 +191,34 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
           </div>
         </div>
 
-        {/* Floating Verified Site Badge in Bottom Right - Crisp & Blur-Free */}
-        <div className="absolute bottom-6 right-6 lg:right-16 z-10 hidden sm:flex items-center space-x-3 bg-white px-4 py-2.5 rounded-2xl border border-slate-300 shadow-xl">
+        {/* Dynamic Verified Site Badge in Bottom Right */}
+        <div className="absolute bottom-6 right-6 lg:right-16 z-20 hidden sm:flex items-center space-x-3 bg-white/95 px-4 py-2.5 rounded-2xl border border-slate-200/90 shadow-xl transition-all">
           <div className="w-8 h-8 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 font-bold shrink-0">
             <ShieldCheck className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-xs font-bold text-slate-900">Commercial Solar Polyhouse Tunnel</div>
-            <div className="text-[10px] text-green-700 font-bold">ZeniTEK Manufacturing & Field Site</div>
+            <div className="text-xs font-bold text-slate-900">{heroSlides[currentHeroSlide].title}</div>
+            <div className="text-[10px] text-green-700 font-bold">{heroSlides[currentHeroSlide].subtitle}</div>
           </div>
           <span className="text-[10px] bg-green-700 text-white font-bold px-2 py-0.5 rounded uppercase shrink-0">
-            MNRE Enlisted
+            {heroSlides[currentHeroSlide].badge}
           </span>
+        </div>
+
+        {/* Tesla-Style Bottom Center Pagination Dots */}
+        <div className="absolute bottom-6 inset-x-0 z-20 flex items-center justify-center space-x-2">
+          {heroSlides.map((slide, idx) => (
+            <button
+              key={slide.image}
+              onClick={() => setCurrentHeroSlide(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+              className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                currentHeroSlide === idx
+                  ? 'w-8 bg-slate-900 shadow-md'
+                  : 'w-2.5 bg-slate-400 hover:bg-slate-600'
+              }`}
+            />
+          ))}
         </div>
       </section>
 
