@@ -374,6 +374,151 @@ export default function Footer({ onOpenQuoteModal }) {
         </div>
       )}
 
+      {/* Interactive PDF Brochure Viewer Modal */}
+      {activeBrochure && (
+        <div 
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-2 sm:p-4 bg-slate-950/75 backdrop-blur-xs animate-in fade-in duration-200"
+          onClick={() => setActiveBrochure(null)}
+        >
+          <div 
+            className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-5xl h-[94vh] sm:h-[88vh] flex flex-col overflow-hidden border border-slate-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="px-4 sm:px-6 py-3.5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 bg-slate-50">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-9 h-9 rounded-xl bg-blue-100 text-[#002DC2] flex items-center justify-center shrink-0">
+                  <FileText className="w-5 h-5" />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-black text-sm sm:text-base text-slate-900 truncate">
+                      {activeBrochure.title}
+                    </h3>
+                    <span className="hidden sm:inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-[#002DC2] border border-blue-200">
+                      {activeBrochure.pages} • {activeBrochure.size}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 truncate hidden sm:block">
+                    {activeBrochure.subtitle}
+                  </p>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-2">
+                {/* Download Button */}
+                <a
+                  href={activeBrochure.url}
+                  download={activeBrochure.downloadName}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#002DC2] hover:bg-[#002299] text-white rounded-xl text-xs font-bold transition-colors shadow-sm"
+                  title="Download PDF to your device"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Download PDF</span>
+                </a>
+
+                {/* Open in New Tab / Print */}
+                <a
+                  href={activeBrochure.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold transition-colors"
+                  title="Open Fullscreen in New Window"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Open in Tab</span>
+                </a>
+
+                {/* WhatsApp Share */}
+                <a
+                  href={`https://wa.me/?text=${encodeURIComponent(`Check out the ZeniTEK ${activeBrochure.title}: ${window.location.origin}${activeBrochure.url}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-xl text-xs font-bold transition-colors"
+                  title="Share via WhatsApp"
+                >
+                  <Share2 className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Share</span>
+                </a>
+
+                {/* Close Button */}
+                <button
+                  type="button"
+                  onClick={() => setActiveBrochure(null)}
+                  className="w-8 h-8 rounded-xl hover:bg-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-900 transition-colors ml-1"
+                  title="Close Preview"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Quick Switch Tabs */}
+            <div className="px-4 sm:px-6 py-2 bg-slate-100/80 border-b border-slate-200 flex items-center gap-2 overflow-x-auto">
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider shrink-0 mr-1">
+                Brochures:
+              </span>
+              {brochures.map((b) => (
+                <button
+                  key={b.id}
+                  type="button"
+                  onClick={() => setActiveBrochure(b)}
+                  className={`px-3 py-1 rounded-lg text-xs font-bold whitespace-nowrap transition-colors ${
+                    activeBrochure.id === b.id
+                      ? 'bg-[#002DC2] text-white shadow-xs'
+                      : 'bg-white hover:bg-slate-200 text-slate-700 border border-slate-200'
+                  }`}
+                >
+                  {b.badge}: {b.title.replace(' Technical Brochure', '').replace(' Dryer', '')}
+                </button>
+              ))}
+            </div>
+
+            {/* PDF Viewer Body */}
+            <div className="flex-1 bg-slate-800 relative w-full h-full overflow-hidden">
+              <iframe
+                src={`${activeBrochure.url}#view=FitH&toolbar=1`}
+                className="w-full h-full border-0 bg-white"
+                title={activeBrochure.title}
+              />
+            </div>
+
+            {/* Footer Toolbar */}
+            <div className="px-4 sm:px-6 py-2.5 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs">
+              <div className="flex items-center gap-2 text-slate-600">
+                <span className="font-semibold text-slate-900">{activeBrochure.title}</span>
+                <span className="text-slate-400">•</span>
+                <span>{activeBrochure.pages}</span>
+                <span className="text-slate-400">•</span>
+                <span>{activeBrochure.size}</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <a
+                  href={activeBrochure.url}
+                  download={activeBrochure.downloadName}
+                  className="font-bold text-[#002DC2] hover:underline flex items-center gap-1"
+                >
+                  <Download className="w-3.5 h-3.5" /> Download PDF File
+                </a>
+                <span className="text-slate-300">|</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveBrochure(null);
+                    if (onOpenQuoteModal) onOpenQuoteModal();
+                  }}
+                  className="font-bold text-[#123B92] hover:text-[#002DC2]"
+                >
+                  Request Technical Quotation →
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
+
     </footer>
   );
 }
