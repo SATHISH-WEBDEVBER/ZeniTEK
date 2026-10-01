@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
-export default function Navbar({ onOpenQuoteModal }) {
+export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { t } = useLanguage();
@@ -22,14 +22,21 @@ export default function Navbar({ onOpenQuoteModal }) {
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm w-full border-b border-slate-200/80">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm w-full border-b border-slate-200/80 transition-colors duration-500">
       
       {/* MAIN NAVBAR */}
       <div className="w-full px-5 sm:px-8 md:px-[60px]">
         <div className="flex items-center justify-between h-18 sm:h-20 lg:h-24 w-full">
           
-          {/* Logo */}
-          <Link to="/" className="flex items-center shrink-0">
+          {/* Logo - Stage 1 Animation */}
+          <Link
+            to="/"
+            className={`flex items-center shrink-0 transition-all duration-700 ease-out transform ${
+              animStage >= 1
+                ? 'opacity-100 scale-100 translate-x-0'
+                : 'opacity-0 scale-90 -translate-x-6 pointer-events-none'
+            }`}
+          >
             <img
               src="/logo.png"
               alt="ZeniTEK - Towards Sustainable Future"
@@ -37,13 +44,22 @@ export default function Navbar({ onOpenQuoteModal }) {
             />
           </Link>
 
-          {/* Desktop Nav Items */}
-          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2 2xl:space-x-4">
-            {navLinks.map((link) => (
+          {/* Desktop Nav Items - Stage 2 Animation */}
+          <nav
+            className={`hidden lg:flex items-center space-x-1 xl:space-x-2 2xl:space-x-4 transition-all duration-700 ease-out transform ${
+              animStage >= 2
+                ? 'opacity-100 translate-y-0 scale-100'
+                : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'
+            }`}
+          >
+            {navLinks.map((link, idx) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-3 py-1.5 xl:px-3.5 xl:py-2 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all whitespace-nowrap ${
+                style={{
+                  transitionDelay: animStage >= 2 ? `${idx * 60}ms` : '0ms',
+                }}
+                className={`px-3 py-1.5 xl:px-3.5 xl:py-2 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all duration-300 whitespace-nowrap ${
                   link.isActive
                     ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-xs'
                     : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
@@ -54,9 +70,14 @@ export default function Navbar({ onOpenQuoteModal }) {
             ))}
           </nav>
 
-          {/* Right Action & Mobile Toggle */}
-          <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
-            
+          {/* Right Action & Mobile Toggle - Stage 2 Animation */}
+          <div
+            className={`flex items-center space-x-2 sm:space-x-3 shrink-0 transition-all duration-700 ease-out transform ${
+              animStage >= 2
+                ? 'opacity-100 scale-100 translate-x-0'
+                : 'opacity-0 scale-90 translate-x-6 pointer-events-none'
+            }`}
+          >
             {/* Quote CTA Button */}
             <button
               onClick={onOpenQuoteModal}
