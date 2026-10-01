@@ -1013,7 +1013,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 <div className="pt-3 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm sm:text-base text-slate-200 font-semibold">
                   <div className="flex items-center space-x-2.5">
                     <MapPin className="w-5 h-5 text-emerald-400 shrink-0" />
-                    <span>Erode, TamilNadu — 638 112</span>
+                    <span>Erode, Tamil Nadu (State) — 638 112</span>
                   </div>
                   <a
                     href="tel:+918903852623"

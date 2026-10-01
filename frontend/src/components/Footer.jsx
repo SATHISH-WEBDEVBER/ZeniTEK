@@ -20,6 +20,21 @@ export default function Footer({ onOpenQuoteModal }) {
   const { t } = useLanguage();
   const [legalModal, setLegalModal] = useState(null); // 'privacy' | 'terms' | null
 
+  // Ensure "Tamil Nadu" never breaks across lines
+  const formatAddress = (text) => {
+    if (!text || typeof text !== 'string') return text;
+    if (!text.includes('Tamil Nadu')) return text;
+    const parts = text.split('Tamil Nadu');
+    return parts.map((part, idx) => (
+      <React.Fragment key={idx}>
+        {part}
+        {idx < parts.length - 1 && (
+          <span className="whitespace-nowrap font-medium">Tamil Nadu</span>
+        )}
+      </React.Fragment>
+    ));
+  };
+
   return (
     <footer className="bg-white text-black pt-16 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -131,7 +146,7 @@ export default function Footer({ onOpenQuoteModal }) {
                 <Building2 className="w-4 h-4 text-[#002DC2] shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-[#123B92] text-[11px] block">{t('regOfficeLabel')}:</span>
-                  <p className="text-black leading-relaxed text-[11px] mt-0.5">{t('regOfficeAddress')}</p>
+                  <p className="text-black leading-relaxed text-[11px] mt-0.5">{formatAddress(t('regOfficeAddress'))}</p>
                 </div>
               </div>
 
@@ -139,7 +154,7 @@ export default function Footer({ onOpenQuoteModal }) {
                 <MapPin className="w-4 h-4 text-[#002DC2] shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-[#123B92] text-[11px] block">{t('opOfficeLabel')}:</span>
-                  <p className="text-black leading-relaxed text-[11px] mt-0.5">{t('opOfficeAddress')}</p>
+                  <p className="text-black leading-relaxed text-[11px] mt-0.5">{formatAddress(t('opOfficeAddress'))}</p>
                 </div>
               </div>
 
