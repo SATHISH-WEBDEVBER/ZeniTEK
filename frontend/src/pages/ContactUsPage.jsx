@@ -71,7 +71,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
         {/* Left Column */}
         <div className="lg:col-span-5 space-y-6">
           <div className="bg-white p-6 sm:p-7 rounded-3xl border border-[#123B92]/20 shadow-md space-y-6">
-            <div className="flex items-center justify-between border-b border-[#123B92]/10 pb-3">
+            <div className="flex items-center justify-between pb-3">
               <h3 className="text-xl font-bold text-[#123B92]">{t('factoryLocation')}</h3>
               <span className="text-[10px] font-bold bg-[#F0F4FD] text-[#123B92] border border-[#123B92]/30 px-2 py-0.5 rounded-md">
                 Verified Hub

@@ -124,7 +124,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xl space-y-6">
             
-            <div className="flex items-center space-x-3 pb-4 border-b border-slate-100">
+            <div className="flex items-center space-x-3 pb-4">
               <div className="w-10 h-10 rounded-xl bg-[#F0F4FD] border border-[#123B92]/20 flex items-center justify-center text-[#123B92] shrink-0">
                 <Calculator className="w-5 h-5" />
               </div>

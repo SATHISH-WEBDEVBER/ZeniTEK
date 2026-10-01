@@ -58,7 +58,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Navigation & Breadcrumbs Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
           <div className="flex items-center space-x-2 text-xs">
             <Link to="/" className="text-slate-500 hover:text-blue-700 font-semibold">Home</Link>
             <span className="text-slate-400">/</span>
@@ -146,7 +146,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
 
             {/* Produce & Crop Highlight Card */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
                 <div>
                   <span className="text-[10px] font-extrabold uppercase tracking-widest text-green-700 bg-green-50 px-2.5 py-1 rounded-md border border-green-200">
                     TARGET CROP & DEHYDRATION APPLICATION
