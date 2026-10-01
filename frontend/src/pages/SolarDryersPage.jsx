@@ -15,7 +15,7 @@ import {
   MapPin, Calendar, Search, Filter, Sparkles, ArrowRight, ShieldCheck,
   CheckCircle2, X, PhoneCall, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight,
   SlidersHorizontal, Eye, LayoutGrid, Sun, Wind, Droplets, Cpu, Shield, Zap, Maximize2, Download, Layers, Grid, FileText,
-  Camera, Image as ImageIcon
+  Camera, Image as ImageIcon, ChevronDown, ChevronUp
 } from 'lucide-react';
 
 export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal }) {
@@ -26,6 +26,23 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
   // State for active top tab / section filter
   const [modelCategoryFilter, setModelCategoryFilter] = useState('All');
   const [selectedBrochureModalPage, setSelectedBrochureModalPage] = useState(null);
+
+  // In-Card Expandable Details State (Image-Priority Mode)
+  const [expandedModels, setExpandedModels] = useState({});
+  const [expandedBrochures, setExpandedBrochures] = useState({});
+  const [expandedProjects, setExpandedProjects] = useState({});
+
+  const toggleModelExpand = (id) => {
+    setExpandedModels(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const toggleBrochureExpand = (page) => {
+    setExpandedBrochures(prev => ({ ...prev, [page]: !prev[page] }));
+  };
+
+  const toggleProjectExpand = (id) => {
+    setExpandedProjects(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
   // Project Gallery Filter State
   const [searchQuery, setSearchQuery] = useState('');
@@ -265,99 +282,126 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
 
         {/* Models Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredModels.map((model) => (
-            <div
-              key={model.id}
-              className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-blue-500 transition-all duration-300 flex flex-col justify-between shadow-sm hover:shadow-xl group"
-            >
-              <div>
-                {/* Product Brochure Image Container (Clean, zero text on image) */}
-                <div 
-                  onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
-                  className="h-60 overflow-hidden bg-gradient-to-b from-slate-100 to-slate-50 border-b border-slate-200 cursor-pointer p-3 flex items-center justify-center"
-                >
-                  <img
-                    src={model.imageUrl}
-                    alt={model.name}
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                </div>
+          {filteredModels.map((model) => {
+            const isExpanded = !!expandedModels[model.id];
+            return (
+              <div
+                key={model.id}
+                className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-blue-500 transition-all duration-300 flex flex-col justify-between shadow-sm hover:shadow-xl group"
+              >
+                <div>
+                  {/* Product Brochure Image Container (Priority to Image: Full visual height) */}
+                  <div 
+                    onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
+                    className="relative h-64 sm:h-72 overflow-hidden bg-gradient-to-b from-slate-100 to-slate-50 border-b border-slate-200 cursor-pointer p-4 flex items-center justify-center"
+                  >
+                    <img
+                      src={model.imageUrl}
+                      alt={model.name}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
 
-                {/* Product Content Details */}
-                <div className="p-5 space-y-3">
-                  <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{model.tier}</span>
-                    <div className="flex items-center gap-1.5">
+                    {/* Floating Badges */}
+                    <div className="absolute top-3 left-3 flex items-center gap-1.5">
+                      <span className="bg-slate-900/80 backdrop-blur-xs text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg">
+                        {model.tier}
+                      </span>
+                    </div>
+                    <div className="absolute top-3 right-3 flex items-center gap-1.5">
                       {model.floorArea && (
-                        <span className="bg-slate-100 text-slate-700 font-bold text-[10px] px-2 py-0.5 rounded border border-slate-200">
+                        <span className="bg-white/95 backdrop-blur-xs text-slate-800 font-extrabold text-[10px] px-2.5 py-1 rounded-lg border border-slate-200 shadow-xs">
                           {model.floorArea}
                         </span>
                       )}
-                      <span className="bg-blue-800 text-white font-bold text-[10px] uppercase px-2 py-0.5 rounded">
+                      <span className="bg-blue-700 text-white font-extrabold text-[10px] uppercase px-2.5 py-1 rounded-lg shadow-xs">
                         {model.badge}
                       </span>
                     </div>
                   </div>
-                  <div>
-                    <h3 
-                      onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
-                      className="text-base font-black text-slate-900 group-hover:text-blue-700 transition-colors cursor-pointer leading-tight mt-0.5"
+
+                  {/* Clean Model Header & Image-First Action Button */}
+                  <div className="p-4 sm:p-5 space-y-3">
+                    <div>
+                      <h3 
+                        onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
+                        className="text-base font-black text-slate-900 group-hover:text-blue-700 transition-colors cursor-pointer leading-tight"
+                      >
+                        {model.name}
+                      </h3>
+                      <p className="text-xs font-bold text-green-700 mt-1">{model.capacityRange}</p>
+                    </div>
+
+                    {/* Button to toggle content - Image Priority Requirement */}
+                    <button
+                      type="button"
+                      onClick={() => toggleModelExpand(model.id)}
+                      className={`w-full py-2.5 px-4 rounded-xl border font-bold text-xs flex items-center justify-between transition-all cursor-pointer ${
+                        isExpanded 
+                          ? 'bg-blue-50 border-blue-400 text-blue-900 shadow-xs' 
+                          : 'bg-slate-50 hover:bg-blue-50 border-slate-300 hover:border-blue-500 text-slate-800'
+                      }`}
                     >
-                      {model.name}
-                    </h3>
-                    <p className="text-xs font-bold text-green-700 mt-1">{model.capacityRange}</p>
-                  </div>
+                      <span className="flex items-center space-x-1.5">
+                        <Eye className="w-3.5 h-3.5 text-blue-600" />
+                        <span>{isExpanded ? 'Hide Specifications' : 'View Specifications & Content'}</span>
+                      </span>
+                      <ChevronDown className={`w-4 h-4 text-blue-600 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                    </button>
 
-                  <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
-                    {model.description}
-                  </p>
+                    {/* In-Card Expandable / Slide-Up Panel */}
+                    {isExpanded && (
+                      <div className="pt-3 space-y-3 border-t border-slate-100 animate-fade-in text-left">
+                        <p className="text-xs text-slate-600 leading-relaxed">
+                          {model.description}
+                        </p>
 
-                  {/* 4-Item Key Spec Metric Chips */}
-                  <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100 text-[11px]">
-                    <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
-                      <span className="text-[9.5px] text-slate-400 font-bold uppercase block">Tray Area</span>
-                      <span className="font-extrabold text-slate-800">{model.totalTrayArea}</span>
-                    </div>
-                    <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
-                      <span className="text-[9.5px] text-slate-400 font-bold uppercase block">Trays / Trolleys</span>
-                      <span className="font-extrabold text-slate-800 line-clamp-1">{model.trayCount}</span>
-                    </div>
-                    <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
-                      <span className="text-[9.5px] text-slate-400 font-bold uppercase block">Solar Power</span>
-                      <span className="font-extrabold text-slate-800 line-clamp-1">{model.solarPower}</span>
-                    </div>
-                    <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
-                      <span className="text-[9.5px] text-slate-400 font-bold uppercase block">Night Heating</span>
-                      <span className="font-extrabold text-slate-800 line-clamp-1">{model.electricalHeater}</span>
-                    </div>
+                        {/* 4-Item Key Spec Metric Chips */}
+                        <div className="grid grid-cols-2 gap-2 text-[11px]">
+                          <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
+                            <span className="text-[9.5px] text-slate-400 font-bold uppercase block">Tray Area</span>
+                            <span className="font-extrabold text-slate-800">{model.totalTrayArea}</span>
+                          </div>
+                          <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
+                            <span className="text-[9.5px] text-slate-400 font-bold uppercase block">Trays / Trolleys</span>
+                            <span className="font-extrabold text-slate-800 line-clamp-1">{model.trayCount}</span>
+                          </div>
+                          <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
+                            <span className="text-[9.5px] text-slate-400 font-bold uppercase block">Solar Power</span>
+                            <span className="font-extrabold text-slate-800 line-clamp-1">{model.solarPower}</span>
+                          </div>
+                          <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
+                            <span className="text-[9.5px] text-slate-400 font-bold uppercase block">Night Heating</span>
+                            <span className="font-extrabold text-slate-800 line-clamp-1">{model.electricalHeater}</span>
+                          </div>
+                        </div>
+
+                        <div className="pt-1 space-y-2">
+                          <button
+                            type="button"
+                            onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
+                            className="w-full py-2 bg-white hover:bg-[#002DC2] border border-[#002DC2] text-[#002DC2] hover:text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+                          >
+                            <Eye className="w-3.5 h-3.5" />
+                            <span>Full Engineering Specifications Modal</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: model.name })}
+                            className="w-full py-2.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow hover:scale-102 flex items-center justify-center space-x-1.5 cursor-pointer"
+                          >
+                            <span>Request Price Quote</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-
-              {/* Action Buttons */}
-              <div className="p-5 pt-0 space-y-2">
-                <button
-                  type="button"
-                  onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
-                  className="w-full py-2.5 bg-white hover:bg-[#002DC2] border-2 border-[#002DC2] text-[#002DC2] hover:text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
-                >
-                  <Eye className="w-3.5 h-3.5" />
-                  <span>View Engineering Specifications</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: model.name })}
-                  className="w-full py-3 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow hover:scale-102 flex items-center justify-center space-x-1.5 cursor-pointer"
-                >
-                  <span>Request Price Quote</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-
-            </div>
-          ))}
+            );
+          })}
         </div>
         </div>
 
@@ -566,53 +610,87 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
 
         {/* Brochure Pages Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {brochurePages.map((bPage) => (
-            <div
-              key={bPage.page}
-              onClick={() => setSelectedBrochureModalPage(bPage)}
-              className="bg-white rounded-3xl overflow-hidden border border-[#123B92]/20 hover:border-[#002DC2] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col justify-between"
-            >
-              <div>
-                {/* Clean Page Thumbnail without text overlays */}
-                <div className="h-72 overflow-hidden bg-[#F0F4FD] border-b border-[#123B92]/20 flex items-center justify-center">
-                  <img
-                    src={bPage.image}
-                    alt={bPage.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                </div>
+          {brochurePages.map((bPage) => {
+            const isExpanded = !!expandedBrochures[bPage.page];
+            return (
+              <div
+                key={bPage.page}
+                className="bg-white rounded-3xl overflow-hidden border border-[#123B92]/20 hover:border-[#002DC2] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+              >
+                <div>
+                  {/* Priority to Image: Full visual height */}
+                  <div 
+                    onClick={() => setSelectedBrochureModalPage(bPage)}
+                    className="relative h-80 sm:h-96 overflow-hidden bg-[#F0F4FD] border-b border-[#123B92]/20 flex items-center justify-center cursor-pointer"
+                  >
+                    <img
+                      src={bPage.image}
+                      alt={bPage.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
 
-                <div className="p-4 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="bg-[#123B92] text-white font-black text-[10px] px-2.5 py-0.5 rounded shadow-xs">
-                      PAGE {bPage.page}
-                    </span>
-                    <span className="bg-[#23AC39] text-white font-black text-[10px] px-2.5 py-0.5 rounded shadow-xs">
-                      {bPage.category}
-                    </span>
+                    {/* Floating Badges */}
+                    <div className="absolute top-3 left-3">
+                      <span className="bg-[#123B92]/90 backdrop-blur-xs text-white font-black text-[10px] px-2.5 py-1 rounded-lg shadow-xs">
+                        PAGE {bPage.page}
+                      </span>
+                    </div>
+                    <div className="absolute top-3 right-3">
+                      <span className="bg-[#23AC39]/95 backdrop-blur-xs text-white font-black text-[10px] px-2.5 py-1 rounded-lg shadow-xs">
+                        {bPage.category}
+                      </span>
+                    </div>
                   </div>
-                  <h4 className="text-xs font-black text-[#123B92] group-hover:text-[#002DC2] transition-colors line-clamp-1">
-                    {bPage.title}
-                  </h4>
-                  <p className="text-[11px] text-black/70 line-clamp-2 leading-snug">
-                    {bPage.summary}
-                  </p>
+
+                  <div className="p-4 sm:p-5 space-y-3">
+                    <h4 
+                      onClick={() => setSelectedBrochureModalPage(bPage)}
+                      className="text-sm font-black text-[#123B92] group-hover:text-[#002DC2] transition-colors line-clamp-1 cursor-pointer"
+                    >
+                      {bPage.title}
+                    </h4>
+
+                    {/* Button to toggle content - Image Priority Requirement */}
+                    <button
+                      type="button"
+                      onClick={() => toggleBrochureExpand(bPage.page)}
+                      className={`w-full py-2.5 px-4 rounded-xl border font-bold text-xs flex items-center justify-between transition-all cursor-pointer ${
+                        isExpanded 
+                          ? 'bg-blue-50 border-blue-400 text-blue-900 shadow-xs' 
+                          : 'bg-slate-50 hover:bg-blue-50 border-slate-300 hover:border-blue-500 text-slate-800'
+                      }`}
+                    >
+                      <span className="flex items-center space-x-1.5">
+                        <FileText className="w-3.5 h-3.5 text-blue-600" />
+                        <span>{isExpanded ? 'Hide Brochure Details' : 'View Page Details & Summary'}</span>
+                      </span>
+                      <ChevronDown className={`w-4 h-4 text-blue-600 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {/* In-Card Expandable / Slide-Up Panel */}
+                    {isExpanded && (
+                      <div className="pt-3 space-y-3 border-t border-slate-100 animate-fade-in text-left">
+                        <p className="text-xs text-black/80 leading-relaxed font-normal">
+                          {bPage.summary}
+                        </p>
+
+                        <button
+                          type="button"
+                          onClick={() => setSelectedBrochureModalPage(bPage)}
+                          className="w-full py-2.5 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-600 hover:to-blue-700 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-1.5 shadow-sm cursor-pointer"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                          <span>Click to View Full High-Res Page</span>
+                          <ArrowRight className="w-3 h-3 ml-1" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-
-              <div className="p-4 pt-0">
-                <button
-                  type="button"
-                  onClick={() => setSelectedBrochureModalPage(bPage)}
-                  className="w-full py-2 bg-white group-hover:bg-[#002DC2] border border-[#002DC2] text-[#002DC2] group-hover:text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-1"
-                >
-                  <span>Click to View Full High-Res Page</span>
-                  <ArrowRight className="w-3 h-3 ml-1" />
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         </div>
@@ -814,66 +892,91 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
 
         {/* 25 Project Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {paginatedProjects.map((proj) => (
-            <div
-              key={proj.id}
-              className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-blue-500 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                {/* Clean installation photo container without text on top */}
-                <div className="h-56 w-full overflow-hidden bg-slate-100 border-b border-slate-200">
-                  <img
-                    src={proj.image}
-                    alt={proj.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                </div>
+          {paginatedProjects.map((proj) => {
+            const isExpanded = !!expandedProjects[proj.id];
+            return (
+              <div
+                key={proj.id}
+                className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-blue-500 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+              >
+                <div>
+                  {/* Clean installation photo container (Priority to Image: Full visual height) */}
+                  <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-100 border-b border-slate-200">
+                    <img
+                      src={proj.image}
+                      alt={proj.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
 
-                <div className="p-5 space-y-3">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="bg-blue-950 text-white font-mono font-bold text-[10px] px-2.5 py-0.5 rounded border border-blue-800/60">
-                      #{proj.id}
-                    </span>
-                    <span className="bg-slate-900 text-amber-300 font-mono font-bold text-[10px] px-2 py-0.5 rounded">
-                      {proj.dryerCode}
-                    </span>
-                    <span className="bg-green-700 text-white font-bold text-[10px] px-2 py-0.5 rounded">
-                      {proj.year}
-                    </span>
+                    {/* Floating Badges */}
+                    <div className="absolute top-3 left-3 flex items-center gap-1.5">
+                      <span className="bg-blue-950/90 backdrop-blur-xs text-white font-mono font-bold text-[10px] px-2.5 py-1 rounded-lg border border-blue-800/60 shadow-xs">
+                        #{proj.id}
+                      </span>
+                      <span className="bg-slate-900/90 backdrop-blur-xs text-amber-300 font-mono font-bold text-[10px] px-2.5 py-1 rounded-lg shadow-xs">
+                        {proj.dryerCode}
+                      </span>
+                    </div>
+                    <div className="absolute top-3 right-3">
+                      <span className="bg-green-700/95 backdrop-blur-xs text-white font-bold text-[10px] px-2.5 py-1 rounded-lg shadow-xs">
+                        {proj.year}
+                      </span>
+                    </div>
                   </div>
 
-                  <div>
-                    <h3 className="text-base font-black text-slate-900 group-hover:text-blue-700 transition-colors leading-snug">
-                      {proj.title}
-                    </h3>
-                    <p className="text-xs text-slate-500 flex items-center font-medium mt-1">
-                      <MapPin className="w-3.5 h-3.5 text-green-600 mr-1 shrink-0" />
-                      <span>{proj.locality} • {proj.state}</span>
-                    </p>
-                  </div>
+                  <div className="p-4 sm:p-5 space-y-3">
+                    <div>
+                      <h3 className="text-base font-black text-slate-900 group-hover:text-blue-700 transition-colors leading-snug">
+                        {proj.title}
+                      </h3>
+                      <p className="text-xs text-slate-500 flex items-center font-medium mt-1">
+                        <MapPin className="w-3.5 h-3.5 text-green-600 mr-1 shrink-0" />
+                        <span>{proj.locality} • {proj.state}</span>
+                      </p>
+                    </div>
 
-                  <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1 text-xs">
-                    <div className="text-[10px] font-bold text-slate-400 uppercase">DRYING APPLICATION</div>
-                    <div className="font-extrabold text-blue-950 line-clamp-1">{proj.application}</div>
-                    <div className="text-[10px] font-semibold text-green-800">{proj.sector} • {proj.pinPrecision}</div>
+                    {/* Button to toggle content - Image Priority Requirement */}
+                    <button
+                      type="button"
+                      onClick={() => toggleProjectExpand(proj.id)}
+                      className={`w-full py-2.5 px-4 rounded-xl border font-bold text-xs flex items-center justify-between transition-all cursor-pointer ${
+                        isExpanded 
+                          ? 'bg-blue-50 border-blue-400 text-blue-900 shadow-xs' 
+                          : 'bg-slate-50 hover:bg-blue-50 border-slate-300 hover:border-blue-500 text-slate-800'
+                      }`}
+                    >
+                      <span className="flex items-center space-x-1.5">
+                        <Eye className="w-3.5 h-3.5 text-blue-600" />
+                        <span>{isExpanded ? 'Hide Details' : 'View Installation Details & Specs'}</span>
+                      </span>
+                      <ChevronDown className={`w-4 h-4 text-blue-600 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {/* In-Card Expandable / Slide-Up Panel */}
+                    {isExpanded && (
+                      <div className="pt-3 space-y-3 border-t border-slate-100 animate-fade-in text-left">
+                        <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1 text-xs">
+                          <div className="text-[10px] font-bold text-slate-400 uppercase">DRYING APPLICATION</div>
+                          <div className="font-extrabold text-blue-950">{proj.application}</div>
+                          <div className="text-[10px] font-semibold text-green-800">{proj.sector} • {proj.pinPrecision}</div>
+                        </div>
+
+                        <Link
+                          to={`/dryers/${proj.id}`}
+                          className="w-full py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow flex items-center justify-center space-x-1.5"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                          <span>View Full Site Details & Specs</span>
+                          <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-
-              {/* View Details Button */}
-              <div className="p-5 pt-0">
-                <Link
-                  to={`/dryers/${proj.id}`}
-                  className="w-full py-3 bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow flex items-center justify-center space-x-1.5"
-                >
-                  <Eye className="w-3.5 h-3.5" />
-                  <span>View Details & Specifications</span>
-                  <ArrowRight className="w-3.5 h-3.5 ml-1" />
-                </Link>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Pagination Controls */}

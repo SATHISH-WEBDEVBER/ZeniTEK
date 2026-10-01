@@ -6,11 +6,18 @@ import { sampleReviews, dryerModelsData, cropMatrixData } from '../data/sampleDa
 import { workingPrincipleSteps } from '../data/zenitekBrochureData';
 import { useLanguage } from '../context/LanguageContext';
 import {
-  Sun, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, TrendingUp, Zap, ChevronRight, MapPin, Search, SlidersHorizontal, Sprout, Wind, Droplets, Cpu, Shield, Sparkles
+  Sun, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, TrendingUp, Zap, ChevronRight, MapPin, Search, SlidersHorizontal, Sprout, Wind, Droplets, Cpu, Shield, Sparkles,
+  ChevronDown, ChevronUp, Eye
 } from 'lucide-react';
 
 export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
   const { t } = useLanguage();
+  const [expandedModels, setExpandedModels] = useState({});
+
+  const toggleModelExpand = (id) => {
+    setExpandedModels(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
   const [quickForm, setQuickForm] = useState({
     name: '',
     phone: '',
@@ -181,65 +188,105 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-            {dryerModelsData.slice(0, 6).map(model => (
-              <div key={model.id} className="bg-white rounded-3xl overflow-hidden border border-[#123B92]/20 hover:border-[#002DC2] transition-all duration-300 flex flex-col justify-between shadow-sm hover:shadow-lg group">
-                <div className="cursor-pointer" onClick={() => onOpenDetailModal && onOpenDetailModal(model)}>
-                  {/* Clean Image Container (Zero text overlay on the image) */}
-                  <div className="h-52 overflow-hidden bg-[#F0F4FD] border-b border-[#123B92]/20 flex items-center justify-center p-3">
-                    <img src={model.imageUrl} alt={model.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
-                  </div>
-                  
-                  <div className="p-5 sm:p-6 space-y-3.5">
-                    {/* Badge and specs placed cleanly below the image */}
-                    <div className="flex items-center justify-between gap-2 flex-wrap">
-                      <span className="text-[10px] font-bold text-black/60 uppercase tracking-wider">{model.category}</span>
-                      <div className="flex items-center gap-1.5">
+            {dryerModelsData.slice(0, 6).map(model => {
+              const isExpanded = !!expandedModels[model.id];
+              return (
+                <div key={model.id} className="bg-white rounded-3xl overflow-hidden border border-[#123B92]/20 hover:border-[#002DC2] transition-all duration-300 flex flex-col justify-between shadow-sm hover:shadow-xl group">
+                  <div>
+                    {/* Priority Image Container (Full visual priority) */}
+                    <div 
+                      className="relative h-64 sm:h-72 overflow-hidden bg-[#F0F4FD] border-b border-[#123B92]/20 flex items-center justify-center p-4 cursor-pointer"
+                      onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
+                    >
+                      <img src={model.imageUrl} alt={model.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
+
+                      {/* Floating Badges */}
+                      <div className="absolute top-3 left-3">
+                        <span className="bg-[#123B92]/90 backdrop-blur-xs text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg">
+                          {model.category}
+                        </span>
+                      </div>
+                      <div className="absolute top-3 right-3 flex items-center gap-1.5">
                         {model.floorArea && (
-                          <span className="bg-[#F0F4FD] text-[#123B92] font-bold text-[10px] px-2 py-0.5 rounded border border-[#123B92]/20">
+                          <span className="bg-white/95 backdrop-blur-xs text-[#123B92] font-extrabold text-[10px] px-2.5 py-1 rounded-lg border border-[#123B92]/20 shadow-xs">
                             {model.floorArea}
                           </span>
                         )}
-                        <span className="bg-[#123B92] text-white font-bold text-[10px] uppercase px-2 py-0.5 rounded shadow-xs">
+                        <span className="bg-[#23AC39] text-white font-extrabold text-[10px] uppercase px-2.5 py-1 rounded-lg shadow-xs">
                           {model.badge}
                         </span>
                       </div>
                     </div>
-
-                    <div>
-                      <h3 className="text-base font-bold text-black group-hover:text-[#002DC2] transition-colors mt-0.5">{model.name}</h3>
-                      <p className="text-xs font-black text-[#002DC2] mt-0.5">{model.capacityRange}</p>
-                    </div>
-                    <p className="text-xs text-black/70 leading-relaxed line-clamp-2">{model.description}</p>
                     
-                    <div className="space-y-2 pt-2 border-t border-[#123B92]/10 text-xs">
-                      {(model.keyFeatures || model.features || []).slice(0, 3).map((feat, idx) => (
-                        <div key={idx} className="flex items-start text-black font-medium">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#002DC2] mr-2 shrink-0 mt-0.5" />
-                          <span className="line-clamp-1">{feat}</span>
+                    {/* Clean Model Header & Image-First Action Button */}
+                    <div className="p-4 sm:p-5 space-y-3">
+                      <div>
+                        <h3 
+                          onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
+                          className="text-base font-bold text-black group-hover:text-[#002DC2] transition-colors leading-tight cursor-pointer"
+                        >
+                          {model.name}
+                        </h3>
+                        <p className="text-xs font-black text-[#002DC2] mt-0.5">{model.capacityRange}</p>
+                      </div>
+
+                      {/* Button to toggle content - Image Priority Requirement */}
+                      <button
+                        type="button"
+                        onClick={() => toggleModelExpand(model.id)}
+                        className={`w-full py-2.5 px-4 rounded-xl border font-bold text-xs flex items-center justify-between transition-all cursor-pointer ${
+                          isExpanded 
+                            ? 'bg-[#F0F4FD] border-[#002DC2] text-[#002DC2] shadow-xs' 
+                            : 'bg-slate-50 hover:bg-[#F0F4FD] border-slate-300 hover:border-[#002DC2] text-slate-800'
+                        }`}
+                      >
+                        <span className="flex items-center space-x-1.5">
+                          <Eye className="w-3.5 h-3.5 text-[#002DC2]" />
+                          <span>{isExpanded ? 'Hide Specifications' : 'View Specifications & Features'}</span>
+                        </span>
+                        <ChevronDown className={`w-4 h-4 text-[#002DC2] transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                      </button>
+
+                      {/* In-Card Expandable / Slide-Up Panel */}
+                      {isExpanded && (
+                        <div className="pt-3 space-y-3 border-t border-[#123B92]/10 animate-fade-in text-left">
+                          <p className="text-xs text-black/70 leading-relaxed">{model.description}</p>
+                          
+                          <div className="space-y-1.5 pt-1 text-xs">
+                            {(model.keyFeatures || model.features || []).slice(0, 3).map((feat, idx) => (
+                              <div key={idx} className="flex items-start text-black font-medium">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-[#002DC2] mr-2 shrink-0 mt-0.5" />
+                                <span className="line-clamp-1">{feat}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="pt-2 space-y-2">
+                            <button
+                              type="button"
+                              onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
+                              className="w-full py-2 bg-white border border-[#002DC2] text-[#002DC2] hover:bg-[#002DC2] hover:text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer flex items-center justify-center space-x-1.5"
+                            >
+                              <Eye className="w-3.5 h-3.5" />
+                              <span>View Details & Brochure</span>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => onOpenQuoteModal({ capacityNeeded: model.name })}
+                              className="w-full py-2.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center space-x-1.5 cursor-pointer shadow-sm hover:scale-102"
+                            >
+                              <span>{t('reqQuote')}</span>
+                              <ArrowRight className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
                         </div>
-                      ))}
+                      )}
                     </div>
                   </div>
                 </div>
-
-                <div className="p-5 sm:p-6 pt-0 space-y-2">
-                  <button
-                    onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
-                    className="w-full py-2.5 bg-white border-2 border-[#002DC2] text-[#002DC2] hover:bg-[#002DC2] hover:text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer"
-                  >
-                    View Details & Brochure
-                  </button>
-
-                  <button
-                    onClick={() => onOpenQuoteModal({ capacityNeeded: model.name })}
-                    className="w-full py-2.5 sm:py-3 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
-                  >
-                    <span>{t('reqQuote')}</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="text-center pt-2">
