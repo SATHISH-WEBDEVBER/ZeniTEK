@@ -268,9 +268,13 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
 
       {/* SECTION 3: INTERACTIVE ROI CALCULATOR (ODD SECTION - CRISP WHITE) */}
-      <section className="w-full section-odd py-14 sm:py-20" id="roi-calculator">
+      <section className="w-full section-odd py-8 sm:py-10" id="roi-calculator">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ROICalculator onSelectModelQuote={(modelKey, kg, crop) => onOpenQuoteModal({ capacityNeeded: modelKey, cropType: crop })} />
+          <ROICalculator onSelectModelQuote={(modelKey, kg, crop, fullModel) => onOpenQuoteModal({ 
+            capacityNeeded: modelKey, 
+            cropType: crop,
+            message: `Inquiry for ${fullModel || modelKey} (${kg} kg/batch of ${crop})`
+          })} />
         </div>
       </section>
 

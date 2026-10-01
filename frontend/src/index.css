@@ -406,3 +406,17 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #2563eb;
 }
+
+/* 5-second Auto-swap Progress Animation for Showcase Carousel */
+@keyframes progress5s {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-progress-5s {
+  animation: progress5s 5000ms linear forwards;
+}
