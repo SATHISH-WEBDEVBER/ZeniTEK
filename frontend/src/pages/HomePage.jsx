@@ -33,14 +33,14 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
     {
       image: '/hero-carousel/slide-1.jpg',
       title: 'Commercial Solar Polyhouse Tunnel',
-      subtitle: 'ZeniTEK Manufacturing & Field Site',
+      subtitle: 'ZeniTEK Agricultural Field Installation',
       badge: 'MNRE Enlisted',
       objectPos: 'object-cover object-center',
     },
     {
       image: '/hero-carousel/slide-2.jpg',
-      title: 'Industrial Tunnel Airflow Chamber',
-      subtitle: 'Precision Heat Circulation Architecture',
+      title: 'SOLDRY Inverted Parabolic Arch Dryer',
+      subtitle: 'Continuous Aerodynamic Airflow Architecture',
       badge: 'ISO 9001:2015 Quality',
       objectPos: 'object-cover object-center',
     },
@@ -49,13 +49,6 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       title: 'Solar PV Apex & Concrete Foundation',
       subtitle: 'Heavy-Duty All-Weather Construction',
       badge: 'Govt Subsidy Eligible',
-      objectPos: 'object-cover object-center',
-    },
-    {
-      image: '/hero-carousel/slide-4.jpg',
-      title: 'Food-Grade SS304 Chilli Dehydration',
-      subtitle: 'High-Yield Commercial Solar Drying',
-      badge: 'MNRE Enlisted',
       objectPos: 'object-cover object-center',
     },
   ];
@@ -90,7 +83,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
     <div className="bg-slate-50 text-slate-900 w-full max-w-full overflow-x-hidden">
       
       {/* SECTION 1: HERO SECTION WITH 4-IMAGE TESLA-STYLE AUTO-CAROUSEL (5S LOOP) */}
-      <section className="relative pt-12 pb-16 lg:pt-20 lg:pb-24 section-odd w-full overflow-hidden min-h-[580px] lg:min-h-[660px] flex items-center select-none">
+      <section className="relative pt-12 pb-16 lg:pt-20 lg:pb-24 section-odd w-full overflow-hidden min-h-[600px] lg:min-h-[680px] flex items-center select-none">
         
         {/* Carousel Background Images (Smooth Cross-fade, 100% HD View) */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -109,15 +102,15 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
             </div>
           ))}
 
-          {/* Minimal Soft Left-Gradient on Mobile only, Transparent on Large Desktop where Left is Open Courtyard/Sky */}
+          {/* Minimal Soft Left-Gradient on Mobile only, Transparent on Large Desktop where Left is Open Sky */}
           <div className="absolute inset-0 z-15 bg-gradient-to-r from-white/95 via-white/80 to-transparent sm:from-white/70 sm:via-white/30 sm:to-transparent lg:from-transparent pointer-events-none" />
         </div>
 
-        {/* Tesla-Style Left & Right Navigation Controls */}
+        {/* Tesla-Style Left & Right Navigation Controls with Dedicated Clearance */}
         <button
           onClick={handlePrevSlide}
           aria-label="Previous Slide"
-          className="absolute left-3 sm:left-6 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/85 hover:bg-white text-slate-800 hover:text-[#123B92] border border-slate-200 shadow-xl flex items-center justify-center transition-all active:scale-90 cursor-pointer"
+          className="absolute left-2 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/90 hover:bg-white text-slate-800 hover:text-[#123B92] border border-slate-200/90 shadow-xl flex items-center justify-center transition-all active:scale-90 cursor-pointer"
         >
           <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
@@ -125,23 +118,23 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
         <button
           onClick={handleNextSlide}
           aria-label="Next Slide"
-          className="absolute right-3 sm:right-6 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/85 hover:bg-white text-slate-800 hover:text-[#123B92] border border-slate-200 shadow-xl flex items-center justify-center transition-all active:scale-90 cursor-pointer"
+          className="absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/90 hover:bg-white text-slate-800 hover:text-[#123B92] border border-slate-200/90 shadow-xl flex items-center justify-center transition-all active:scale-90 cursor-pointer"
         >
           <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
-        {/* Foreground Content (Left-Aligned with z-10) */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Foreground Content (Left-Aligned with Dedicated Padding to Clear Arrow Buttons) */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-12 sm:px-16 lg:px-20">
           <div className="max-w-xl lg:max-w-2xl xl:max-w-3xl space-y-6">
             
             {/* Top Badge */}
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white border border-[#123B92]/30 text-[#123B92] text-xs font-bold shadow-sm max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/95 border border-[#123B92]/30 text-[#123B92] text-xs font-bold shadow-md max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
               <Sun className="w-4 h-4 text-[#002DC2] animate-spin-slow shrink-0" />
               <span className="truncate">{t('heroBadge')}</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#123B92] leading-tight drop-shadow-xs">
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#123B92] leading-tight drop-shadow-sm">
               {t('heroTitle1')} <br />
               <span className="text-[#002DC2]">
                 {t('heroTitle2')}
@@ -149,7 +142,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-sm sm:text-base lg:text-lg text-slate-800 leading-relaxed font-bold max-w-xl">
+            <p className="text-sm sm:text-base lg:text-lg text-slate-800 leading-relaxed font-bold max-w-xl drop-shadow-2xs">
               {t('heroSubtitle')}
             </p>
 
@@ -165,26 +158,28 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
               <Link
                 to="/dryers"
-                className="px-6 py-3.5 sm:px-8 sm:py-4 bg-white hover:bg-slate-50 border-2 border-[#123B92] text-[#123B92] font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl transition-all text-center flex items-center justify-center space-x-2 shadow-sm active:scale-95"
+                className="px-6 py-3.5 sm:px-8 sm:py-4 bg-white hover:bg-slate-50 border-2 border-[#123B92] text-[#123B92] font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl transition-all text-center flex items-center justify-center space-x-2 shadow-md active:scale-95"
               >
                 <span>{t('exploreModels')}</span>
                 <ChevronRight className="w-4 h-4" />
               </Link>
             </div>
 
-            {/* Stat Highlights Row - Clean Solid Glass Cards */}
-            <div className="pt-6 border-t border-[#123B92]/20 grid grid-cols-3 gap-3 sm:gap-6 max-w-lg bg-white/80 sm:bg-transparent p-3 sm:p-0 rounded-xl sm:rounded-none">
-              <div>
-                <div className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-black text-[#123B92]">1,200+</div>
-                <div className="text-[10px] xs:text-[11px] sm:text-xs text-slate-900 font-bold mt-0.5">{t('dryersInstalled')}</div>
-              </div>
-              <div>
-                <div className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-black text-[#002DC2]">500+ MT</div>
-                <div className="text-[10px] xs:text-[11px] sm:text-xs text-slate-900 font-bold mt-0.5">{t('foodSaved')}</div>
-              </div>
-              <div>
-                <div className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900">40-60%</div>
-                <div className="text-[10px] xs:text-[11px] sm:text-xs text-slate-900 font-bold mt-0.5">{t('subsidyHelp')}</div>
+            {/* Stat Highlights Row - Clean Frosted Glass Card with Dividers */}
+            <div className="pt-2">
+              <div className="bg-white/90 backdrop-blur-md border border-slate-200/90 shadow-xl rounded-2xl p-4 sm:p-5 max-w-lg grid grid-cols-3 gap-3 sm:gap-4 divide-x divide-slate-200">
+                <div className="pr-2">
+                  <div className="text-xl sm:text-2xl lg:text-3xl font-black text-[#123B92] tracking-tight whitespace-nowrap">1,200+</div>
+                  <div className="text-[11px] sm:text-xs text-slate-700 font-bold mt-1 leading-snug">{t('dryersInstalled')}</div>
+                </div>
+                <div className="px-2 sm:px-3">
+                  <div className="text-xl sm:text-2xl lg:text-3xl font-black text-[#002DC2] tracking-tight whitespace-nowrap">500+ MT</div>
+                  <div className="text-[11px] sm:text-xs text-slate-700 font-bold mt-1 leading-snug">{t('foodSaved')}</div>
+                </div>
+                <div className="pl-2 sm:pl-3">
+                  <div className="text-xl sm:text-2xl lg:text-3xl font-black text-[#23AC39] tracking-tight whitespace-nowrap">40-60%</div>
+                  <div className="text-[11px] sm:text-xs text-slate-700 font-bold mt-1 leading-snug">{t('subsidyHelp')}</div>
+                </div>
               </div>
             </div>
 
