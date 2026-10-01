@@ -21,11 +21,11 @@ export default function Footer({ onOpenQuoteModal }) {
   const [legalModal, setLegalModal] = useState(null); // 'privacy' | 'terms' | null
 
   return (
-    <footer className="bg-white border-t-2 border-[#123B92] text-black pt-16 pb-10">
+    <footer className="bg-white text-black pt-16 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main 12-Column Responsive Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-12 border-b border-[#123B92]/15">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-8">
           
           {/* Col 1: Brand Info & Accreditations (4 cols on desktop) */}
           <div className="lg:col-span-4 space-y-4">
@@ -36,8 +36,8 @@ export default function Footer({ onOpenQuoteModal }) {
                 className="h-12 sm:h-14 w-auto object-contain"
               />
             </div>
-            <p className="text-xs leading-relaxed text-black max-w-sm">
-              {t('footerAbout')}
+            <p className="text-xs leading-relaxed text-black max-w-sm font-medium">
+              ZeniTEK is India's leading designer &amp; manufacturer of high-efficiency polyhouse greenhouse solar thermal dryers. Engineered in Coimbatore to eliminate post-harvest waste for farmers, FPOs, and exporters.
             </p>
             <div className="flex flex-wrap items-center gap-2 pt-1">
               <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold bg-[#F0F4FD] text-[#123B92] border border-[#002DC2] shadow-2xs">
@@ -51,31 +51,36 @@ export default function Footer({ onOpenQuoteModal }) {
 
           {/* Col 2: Dryer Models (2 cols on desktop) */}
           <div className="lg:col-span-2">
-            <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4">{t('footerDryerModels')}</h4>
+            <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4">Dryer Models</h4>
             <ul className="space-y-2.5 text-xs font-medium">
               <li>
-                <Link to="/dryers?model=portable" className="hover:text-[#002DC2] text-black transition-colors block">
-                  {t('modelPortable')} <span className="text-[10px] text-black/60 block sm:inline">(10-50 kg)</span>
+                <Link to="/dryers" className="hover:text-[#002DC2] text-black transition-colors block">
+                  <span className="font-bold text-[#123B92] block">SOLDRY 1210</span>
+                  <span className="text-[10px] text-slate-500 block">Polyhouse Tunnel (100-300 kg)</span>
                 </Link>
               </li>
               <li>
-                <Link to="/dryers?model=polyhouse" className="hover:text-[#002DC2] text-black transition-colors block">
-                  {t('modelPolyhouse')} <span className="text-[10px] text-black/60 block sm:inline">(100-500 kg)</span>
+                <Link to="/dryers" className="hover:text-[#002DC2] text-black transition-colors block">
+                  <span className="font-bold text-[#123B92] block">SOLDRY 1709</span>
+                  <span className="text-[10px] text-slate-500 block">Commercial Tunnel (500 kg-1 Ton)</span>
                 </Link>
               </li>
               <li>
-                <Link to="/dryers?model=industrial" className="hover:text-[#002DC2] text-black transition-colors block">
-                  {t('modelIndustrial')} <span className="text-[10px] text-black/60 block sm:inline">(1 Ton+)</span>
+                <Link to="/dryers" className="hover:text-[#002DC2] text-black transition-colors block">
+                  <span className="font-bold text-[#123B92] block">SOLDRY 300</span>
+                  <span className="text-[10px] text-slate-500 block">Industrial Multi-Unit Rig</span>
                 </Link>
               </li>
               <li>
-                <Link to="/applications" className="hover:text-[#002DC2] text-black transition-colors block">
-                  {t('matrixCropTitle')}
+                <Link to="/dryers" className="hover:text-[#002DC2] text-black transition-colors block">
+                  <span className="font-bold text-[#123B92] block">SUNDRY 50</span>
+                  <span className="text-[10px] text-slate-500 block">Stainless Box Dryer (50 kg)</span>
                 </Link>
               </li>
               <li>
-                <Link to="/gallery" className="hover:text-[#002DC2] text-black transition-colors block">
-                  {t('galleryBadge')}
+                <Link to="/dryers" className="hover:text-[#002DC2] text-black transition-colors block">
+                  <span className="font-bold text-[#123B92] block">SUNDRY 12 &amp; 6</span>
+                  <span className="text-[10px] text-slate-500 block">Portable Micro Dryer Units</span>
                 </Link>
               </li>
             </ul>
@@ -106,14 +111,13 @@ export default function Footer({ onOpenQuoteModal }) {
                 </a>
               </li>
               <li>
-                <a 
-                  href="#copra-report" 
-                  onClick={(e) => { e.preventDefault(); alert('Downloading Copra Drying Lab Report PDF...'); }} 
-                  className="inline-flex items-center text-black hover:text-[#002DC2] hover:underline transition-colors"
+                <Link 
+                  to="/gallery?cat=brochure"
+                  className="inline-flex items-center text-slate-700 hover:text-[#002DC2] hover:underline font-medium transition-colors"
                 >
-                  <ExternalLink className="w-3.5 h-3.5 mr-1.5 text-[#002DC2] shrink-0" /> 
-                  <span>{t('footerLabReport')}</span>
-                </a>
+                  <FileText className="w-3.5 h-3.5 mr-1.5 text-[#002DC2] shrink-0" /> 
+                  <span>Technical Brochure</span>
+                </Link>
               </li>
             </ul>
           </div>
@@ -144,15 +148,14 @@ export default function Footer({ onOpenQuoteModal }) {
                   <Phone className="w-3.5 h-3.5 text-[#002DC2] shrink-0" />
                   <div className="text-[11px]">
                     <a href="tel:+918903852623" className="hover:text-[#002DC2] font-bold text-[#123B92] block">+91-8903852623</a>
-                    <a href="tel:+918098613422" className="hover:text-[#002DC2] font-medium text-black block">+91 80986 13422</a>
+                    <a href="tel:+918098613422" className="hover:text-[#002DC2] font-bold text-[#123B92] block">+91 80986 13422</a>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-2">
                   <Mail className="w-3.5 h-3.5 text-[#002DC2] shrink-0" />
                   <div className="text-[11px]">
-                    <a href="mailto:zenitek2k@gmail.com" className="hover:text-[#002DC2] font-semibold text-[#123B92] block">zenitek2k@gmail.com</a>
-                    <a href="mailto:sales@zenitek.in" className="hover:text-[#002DC2] text-black block">sales@zenitek.in</a>
+                    <a href="mailto:zenitek2k@gmail.com" className="hover:text-[#002DC2] font-bold text-[#123B92] block">zenitek2k@gmail.com</a>
                   </div>
                 </div>
               </div>
@@ -173,52 +176,41 @@ export default function Footer({ onOpenQuoteModal }) {
 
         </div>
 
-        {/* Clean, Perfectly Aligned Bottom Bar */}
-        <div className="pt-6 border-t border-[#123B92]/15 mt-2 space-y-4">
-          
-          {/* Row 1: Copyright & Regulatory Badges */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-black">
-            <p className="text-black font-medium text-center md:text-left">
-              © {new Date().getFullYear()} <strong className="font-bold text-[#123B92]">ZeniTEK Solar Thermal Solutions</strong>. {t('footerRights')}
-            </p>
+        {/* Clean, Single-Line Bottom Bar */}
+        <div className="pt-6 pb-2 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-black">
+          <p className="text-black font-medium text-center md:text-left">
+            © {new Date().getFullYear()} <strong className="font-bold text-[#123B92]">ZeniTEK Solar Thermal Solutions</strong>. {t('footerRights')}
+          </p>
 
-            <div className="flex items-center justify-center md:justify-end space-x-3 text-[11px]">
-              <button
-                type="button"
-                onClick={() => setLegalModal('privacy')}
-                className="text-black hover:text-[#002DC2] font-medium transition-colors cursor-pointer"
-              >
-                {t('footerPrivacy')}
-              </button>
-              <span className="text-[#123B92]/30">•</span>
-              <button
-                type="button"
-                onClick={() => setLegalModal('terms')}
-                className="text-black hover:text-[#002DC2] font-medium transition-colors cursor-pointer"
-              >
-                {t('footerTerms')}
-              </button>
-            </div>
-          </div>
-
-          {/* Row 2: Subtle Mission & Agency Attributions Sub-bar */}
-          <div className="pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-2 text-center sm:text-left">
-            <p>
-              Pioneering clean agritech solar thermal food preservation across India since 2004.
-            </p>
-            <p className="font-medium text-slate-500">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-3 gap-y-1 text-xs text-slate-600">
+            <button
+              type="button"
+              onClick={() => setLegalModal('privacy')}
+              className="text-black hover:text-[#002DC2] font-medium transition-colors cursor-pointer"
+            >
+              {t('footerPrivacy')}
+            </button>
+            <span className="text-slate-300">•</span>
+            <button
+              type="button"
+              onClick={() => setLegalModal('terms')}
+              className="text-black hover:text-[#002DC2] font-medium transition-colors cursor-pointer"
+            >
+              {t('footerTerms')}
+            </button>
+            <span className="text-slate-300">•</span>
+            <span className="text-slate-600 font-medium">
               Designed by{' '}
               <a
                 href="https://knowledgetointelligence.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-700 hover:text-blue-900 hover:underline font-bold transition-colors inline-flex items-center"
+                className="text-[#002DC2] hover:underline font-bold transition-colors"
               >
                 KnowledgeToIntelligence
               </a>
-            </p>
+            </span>
           </div>
-
         </div>
 
       </div>

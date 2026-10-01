@@ -84,7 +84,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
     <div className="text-slate-900 min-h-screen bg-white">
       
       {/* SECTION 1: HERO HEADER */}
-      <section className="w-full section-odd py-12 sm:py-16 border-b border-slate-200">
+      <section className="w-full section-odd py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#F0F4FD] border border-[#123B92]/30 text-[#123B92] text-xs font-bold uppercase tracking-wider shadow-xs">
             <Landmark className="w-4 h-4 text-[#002DC2]" />
@@ -120,7 +120,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
 
 
       {/* SECTION 2: FAST ELIGIBILITY ESTIMATOR */}
-      <section className="w-full section-even py-10 sm:py-14 border-b border-slate-200">
+      <section className="w-full section-even py-10 sm:py-14">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xl space-y-6">
             
@@ -274,7 +274,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
 
 
       {/* SECTION 4: 5-STEP ASSISTANCE PROCESS */}
-      <section className="w-full section-even py-14 sm:py-18 border-t border-slate-200">
+      <section className="w-full section-even py-14 sm:py-18">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           
           <div className="text-center max-w-3xl mx-auto space-y-2">

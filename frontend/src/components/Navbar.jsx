@@ -209,7 +209,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const isContactActive = location.pathname === '/contact';
 
   return (
-    <header className="sticky top-0 z-40 relative bg-white/95 backdrop-blur-md shadow-sm w-full border-b border-slate-200/80 transition-colors duration-500">
+    <header className="sticky top-0 z-40 relative bg-white/95 backdrop-blur-md shadow-xs w-full transition-colors duration-500">
       
       {/* MAIN NAVBAR CONTAINER */}
       <div className="w-full px-5 sm:px-8 md:px-[60px]">

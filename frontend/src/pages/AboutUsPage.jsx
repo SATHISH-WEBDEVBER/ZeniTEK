@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { 
-  Award, Zap, Sprout, Cpu, Microscope, ShieldCheck, CheckCircle2, 
-  MapPin, Phone, Mail, ArrowRight, ExternalLink, ChevronRight, 
-  ChevronLeft, Sparkles, Building2, Factory, GraduationCap, X, 
+import {
+  Award, Zap, Sprout, Cpu, Microscope, ShieldCheck, CheckCircle2,
+  MapPin, Phone, Mail, ArrowRight, ExternalLink, ChevronRight,
+  ChevronLeft, Sparkles, Building2, Factory, GraduationCap, X,
   Layers, Maximize2, Compass, Wrench, Check
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
@@ -12,7 +12,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
   // Active category filter for Landmark Projects
   const [projectCategory, setProjectCategory] = useState('all');
-  
+
   // Lightbox modal state for full-screen photo viewing
   const [lightboxImage, setLightboxImage] = useState(null);
 
@@ -158,72 +158,72 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
     }
   ];
 
-  const filteredProjects = projectCategory === 'all' 
-    ? landmarkProjects 
+  const filteredProjects = projectCategory === 'all'
+    ? landmarkProjects
     : landmarkProjects.filter(p => p.category === projectCategory);
 
   // Prestigious Partners from Document 2 with Real Logos
   const academicClients = [
-    { 
-      name: "IIT Bhubaneswar", 
-      branch: "School of Mechanical Science", 
+    {
+      name: "IIT Bhubaneswar",
+      branch: "School of Mechanical Science",
       tag: "Academic R&D",
       logo: "/client-logos/academic_iit_bhubaneswar.png"
     },
-    { 
-      name: "Anna University Chennai", 
-      branch: "DST NRDMS Tribal Community Project", 
+    {
+      name: "Anna University Chennai",
+      branch: "DST NRDMS Tribal Community Project",
       tag: "Govt Research",
       logo: "/client-logos/academic_anna_univ.jpeg"
     },
-    { 
-      name: "SRM University", 
-      branch: "592 Sq.m Scheffler Solar Thermal Array", 
+    {
+      name: "SRM University",
+      branch: "592 Sq.m Scheffler Solar Thermal Array",
       tag: "Campus Thermal",
       logo: "/client-logos/industry_srm.png"
     },
-    { 
-      name: "Sree Sankara College", 
-      branch: "Energy Department, Kalady, Kerala", 
+    {
+      name: "Sree Sankara College",
+      branch: "Energy Department, Kalady, Kerala",
       tag: "Lab Test Rigs",
       logo: "/client-logos/academic_sree_sankara.jpeg"
     },
-    { 
-      name: "Gandhigram University", 
-      branch: "Centre for Rural Energy, Dindigul", 
+    {
+      name: "Gandhigram University",
+      branch: "Centre for Rural Energy, Dindigul",
       tag: "Rural Energy",
       logo: "/client-logos/academic_gandhigram.jpeg"
     },
-    { 
-      name: "College of Fisheries", 
-      branch: "Fisheries Engineering, Nagapattinam", 
+    {
+      name: "College of Fisheries",
+      branch: "Fisheries Engineering, Nagapattinam",
       tag: "Marine Drying",
       logo: "/client-logos/academic_fisheries.png"
     }
   ];
 
   const industryClients = [
-    { 
-      name: "Mitsui Chemicals Group", 
-      detail: "Solar PV Certification Lab (Ahmedabad)", 
+    {
+      name: "Mitsui Chemicals Group",
+      detail: "Solar PV Certification Lab (Ahmedabad)",
       tag: "Global Industry",
       logo: "/client-logos/industry_mitsui.jpeg"
     },
-    { 
-      name: "Indo-MIM Pvt Ltd", 
-      detail: "Industrial Scheffler Thermal (Bangalore)", 
+    {
+      name: "Indo-MIM Pvt Ltd",
+      detail: "Industrial Scheffler Thermal (Bangalore)",
       tag: "Aerospace & MIM",
       logo: "/client-logos/industry_indomim.jpeg"
     },
-    { 
-      name: "SELCO Foundation", 
-      detail: "Solar Tunnel Dryers & Paddy Transplanters", 
+    {
+      name: "SELCO Foundation",
+      detail: "Solar Tunnel Dryers & Paddy Transplanters",
       tag: "Social Innovation",
       logo: "/client-logos/industry_selco.png"
     },
-    { 
-      name: "Pro-Target & NISE", 
-      detail: "Technical Mentorship (Germany / India)", 
+    {
+      name: "Pro-Target & NISE",
+      detail: "Technical Mentorship (Germany / India)",
       tag: "Solar Pioneers",
       logo: "/client-logos/industry_nise_protarget.svg"
     }
@@ -243,19 +243,19 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
   return (
     <div className="text-slate-900 min-h-screen bg-slate-50 font-sans selection:bg-[#002DC2] selection:text-white">
-      
+
       {/* 1. CINEMATIC HERO SECTION WITH BOLD LEGIBLE TYPOGRAPHY */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-white via-blue-50/40 to-slate-50 pt-14 pb-20 lg:pt-20 lg:pb-28 border-b border-slate-200/80">
-        
+      <section className="relative overflow-hidden bg-gradient-to-b from-white via-blue-50/40 to-slate-50 pt-14 pb-20 lg:pt-20 lg:pb-28">
+
         {/* Ambient background glow */}
         <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12">
-          
+
           {/* Top Headline & Quick Metrics */}
           <div className="text-center max-w-4xl mx-auto space-y-6">
-            
+
             <div className="inline-flex items-center space-x-2.5 px-5 py-2 rounded-full bg-white border border-[#002DC2]/25 shadow-sm">
               <span className="w-3 h-3 rounded-full bg-[#23AC39] animate-pulse" />
               <span className="text-sm sm:text-base font-black uppercase tracking-wider text-[#002DC2]">
@@ -271,7 +271,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             </h1>
 
             <p className="text-lg sm:text-xl lg:text-2xl text-slate-700 font-medium leading-relaxed max-w-3xl mx-auto">
-              Engineering clean-energy systems for agriculture, industry, and educational institutions. 
+              Engineering clean-energy systems for agriculture, industry, and educational institutions.
               Combining thermal engineering, solar automation, and applied research.
             </p>
 
@@ -299,9 +299,9 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
           {/* Hero Visual Collage (4 Large Interactive Real Photos) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-4">
-            
+
             {/* Card 1: Solar Parabolic Trough */}
-            <div 
+            <div
               onClick={() => setLightboxImage('/real-photos/zenitek_photo_18.jpeg')}
               className="relative h-72 sm:h-80 rounded-3xl overflow-hidden shadow-lg border border-slate-200 group cursor-pointer"
             >
@@ -321,7 +321,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             </div>
 
             {/* Card 2: Commercial Polyhouse Tunnel */}
-            <div 
+            <div
               onClick={() => setLightboxImage('/real-photos/zenitek_photo_04.jpeg')}
               className="relative h-72 sm:h-80 rounded-3xl overflow-hidden shadow-lg border border-slate-200 group cursor-pointer"
             >
@@ -341,7 +341,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             </div>
 
             {/* Card 3: Active Crop Dehydration Hub */}
-            <div 
+            <div
               onClick={() => setLightboxImage('/real-photos/zenitek_photo_23.jpeg')}
               className="relative h-72 sm:h-80 rounded-3xl overflow-hidden shadow-lg border border-slate-200 group cursor-pointer"
             >
@@ -361,7 +361,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             </div>
 
             {/* Card 4: Precision SUNDRY Box Dryer */}
-            <div 
+            <div
               onClick={() => setLightboxImage('/real-photos/zenitek_photo_27.jpeg')}
               className="relative h-72 sm:h-80 rounded-3xl overflow-hidden shadow-lg border border-slate-200 group cursor-pointer"
             >
@@ -387,14 +387,14 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
 
       {/* 2. OUR ROOTS, EVOLUTION & GLOBAL MENTORS (DOCUMENT 2) */}
-      <section className="py-16 sm:py-24 bg-white border-b border-slate-200/80">
+      <section className="py-16 sm:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            
+
             {/* Left 6 cols: Roots & Story */}
             <div className="lg:col-span-6 space-y-6">
-              
+
               <div className="space-y-3">
                 <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
                   Roots & Engineering DNA
@@ -478,9 +478,9 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
 
       {/* 3. "WHAT WE DO" — 4 CORE DOMAINS (IMAGE-CENTRIC VISUAL CARDS) */}
-      <section className="py-16 sm:py-24 bg-slate-100/70 border-b border-slate-200/80">
+      <section className="py-16 sm:py-24 bg-slate-100/70">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
-          
+
           <div className="text-center max-w-3xl mx-auto space-y-4">
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
               Core Engineering Focus
@@ -510,7 +510,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
-                    
+
                     <span className="absolute top-5 left-5 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full text-xs sm:text-sm font-black text-[#002DC2] shadow-sm">
                       {domain.badge}
                     </span>
@@ -566,9 +566,9 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
 
       {/* 4. LANDMARK INSTALLED PROJECTS GALLERY (REAL INSTALLATIONS FROM DOCUMENT 2) */}
-      <section className="py-16 sm:py-24 bg-white border-b border-slate-200/80">
+      <section className="py-16 sm:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          
+
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
             <div>
               <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
@@ -583,41 +583,37 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <div className="flex flex-wrap items-center gap-2.5">
               <button
                 onClick={() => setProjectCategory('all')}
-                className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black transition-all cursor-pointer ${
-                  projectCategory === 'all'
+                className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black transition-all cursor-pointer ${projectCategory === 'all'
                     ? 'bg-[#002DC2] text-white shadow-md'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                }`}
+                  }`}
               >
                 All Projects
               </button>
               <button
                 onClick={() => setProjectCategory('thermal')}
-                className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black transition-all cursor-pointer ${
-                  projectCategory === 'thermal'
+                className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black transition-all cursor-pointer ${projectCategory === 'thermal'
                     ? 'bg-[#002DC2] text-white shadow-md'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                }`}
+                  }`}
               >
                 Solar Thermal
               </button>
               <button
                 onClick={() => setProjectCategory('agri')}
-                className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black transition-all cursor-pointer ${
-                  projectCategory === 'agri'
+                className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black transition-all cursor-pointer ${projectCategory === 'agri'
                     ? 'bg-[#002DC2] text-white shadow-md'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                }`}
+                  }`}
               >
                 Agri-Solar
               </button>
               <button
                 onClick={() => setProjectCategory('pv')}
-                className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black transition-all cursor-pointer ${
-                  projectCategory === 'pv'
+                className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black transition-all cursor-pointer ${projectCategory === 'pv'
                     ? 'bg-[#002DC2] text-white shadow-md'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                }`}
+                  }`}
               >
                 PV Test Labs
               </button>
@@ -632,7 +628,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group"
               >
                 {/* Photo with zoom & tag */}
-                <div 
+                <div
                   onClick={() => setLightboxImage(proj.image)}
                   className="relative h-60 sm:h-64 overflow-hidden cursor-pointer"
                 >
@@ -690,9 +686,9 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
 
       {/* 5. PRESTIGIOUS CLIENTS & INSTITUTIONAL PARTNERS (DOCUMENT 2) */}
-      <section className="py-16 sm:py-24 bg-slate-50 border-b border-slate-200/80 overflow-hidden">
+      <section className="py-16 sm:py-24 bg-slate-50 overflow-hidden">
         <div className="space-y-12">
-          
+
           <div className="text-center max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
               Trusted Institutional Deployments
@@ -862,9 +858,9 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
 
       {/* 6. REAL FIELD PHOTO GALLERY REEL (8 PHOTOS) */}
-      <section className="py-16 sm:py-24 bg-white border-b border-slate-200/80">
+      <section className="py-16 sm:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-          
+
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
               Authentic Visual Proof
@@ -902,11 +898,11 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
 
       {/* 7. ENGINEERING CAPABILITIES & HOW WE WORK */}
-      <section className="py-16 sm:py-24 bg-slate-50 border-b border-slate-200/80">
+      <section className="py-16 sm:py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            
+
             {/* Left 5 cols: How We Work & Our Focus */}
             <div className="lg:col-span-5 space-y-6">
               <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
@@ -918,7 +914,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
               <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-medium">
                 We combine engineering analysis, practical field testing, and user feedback to develop systems that are technically sound and operationally simple.
               </p>
-              
+
               <div className="space-y-4 pt-2">
                 <div className="p-5 rounded-3xl bg-white border border-slate-200/90 shadow-sm space-y-1.5">
                   <div className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">Sustainable Engineering</div>
@@ -995,13 +991,13 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       {/* 8. REGISTERED DETAILS & CONSULTATION CTA */}
       <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-[#F0F4FD]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           <div className="bg-[#123B92] text-white rounded-3xl p-8 sm:p-14 lg:p-18 shadow-2xl relative overflow-hidden">
-            
+
             <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-blue-500/20 rounded-full blur-2xl pointer-events-none" />
 
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-              
+
               <div className="lg:col-span-8 space-y-5 text-left">
                 <span className="text-xs sm:text-sm font-black text-emerald-400 uppercase tracking-wider bg-white/10 px-4 py-1.5 rounded-full">
                   Direct EPC Consultation
@@ -1017,12 +1013,15 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 <div className="pt-3 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm sm:text-base text-slate-200 font-semibold">
                   <div className="flex items-center space-x-2.5">
                     <MapPin className="w-5 h-5 text-emerald-400 shrink-0" />
-                    <span>Erode, Tamil Nadu — 638 112</span>
+                    <span>Erode, TamilNadu — 638 112</span>
                   </div>
-                  <div className="flex items-center space-x-2.5">
+                  <a
+                    href="tel:+918903852623"
+                    className="flex items-center space-x-2.5 hover:text-emerald-300 transition-colors"
+                  >
                     <Phone className="w-5 h-5 text-emerald-400 shrink-0" />
                     <span>+91-8903852623</span>
-                  </div>
+                  </a>
                   <div className="flex items-center space-x-2.5">
                     <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
                     <span>GST: 33AACFZ8530G1Z5</span>
@@ -1030,21 +1029,37 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 </div>
               </div>
 
-              <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-4 justify-center">
+              <div className="lg:col-span-4 flex flex-col gap-3 justify-center">
                 <button
                   onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: "About Us Consultation" })}
-                  className="px-8 py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-sm sm:text-base uppercase tracking-wider rounded-2xl shadow-lg hover:shadow-xl hover:scale-102 transition-all flex items-center justify-center space-x-2.5 cursor-pointer"
+                  className="w-full px-6 py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-sm sm:text-base uppercase tracking-wider rounded-2xl shadow-lg hover:shadow-xl hover:scale-101 transition-all flex items-center justify-center space-x-2.5 cursor-pointer"
                 >
                   <span>Request Engineering Quote</span>
                   <ArrowRight className="w-5 h-5" />
                 </button>
-                <a
-                  href="tel:+918903852623"
-                  className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold text-sm sm:text-base uppercase tracking-wider rounded-2xl border border-white/20 transition-all flex items-center justify-center space-x-2.5 text-center"
-                >
-                  <Phone className="w-5 h-5 text-emerald-400" />
-                  <span>Call: +91-8903852623</span>
-                </a>
+
+                {/* Direct Call & WhatsApp Action Buttons */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <a
+                    href="tel:+918903852623"
+                    className="px-4 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-2xl border border-white/20 hover:border-white/40 transition-all flex items-center justify-center space-x-2 text-center hover:scale-101 shadow-sm"
+                  >
+                    <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Call Directly</span>
+                  </a>
+
+                  <a
+                    href="https://wa.me/918903852623?text=Hello%20ZeniTEK%20Team,%20I%20would%20like%20to%20consult%20regarding%20solar%20thermal%20and%20drying%20solutions."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-3.5 bg-[#25D366] hover:bg-[#20ba59] text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2 text-center hover:scale-101"
+                  >
+                    <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+                      <path d="M12.031 2C6.495 2 2 6.494 2 12.03c0 1.769.46 3.498 1.334 5.018L2 22l5.122-1.342a10.016 10.016 0 004.909 1.272h.004c5.535 0 10.03-4.494 10.03-10.03A10.03 10.03 0 0012.031 2zm0 18.366h-.003a8.318 8.318 0 01-4.238-1.163l-.304-.18-3.148.825.84-3.068-.198-.315A8.32 8.32 0 013.7 12.03c0-4.595 3.738-8.332 8.334-8.332a8.3 8.3 0 015.892 2.44 8.3 8.3 0 012.44 5.892c0 4.596-3.738 8.336-8.335 8.336zm4.568-6.242c-.25-.125-1.48-.73-1.71-.813-.23-.083-.398-.125-.565.125-.168.25-.65.813-.797.98-.146.166-.293.187-.543.062a6.93 6.93 0 01-2.02-1.246 7.64 7.64 0 01-1.398-1.74c-.146-.25-.016-.385.109-.51.112-.112.25-.292.375-.438.125-.146.167-.25.25-.417.084-.167.042-.313-.02-.438-.063-.125-.564-1.36-.773-1.862-.204-.49-.41-.423-.564-.431-.146-.008-.313-.01-.48-.01-.167 0-.438.063-.667.313-.23.25-.875.855-.875 2.085s.896 2.418 1.021 2.585c.125.167 1.76 2.688 4.264 3.77.596.257 1.061.411 1.424.526.598.19 1.143.163 1.573.099.48-.072 1.48-.605 1.688-1.189.209-.584.209-1.084.146-1.189-.062-.104-.23-.166-.48-.291z" />
+                    </svg>
+                    <span>WhatsApp</span>
+                  </a>
+                </div>
               </div>
 
             </div>
@@ -1056,7 +1071,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
       {/* LIGHTBOX MODAL FOR REAL PHOTOS */}
       {lightboxImage && (
-        <div 
+        <div
           className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in"
           onClick={() => setLightboxImage(null)}
         >
