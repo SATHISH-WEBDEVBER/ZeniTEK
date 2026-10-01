@@ -12,13 +12,52 @@ import {
   Building2, 
   X,
   FileText,
-  Lock
+  Lock,
+  Eye,
+  Share2
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function Footer({ onOpenQuoteModal }) {
   const { t } = useLanguage();
   const [legalModal, setLegalModal] = useState(null); // 'privacy' | 'terms' | null
+  const [activeBrochure, setActiveBrochure] = useState(null); // active PDF brochure object | null
+
+  const brochures = [
+    {
+      id: 'solar-dryer',
+      title: 'Solar Dryer Technical Brochure',
+      subtitle: 'Commercial Polyhouse (10 Pages)',
+      url: '/brochures/zenitek-solar-dryer-brochure.pdf',
+      downloadName: 'ZeniTEK-Commercial-Solar-Dryer-Brochure.pdf',
+      size: '7.1 MB',
+      pages: '10 Pages',
+      badge: 'Commercial',
+      badgeColor: 'bg-blue-50 text-[#002DC2] border-blue-200'
+    },
+    {
+      id: 'household-box',
+      title: 'Household Solar Box Dryer',
+      subtitle: 'Sundry Mini (Kitchen & Balcony)',
+      url: '/brochures/zenitek-household-box-dryer-brochure.pdf',
+      downloadName: 'ZeniTEK-Household-Solar-Box-Dryer-Brochure.pdf',
+      size: '1.0 MB',
+      pages: '3 Pages',
+      badge: 'Domestic',
+      badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200'
+    },
+    {
+      id: 'entrepreneur-box',
+      title: 'Entrepreneur Box Dryer',
+      subtitle: 'Commercial 4 & 8-Tray SS304 Model',
+      url: '/brochures/zenitek-entrepreneur-box-dryer-brochure.pdf',
+      downloadName: 'ZeniTEK-Entrepreneur-Solar-Box-Dryer-Brochure.pdf',
+      size: '1.2 MB',
+      pages: '4 Pages',
+      badge: 'Business',
+      badgeColor: 'bg-amber-50 text-amber-700 border-amber-200'
+    }
+  ];
 
   // Ensure "Tamil Nadu - 000 000" never breaks across lines
   const formatAddress = (text) => {
@@ -45,8 +84,8 @@ export default function Footer({ onOpenQuoteModal }) {
         {/* Main 12-Column Responsive Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-8">
           
-          {/* Col 1: Brand Info & Accreditations (4 cols on desktop) */}
-          <div className="lg:col-span-4 space-y-4">
+          {/* Col 1: Brand Info & Accreditations (3 cols on desktop) */}
+          <div className="lg:col-span-3 space-y-4">
             <div className="flex items-center">
               <img
                 src="/logo.png"
@@ -104,40 +143,71 @@ export default function Footer({ onOpenQuoteModal }) {
             </ul>
           </div>
 
-          {/* Col 3: Downloads & Resources (2 cols on desktop) */}
-          <div className="lg:col-span-2">
-            <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4">{t('footerDownloads')}</h4>
-            <ul className="space-y-2.5 text-xs font-medium">
-              <li>
-                <a 
-                  href="#download-catalog" 
-                  onClick={(e) => { e.preventDefault(); alert('Downloading ZeniTEK Solar Dryer Product Catalog PDF...'); }} 
-                  className="inline-flex items-center text-[#002DC2] hover:underline font-bold transition-colors"
+          {/* Col 3: Product Brochures & Downloads (3 cols on desktop) */}
+          <div className="lg:col-span-3">
+            <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4 flex items-center gap-1.5">
+              <FileText className="w-3.5 h-3.5 text-[#002DC2]" />
+              <span>Product Brochures (PDF)</span>
+            </h4>
+            <div className="space-y-2.5">
+              {brochures.map((b) => (
+                <div 
+                  key={b.id}
+                  className="p-2.5 rounded-xl border border-slate-200/90 hover:border-[#002DC2] bg-white hover:bg-blue-50/20 transition-all flex items-center justify-between group shadow-2xs"
                 >
-                  <Download className="w-3.5 h-3.5 mr-1.5 shrink-0 text-[#002DC2]" /> 
-                  <span>{t('footerCatalog')}</span>
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#download-subsidy" 
-                  onClick={(e) => { e.preventDefault(); alert('Downloading State Agriculture Subsidy Guide PDF...'); }} 
-                  className="inline-flex items-center text-[#123B92] hover:text-[#002DC2] hover:underline font-bold transition-colors"
-                >
-                  <Download className="w-3.5 h-3.5 mr-1.5 shrink-0 text-[#002DC2]" /> 
-                  <span>{t('footerSubsidyGuide')}</span>
-                </a>
-              </li>
-              <li>
+                  <button
+                    type="button"
+                    onClick={() => setActiveBrochure(b)}
+                    className="text-left flex-1 min-w-0 pr-2 focus:outline-none"
+                    title={`Open and View ${b.title}`}
+                  >
+                    <div className="flex items-center gap-1.5 mb-0.5">
+                      <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${b.badgeColor}`}>
+                        {b.badge}
+                      </span>
+                      <span className="text-[10px] text-slate-500 font-medium">
+                        {b.pages} • {b.size}
+                      </span>
+                    </div>
+                    <span className="text-xs font-bold text-slate-900 group-hover:text-[#002DC2] transition-colors block truncate">
+                      {b.title}
+                    </span>
+                    <span className="text-[10px] text-slate-500 block truncate">
+                      {b.subtitle}
+                    </span>
+                  </button>
+
+                  <div className="flex items-center gap-1 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => setActiveBrochure(b)}
+                      title="View PDF Brochure"
+                      className="w-7 h-7 rounded-lg bg-blue-50 text-[#002DC2] hover:bg-[#002DC2] hover:text-white flex items-center justify-center transition-colors"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                    </button>
+                    <a
+                      href={b.url}
+                      download={b.downloadName}
+                      title="Direct Download PDF"
+                      className="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 hover:bg-[#002DC2] hover:text-white flex items-center justify-center transition-colors"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
+              ))}
+
+              <div className="pt-1">
                 <Link 
-                  to="/gallery?cat=brochure"
-                  className="inline-flex items-center text-slate-700 hover:text-[#002DC2] hover:underline font-medium transition-colors"
+                  to="/subsidies"
+                  className="inline-flex items-center text-xs font-bold text-[#123B92] hover:text-[#002DC2] hover:underline transition-colors"
                 >
-                  <FileText className="w-3.5 h-3.5 mr-1.5 text-[#002DC2] shrink-0" /> 
-                  <span>Technical Brochure</span>
+                  <ArrowRight className="w-3 h-3 mr-1 text-[#002DC2]" />
+                  <span>State Agriculture Subsidy Guide</span>
                 </Link>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
 
           {/* Col 4: Registered & Operations Hubs, Direct Contacts (4 cols on desktop) */}
