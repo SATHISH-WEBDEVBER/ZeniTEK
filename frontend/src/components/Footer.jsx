@@ -31,7 +31,8 @@ export default function Footer({ onOpenQuoteModal }) {
       url: '/brochures/zenitek-solar-dryer-brochure.pdf',
       downloadName: 'ZeniTEK-Commercial-Solar-Dryer-Brochure.pdf',
       size: '7.1 MB',
-      pages: '10 Pages',
+      pageCount: 10,
+      pages: Array.from({ length: 10 }, (_, i) => `/brochures/pages/solar-dryer/page-${i + 1}.jpg`),
       badge: 'Commercial',
       badgeColor: 'bg-blue-50 text-[#002DC2] border-blue-200'
     },
@@ -42,7 +43,8 @@ export default function Footer({ onOpenQuoteModal }) {
       url: '/brochures/zenitek-household-box-dryer-brochure.pdf',
       downloadName: 'ZeniTEK-Household-Solar-Box-Dryer-Brochure.pdf',
       size: '1.0 MB',
-      pages: '3 Pages',
+      pageCount: 3,
+      pages: Array.from({ length: 3 }, (_, i) => `/brochures/pages/household-box/page-${i + 1}.jpg`),
       badge: 'Domestic',
       badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200'
     },
@@ -53,7 +55,8 @@ export default function Footer({ onOpenQuoteModal }) {
       url: '/brochures/zenitek-entrepreneur-box-dryer-brochure.pdf',
       downloadName: 'ZeniTEK-Entrepreneur-Solar-Box-Dryer-Brochure.pdf',
       size: '1.2 MB',
-      pages: '4 Pages',
+      pageCount: 4,
+      pages: Array.from({ length: 4 }, (_, i) => `/brochures/pages/entrepreneur-box/page-${i + 1}.jpg`),
       badge: 'Business',
       badgeColor: 'bg-amber-50 text-amber-700 border-amber-200'
     }
@@ -166,7 +169,7 @@ export default function Footer({ onOpenQuoteModal }) {
                         {b.badge}
                       </span>
                       <span className="text-[10px] text-slate-500 font-medium">
-                        {b.pages} • {b.size}
+                        {b.pageCount} Pages • {b.size}
                       </span>
                     </div>
                     <span className="text-xs font-bold text-slate-900 group-hover:text-[#002DC2] transition-colors block truncate">
@@ -374,18 +377,18 @@ export default function Footer({ onOpenQuoteModal }) {
         </div>
       )}
 
-      {/* Interactive PDF Brochure Viewer Modal */}
+      {/* Interactive High-Res PDF Brochure Viewer Modal */}
       {activeBrochure && (
         <div 
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-2 sm:p-4 bg-slate-950/75 backdrop-blur-xs animate-in fade-in duration-200"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-xs animate-in fade-in duration-200"
           onClick={() => setActiveBrochure(null)}
         >
           <div 
-            className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-5xl h-[94vh] sm:h-[88vh] flex flex-col overflow-hidden border border-slate-200"
+            className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-5xl h-[95vh] sm:h-[90vh] flex flex-col overflow-hidden border border-slate-200"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="px-4 sm:px-6 py-3.5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 bg-slate-50">
+            <div className="px-4 sm:px-6 py-3.5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 bg-slate-50 shrink-0">
               <div className="flex items-center gap-2.5 min-w-0">
                 <div className="w-9 h-9 rounded-xl bg-blue-100 text-[#002DC2] flex items-center justify-center shrink-0">
                   <FileText className="w-5 h-5" />
@@ -396,7 +399,7 @@ export default function Footer({ onOpenQuoteModal }) {
                       {activeBrochure.title}
                     </h3>
                     <span className="hidden sm:inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-[#002DC2] border border-blue-200">
-                      {activeBrochure.pages} • {activeBrochure.size}
+                      {activeBrochure.pageCount} Pages • {activeBrochure.size}
                     </span>
                   </div>
                   <p className="text-[11px] text-slate-500 truncate hidden sm:block">
@@ -412,19 +415,19 @@ export default function Footer({ onOpenQuoteModal }) {
                   href={activeBrochure.url}
                   download={activeBrochure.downloadName}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#002DC2] hover:bg-[#002299] text-white rounded-xl text-xs font-bold transition-colors shadow-sm"
-                  title="Download PDF to your device"
+                  title="Download PDF to your computer/phone"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Download PDF</span>
                 </a>
 
-                {/* Open in New Tab / Print */}
+                {/* Open in New Tab / Native Viewer */}
                 <a
                   href={activeBrochure.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold transition-colors"
-                  title="Open Fullscreen in New Window"
+                  title="Open Original PDF in New Window"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Open in Tab</span>
@@ -432,7 +435,7 @@ export default function Footer({ onOpenQuoteModal }) {
 
                 {/* WhatsApp Share */}
                 <a
-                  href={`https://wa.me/?text=${encodeURIComponent(`Check out the ZeniTEK ${activeBrochure.title}: ${window.location.origin}${activeBrochure.url}`)}`}
+                  href={`https://wa.me/?text=${encodeURIComponent(`Check out the official ZeniTEK ${activeBrochure.title}: ${window.location.origin}${activeBrochure.url}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-xl text-xs font-bold transition-colors"
@@ -454,42 +457,82 @@ export default function Footer({ onOpenQuoteModal }) {
               </div>
             </div>
 
-            {/* Quick Switch Tabs */}
-            <div className="px-4 sm:px-6 py-2 bg-slate-100/80 border-b border-slate-200 flex items-center gap-2 overflow-x-auto">
-              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider shrink-0 mr-1">
-                Brochures:
-              </span>
-              {brochures.map((b) => (
-                <button
-                  key={b.id}
-                  type="button"
-                  onClick={() => setActiveBrochure(b)}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold whitespace-nowrap transition-colors ${
-                    activeBrochure.id === b.id
-                      ? 'bg-[#002DC2] text-white shadow-xs'
-                      : 'bg-white hover:bg-slate-200 text-slate-700 border border-slate-200'
-                  }`}
+            {/* Quick Switch Tabs & Page Navigator */}
+            <div className="px-4 sm:px-6 py-2 bg-slate-100/90 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 shrink-0">
+              <div className="flex items-center gap-2 overflow-x-auto py-0.5">
+                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider shrink-0 mr-1">
+                  Brochures:
+                </span>
+                {brochures.map((b) => (
+                  <button
+                    key={b.id}
+                    type="button"
+                    onClick={() => setActiveBrochure(b)}
+                    className={`px-3 py-1 rounded-lg text-xs font-bold whitespace-nowrap transition-colors ${
+                      activeBrochure.id === b.id
+                        ? 'bg-[#002DC2] text-white shadow-xs'
+                        : 'bg-white hover:bg-slate-200 text-slate-700 border border-slate-200'
+                    }`}
+                  >
+                    {b.badge}: {b.title.replace(' Technical Brochure', '').replace(' Dryer', '')}
+                  </button>
+                ))}
+              </div>
+
+              {/* Page Quick Jump Links */}
+              <div className="hidden md:flex items-center gap-1 overflow-x-auto text-[11px] font-bold text-slate-600">
+                <span className="text-slate-400 mr-1">Jump to:</span>
+                {activeBrochure.pages.map((_, i) => (
+                  <a
+                    key={i}
+                    href={`#brochure-page-${i + 1}`}
+                    className="w-5 h-5 rounded hover:bg-blue-100 hover:text-[#002DC2] flex items-center justify-center transition-colors"
+                  >
+                    {i + 1}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Visual Document Pages Reader (No Auto-Download, Works Everywhere) */}
+            <div className="flex-1 bg-slate-900/95 overflow-y-auto p-3 sm:p-6 flex flex-col items-center space-y-4 sm:space-y-6">
+              {activeBrochure.pages.map((pageImg, idx) => (
+                <div 
+                  key={idx}
+                  id={`brochure-page-${idx + 1}`}
+                  className="bg-white rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden max-w-3xl w-full border border-slate-700/60"
                 >
-                  {b.badge}: {b.title.replace(' Technical Brochure', '').replace(' Dryer', '')}
-                </button>
+                  <div className="bg-slate-100 px-3 sm:px-4 py-2 border-b border-slate-200 flex items-center justify-between text-[11px] sm:text-xs font-bold text-slate-600">
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-[#002DC2]" />
+                      Page {idx + 1} of {activeBrochure.pageCount}
+                    </span>
+                    <span className="text-slate-400 font-mono text-[10px] hidden sm:inline">
+                      {activeBrochure.title}
+                    </span>
+                    <a
+                      href={`#brochure-page-${idx + 1}`}
+                      className="text-slate-400 hover:text-[#002DC2] text-[10px]"
+                    >
+                      #P{idx + 1}
+                    </a>
+                  </div>
+                  <img
+                    src={pageImg}
+                    alt={`${activeBrochure.title} - Page ${idx + 1}`}
+                    className="w-full h-auto object-contain block bg-white"
+                    loading={idx === 0 ? "eager" : "lazy"}
+                  />
+                </div>
               ))}
             </div>
 
-            {/* PDF Viewer Body */}
-            <div className="flex-1 bg-slate-800 relative w-full h-full overflow-hidden">
-              <iframe
-                src={`${activeBrochure.url}#view=FitH&toolbar=1`}
-                className="w-full h-full border-0 bg-white"
-                title={activeBrochure.title}
-              />
-            </div>
-
             {/* Footer Toolbar */}
-            <div className="px-4 sm:px-6 py-2.5 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div className="px-4 sm:px-6 py-2.5 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs shrink-0">
               <div className="flex items-center gap-2 text-slate-600">
                 <span className="font-semibold text-slate-900">{activeBrochure.title}</span>
                 <span className="text-slate-400">•</span>
-                <span>{activeBrochure.pages}</span>
+                <span>{activeBrochure.pageCount} Pages</span>
                 <span className="text-slate-400">•</span>
                 <span>{activeBrochure.size}</span>
               </div>
