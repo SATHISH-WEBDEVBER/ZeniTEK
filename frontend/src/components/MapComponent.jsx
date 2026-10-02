@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, GeoJSON, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { 
   MapPin, 
@@ -12,17 +12,20 @@ import {
   Search, 
   Sparkles, 
   Info,
-  Play
+  Play,
+  Layers,
+  Compass
 } from 'lucide-react';
 import { sampleProjects } from '../data/sampleData';
 import { activeLocationsData } from '../data/mapLocationsData';
+import indiaGeoJson from '../data/india_states.json';
 import { useLanguage } from '../context/LanguageContext';
 import ProjectDetailModal from './ProjectDetailModal';
 
-// India Geographic Bounding Box (Southwest to Northeast)
+// Official India Geographic Bounding Box (Southwest to Northeast)
 const INDIA_BOUNDS = [
-  [6.0, 68.0],   // Southwest corner (below Kanyakumari / Lakshadweep)
-  [37.5, 97.5]   // Northeast corner (Kashmir / Ladakh to Arunachal Pradesh)
+  [7.0, 68.0],   // Southwest corner (Kanyakumari / Lakshadweep)
+  [36.5, 97.5]   // Northeast corner (Kashmir / Ladakh to Arunachal Pradesh)
 ];
 
 // Custom ZeniTEK Map Pin Marker (Zomato / Swiggy style teardrop badge with ZeniTEK emblem)
@@ -58,19 +61,19 @@ function MapController({
   const map = useMap();
   const prevFilterKeyRef = useRef('');
 
-  // Auto-resize tiles and strictly fit India installation bounds on mount
+  // Strictly fit full India boundary on initial mount
   useEffect(() => {
     const timer = setTimeout(() => {
       map.invalidateSize();
-      if (filteredProjects && filteredProjects.length > 0) {
+      if (filteredProjects && filteredProjects.length > 0 && filteredProjects.length < 35) {
         const bounds = L.latLngBounds(filteredProjects.map(p => [p.latitude, p.longitude]));
         if (bounds.isValid()) {
-          map.fitBounds(bounds, { padding: [30, 30], maxZoom: 8 });
+          map.fitBounds(bounds, { padding: [35, 35], maxZoom: 8 });
         }
       } else {
-        map.fitBounds(INDIA_BOUNDS, { padding: [20, 20] });
+        map.fitBounds(INDIA_BOUNDS, { padding: [20, 20], maxZoom: 6 });
       }
-    }, 200);
+    }, 150);
     return () => clearTimeout(timer);
   }, [map, mobileTab]);
 
@@ -136,8 +139,8 @@ function MapController({
   return null;
 }
 
-// Custom Floating Map Controls UI (Zoom In, Zoom Out, Fit All)
-function MapOverlayControls({ onFitAll }) {
+// Custom Floating Map Controls UI (Zoom In, Zoom Out, Fit All, Layer Toggle)
+function MapOverlayControls({ onFitAll, mapMode, onToggleMode }) {
   const map = useMap();
 
   return (
@@ -164,11 +167,24 @@ function MapOverlayControls({ onFitAll }) {
 
         <button
           type="button"
-          title="Fit All Sites in View"
+          title="Fit Entire India in View"
           onClick={onFitAll}
           className="w-9 h-9 rounded-xl bg-white hover:bg-[#F0F4FD] text-[#123B92] hover:text-[#002DC2] flex items-center justify-center transition-all border border-[#123B92]/20 active:scale-95 shadow-xs cursor-pointer"
         >
           <Maximize2 className="w-4 h-4" />
+        </button>
+
+        <button
+          type="button"
+          title={mapMode === 'vector' ? 'Switch to Satellite View' : 'Switch to India Vector Map'}
+          onClick={onToggleMode}
+          className={`w-9 h-9 rounded-xl font-bold flex items-center justify-center transition-all border active:scale-95 shadow-xs cursor-pointer ${
+            mapMode === 'satellite' 
+              ? 'bg-[#002DC2] text-white border-[#002DC2]' 
+              : 'bg-white hover:bg-[#F0F4FD] text-[#123B92] hover:text-[#002DC2] border-[#123B92]/20'
+          }`}
+        >
+          <Layers className="w-4 h-4" />
         </button>
       </div>
     </div>
@@ -184,10 +200,77 @@ export default function MapComponent({ onSelectProjectQuote }) {
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedDetailProject, setSelectedDetailProject] = useState(null);
   const [triggerFitAll, setTriggerFitAll] = useState(false);
+  const [mapMode, setMapMode] = useState('vector'); // 'vector' | 'satellite'
 
   // References and timers for robust hover-card interactivity
   const markerRefs = useRef({});
   const hoverTimerRef = useRef(null);
+
+  // Get count of installations for a state name
+  const getStateCount = useCallback((stName) => {
+    if (!stName) return 0;
+    return projects.filter(p => {
+      if (p.state && p.state.toLowerCase() === stName.toLowerCase()) return true;
+      if (p.locationName && p.locationName.toLowerCase().includes(stName.toLowerCase())) return true;
+      return false;
+    }).length;
+  }, [projects]);
+
+  // Dynamic GeoJSON styling for India States
+  const getStateStyle = useCallback((feature) => {
+    const stName = feature.properties.ST_NM;
+    const isSelected = selectedState !== 'All' && stName.toLowerCase() === selectedState.toLowerCase();
+    const count = getStateCount(stName);
+
+    if (mapMode === 'satellite') {
+      return {
+        fillColor: isSelected ? '#002DC2' : (count > 0 ? '#38BDF8' : 'transparent'),
+        fillOpacity: isSelected ? 0.45 : (count > 0 ? 0.2 : 0),
+        weight: isSelected ? 3 : (count > 0 ? 2 : 1),
+        color: isSelected ? '#23AC39' : (count > 0 ? '#38BDF8' : 'rgba(255, 255, 255, 0.7)'),
+        opacity: 0.9,
+        dashArray: isSelected ? '' : '3, 4'
+      };
+    }
+
+    // Official Vector Map Mode
+    return {
+      fillColor: isSelected 
+        ? '#002DC2' 
+        : count > 0 
+          ? '#DCEBFA' 
+          : '#FFFFFF',
+      fillOpacity: isSelected ? 0.95 : (count > 0 ? 0.88 : 0.65),
+      weight: isSelected ? 2.5 : (count > 0 ? 1.6 : 1),
+      color: isSelected ? '#23AC39' : (count > 0 ? '#123B92' : '#94A3B8'),
+      opacity: 1
+    };
+  }, [selectedState, mapMode, getStateCount]);
+
+  // On Each Feature for tooltips and state click
+  const onEachStateFeature = useCallback((feature, layer) => {
+    const stName = feature.properties.ST_NM;
+    const count = getStateCount(stName);
+
+    layer.bindTooltip(
+      `<div class="text-center font-sans py-0.5">
+         <div class="font-black text-xs text-white">${stName}</div>
+         <div class="text-[11px] font-bold ${count > 0 ? 'text-[#38BDF8]' : 'text-slate-300'}">
+           ${count > 0 ? `${count} Active Installation${count > 1 ? 's' : ''}` : 'Official India Territory'}
+         </div>
+       </div>`,
+      { sticky: true, className: 'zenitek-state-tooltip', direction: 'auto' }
+    );
+
+    layer.on({
+      click: () => {
+        if (count > 0) {
+          setSelectedState(stName);
+          setSelectedProject(null);
+        }
+      }
+    });
+  }, [getStateCount, setSelectedState]);
 
   const handleMarkerMouseOver = (markerInstance) => {
     if (hoverTimerRef.current) {
@@ -471,21 +554,22 @@ export default function MapComponent({ onSelectProjectQuote }) {
           </div>
         </div>
 
-        {/* Map Viewport - Mouse scroll zoom ENABLED, Zero map movement on hover, Interactive Clickable Card */}
+        {/* Map Viewport - New Dedicated India Map */}
         <div 
-          className={`lg:col-span-8 h-full rounded-2xl overflow-hidden relative border border-slate-200 ${
+          className={`lg:col-span-8 h-full rounded-2xl overflow-hidden relative border-2 border-[#123B92]/30 ${
             mobileTab === 'map' ? 'block' : 'hidden lg:block'
           }`}
         >
           <MapContainer
-            center={[20.5937, 78.9629]}
+            center={[22.5, 82.0]}
             zoom={5}
-            minZoom={4.8}
-            maxZoom={16}
-            maxBounds={INDIA_BOUNDS}
+            minZoom={4.5}
+            maxZoom={14}
+            maxBounds={[[5.0, 65.0], [38.5, 100.0]]}
             maxBoundsViscosity={1.0}
             scrollWheelZoom={true}
             zoomControl={false}
+            className="india-vector-map-viewport"
             style={{ width: '100%', height: '100%' }}
           >
             {/* Controller for bounds fitting & smooth flyTo on sidebar click */}
@@ -498,13 +582,27 @@ export default function MapComponent({ onSelectProjectQuote }) {
               markerRefs={markerRefs}
             />
 
-            {/* Custom Floating Zoom & Fit Controls (Top-Right) */}
-            <MapOverlayControls onFitAll={handleFitAllClick} />
+            {/* Custom Floating Zoom, Fit & Mode Controls (Top-Right) */}
+            <MapOverlayControls 
+              onFitAll={handleFitAllClick}
+              mapMode={mapMode}
+              onToggleMode={() => setMapMode(m => m === 'vector' ? 'satellite' : 'vector')}
+            />
 
-            {/* Standard Leaflet Tiles */}
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            {/* In Satellite mode, render high-res satellite tile layer; in Vector mode, pure clean oceanic vector map */}
+            {mapMode === 'satellite' && (
+              <TileLayer
+                attribution='&copy; Esri &mdash; Earthstar Geographics'
+                url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+              />
+            )}
+
+            {/* Dedicated Official India States Vector Boundary Layer */}
+            <GeoJSON
+              key={`${selectedState}-${mapMode}`}
+              data={indiaGeoJson}
+              style={getStateStyle}
+              onEachFeature={onEachStateFeature}
             />
 
             {/* Location Markers with Interactive Hover & Clickable Card */}
@@ -601,6 +699,29 @@ export default function MapComponent({ onSelectProjectQuote }) {
               );
             })}
           </MapContainer>
+
+          {/* Ocean Watermarks */}
+          {mapMode === 'vector' && (
+            <>
+              <div className="absolute left-6 bottom-28 pointer-events-none select-none text-xs sm:text-sm font-black tracking-widest text-[#123B92]/25 uppercase z-[400]">
+                Arabian Sea
+              </div>
+              <div className="absolute right-6 bottom-32 pointer-events-none select-none text-xs sm:text-sm font-black tracking-widest text-[#123B92]/25 uppercase z-[400]">
+                Bay of Bengal
+              </div>
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 pointer-events-none select-none text-xs sm:text-sm font-black tracking-widest text-[#123B92]/25 uppercase z-[400]">
+                Indian Ocean
+              </div>
+            </>
+          )}
+
+          {/* Official Survey of India Badge */}
+          <div className="absolute bottom-3 left-3 z-[500] pointer-events-none select-none bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-[#123B92]/25 shadow-md flex items-center space-x-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#23AC39] animate-pulse" />
+            <span className="text-[11px] sm:text-xs font-black text-[#123B92] tracking-wide">
+              Official Survey of India Boundaries • 35 Active Field Sites
+            </span>
+          </div>
         </div>
 
       </div>
