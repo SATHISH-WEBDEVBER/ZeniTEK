@@ -53,6 +53,49 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
     },
   ];
 
+  const clientPartners = [
+    {
+      name: 'IIT Bhubaneswar',
+      type: 'Premier Research Institute',
+      logo: '/client-logos/academic_iit_bhubaneswar.png'
+    },
+    {
+      name: 'Anna University',
+      type: 'State Technical University',
+      logo: '/client-logos/academic_anna_univ.jpeg'
+    },
+    {
+      name: 'SRM University',
+      type: 'Applied R&D Partner',
+      logo: '/client-logos/industry_srm.png'
+    },
+    {
+      name: 'Mitsui Chemicals',
+      type: 'Global Industry Client',
+      logo: '/client-logos/industry_mitsui.jpeg'
+    },
+    {
+      name: 'Indo-MIM',
+      type: 'Precision Engineering Client',
+      logo: '/client-logos/industry_indomim.jpeg'
+    },
+    {
+      name: 'SELCO Foundation',
+      type: 'Renewable Energy Partner',
+      logo: '/client-logos/industry_selco.png'
+    },
+    {
+      name: 'TNJFU Fisheries Univ',
+      type: 'Marine Solar Dehydration',
+      logo: '/client-logos/academic_fisheries.png'
+    },
+    {
+      name: 'Gandhigram Rural Inst.',
+      type: 'Deemed University Partner',
+      logo: '/client-logos/academic_gandhigram.jpeg'
+    },
+  ];
+
   // Auto-swap every 5 seconds in continuous loop (Tesla style)
   useEffect(() => {
     const timer = setInterval(() => {
@@ -574,18 +617,39 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
           </div>
 
-          {/* Institutional Partner Logos Banner */}
-          <div className="pt-6">
-            <div className="text-center text-sm font-black text-slate-500 uppercase tracking-wider pb-4">
+          {/* Institutional Partner Logos Infinite Horizontal Marquee */}
+          <div className="pt-8">
+            <div className="text-center text-xs sm:text-sm font-black text-slate-500 uppercase tracking-widest pb-4">
               Collaborative Deployments & Key Industry Clients
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-slate-900 text-sm sm:text-base font-black">
-              <span className="px-5 py-2.5 bg-white rounded-2xl border border-slate-200 shadow-xs">IIT Bhubaneswar</span>
-              <span className="px-5 py-2.5 bg-white rounded-2xl border border-slate-200 shadow-xs">Anna University</span>
-              <span className="px-5 py-2.5 bg-white rounded-2xl border border-slate-200 shadow-xs">SRM University</span>
-              <span className="px-5 py-2.5 bg-white rounded-2xl border border-slate-200 shadow-xs">Mitsui Chemicals</span>
-              <span className="px-5 py-2.5 bg-white rounded-2xl border border-slate-200 shadow-xs">Indo-MIM</span>
-              <span className="px-5 py-2.5 bg-white rounded-2xl border border-slate-200 shadow-xs">SELCO Foundation</span>
+
+            {/* Infinite Horizontal Running Marquee (Stops on hover only) */}
+            <div className="client-marquee-container">
+              <div className="client-marquee-track gap-4 sm:gap-6 pr-4 sm:pr-6">
+                {[...clientPartners, ...clientPartners].map((client, idx) => (
+                  <div
+                    key={`${client.name}-${idx}`}
+                    className="flex items-center space-x-3.5 px-5 py-3.5 bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-lg hover:border-[#002DC2] hover:scale-102 transition-all shrink-0 select-none group cursor-pointer"
+                  >
+                    <div className="w-11 h-11 rounded-xl bg-white border border-slate-200/90 flex items-center justify-center p-1 shrink-0 overflow-hidden shadow-2xs group-hover:border-[#002DC2]/40 transition-colors">
+                      <img
+                        src={client.logo}
+                        alt={client.name}
+                        className="w-full h-full object-contain"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="text-left">
+                      <div className="text-sm font-black text-slate-900 group-hover:text-[#002DC2] transition-colors whitespace-nowrap">
+                        {client.name}
+                      </div>
+                      <div className="text-[10px] text-slate-500 font-bold uppercase tracking-wider whitespace-nowrap">
+                        {client.type}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 

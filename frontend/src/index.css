@@ -447,3 +447,35 @@
 .animate-marquee-continuous-fast:hover {
   animation-play-state: running !important;
 }
+
+/* Client Partner Infinite Horizontal Marquee (Continuous Scrolling with Hover-Pause) */
+@keyframes clientMarqueeScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.client-marquee-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 8px 0;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+}
+
+.client-marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+  animation: clientMarqueeScroll 28s linear infinite;
+}
+
+.client-marquee-container:hover .client-marquee-track,
+.client-marquee-track:hover {
+  animation-play-state: paused !important;
+}
