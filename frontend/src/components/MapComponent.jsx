@@ -463,11 +463,11 @@ export default function MapComponent({ onSelectProjectQuote }) {
 
       </div>
 
-      {/* Main Workspace Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 h-[580px] sm:h-[680px] w-full">
+      {/* Main Workspace Layout - Full Width on Laptop, Mobile Switchable */}
+      <div className="w-full h-[460px] sm:h-[500px] lg:h-[540px] relative">
         
-        {/* Left Sidebar Directory */}
-        <div className={`lg:col-span-4 flex-col h-full bg-[#F0F4FD] rounded-2xl p-3.5 sm:p-4.5 border border-[#123B92]/20 overflow-hidden ${mobileTab === 'list' ? 'flex' : 'hidden lg:flex'}`}>
+        {/* Mobile-Only Sites Directory (Shows only when mobileTab is 'list' on mobile screens) */}
+        <div className={`w-full flex-col h-full bg-[#F0F4FD] rounded-2xl p-3.5 sm:p-4.5 border border-[#123B92]/20 overflow-hidden lg:hidden ${mobileTab === 'list' ? 'flex' : 'hidden'}`}>
           
           {/* Sidebar Header & Search */}
           <div className="mb-3.5 space-y-3 pb-3 border-b border-[#123B92]/20 shrink-0">
@@ -554,9 +554,9 @@ export default function MapComponent({ onSelectProjectQuote }) {
           </div>
         </div>
 
-        {/* Map Viewport - New Dedicated India Map */}
+        {/* Map Viewport - New Dedicated India Map (Full Width on Laptop, Toggleable on Mobile) */}
         <div 
-          className={`lg:col-span-8 h-full rounded-2xl overflow-hidden relative border-2 border-[#123B92]/30 ${
+          className={`w-full h-full rounded-2xl overflow-hidden relative border-2 border-[#123B92]/30 ${
             mobileTab === 'map' ? 'block' : 'hidden lg:block'
           }`}
         >

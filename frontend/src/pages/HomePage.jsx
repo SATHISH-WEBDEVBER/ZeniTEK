@@ -414,7 +414,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
 
       {/* SECTION 5: INTERACTIVE INSTALLATION MAP (ODD SECTION - CRISP WHITE) */}
-      <section className="w-full section-odd py-14 sm:py-20">
+      <section className="w-full section-odd py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center max-w-4xl mx-auto space-y-3.5">
             <span className="text-sm sm:text-base font-black text-green-700 uppercase tracking-widest bg-green-50 px-4.5 py-1.5 rounded-full border border-green-200 inline-flex items-center shadow-xs">
