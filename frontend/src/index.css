@@ -431,7 +431,7 @@
   display: flex;
   width: max-content;
   will-change: transform;
-  animation: marqueeLeft 35s linear infinite;
+  animation: marqueeLeft 34s linear infinite;
 }
 
 .animate-marquee-continuous-fast {
@@ -441,11 +441,12 @@
   animation: marqueeLeft 28s linear infinite;
 }
 
-.animate-marquee-continuous,
 .animate-marquee-continuous:hover,
-.animate-marquee-continuous-fast,
-.animate-marquee-continuous-fast:hover {
-  animation-play-state: running !important;
+.animate-marquee-continuous-fast:hover,
+.client-marquee-container:hover .animate-marquee-continuous,
+.client-marquee-container:hover .animate-marquee-continuous-fast {
+  animation-play-state: paused !important;
+  cursor: pointer;
 }
 
 /* Client Partner Infinite Horizontal Marquee (Continuous Scrolling with Hover-Pause) */

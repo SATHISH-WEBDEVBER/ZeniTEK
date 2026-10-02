@@ -708,7 +708,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
               <span>Academic Institutions</span>
             </div>
 
-            <div className="relative w-full overflow-hidden py-3">
+            <div className="relative w-full overflow-hidden py-3 client-marquee-container">
               {/* Left and Right Fade Gradient Masks */}
               <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-slate-50 via-slate-50/80 to-transparent z-10" />
               <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-slate-50 via-slate-50/80 to-transparent z-10" />
@@ -784,7 +784,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
               <span>Industry Clients & Mentors</span>
             </div>
 
-            <div className="relative w-full overflow-hidden py-3">
+            <div className="relative w-full overflow-hidden py-3 client-marquee-container">
               {/* Left and Right Fade Gradient Masks */}
               <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-slate-50 via-slate-50/80 to-transparent z-10" />
               <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-slate-50 via-slate-50/80 to-transparent z-10" />
