@@ -4,7 +4,6 @@ import ROICalculator from '../components/ROICalculator';
 import ProductModelShowcase from '../components/ProductModelShowcase';
 import MapComponent from '../components/MapComponent';
 import { sampleReviews, dryerModelsData } from '../data/sampleData';
-import { workingPrincipleSteps } from '../data/zenitekBrochureData';
 import { useLanguage } from '../context/LanguageContext';
 import {
   Sun, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, TrendingUp, Zap, ChevronRight, ChevronLeft, MapPin, Search, Sprout, Wind, Droplets, Cpu, Shield, Sparkles,
@@ -326,91 +325,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       </section>
 
 
-      {/* SECTION 4.25 & 4.5: WORKING PRINCIPLE & SPECIFICATION MATRIX (ODD SECTION - CRISP WHITE) */}
-      <section className="w-full section-odd py-14 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          
-          {/* Working Principle */}
-          <div className="bg-white text-black p-6 sm:p-10 rounded-3xl shadow-md space-y-8 border border-[#123B92]/20">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6">
-              <div className="space-y-2">
-                <span className="text-[11px] font-bold text-[#123B92] uppercase tracking-widest bg-[#F0F4FD] border border-[#123B92]/30 px-3 py-1 rounded-full inline-flex items-center">
-                  <Sun className="w-3.5 h-3.5 mr-1.5 text-[#002DC2] animate-spin-slow" /> PDF Technical Guide • Page 8
-                </span>
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-[#123B92]">
-                  Solar Dryer Working Principle
-                </h2>
-                <p className="text-xs sm:text-sm text-black/70 font-medium max-w-2xl">
-                  Smart, Efficient, Sustainable — 7-step thermodynamic cycle engineered by ZeniTEK for 40% faster moisture reduction with zero contamination.
-                </p>
-              </div>
 
-              <div className="flex items-center space-x-2 text-xs font-bold text-white bg-[#23AC39] px-4 py-2 rounded-2xl border border-[#23AC39] shrink-0">
-                <Sparkles className="w-4 h-4 text-white" />
-                <span>40% Faster Than Open-Sun</span>
-              </div>
-            </div>
-
-            {/* 7 Process Steps Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {workingPrincipleSteps.map((stepItem) => (
-                <div
-                  key={stepItem.step}
-                  className={`p-5 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
-                    stepItem.step === 7
-                      ? 'bg-white border-2 border-[#23AC39] shadow-sm md:col-span-2 lg:col-span-2'
-                      : 'bg-[#F0F4FD] hover:bg-white border-[#123B92]/20 hover:border-[#002DC2]'
-                  }`}
-                >
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="w-8 h-8 rounded-xl bg-[#123B92] text-white font-black text-xs flex items-center justify-center shadow">
-                        {stepItem.step}
-                      </span>
-                      <span className="text-[10px] uppercase font-bold text-[#123B92] tracking-wider">
-                        {stepItem.subtitle}
-                      </span>
-                    </div>
-
-                    <h4 className="text-sm font-bold text-black leading-snug">
-                      {stepItem.title}
-                    </h4>
-
-                    <p className="text-xs text-black/70 leading-relaxed font-normal">
-                      {stepItem.description}
-                    </p>
-                  </div>
-
-                  <div className="pt-3 mt-3 border-t border-[#123B92]/10 flex items-center text-[10px] text-[#002DC2] font-bold">
-                    <CheckCircle2 className="w-3 h-3 mr-1 text-[#002DC2]" /> Step {stepItem.step} of 7
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Diagram Preview Banner */}
-            <div className="bg-[#F0F4FD] p-4 rounded-2xl border border-[#123B92]/20 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 rounded-xl bg-white border border-[#123B92]/20 flex items-center justify-center text-xl shrink-0">
-                  ☀️
-                </div>
-                <div className="text-xs">
-                  <div className="font-bold text-[#123B92]">Need Engineering Consultation for Your Farm Crop?</div>
-                  <div className="text-black/70">Our engineers custom-calculate airflow CFM, tray loading, and solar panel arrays for your exact daily tonnage.</div>
-                </div>
-              </div>
-
-              <button
-                onClick={() => onOpenQuoteModal({ capacityNeeded: 'Technical Engineering Sizing' })}
-                className="px-5 py-2.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow shrink-0 cursor-pointer"
-              >
-                Get Free Sizing Report
-              </button>
-            </div>
-          </div>
-
-        </div>
-      </section>
 
 
       {/* SECTION 5: INTERACTIVE INSTALLATION MAP (ODD SECTION - CRISP WHITE) */}

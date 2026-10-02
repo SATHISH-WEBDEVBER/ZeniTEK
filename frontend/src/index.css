@@ -496,8 +496,9 @@
   border-top-color: rgba(15, 23, 42, 0.92) !important;
 }
 
-.india-vector-map-viewport {
-  background: radial-gradient(ellipse at 50% 50%, #F3F8FE 0%, #DCEBFA 100%) !important;
+.india-vector-map-viewport,
+.india-google-map-viewport {
+  background: #aad3df !important; /* Authentic Google Maps sea/canvas base color */
 }
 
 /* Calm Cross-fade & Subtle Translation Animation for Synchronized Product Showcase */

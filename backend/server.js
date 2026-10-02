@@ -107,7 +107,11 @@ app.use((err, req, res, next) => {
 mongoose
   .connect(MONGODB_URI)
   .then(() => {
-    console.log('✅ Connected to MongoDB database [zenitek]');
+    if (process.env.MONGODB_URI) {
+      console.log('✅ Connected to MongoDB Atlas (Cloud Database)');
+    } else {
+      console.log('ℹ️ No MONGODB_URI in .env — Connected to LOCAL MongoDB service on your PC (127.0.0.1:27017/zenitek)');
+    }
   })
   .catch((err) => {
     console.warn('⚠️ MongoDB connection warning (app running in fallback mode):', err.message);

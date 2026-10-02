@@ -139,55 +139,92 @@ function MapController({
   return null;
 }
 
-// Custom Floating Map Controls UI (Zoom In, Zoom Out, Fit All, Layer Toggle)
-function MapOverlayControls({ onFitAll, mapMode, onToggleMode }) {
+// Custom Floating Map Controls UI (Google Maps Style Selector, Zoom In, Zoom Out, Fit All)
+function MapOverlayControls({ onFitAll, mapMode, setMapMode }) {
   const map = useMap();
 
   return (
-    <div className="leaflet-top leaflet-right" style={{ pointerEvents: 'auto', margin: '14px', zIndex: 1000 }}>
-      <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-[#123B92]/30 p-1.5 flex flex-col gap-1.5">
-        <button
-          type="button"
-          title="Zoom In"
-          onClick={() => map.zoomIn()}
-          className="w-9 h-9 rounded-xl bg-white hover:bg-[#F0F4FD] text-[#123B92] hover:text-[#002DC2] font-bold flex items-center justify-center transition-all border border-[#123B92]/20 active:scale-95 shadow-xs cursor-pointer"
-        >
-          <Plus className="w-4 h-4" />
-        </button>
-        <button
-          type="button"
-          title="Zoom Out"
-          onClick={() => map.zoomOut()}
-          className="w-9 h-9 rounded-xl bg-white hover:bg-[#F0F4FD] text-[#123B92] hover:text-[#002DC2] font-bold flex items-center justify-center transition-all border border-[#123B92]/20 active:scale-95 shadow-xs cursor-pointer"
-        >
-          <Minus className="w-4 h-4" />
-        </button>
-        
-        <div className="h-px bg-[#123B92]/20 my-0.5" />
-
-        <button
-          type="button"
-          title="Fit Entire India in View"
-          onClick={onFitAll}
-          className="w-9 h-9 rounded-xl bg-white hover:bg-[#F0F4FD] text-[#123B92] hover:text-[#002DC2] flex items-center justify-center transition-all border border-[#123B92]/20 active:scale-95 shadow-xs cursor-pointer"
-        >
-          <Maximize2 className="w-4 h-4" />
-        </button>
-
-        <button
-          type="button"
-          title={mapMode === 'vector' ? 'Switch to Satellite View' : 'Switch to India Vector Map'}
-          onClick={onToggleMode}
-          className={`w-9 h-9 rounded-xl font-bold flex items-center justify-center transition-all border active:scale-95 shadow-xs cursor-pointer ${
-            mapMode === 'satellite' 
-              ? 'bg-[#002DC2] text-white border-[#002DC2]' 
-              : 'bg-white hover:bg-[#F0F4FD] text-[#123B92] hover:text-[#002DC2] border-[#123B92]/20'
-          }`}
-        >
-          <Layers className="w-4 h-4" />
-        </button>
+    <>
+      {/* Top Left: Google Maps India Badge */}
+      <div className="leaflet-top leaflet-left" style={{ pointerEvents: 'auto', margin: '12px', zIndex: 1000 }}>
+        <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-md border border-slate-200 px-3 py-1.5 flex items-center space-x-2">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#23AC39] animate-pulse" />
+          <span className="text-xs font-black text-[#123B92] tracking-wide">
+            Google Maps • India
+          </span>
+        </div>
       </div>
-    </div>
+
+      {/* Top Right: Layer Switcher & Zoom Controls */}
+      <div className="leaflet-top leaflet-right" style={{ pointerEvents: 'auto', margin: '12px', zIndex: 1000 }}>
+        <div className="flex flex-col items-end gap-2">
+          {/* Mode Switcher Pills (Google Style) */}
+          <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-slate-200 p-1 flex items-center space-x-1">
+            <button
+              type="button"
+              onClick={() => setMapMode('streets')}
+              className={`px-3 py-1 text-xs font-black rounded-lg transition-all cursor-pointer ${
+                mapMode === 'streets'
+                  ? 'bg-[#002DC2] text-white shadow-xs'
+                  : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
+              }`}
+            >
+              Map
+            </button>
+            <button
+              type="button"
+              onClick={() => setMapMode('satellite')}
+              className={`px-3 py-1 text-xs font-black rounded-lg transition-all cursor-pointer ${
+                mapMode === 'satellite'
+                  ? 'bg-[#002DC2] text-white shadow-xs'
+                  : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
+              }`}
+            >
+              Satellite
+            </button>
+            <button
+              type="button"
+              onClick={() => setMapMode('terrain')}
+              className={`px-3 py-1 text-xs font-black rounded-lg transition-all cursor-pointer ${
+                mapMode === 'terrain'
+                  ? 'bg-[#002DC2] text-white shadow-xs'
+                  : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
+              }`}
+            >
+              Terrain
+            </button>
+          </div>
+
+          {/* Zoom & Fit Controls */}
+          <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-slate-200 p-1 flex flex-col gap-1">
+            <button
+              type="button"
+              title="Zoom In"
+              onClick={() => map.zoomIn()}
+              className="w-8 h-8 rounded-lg bg-white hover:bg-[#F0F4FD] text-[#123B92] hover:text-[#002DC2] flex items-center justify-center transition-all border border-slate-200 active:scale-95 cursor-pointer"
+            >
+              <Plus className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              title="Zoom Out"
+              onClick={() => map.zoomOut()}
+              className="w-8 h-8 rounded-lg bg-white hover:bg-[#F0F4FD] text-[#123B92] hover:text-[#002DC2] flex items-center justify-center transition-all border border-slate-200 active:scale-95 cursor-pointer"
+            >
+              <Minus className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              title="Fit Entire India in View"
+              onClick={onFitAll}
+              className="w-8 h-8 rounded-lg bg-white hover:bg-[#F0F4FD] text-[#123B92] hover:text-[#002DC2] flex items-center justify-center transition-all border border-slate-200 active:scale-95 cursor-pointer"
+            >
+              <Maximize2 className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
@@ -200,7 +237,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedDetailProject, setSelectedDetailProject] = useState(null);
   const [triggerFitAll, setTriggerFitAll] = useState(false);
-  const [mapMode, setMapMode] = useState('vector'); // 'vector' | 'satellite'
+  const [mapMode, setMapMode] = useState('streets'); // 'streets' | 'satellite' | 'terrain'
 
   // References and timers for robust hover-card interactivity
   const markerRefs = useRef({});
@@ -216,7 +253,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
     }).length;
   }, [projects]);
 
-  // Dynamic GeoJSON styling for India States
+  // Dynamic GeoJSON styling for India States on Google Maps
   const getStateStyle = useCallback((feature) => {
     const stName = feature.properties.ST_NM;
     const isSelected = selectedState !== 'All' && stName.toLowerCase() === selectedState.toLowerCase();
@@ -225,25 +262,26 @@ export default function MapComponent({ onSelectProjectQuote }) {
     if (mapMode === 'satellite') {
       return {
         fillColor: isSelected ? '#002DC2' : (count > 0 ? '#38BDF8' : 'transparent'),
-        fillOpacity: isSelected ? 0.45 : (count > 0 ? 0.2 : 0),
-        weight: isSelected ? 3 : (count > 0 ? 2 : 1),
-        color: isSelected ? '#23AC39' : (count > 0 ? '#38BDF8' : 'rgba(255, 255, 255, 0.7)'),
-        opacity: 0.9,
-        dashArray: isSelected ? '' : '3, 4'
+        fillOpacity: isSelected ? 0.35 : (count > 0 ? 0.12 : 0),
+        weight: isSelected ? 3 : (count > 0 ? 1.8 : 1),
+        color: isSelected ? '#23AC39' : (count > 0 ? '#38BDF8' : 'rgba(255, 255, 255, 0.4)'),
+        opacity: 0.85,
+        dashArray: isSelected ? '' : (count > 0 ? '' : '3, 4')
       };
     }
 
-    // Official Vector Map Mode
+    // Google Maps Roadmap & Terrain: Keep Google Maps 100% visible, highlight active state boundaries
     return {
       fillColor: isSelected 
         ? '#002DC2' 
         : count > 0 
-          ? '#DCEBFA' 
-          : '#FFFFFF',
-      fillOpacity: isSelected ? 0.95 : (count > 0 ? 0.88 : 0.65),
-      weight: isSelected ? 2.5 : (count > 0 ? 1.6 : 1),
-      color: isSelected ? '#23AC39' : (count > 0 ? '#123B92' : '#94A3B8'),
-      opacity: 1
+          ? '#002DC2' 
+          : 'transparent',
+      fillOpacity: isSelected ? 0.20 : (count > 0 ? 0.05 : 0),
+      weight: isSelected ? 2.5 : (count > 0 ? 1.8 : 1.2),
+      color: isSelected ? '#002DC2' : (count > 0 ? '#123B92' : 'rgba(100, 116, 139, 0.4)'),
+      opacity: 0.85,
+      dashArray: isSelected ? '' : (count > 0 ? '' : '2, 3')
     };
   }, [selectedState, mapMode, getStateCount]);
 
@@ -561,15 +599,15 @@ export default function MapComponent({ onSelectProjectQuote }) {
           }`}
         >
           <MapContainer
-            center={[22.0, 79.5]}
+            center={[22.5, 80.0]}
             zoom={4.8}
-            minZoom={4.5}
-            maxZoom={14}
-            maxBounds={[[5.0, 65.0], [38.5, 100.0]]}
+            minZoom={4.6}
+            maxZoom={18}
+            maxBounds={[[6.0, 68.0], [37.5, 97.5]]}
             maxBoundsViscosity={1.0}
             scrollWheelZoom={true}
             zoomControl={false}
-            className="india-vector-map-viewport"
+            className="india-google-map-viewport"
             style={{ width: '100%', height: '100%' }}
           >
             {/* Controller for bounds fitting & smooth flyTo on sidebar click */}
@@ -582,20 +620,27 @@ export default function MapComponent({ onSelectProjectQuote }) {
               markerRefs={markerRefs}
             />
 
-            {/* Custom Floating Zoom, Fit & Mode Controls (Top-Right) */}
+            {/* Custom Floating Zoom, Fit & Google Map Controls */}
             <MapOverlayControls 
               onFitAll={handleFitAllClick}
               mapMode={mapMode}
-              onToggleMode={() => setMapMode(m => m === 'vector' ? 'satellite' : 'vector')}
+              setMapMode={setMapMode}
             />
 
-            {/* In Satellite mode, render high-res satellite tile layer; in Vector mode, pure clean oceanic vector map */}
-            {mapMode === 'satellite' && (
-              <TileLayer
-                attribution='&copy; Esri &mdash; Earthstar Geographics'
-                url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-              />
-            )}
+            {/* Official Google Maps Tile Layer */}
+            <TileLayer
+              key={mapMode}
+              attribution='&copy; <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer">Google Maps</a>'
+              url={
+                mapMode === 'satellite'
+                  ? 'https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}'
+                  : mapMode === 'terrain'
+                    ? 'https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}'
+                    : 'https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
+              }
+              subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
+              maxZoom={19}
+            />
 
             {/* Dedicated Official India States Vector Boundary Layer */}
             <GeoJSON

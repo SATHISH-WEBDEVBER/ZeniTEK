@@ -162,14 +162,14 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
         </h2>
       </div>
 
-      {/* FULL-BLEED ZERO-PADDING TESLA STAGE WITH EXACT 20PX GAP */}
-      <div className="relative w-full overflow-hidden px-0 mx-0 py-1">
-        <div className="flex items-center justify-center gap-[20px] w-full px-0 mx-0">
+      {/* STAGE WITH GENEROUS SPACING BETWEEN CARDS */}
+      <div className="relative w-full overflow-hidden px-3 sm:px-6 lg:px-8 py-2">
+        <div className="flex items-center justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 w-full">
           
-          {/* ================= LEFT PEEK CARD (PREVIOUS PRODUCT) - 100% OPACITY, ZERO BLUR ================= */}
+          {/* ================= LEFT PEEK CARD (PREVIOUS PRODUCT) ================= */}
           <div 
             onClick={handlePrev}
-            className="hidden md:block relative w-[16%] lg:w-[18%] h-[420px] sm:h-[480px] lg:h-[540px] rounded-r-2xl lg:rounded-r-3xl overflow-hidden cursor-pointer group shrink-0 opacity-100 shadow-xl transition-transform duration-500"
+            className="hidden md:block relative w-[13%] lg:w-[15%] xl:w-[16%] h-[380px] sm:h-[440px] lg:h-[500px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group shrink-0 opacity-90 hover:opacity-100 shadow-xl transition-all duration-500 hover:scale-[1.02]"
           >
             <img 
               src={prevProduct.images[0]} 
@@ -198,15 +198,15 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
                 handlePrev();
               }}
               aria-label="Previous Product"
-              className="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-11 h-11 lg:w-12 lg:h-12 rounded-xl bg-white hover:bg-slate-100 text-slate-900 shadow-2xl flex items-center justify-center transition-all active:scale-90 cursor-pointer"
+              className="absolute right-4 lg:right-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 lg:w-12 lg:h-12 rounded-xl bg-white hover:bg-slate-100 text-slate-900 shadow-2xl flex items-center justify-center transition-all active:scale-90 cursor-pointer"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
           </div>
 
 
-          {/* ================= CENTER ACTIVE CARD (MAIN TESLA CAROUSEL FORMAT) - EXPANDED HEIGHT ================= */}
-          <div className="relative w-[96%] md:w-[68%] lg:w-[64%] h-[460px] sm:h-[520px] lg:h-[570px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shrink-0 group opacity-100">
+          {/* ================= CENTER ACTIVE CARD ================= */}
+          <div className="relative w-full md:w-[64%] lg:w-[60%] xl:w-[58%] max-w-[1040px] h-[440px] sm:h-[500px] lg:h-[550px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shrink-0 group opacity-100 ring-1 ring-black/5">
             
             {/* Active Image with 5-Second Smooth Cross-Fade - Full HD, Zero Blur */}
             <img
@@ -309,10 +309,10 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
           </div>
 
 
-          {/* ================= RIGHT PEEK CARD (NEXT PRODUCT) - 100% OPACITY, ZERO BLUR ================= */}
+          {/* ================= RIGHT PEEK CARD (NEXT PRODUCT) ================= */}
           <div 
             onClick={handleNext}
-            className="hidden md:block relative w-[16%] lg:w-[18%] h-[420px] sm:h-[480px] lg:h-[540px] rounded-l-2xl lg:rounded-l-3xl overflow-hidden cursor-pointer group shrink-0 opacity-100 shadow-xl transition-transform duration-500"
+            className="hidden md:block relative w-[13%] lg:w-[15%] xl:w-[16%] h-[380px] sm:h-[440px] lg:h-[500px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group shrink-0 opacity-90 hover:opacity-100 shadow-xl transition-all duration-500 hover:scale-[1.02]"
           >
             <img 
               src={nextProduct.images[0]} 
@@ -341,7 +341,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
                 handleNext();
               }}
               aria-label="Next Product"
-              className="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-11 h-11 lg:w-12 lg:h-12 rounded-xl bg-white hover:bg-slate-100 text-slate-900 shadow-2xl flex items-center justify-center transition-all active:scale-90 cursor-pointer"
+              className="absolute left-4 lg:left-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 lg:w-12 lg:h-12 rounded-xl bg-white hover:bg-slate-100 text-slate-900 shadow-2xl flex items-center justify-center transition-all active:scale-90 cursor-pointer"
             >
               <ChevronRight className="w-6 h-6" />
             </button>
