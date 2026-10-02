@@ -9,6 +9,7 @@ import reviewsRouter from './routes/reviews.js';
 import seedRouter from './routes/seed.js';
 import productsRouter, { publicProductsRouter } from './routes/products.js';
 import galleryRouter, { publicGalleryRouter } from './routes/gallery.js';
+import sectionsRouter, { publicSectionsRouter } from './routes/sections.js';
 import adminRouter from './routes/admin.js';
 
 dotenv.config();
@@ -37,10 +38,12 @@ app.use('/api/admin', adminRouter);
 // ─── Admin CMS Routes (protected) ───────────────────────────────────────────
 app.use('/api/products', productsRouter);
 app.use('/api/gallery', galleryRouter);
+app.use('/api/sections', sectionsRouter);
 
 // ─── Public API Routes (no auth required) ────────────────────────────────────
 app.use('/api/public/products', publicProductsRouter);
 app.use('/api/public/gallery', publicGalleryRouter);
+app.use('/api/public/sections', publicSectionsRouter);
 
 // API Index Endpoint
 app.get('/api', (req, res) => {

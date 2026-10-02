@@ -199,3 +199,77 @@ export async function adminLogin(apiKey) {
   if (data.token) setAdminToken(data.token);
   return data;
 }
+
+// ─── Sections API ─────────────────────────────────────────────────────────────
+
+/** Public: fetch all published sections (for navbar) */
+export async function fetchPublicSections() {
+  return apiFetch('/public/sections');
+}
+
+/** Public: fetch single published section by slug */
+export async function fetchPublicSection(slug) {
+  return apiFetch(`/public/sections/${slug}`);
+}
+
+/** Admin: fetch all sections */
+export async function adminFetchSections() {
+  return apiFetch('/sections', { headers: adminHeaders() });
+}
+
+/** Admin: fetch single section by slug */
+export async function adminFetchSection(slug) {
+  return apiFetch(`/sections/${slug}`, { headers: adminHeaders() });
+}
+
+/** Admin: create section (with optional thumbnail) */
+export async function adminCreateSection(formData) {
+  return apiFetch('/sections', {
+    method: 'POST',
+    headers: adminHeaders(),
+    body: formData
+  });
+}
+
+/** Admin: update section */
+export async function adminUpdateSection(slug, formData) {
+  return apiFetch(`/sections/${slug}`, {
+    method: 'PUT',
+    headers: adminHeaders(),
+    body: formData
+  });
+}
+
+/** Admin: add body images to section */
+export async function adminAddSectionImages(slug, formData) {
+  return apiFetch(`/sections/${slug}/images`, {
+    method: 'POST',
+    headers: adminHeaders(),
+    body: formData
+  });
+}
+
+/** Admin: delete a section body image */
+export async function adminDeleteSectionImage(slug, imageId) {
+  return apiFetch(`/sections/${slug}/images/${imageId}`, {
+    method: 'DELETE',
+    headers: adminHeaders()
+  });
+}
+
+/** Admin: toggle section published status */
+export async function adminToggleSection(slug, published) {
+  return apiFetch(`/sections/${slug}/status`, {
+    method: 'PATCH',
+    headers: adminHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify({ published })
+  });
+}
+
+/** Admin: delete section */
+export async function adminDeleteSection(slug) {
+  return apiFetch(`/sections/${slug}`, {
+    method: 'DELETE',
+    headers: adminHeaders()
+  });
+}
