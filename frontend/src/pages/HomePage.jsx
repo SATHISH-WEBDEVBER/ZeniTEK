@@ -416,14 +416,14 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       {/* SECTION 5: INTERACTIVE INSTALLATION MAP (ODD SECTION - CRISP WHITE) */}
       <section className="w-full section-odd py-14 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 px-3.5 py-1 rounded-full border border-green-200 inline-flex items-center">
-              <MapPin className="w-3.5 h-3.5 mr-1.5 text-green-600" /> GEOGRAPHICAL FOOTPRINT & FIELD SITES
+          <div className="text-center max-w-4xl mx-auto space-y-3.5">
+            <span className="text-sm sm:text-base font-black text-green-700 uppercase tracking-widest bg-green-50 px-4.5 py-1.5 rounded-full border border-green-200 inline-flex items-center shadow-xs">
+              <MapPin className="w-4.5 h-4.5 mr-2 text-green-600" /> GEOGRAPHICAL FOOTPRINT & FIELD SITES
             </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-blue-950">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-blue-950 tracking-tight">
               Active Solar Dryer Installations Map
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium">
+            <p className="text-base sm:text-lg lg:text-xl text-slate-700 font-medium leading-relaxed max-w-4xl mx-auto">
               Explore live operational sites across Tamil Nadu, Kerala, Andhra Pradesh & Karnataka. Hover over any marker for instant site preview or click to open full installation metrics and video.
             </p>
           </div>
