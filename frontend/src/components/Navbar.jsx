@@ -205,7 +205,8 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const isProductsActive = location.pathname.startsWith('/dryers') || location.pathname.startsWith('/applications');
   const isGalleryActive = location.pathname.startsWith('/gallery');
   const isSubsidiesActive = location.pathname === '/subsidies';
-  const isAboutActive = location.pathname === '/about';
+  const isRnDActive = location.pathname === '/about' && location.hash === '#rnd';
+  const isAboutActive = location.pathname === '/about' && location.hash !== '#rnd';
   const isContactActive = location.pathname === '/contact';
 
   return (
@@ -213,7 +214,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
       
       {/* MAIN NAVBAR CONTAINER */}
       <div className="w-full px-5 sm:px-8 md:px-[60px]">
-        <div className="flex items-center justify-between h-18 sm:h-20 lg:h-24 w-full">
+        <div className="flex items-center justify-between h-14 sm:h-16 lg:h-[68px] w-full">
           
           {/* Logo - Stage 1 Animation */}
           <Link
@@ -227,7 +228,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             <img
               src="/logo.png"
               alt="ZeniTEK - Towards Sustainable Future"
-              className="h-11 xs:h-12 sm:h-14 md:h-16 lg:h-18 xl:h-20 w-auto object-contain py-0.5"
+              className="h-9 xs:h-10 sm:h-11 md:h-12 lg:h-13 xl:h-14 w-auto object-contain py-0.5"
             />
           </Link>
 
@@ -242,7 +243,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {/* 1. HOME */}
             <Link
               to="/"
-              className={`px-3 py-2 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all duration-200 whitespace-nowrap ${
+              className={`px-3 py-1.5 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all duration-200 whitespace-nowrap ${
                 location.pathname === '/'
                   ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-xs'
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
@@ -251,7 +252,6 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               {t('navHome')}
             </Link>
 
-            {/* 2. PRODUCTS (DROPDOWN MENU) */}
             {/* 2. PRODUCTS (TESLA MEGA MENU) */}
             <div 
               ref={productsRef}
@@ -265,7 +265,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                   setGalleryDropdownOpen(false);
                   setProductsDropdownOpen(!productsDropdownOpen);
                 }}
-                className={`px-3 py-2 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all duration-200 whitespace-nowrap flex items-center space-x-1.5 cursor-pointer ${
+                className={`px-3 py-1.5 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all duration-200 whitespace-nowrap flex items-center space-x-1.5 cursor-pointer ${
                   isProductsActive || productsDropdownOpen
                     ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-xs'
                     : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
@@ -289,7 +289,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                   setProductsDropdownOpen(false);
                   setGalleryDropdownOpen(!galleryDropdownOpen);
                 }}
-                className={`px-3 py-2 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all duration-200 whitespace-nowrap flex items-center space-x-1.5 cursor-pointer ${
+                className={`px-3 py-1.5 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all duration-200 whitespace-nowrap flex items-center space-x-1.5 cursor-pointer ${
                   isGalleryActive || galleryDropdownOpen
                     ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-xs'
                     : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
@@ -336,7 +336,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {/* 4. SUBSIDIES */}
             <Link
               to="/subsidies"
-              className={`px-3 py-2 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all duration-200 whitespace-nowrap flex items-center space-x-1 ${
+              className={`px-3 py-1.5 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all duration-200 whitespace-nowrap flex items-center space-x-1 ${
                 isSubsidiesActive
                   ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-xs'
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
@@ -345,10 +345,23 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               <span>Subsidies</span>
             </Link>
 
-            {/* 5. ABOUT US */}
+            {/* 5. R&D (RESEARCH & DEVELOPMENT SHORT FORM) */}
+            <Link
+              to="/about#rnd"
+              title="Research & Development"
+              className={`px-3 py-1.5 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all duration-200 whitespace-nowrap flex items-center space-x-1 ${
+                isRnDActive
+                  ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-xs'
+                  : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
+              }`}
+            >
+              <span>R&D</span>
+            </Link>
+
+            {/* 6. ABOUT US */}
             <Link
               to="/about"
-              className={`px-3 py-2 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all duration-200 whitespace-nowrap ${
+              className={`px-3 py-1.5 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all duration-200 whitespace-nowrap ${
                 isAboutActive
                   ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-xs'
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
@@ -357,10 +370,10 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               {t('navAbout')}
             </Link>
 
-            {/* 6. CONTACT US */}
+            {/* 7. CONTACT US */}
             <Link
               to="/contact"
-              className={`px-3 py-2 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all duration-200 whitespace-nowrap ${
+              className={`px-3 py-1.5 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all duration-200 whitespace-nowrap ${
                 isContactActive
                   ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-xs'
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
@@ -382,7 +395,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {/* Quote CTA Button */}
             <button
               onClick={onOpenQuoteModal}
-              className="px-3.5 py-2 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white bg-[#23AC39] hover:bg-[#1f9632] rounded-xl shadow-md shadow-[#23AC39]/20 transition-all flex items-center shrink-0 cursor-pointer hover:shadow-lg active:scale-95"
+              className="px-3.5 py-1.5 sm:px-4 sm:py-2 lg:px-4.5 lg:py-2 text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white bg-[#23AC39] hover:bg-[#1f9632] rounded-xl shadow-md shadow-[#23AC39]/20 transition-all flex items-center shrink-0 cursor-pointer hover:shadow-lg active:scale-95"
             >
               <span>{t('getQuote')}</span>
               <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-1.5 shrink-0" />
@@ -490,7 +503,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
       {/* Dimmed backdrop overlay when mega menu or gallery is open */}
       {(productsDropdownOpen || galleryDropdownOpen) && (
         <div 
-          className="hidden lg:block fixed inset-0 top-[72px] sm:top-[80px] lg:top-[96px] bg-black/35 backdrop-blur-[1px] z-30 transition-opacity duration-300"
+          className="hidden lg:block fixed inset-0 top-[56px] sm:top-[64px] lg:top-[68px] bg-black/35 backdrop-blur-[1px] z-30 transition-opacity duration-300"
           onClick={() => {
             setProductsDropdownOpen(false);
             setGalleryDropdownOpen(false);
@@ -506,7 +519,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
           <Link
             to="/"
             onClick={() => setMobileMenuOpen(false)}
-            className={`block px-4 py-3 rounded-xl text-base font-bold transition-colors ${
+            className={`block px-4 py-2.5 rounded-xl text-base font-bold transition-colors ${
               location.pathname === '/'
                 ? 'text-[#002DC2] bg-[#F0F4FD]'
                 : 'text-slate-800 hover:bg-slate-50'
@@ -520,7 +533,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             <button
               type="button"
               onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
-              className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-bold text-slate-800 hover:bg-slate-50 transition-colors"
+              className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-base font-bold text-slate-800 hover:bg-slate-50 transition-colors"
             >
               <span>Products</span>
               <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${mobileProductsOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
@@ -547,7 +560,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             <button
               type="button"
               onClick={() => setMobileGalleryOpen(!mobileGalleryOpen)}
-              className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-bold text-slate-800 hover:bg-slate-50 transition-colors"
+              className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-base font-bold text-slate-800 hover:bg-slate-50 transition-colors"
             >
               <span>Gallery</span>
               <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${mobileGalleryOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
@@ -573,7 +586,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
           <Link
             to="/subsidies"
             onClick={() => setMobileMenuOpen(false)}
-            className={`block px-4 py-3 rounded-xl text-base font-bold transition-colors ${
+            className={`block px-4 py-2.5 rounded-xl text-base font-bold transition-colors ${
               isSubsidiesActive
                 ? 'text-[#002DC2] bg-[#F0F4FD]'
                 : 'text-slate-800 hover:bg-slate-50'
@@ -582,11 +595,27 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             Subsidies
           </Link>
 
-          {/* Mobile: 5. About Us */}
+          {/* Mobile: 5. R&D (Research & Development Short Form) */}
+          <Link
+            to="/about#rnd"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-base font-bold transition-colors ${
+              isRnDActive
+                ? 'text-[#002DC2] bg-[#F0F4FD]'
+                : 'text-slate-800 hover:bg-slate-50'
+            }`}
+          >
+            <span>R&D</span>
+            <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
+              Research & Dev
+            </span>
+          </Link>
+
+          {/* Mobile: 6. About Us */}
           <Link
             to="/about"
             onClick={() => setMobileMenuOpen(false)}
-            className={`block px-4 py-3 rounded-xl text-base font-bold transition-colors ${
+            className={`block px-4 py-2.5 rounded-xl text-base font-bold transition-colors ${
               isAboutActive
                 ? 'text-[#002DC2] bg-[#F0F4FD]'
                 : 'text-slate-800 hover:bg-slate-50'
@@ -595,11 +624,11 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {t('navAbout')}
           </Link>
 
-          {/* Mobile: 6. Contact Us */}
+          {/* Mobile: 7. Contact Us */}
           <Link
             to="/contact"
             onClick={() => setMobileMenuOpen(false)}
-            className={`block px-4 py-3 rounded-xl text-base font-bold transition-colors ${
+            className={`block px-4 py-2.5 rounded-xl text-base font-bold transition-colors ${
               isContactActive
                 ? 'text-[#002DC2] bg-[#F0F4FD]'
                 : 'text-slate-800 hover:bg-slate-50'

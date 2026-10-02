@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Award, Zap, Sprout, Cpu, Microscope, ShieldCheck, CheckCircle2,
   MapPin, Phone, Mail, ArrowRight, ExternalLink, ChevronRight,
@@ -9,12 +10,24 @@ import { useLanguage } from '../context/LanguageContext';
 
 export default function AboutUsPage({ onOpenQuoteModal }) {
   const { t } = useLanguage();
+  const location = useLocation();
 
   // Active category filter for Landmark Projects
   const [projectCategory, setProjectCategory] = useState('all');
 
   // Lightbox modal state for full-screen photo viewing
   const [lightboxImage, setLightboxImage] = useState(null);
+
+  useEffect(() => {
+    if (location.hash === '#rnd') {
+      const el = document.getElementById('rnd');
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 150);
+      }
+    }
+  }, [location.hash]);
 
   // 4 Core Domains from Document 1 (Visual-first with real photos)
   const whatWeDoDomains = [
@@ -500,7 +513,12 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
               return (
                 <div
                   key={domain.id}
-                  className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group"
+                  id={domain.id === 'rnd' ? 'rnd' : undefined}
+                  className={`bg-white rounded-3xl overflow-hidden border transition-all duration-300 flex flex-col justify-between group scroll-mt-28 ${
+                    domain.id === 'rnd' && location.hash === '#rnd'
+                      ? 'border-[#002DC2] ring-4 ring-[#002DC2]/20 shadow-2xl'
+                      : 'border-slate-200/90 shadow-md hover:shadow-2xl'
+                  }`}
                 >
                   {/* Photo Header with Badge */}
                   <div className="relative h-64 sm:h-72 overflow-hidden">
