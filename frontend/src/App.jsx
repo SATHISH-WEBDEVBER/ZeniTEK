@@ -5,7 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LeadModal from './components/LeadModal';
 import DryerDetailModal from './components/DryerDetailModal';
-import LanguageWidget from './components/LanguageWidget';
+import WhatsAppWidget from './components/WhatsAppWidget';
 
 import HomePage from './pages/HomePage';
 import AboutUsPage from './pages/AboutUsPage';
@@ -101,8 +101,8 @@ export default function App() {
           <Footer onOpenQuoteModal={() => handleOpenQuoteModal()} />
         </div>
 
-        {/* Global Floating Bottom-Right Language Switcher */}
-        {animStage >= 3 && <LanguageWidget />}
+        {/* Global Floating Bottom-Right WhatsApp Quick Contact */}
+        {animStage >= 3 && <WhatsAppWidget />}
 
         {/* Global Product Detail Modal */}
         <DryerDetailModal
