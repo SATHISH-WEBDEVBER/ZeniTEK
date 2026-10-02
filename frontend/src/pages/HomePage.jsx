@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import ROICalculator from '../components/ROICalculator';
 import ProductModelShowcase from '../components/ProductModelShowcase';
 import MapComponent from '../components/MapComponent';
-import { sampleReviews, dryerModelsData, cropMatrixData } from '../data/sampleData';
+import { sampleReviews, dryerModelsData } from '../data/sampleData';
 import { workingPrincipleSteps } from '../data/zenitekBrochureData';
 import { useLanguage } from '../context/LanguageContext';
 import {
-  Sun, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, TrendingUp, Zap, ChevronRight, ChevronLeft, MapPin, Search, SlidersHorizontal, Sprout, Wind, Droplets, Cpu, Shield, Sparkles,
+  Sun, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, TrendingUp, Zap, ChevronRight, ChevronLeft, MapPin, Search, Sprout, Wind, Droplets, Cpu, Shield, Sparkles,
   ChevronDown, ChevronUp, Eye
 } from 'lucide-react';
 
@@ -27,7 +27,6 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
     cropType: 'Copra/Coconut',
     message: ''
   });
-  const [matrixSearch, setMatrixSearch] = useState('');
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
 
   const heroSlides = [
@@ -69,11 +68,6 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
   const handleNextSlide = () => {
     setCurrentHeroSlide((prev) => (prev + 1) % heroSlides.length);
   };
-
-  const filteredCropMatrix = cropMatrixData.filter(item =>
-    item.crop.toLowerCase().includes(matrixSearch.toLowerCase()) ||
-    item.benefit.toLowerCase().includes(matrixSearch.toLowerCase())
-  );
 
   const handleQuickSubmit = (e) => {
     e.preventDefault();
@@ -372,150 +366,6 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
             </div>
           </div>
 
-          {/* Model Lineup Comparison Table */}
-          <div className="space-y-6">
-            <div className="text-center max-w-3xl mx-auto space-y-2">
-              <span className="text-xs font-bold text-blue-700 uppercase tracking-widest bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200 inline-flex items-center shadow-sm">
-                <SlidersHorizontal className="w-3.5 h-3.5 mr-1.5 text-blue-600" /> Official Specification Matrix
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-blue-950">
-                ZeniTEK Model Lineup Comparison
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 font-medium">
-                Side-by-side engineering specifications from our official technical product brochures
-              </p>
-            </div>
-
-            <div className="bg-white rounded-3xl overflow-x-auto border border-slate-200 shadow-md">
-              <table className="w-full text-left border-collapse min-w-[760px]">
-                <thead>
-                  <tr className="bg-[#1e3a8a] text-white text-xs uppercase font-bold tracking-wider">
-                    <th className="p-4 rounded-tl-3xl">SPECIFICATION PARAMETER</th>
-                    <th className="p-4 text-blue-100">SUNDRY 50 (BOX TYPE)</th>
-                    <th className="p-4 text-green-300">SOLDRY 1210 - 150 (TUNNEL)</th>
-                    <th className="p-4 rounded-tr-3xl text-amber-300">SOLDRY 1210 - 300 (COMMERCIAL)</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200 text-xs text-slate-700 font-medium">
-                  <tr className="hover:bg-slate-50 transition-colors">
-                    <td className="p-4 font-bold text-slate-900">Floor Footprint Area</td>
-                    <td className="p-4 font-semibold text-slate-800">16 sq.ft (4x4 ft)</td>
-                    <td className="p-4 font-bold text-blue-700">150 sq.ft (12.5x12.5 ft)</td>
-                    <td className="p-4 font-bold text-green-700">300 sq.ft (12.5x24.5 ft)</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50 transition-colors">
-                    <td className="p-4 font-bold text-slate-900">Food-Grade Tray Drying Area</td>
-                    <td className="p-4 font-semibold text-slate-800">50 sq.ft (8 SS304 Trays)</td>
-                    <td className="p-4 font-bold text-blue-700">225 sq.ft (36 Trays)</td>
-                    <td className="p-4 font-bold text-green-700">450 sq.ft (72 Trays)</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50 transition-colors">
-                    <td className="p-4 font-bold text-slate-900">Batch Loading Capacity</td>
-                    <td className="p-4">20 kg – 100 kg</td>
-                    <td className="p-4 font-bold text-blue-700">60 kg – 300 kg</td>
-                    <td className="p-4 font-bold text-green-700">180 kg – 900 kg</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50 transition-colors">
-                    <td className="p-4 font-bold text-slate-900">Trolley & Material Handling</td>
-                    <td className="p-4">Fixed Tray Racks with 4" Casters</td>
-                    <td className="p-4">9 Trolleys (4 trays each, 2" casters)</td>
-                    <td className="p-4">18 Trolleys (4 trays each, 2" casters)</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50 transition-colors">
-                    <td className="p-4 font-bold text-slate-900">Solar Power System</td>
-                    <td className="p-4">20W 24V DC + Battery</td>
-                    <td className="p-4">110W 24V DC + Victron MPPT</td>
-                    <td className="p-4">220W 24V DC + Victron MPPT</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50 transition-colors">
-                    <td className="p-4 font-bold text-slate-900">Airflow & Ventilation</td>
-                    <td className="p-4">4 Circulation + 2 Exhaust Fans</td>
-                    <td className="p-4">4 Circulation + 2 Exhaust Fans</td>
-                    <td className="p-4">4 Circulation + 3 Exhaust Fans</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50 transition-colors">
-                    <td className="p-4 font-bold text-slate-900">Auxiliary Heating Backup</td>
-                    <td className="p-4">750W Heater with Thermostat</td>
-                    <td className="p-4">1 kW to 6 kW with Fan & Thermostat</td>
-                    <td className="p-4">1 kW to 6 kW with Fan & Thermostat</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50 transition-colors">
-                    <td className="p-4 font-bold text-slate-900">Automation & Control</td>
-                    <td className="p-4">Temp & Timer Control</td>
-                    <td className="p-4 font-bold text-blue-700">PLC with 4" Touchscreen HMI</td>
-                    <td className="p-4 font-bold text-green-700">PLC with 4" Touchscreen HMI</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50 transition-colors">
-                    <td className="p-4 font-bold text-slate-900">Government Subsidy Eligibility</td>
-                    <td className="p-4">40% Micro-Enterprise Subsidy</td>
-                    <td className="p-4 font-bold text-green-700">50% - 60% State Agri/Horti</td>
-                    <td className="p-4 font-bold text-blue-700">50% - 60% State Agri/Horti</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-
-      {/* SECTION 4.6: CROP MOISTURE PARAMETER MATRIX (EVEN SECTION - SOFT OFF-WHITE) */}
-      <section className="w-full section-even py-14 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-md space-y-6">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-5">
-              <div className="space-y-2">
-                <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 px-3.5 py-1.5 rounded-full border border-green-200 inline-flex items-center shadow-sm">
-                  <Sprout className="w-3.5 h-3.5 mr-1.5 text-green-600" /> {t('matrixCropBadge')}
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-950">
-                  {t('matrixCropTitle')}
-                </h2>
-                <p className="text-xs sm:text-sm text-slate-600 font-medium">
-                  {t('matrixCropSubtitle')}
-                </p>
-              </div>
-
-              <div className="relative w-full md:w-80 shrink-0">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
-                <input
-                  type="text"
-                  placeholder={t('searchPlaceholder')}
-                  value={matrixSearch}
-                  onChange={(e) => setMatrixSearch(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-2xl pl-10 pr-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 shadow-inner"
-                />
-              </div>
-            </div>
-
-            <div className="rounded-2xl overflow-x-auto border border-slate-200">
-              <table className="w-full text-left border-collapse min-w-[750px]">
-                <thead>
-                  <tr className="bg-[#1e3a8a] text-white text-xs uppercase font-bold tracking-wider">
-                    <th className="p-4">TARGET PRODUCE</th>
-                    <th className="p-4">FRESH MOISTURE %</th>
-                    <th className="p-4 text-green-300">DRIED MOISTURE %</th>
-                    <th className="p-4">ZENITEK SOLAR TIME</th>
-                    <th className="p-4">OPEN SUN TIME</th>
-                    <th className="p-4">KEY PROFIT BENEFIT</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200 text-xs text-slate-700 font-medium">
-                  {filteredCropMatrix.map((item, idx) => (
-                    <tr key={idx} className="hover:bg-blue-50/50 transition-colors">
-                      <td className="p-4 font-bold text-slate-900">{item.crop}</td>
-                      <td className="p-4 text-rose-600 font-mono font-semibold">{item.freshMoisture}</td>
-                      <td className="p-4 text-green-700 font-mono font-bold">{item.targetMoisture}</td>
-                      <td className="p-4 font-bold text-blue-700">{item.solarDays}</td>
-                      <td className="p-4 text-slate-500">{item.openSunDays}</td>
-                      <td className="p-4 text-slate-800">{item.benefit}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
       </section>
 
