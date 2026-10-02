@@ -1,9 +1,10 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { zenitekRealGallery } from '../data/zenitekRealGalleryData';
+import { fetchPublicGallery } from '../utils/api';
 import { 
   Camera, Filter, MapPin, X, ArrowRight, Sun, ZoomIn, ShieldCheck, 
-  Layers, Sparkles, CheckCircle2, SlidersHorizontal, Info, Tag, ExternalLink
+  Layers, Sparkles, CheckCircle2, SlidersHorizontal, Info, Tag, ExternalLink, Loader
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -20,10 +21,48 @@ export default function GalleryPage({ onOpenQuoteModal }) {
 
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [apiItems, setApiItems] = useState([]);
+  const [apiLoading, setApiLoading] = useState(true);
   const { t } = useLanguage();
 
-  // Exactly the 30 authentic master photographs (Items 31+ brochure pages removed)
-  const masterGalleryItems = zenitekRealGallery;
+  // Try fetching from API; fall back to static data
+  useEffect(() => {
+    fetchPublicGallery()
+      .then(data => {
+        if (data.items && data.items.length > 0) {
+          setApiItems(data.items);
+        }
+      })
+      .catch(() => {})
+      .finally(() => setApiLoading(false));
+  }, []);
+
+  // Merge: if API has items, use them exclusively; otherwise use static data
+  const rawItems = apiItems.length > 0 ? apiItems : zenitekRealGallery;
+
+  // Normalise so both sources share the same field shape for rendering
+  const masterGalleryItems = rawItems.map(item => {
+    if (item._id) {
+      // API item shape
+      return {
+        id: item._id,
+        title: item.title,
+        category: item.category,
+        categoryLabel: item.category,
+        image: item.image?.url || '',
+        thumbnail: item.image?.url || '',
+        location: item.location || '',
+        state: item.state || '',
+        productModel: item.productModel || '',
+        capacity: item.capacity || '',
+        lat: item.lat || 0,
+        lng: item.lng || 0,
+        description: item.description || '',
+        isApiItem: true
+      };
+    }
+    return { ...item, isApiItem: false };
+  });
 
   // Filter items by category and search query
   const filteredItems = useMemo(() => {
@@ -120,9 +159,14 @@ export default function GalleryPage({ onOpenQuoteModal }) {
       {/* SECTION 2: GALLERY GRID (EVEN: LIGHT TINT, FULLY RESPONSIVE CARDS) */}
       <section className="w-full section-even py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {filteredItems.length === 0 ? (
+          {apiLoading ? (
+            <div className="flex flex-col items-center justify-center py-20 space-y-4">
+              <Loader className="w-10 h-10 text-[#002DC2] animate-spin" />
+              <p className="text-xs text-black/50 font-medium">Loading gallery...</p>
+            </div>
+          ) : filteredItems.length === 0 ? (
             <div className="p-12 text-center bg-white rounded-3xl border border-[#123B92]/20 text-black/60 text-xs">
-              No photographs match your current filter. Try selecting "All Photographs" or clearing search.
+              No photographs match your current filter. Try selecting &quot;All Photographs&quot; or clearing search.
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">

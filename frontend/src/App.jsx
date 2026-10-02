@@ -16,6 +16,7 @@ import GalleryPage from './pages/GalleryPage';
 import GalleryDetailPage from './pages/GalleryDetailPage';
 import ContactUsPage from './pages/ContactUsPage';
 import SubsidiesPage from './pages/SubsidiesPage';
+import AdminPanel from './pages/AdminPanel';
 import { useLocation } from 'react-router-dom';
 
 function ScrollToTop() {
@@ -94,6 +95,7 @@ export default function App() {
               <Route path="/gallery/:id" element={<GalleryDetailPage onOpenQuoteModal={handleOpenQuoteModal} />} />
               <Route path="/subsidies" element={<SubsidiesPage onOpenQuoteModal={handleOpenQuoteModal} />} />
               <Route path="/contact" element={<ContactUsPage onOpenQuoteModal={handleOpenQuoteModal} />} />
+              <Route path="/admin" element={<AdminPanel />} />
             </Routes>
           </main>
 

@@ -9,19 +9,31 @@ import {
   brochureKeyBenefits 
 } from '../data/zenitekBrochureData';
 import { zenitekRealGallery } from '../data/zenitekRealGalleryData';
+import { fetchPublicProducts } from '../utils/api';
 import { useLanguage } from '../context/LanguageContext';
 import MapComponent from '../components/MapComponent';
 import {
   MapPin, Calendar, Search, Filter, Sparkles, ArrowRight, ShieldCheck,
   CheckCircle2, X, PhoneCall, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight,
   SlidersHorizontal, Eye, LayoutGrid, Sun, Wind, Droplets, Cpu, Shield, Zap, Maximize2, Download, Layers, Grid, FileText,
-  Camera, Image as ImageIcon, ChevronDown, ChevronUp
+  Camera, Image as ImageIcon, ChevronDown, ChevronUp, Loader, Package
 } from 'lucide-react';
 
 export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal }) {
   const { t, lang } = useLanguage();
   const navigate = useNavigate();
   const isTamil = lang === 'ta';
+
+  // Dynamic CMS products from backend
+  const [cmsProducts, setCmsProducts] = useState([]);
+  const [cmsProductsLoading, setCmsProductsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchPublicProducts()
+      .then(data => { if (data.products) setCmsProducts(data.products); })
+      .catch(() => {})
+      .finally(() => setCmsProductsLoading(false));
+  }, []);
 
   // State for active top tab / section filter
   const [modelCategoryFilter, setModelCategoryFilter] = useState('All');
@@ -244,6 +256,79 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
           </div>
         </div>
       </section>
+
+      {/* DYNAMIC CMS PRODUCTS SECTION — renders only when admin has published products */}
+      {(cmsProductsLoading || cmsProducts.length > 0) && (
+        <section className="w-full section-odd py-12 sm:py-16" id="cms-products-section">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            <div className="space-y-1">
+              <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                New Additions
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-[#123B92]">Featured Products</h2>
+            </div>
+
+            {cmsProductsLoading ? (
+              <div className="flex items-center justify-center py-16 space-x-3">
+                <Loader className="w-6 h-6 text-[#002DC2] animate-spin" />
+                <span className="text-sm text-slate-500 font-medium">Loading products...</span>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {cmsProducts.map(product => {
+                  const primaryImg = product.images?.find(i => i.isPrimary) || product.images?.[0];
+                  return (
+                    <div key={product._id} className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-blue-500 transition-all duration-300 shadow-sm hover:shadow-xl group flex flex-col">
+                      {/* Product Image */}
+                      <div className="relative h-56 bg-slate-50 overflow-hidden">
+                        {primaryImg ? (
+                          <img src={primaryImg.url} alt={primaryImg.alt || product.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <Package className="w-16 h-16 text-slate-200" />
+                          </div>
+                        )}
+                        <div className="absolute top-3 left-3">
+                          <span className="bg-slate-900/80 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-lg">{product.category}</span>
+                        </div>
+                      </div>
+
+                      {/* Product Info */}
+                      <div className="p-5 flex-1 flex flex-col space-y-3">
+                        <h3 className="font-black text-slate-900 text-sm leading-snug">{product.name}</h3>
+                        {product.shortDescription && (
+                          <p className="text-xs text-slate-600 leading-relaxed line-clamp-2">{product.shortDescription}</p>
+                        )}
+
+                        {/* Features */}
+                        {product.features?.length > 0 && (
+                          <ul className="space-y-1">
+                            {product.features.slice(0, 4).map((f, i) => (
+                              <li key={i} className="flex items-start space-x-2 text-xs text-slate-700">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                                <span>{f}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+
+                        <div className="flex-1" />
+                        <button
+                          onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: product.name })}
+                          className="w-full py-2.5 bg-[#002DC2] hover:bg-[#001fa0] text-white font-bold text-xs rounded-xl cursor-pointer transition-colors mt-auto"
+                        >
+                          Request Quote for this Model
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* SECTION 2: OFFICIAL PRODUCT MODELS LINEUP (EVEN SECTION - SOFT OFF-WHITE) */}
       <section className="w-full section-even py-14 sm:py-20" id="models-section">
