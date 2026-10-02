@@ -12,6 +12,8 @@ import galleryRouter, { publicGalleryRouter } from './routes/gallery.js';
 import sectionsRouter, { publicSectionsRouter } from './routes/sections.js';
 import adminRouter from './routes/admin.js';
 
+import path from 'path';
+
 dotenv.config();
 
 const app = express();
@@ -25,6 +27,9 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Static uploads directory
+app.use('/uploads', express.static(path.resolve(process.cwd(), 'uploads')));
 
 // ─── Existing Routes ────────────────────────────────────────────────────────
 app.use('/api/leads', leadsRouter);

@@ -273,3 +273,12 @@ export async function adminDeleteSection(slug) {
     headers: adminHeaders()
   });
 }
+
+/** Admin: seed / verify default 7 sections */
+export async function adminSeedSections() {
+  return apiFetch('/sections/seed', {
+    method: 'POST',
+    headers: adminHeaders()
+  });
+}
+

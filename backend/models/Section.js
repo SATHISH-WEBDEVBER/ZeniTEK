@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const SectionImageSchema = new mongoose.Schema({
   url: { type: String, required: true },
-  publicId: { type: String, required: true },
+  publicId: { type: String, default: '' },
   alt: { type: String, default: '' },
   caption: { type: String, default: '' }
 }, { _id: true });
@@ -13,16 +13,7 @@ const SectionSchema = new mongoose.Schema({
     required: [true, 'Slug is required'],
     unique: true,
     lowercase: true,
-    trim: true,
-    enum: [
-      'solar-dryer-models',
-      'solar-thermal-system',
-      'agri-solar-innovation',
-      'photovoltaic-solutions',
-      'government-subsidies',
-      'crop-preservation-guide',
-      'technical-spec-sheets'
-    ]
+    trim: true
   },
   title: {
     type: String,
@@ -41,14 +32,14 @@ const SectionSchema = new mongoose.Schema({
     publicId: { type: String, default: '' },
     alt: { type: String, default: '' }
   },
-  // Rich page content (HTML or plain text)
+  // Rich page content (paragraphs / formatted text)
   content: {
     type: String,
     default: ''
   },
   // Key highlights / bullet points shown on the page
   highlights: [{ type: String, trim: true }],
-  // Additional images for the page body
+  // Additional images for the page body gallery
   images: [SectionImageSchema],
   displayOrder: {
     type: Number,
@@ -56,13 +47,13 @@ const SectionSchema = new mongoose.Schema({
   },
   published: {
     type: Boolean,
-    default: false
+    default: true
   }
 }, {
   timestamps: true
 });
 
-SectionSchema.index({ slug: 1 }, { unique: true });
 SectionSchema.index({ published: 1, displayOrder: 1 });
 
 export default mongoose.models.Section || mongoose.model('Section', SectionSchema);
+

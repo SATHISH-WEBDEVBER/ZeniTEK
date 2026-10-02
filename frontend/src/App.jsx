@@ -19,6 +19,8 @@ import SubsidiesPage from './pages/SubsidiesPage';
 import AdminPanel from './pages/AdminPanel';
 import { useLocation } from 'react-router-dom';
 
+import SectionDetailPage from './pages/SectionDetailPage';
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   React.useEffect(() => {
@@ -88,6 +90,17 @@ export default function App() {
             <Routes>
               <Route path="/" element={<HomePage onOpenQuoteModal={handleOpenQuoteModal} onOpenDetailModal={handleOpenDetailModal} />} />
               <Route path="/about" element={<AboutUsPage onOpenQuoteModal={handleOpenQuoteModal} />} />
+              
+              {/* 7 Solution & Information Categories */}
+              <Route path="/solar-dryer-models" element={<SolarDryersPage onOpenQuoteModal={handleOpenQuoteModal} onOpenDetailModal={handleOpenDetailModal} />} />
+              <Route path="/solar-thermal-system" element={<SectionDetailPage slug="solar-thermal-system" onOpenQuoteModal={handleOpenQuoteModal} />} />
+              <Route path="/agri-solar-innovation" element={<SectionDetailPage slug="agri-solar-innovation" onOpenQuoteModal={handleOpenQuoteModal} />} />
+              <Route path="/photovoltaic-solutions" element={<SectionDetailPage slug="photovoltaic-solutions" onOpenQuoteModal={handleOpenQuoteModal} />} />
+              <Route path="/government-subsidies" element={<SectionDetailPage slug="government-subsidies" onOpenQuoteModal={handleOpenQuoteModal} />} />
+              <Route path="/crop-preservation-guide" element={<SectionDetailPage slug="crop-preservation-guide" onOpenQuoteModal={handleOpenQuoteModal} />} />
+              <Route path="/technical-spec-sheets" element={<SectionDetailPage slug="technical-spec-sheets" onOpenQuoteModal={handleOpenQuoteModal} />} />
+              
+              {/* Legacy / Direct Routes for Maximum Compatibility */}
               <Route path="/dryers" element={<SolarDryersPage onOpenQuoteModal={handleOpenQuoteModal} onOpenDetailModal={handleOpenDetailModal} />} />
               <Route path="/dryers/:id" element={<ProjectDetailPage onOpenQuoteModal={handleOpenQuoteModal} />} />
               <Route path="/applications" element={<ApplicationsPage onOpenQuoteModal={handleOpenQuoteModal} />} />

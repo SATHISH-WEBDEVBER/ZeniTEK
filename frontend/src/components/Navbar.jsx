@@ -5,6 +5,8 @@ import {
   Sparkles, FileText, Image as ImageIcon, Landmark, Info, PhoneCall 
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { fetchPublicSections } from '../utils/api';
+import { defaultSectionsData } from '../data/defaultSectionsData';
 
 export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -13,11 +15,27 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [mobileGalleryOpen, setMobileGalleryOpen] = useState(false);
 
+  // Dynamic published sections for the 7 major categories
+  const [sections, setSections] = useState(defaultSectionsData);
+
   const productsRef = useRef(null);
   const galleryRef = useRef(null);
   const timeoutRef = useRef(null);
   const location = useLocation();
   const { t } = useLanguage();
+
+  // Fetch published sections dynamically from API
+  useEffect(() => {
+    fetchPublicSections()
+      .then(data => {
+        if (data?.sections && Array.isArray(data.sections) && data.sections.length > 0) {
+          setSections(data.sections);
+        }
+      })
+      .catch(() => {
+        // Retain default sections on network hiccup
+      });
+  }, [location.pathname]);
 
   // Close menus on route change
   useEffect(() => {
@@ -70,123 +88,6 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
     }, 180);
   };
 
-  // Tesla-style Mega Menu Product Grid Items (4 columns x 2 rows)
-  const megaMenuProducts = [
-    {
-      name: "SOLDRY 1210",
-      image: "/real-photos/zenitek_photo_04.jpeg",
-      learnPath: "/dryers",
-      modelCode: "SOLDRY 1210",
-      learnText: "Learn",
-      orderText: "Order"
-    },
-    {
-      name: "SOLDRY 1709",
-      image: "/real-photos/zenitek_photo_18.jpeg",
-      learnPath: "/dryers",
-      modelCode: "SOLDRY 1709",
-      learnText: "Learn",
-      orderText: "Order"
-    },
-    {
-      name: "SOLDRY 300",
-      image: "/real-photos/zenitek_photo_21.jpeg",
-      learnPath: "/dryers",
-      modelCode: "SOLDRY 1210 - 300",
-      learnText: "Learn",
-      orderText: "Order"
-    },
-    {
-      name: "Full Automation",
-      subtitle: "(PLC / HMI)",
-      image: "/real-photos/zenitek_photo_23.jpeg",
-      learnPath: "/dryers#thermal",
-      modelCode: "Full Automation PLC/HMI System",
-      learnText: "Learn",
-      orderText: "Experience"
-    },
-    {
-      name: "Inventory Fleet",
-      image: "/real-photos/zenitek_photo_26.jpeg",
-      learnPath: "/dryers",
-      modelCode: "Commercial Multi-Unit Plant",
-      learnText: "New",
-      orderText: "Certified"
-    },
-    {
-      name: "SUNDRY 50",
-      image: "/real-photos/zenitek_photo_27.jpeg",
-      learnPath: "/dryers",
-      modelCode: "SUNDRY 50",
-      learnText: "Learn",
-      orderText: "Order"
-    },
-    {
-      name: "SUNDRY 12",
-      image: "/real-photos/zenitek_photo_25.jpeg",
-      learnPath: "/dryers",
-      modelCode: "SUNDRY 12",
-      learnText: "Learn",
-      orderText: "Order"
-    },
-    {
-      name: "SUNDRY 6",
-      image: "/real-photos/zenitek_photo_01.jpeg",
-      learnPath: "/dryers",
-      modelCode: "SUNDRY 6",
-      learnText: "Learn",
-      orderText: "Order"
-    }
-  ];
-
-  // Tesla-style right side quick navigation links
-  const megaMenuSideLinks = [
-    { name: "Solar Dryers Overview", path: "/dryers" },
-    { name: "Solar Thermal System", path: "/dryers#thermal" },
-    { name: "Agri-Solar Innovation", path: "/applications" },
-    { name: "Photovoltaic Solutions", path: "/dryers#pv-solutions" },
-    { name: "Research & Development", path: "/about#rnd" },
-    { name: "Government Subsidies (40% - 60%)", path: "/subsidies" },
-    { name: "Compare Dryer Models", path: "/dryers" },
-    { name: "Commercial ROI Calculator", path: "/#calculator" },
-    { name: "Crop Preservation Guide", path: "/applications" },
-    { name: "Technical Spec Sheets", path: "/gallery?cat=brochure" },
-    { name: "Schedule Farm Demo", path: "/contact" }
-  ];
-
-  const productDropdownItems = [
-    {
-      name: "Solar Dryers",
-      path: "/dryers",
-      icon: Sun,
-      desc: "Walk-In Tunnels & Box Dryers"
-    },
-    {
-      name: "Solar Thermal System",
-      path: "/dryers#thermal",
-      icon: Zap,
-      desc: "High-Efficiency Thermal Collectors"
-    },
-    {
-      name: "Agri-Solar Innovation",
-      path: "/applications",
-      icon: Sprout,
-      desc: "Post-Harvest Crop Preservation"
-    },
-    {
-      name: "Photovoltaic Solutions",
-      path: "/dryers#pv-solutions",
-      icon: Cpu,
-      desc: "Solar PV Hybrid & Off-Grid Kits"
-    },
-    {
-      name: "Research & Development",
-      path: "/about#rnd",
-      icon: Sparkles,
-      desc: "Patented Aerodynamic Engineering"
-    }
-  ];
-
   const galleryDropdownItems = [
     {
       name: "Brochure",
@@ -202,15 +103,27 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
     }
   ];
 
-  const isProductsActive = location.pathname.startsWith('/dryers') || location.pathname.startsWith('/applications');
+  const productRoutes = [
+    '/solar-dryer-models',
+    '/solar-thermal-system',
+    '/agri-solar-innovation',
+    '/photovoltaic-solutions',
+    '/government-subsidies',
+    '/crop-preservation-guide',
+    '/technical-spec-sheets',
+    '/dryers',
+    '/applications'
+  ];
+
+  const isProductsActive = productRoutes.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
   const isGalleryActive = location.pathname.startsWith('/gallery');
-  const isSubsidiesActive = location.pathname === '/subsidies';
+  const isSubsidiesActive = location.pathname === '/subsidies' || location.pathname === '/government-subsidies';
   const isRnDActive = location.pathname === '/about' && location.hash === '#rnd';
   const isAboutActive = location.pathname === '/about' && location.hash !== '#rnd';
   const isContactActive = location.pathname === '/contact';
 
   return (
-    <header className="sticky top-0 z-40 relative bg-white/95 backdrop-blur-md shadow-xs w-full transition-colors duration-500">
+    <header className="sticky top-0 z-40 relative bg-white/95 backdrop-blur-md shadow-xs w-full transition-colors duration-500 border-b border-slate-100">
       
       {/* MAIN NAVBAR CONTAINER */}
       <div className="w-full px-5 sm:px-8 md:px-[60px]">
@@ -252,10 +165,10 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               {t('navHome')}
             </Link>
 
-            {/* 2. PRODUCTS (TESLA MEGA MENU) */}
+            {/* 2. PRODUCTS (STRUCTURED 7 CATEGORIES DROPDOWN) */}
             <div 
               ref={productsRef}
-              className="static"
+              className="relative"
               onMouseEnter={handleProductsEnter}
               onMouseLeave={handleProductsLeave}
             >
@@ -274,6 +187,85 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                 <span>Products</span>
                 <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${productsDropdownOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
               </button>
+
+              {/* PRODUCTS 7 CATEGORIES DROPDOWN MENU */}
+              {productsDropdownOpen && (
+                <div 
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[760px] xl:w-[820px] bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-4 z-50 animate-fade-in space-y-3"
+                  onMouseEnter={handleProductsEnter}
+                  onMouseLeave={handleProductsLeave}
+                >
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-100 px-2">
+                    <div>
+                      <span className="text-xs font-black uppercase tracking-wider text-[#002DC2]">
+                        Solutions & Engineering Categories
+                      </span>
+                      <p className="text-[11px] text-slate-500 font-medium">
+                        Explore our complete solar thermal dehydration portfolio
+                      </p>
+                    </div>
+                    <span className="text-[11px] font-bold text-slate-400 bg-slate-100 px-2.5 py-0.5 rounded-full">
+                      {sections.length} Categories
+                    </span>
+                  </div>
+
+                  {/* 2-Column Structured Grid of the 7 Solution Categories */}
+                  <div className="grid grid-cols-2 gap-2.5">
+                    {sections.map((item) => (
+                      <Link
+                        key={item.slug}
+                        to={`/${item.slug}`}
+                        onClick={() => setProductsDropdownOpen(false)}
+                        className="flex items-center space-x-3.5 p-2.5 rounded-xl hover:bg-[#F0F4FD] transition-all duration-200 border border-transparent hover:border-[#002DC2]/20 group cursor-pointer"
+                      >
+                        <div className="w-16 h-12 rounded-lg overflow-hidden bg-slate-100 shrink-0 border border-slate-200 shadow-2xs group-hover:scale-105 transition-transform duration-300">
+                          {item.thumbnail?.url ? (
+                            <img
+                              src={item.thumbnail.url}
+                              alt={item.title}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-slate-100 text-slate-400">
+                              <Sun className="w-5 h-5" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="text-[13.5px] xl:text-[14px] font-bold text-slate-900 group-hover:text-[#002DC2] transition-colors leading-snug flex items-center justify-between">
+                            <span className="truncate">{item.title}</span>
+                            <ArrowRight className="w-3.5 h-3.5 text-[#002DC2] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all shrink-0 ml-1" />
+                          </div>
+                          {item.subtitle && (
+                            <div className="text-[11px] text-slate-500 font-medium truncate mt-0.5 leading-tight">
+                              {item.subtitle}
+                            </div>
+                          )}
+                        </div>
+                      </Link>
+                    ))}
+
+                    {/* 8th Slot: Fast Quote Assistant */}
+                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200/60">
+                      <div className="min-w-0 pr-2">
+                        <div className="text-xs font-black text-emerald-900">Custom Engineering DPR</div>
+                        <div className="text-[11px] text-emerald-700 font-medium truncate">Government subsidy assistance & quote</div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setProductsDropdownOpen(false);
+                          if (onOpenQuoteModal) onOpenQuoteModal();
+                        }}
+                        className="px-3 py-1.5 bg-[#23AC39] hover:bg-[#1f9632] text-white text-xs font-extrabold rounded-lg shadow-sm cursor-pointer shrink-0 transition-transform active:scale-95"
+                      >
+                        Enquire →
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              )}
             </div>
 
             {/* 3. GALLERY (DROPDOWN MENU) */}
@@ -348,7 +340,6 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {/* 5. R&D (RESEARCH & DEVELOPMENT SHORT FORM) */}
             <Link
               to="/about#rnd"
-              title="Research & Development"
               className={`px-3 py-1.5 rounded-xl text-[14px] xl:text-[15px] font-bold transition-all duration-200 whitespace-nowrap flex items-center space-x-1 ${
                 isRnDActive
                   ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-xs'
@@ -414,93 +405,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
         </div>
       </div>
 
-      {/* TESLA-STYLE FULL-WIDTH PRODUCTS MEGA MENU */}
-      {productsDropdownOpen && (
-        <div 
-          className="hidden lg:block absolute top-full left-0 right-0 w-full bg-white border-b border-slate-200 shadow-2xl z-50 animate-fade-in"
-          onMouseEnter={handleProductsEnter}
-          onMouseLeave={handleProductsLeave}
-        >
-          <div className="max-w-7xl mx-auto px-8 xl:px-12 py-8 xl:py-10">
-            <div className="grid grid-cols-12 gap-8 xl:gap-12 items-start">
-              
-              {/* Left 4-column product grid (4 columns x 2 rows) */}
-              <div className="col-span-9 xl:col-span-10">
-                <div className="grid grid-cols-4 gap-x-6 gap-y-7">
-                  {megaMenuProducts.map((prod) => (
-                    <div key={prod.name} className="flex flex-col items-center text-center group">
-                      <Link
-                        to={prod.learnPath}
-                        onClick={() => setProductsDropdownOpen(false)}
-                        className="w-full h-24 xl:h-28 flex items-center justify-center p-1 rounded-xl transition-all duration-300 group-hover:scale-105"
-                      >
-                        <img
-                          src={prod.image}
-                          alt={prod.name}
-                          className="max-h-full max-w-full object-contain drop-shadow-sm group-hover:drop-shadow-md transition-all"
-                        />
-                      </Link>
-
-                      <Link
-                        to={prod.learnPath}
-                        onClick={() => setProductsDropdownOpen(false)}
-                        className="text-[14px] xl:text-[15px] font-bold text-slate-900 group-hover:text-[#002DC2] transition-colors mt-2"
-                      >
-                        {prod.name}
-                      </Link>
-                      {prod.subtitle && (
-                        <div className="text-[11px] font-medium text-slate-400 -mt-0.5">
-                          {prod.subtitle}
-                        </div>
-                      )}
-
-                      <div className="flex items-center space-x-3 mt-1.5 text-[11px] xl:text-[12px] font-medium text-slate-500">
-                        <Link
-                          to={prod.learnPath}
-                          onClick={() => setProductsDropdownOpen(false)}
-                          className="underline underline-offset-4 decoration-slate-300 hover:decoration-slate-900 hover:text-slate-900 transition-colors"
-                        >
-                          {prod.learnText || 'Learn'}
-                        </Link>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setProductsDropdownOpen(false);
-                            if (onOpenQuoteModal) onOpenQuoteModal({ capacityNeeded: prod.modelCode || prod.name });
-                          }}
-                          className="underline underline-offset-4 decoration-slate-300 hover:decoration-[#23AC39] hover:text-[#23AC39] transition-colors cursor-pointer"
-                        >
-                          {prod.orderText || 'Order'}
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Right Vertical Divider & Tesla-style Quick Links */}
-              <div className="col-span-3 xl:col-span-2 border-l border-slate-200/90 pl-6 xl:pl-8 space-y-2">
-                {megaMenuSideLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    to={link.path}
-                    onClick={() => {
-                      setProductsDropdownOpen(false);
-                      if (link.onClick) link.onClick();
-                    }}
-                    className="block text-[13px] xl:text-[13.5px] font-semibold text-slate-700 hover:text-[#002DC2] transition-colors py-0.5 leading-snug"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-              </div>
-
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Dimmed backdrop overlay when mega menu or gallery is open */}
+      {/* Dimmed backdrop overlay when dropdown is open */}
       {(productsDropdownOpen || galleryDropdownOpen) && (
         <div 
           className="hidden lg:block fixed inset-0 top-[56px] sm:top-[64px] lg:top-[68px] bg-black/35 backdrop-blur-[1px] z-30 transition-opacity duration-300"
@@ -528,27 +433,49 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {t('navHome')}
           </Link>
 
-          {/* Mobile: 2. Products Accordion */}
+          {/* Mobile: 2. Products Accordion (7 Categories) */}
           <div>
             <button
               type="button"
               onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
               className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-base font-bold text-slate-800 hover:bg-slate-50 transition-colors"
             >
-              <span>Products</span>
+              <span>Products ({sections.length} Categories)</span>
               <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${mobileProductsOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
             </button>
 
             {mobileProductsOpen && (
-              <div className="pl-4 pr-2 py-1 space-y-1 bg-slate-50 rounded-xl mb-1">
-                {productDropdownItems.map((item) => (
+              <div className="pl-2 pr-2 py-2 space-y-1.5 bg-slate-50/80 rounded-xl mb-1 border border-slate-100">
+                {sections.map((item) => (
                   <Link
-                    key={item.name}
-                    to={item.path}
+                    key={item.slug}
+                    to={`/${item.slug}`}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#002DC2] hover:bg-white"
+                    className="flex items-center space-x-3 p-2 rounded-lg bg-white border border-slate-200/60 hover:border-[#002DC2]/30 text-slate-800 hover:text-[#002DC2] transition-colors"
                   >
-                    {item.name}
+                    <div className="w-10 h-10 rounded-md overflow-hidden bg-slate-100 shrink-0 border border-slate-200">
+                      {item.thumbnail?.url ? (
+                        <img
+                          src={item.thumbnail.url}
+                          alt={item.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-slate-400">
+                          <Sun className="w-4 h-4" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-xs font-bold text-slate-900 leading-tight truncate">
+                        {item.title}
+                      </div>
+                      {item.subtitle && (
+                        <div className="text-[10px] text-slate-500 font-medium truncate mt-0.5">
+                          {item.subtitle}
+                        </div>
+                      )}
+                    </div>
                   </Link>
                 ))}
               </div>
