@@ -561,8 +561,8 @@ export default function MapComponent({ onSelectProjectQuote }) {
           }`}
         >
           <MapContainer
-            center={[22.5, 82.0]}
-            zoom={5}
+            center={[22.0, 79.5]}
+            zoom={4.8}
             minZoom={4.5}
             maxZoom={14}
             maxBounds={[[5.0, 65.0], [38.5, 100.0]]}
