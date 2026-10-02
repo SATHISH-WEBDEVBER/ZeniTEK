@@ -473,7 +473,7 @@
   align-items: center;
   width: max-content;
   will-change: transform;
-  animation: clientMarqueeScroll 28s linear infinite;
+  animation: clientMarqueeScroll 32s linear infinite;
 }
 
 .client-marquee-container:hover .client-marquee-track,

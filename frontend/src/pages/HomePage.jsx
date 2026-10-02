@@ -8,7 +8,7 @@ import { workingPrincipleSteps } from '../data/zenitekBrochureData';
 import { useLanguage } from '../context/LanguageContext';
 import {
   Sun, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, TrendingUp, Zap, ChevronRight, ChevronLeft, MapPin, Search, Sprout, Wind, Droplets, Cpu, Shield, Sparkles,
-  ChevronDown, ChevronUp, Eye
+  ChevronDown, ChevronUp, Eye, Building2, GraduationCap
 } from 'lucide-react';
 
 export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
@@ -618,20 +618,29 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
           </div>
 
           {/* Institutional Partner Logos Infinite Horizontal Marquee */}
-          <div className="pt-8">
-            <div className="text-center text-xs sm:text-sm font-black text-slate-500 uppercase tracking-widest pb-4">
-              Collaborative Deployments & Key Industry Clients
+          <div className="pt-12 sm:pt-16 border-t border-slate-200/80">
+            {/* Proper Section Header */}
+            <div className="text-center max-w-4xl mx-auto space-y-3 pb-8">
+              <span className="text-xs sm:text-sm font-black text-[#002DC2] uppercase tracking-widest bg-[#F0F4FD] border border-[#002DC2]/20 px-4 py-1.5 rounded-full inline-flex items-center shadow-xs">
+                <Building2 className="w-4 h-4 mr-2 text-[#002DC2]" /> COLLABORATIVE DEPLOYMENTS & KEY INDUSTRY CLIENTS
+              </span>
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight">
+                Trusted by Academic & Industrial Partners
+              </h3>
+              <p className="text-sm sm:text-base lg:text-lg text-slate-600 font-medium max-w-3xl mx-auto">
+                Supplying standard renewable energy systems, prototype demonstration rigs, and commercial installations across India.
+              </p>
             </div>
 
             {/* Infinite Horizontal Running Marquee (Stops on hover only) */}
-            <div className="client-marquee-container">
-              <div className="client-marquee-track gap-4 sm:gap-6 pr-4 sm:pr-6">
+            <div className="client-marquee-container py-3">
+              <div className="client-marquee-track gap-6 sm:gap-8 pr-6 sm:pr-8">
                 {[...clientPartners, ...clientPartners].map((client, idx) => (
                   <div
                     key={`${client.name}-${idx}`}
-                    className="flex items-center space-x-3.5 px-5 py-3.5 bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-lg hover:border-[#002DC2] hover:scale-102 transition-all shrink-0 select-none group cursor-pointer"
+                    className="flex items-center space-x-5 px-6 py-4.5 sm:px-7 sm:py-5 bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-[#002DC2] hover:scale-102 transition-all shrink-0 select-none group cursor-pointer"
                   >
-                    <div className="w-11 h-11 rounded-xl bg-white border border-slate-200/90 flex items-center justify-center p-1 shrink-0 overflow-hidden shadow-2xs group-hover:border-[#002DC2]/40 transition-colors">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-white border border-slate-200 shadow-xs p-2.5 sm:p-3 flex items-center justify-center shrink-0 overflow-hidden group-hover:border-[#002DC2]/40 transition-colors">
                       <img
                         src={client.logo}
                         alt={client.name}
@@ -639,12 +648,13 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                         loading="lazy"
                       />
                     </div>
-                    <div className="text-left">
-                      <div className="text-sm font-black text-slate-900 group-hover:text-[#002DC2] transition-colors whitespace-nowrap">
+                    <div className="text-left min-w-0">
+                      <div className="text-lg sm:text-xl font-black text-slate-900 group-hover:text-[#002DC2] transition-colors whitespace-nowrap">
                         {client.name}
                       </div>
-                      <div className="text-[10px] text-slate-500 font-bold uppercase tracking-wider whitespace-nowrap">
-                        {client.type}
+                      <div className="text-xs sm:text-sm text-[#002DC2] font-bold uppercase tracking-wider whitespace-nowrap mt-1 flex items-center">
+                        <span className="w-2 h-2 rounded-full bg-[#23AC39] mr-2 inline-block shrink-0"></span>
+                        <span>{client.type}</span>
                       </div>
                     </div>
                   </div>
