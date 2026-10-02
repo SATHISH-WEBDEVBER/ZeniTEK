@@ -59,7 +59,6 @@ const ProductSchema = new mongoose.Schema({
 
 // Text index for search
 ProductSchema.index({ name: 'text', shortDescription: 'text', category: 'text' });
-ProductSchema.index({ slug: 1 }, { unique: true });
 ProductSchema.index({ published: 1, displayOrder: 1 });
 
 // Auto-generate slug from name if not provided
