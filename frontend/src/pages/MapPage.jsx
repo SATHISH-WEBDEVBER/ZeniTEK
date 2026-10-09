@@ -13,7 +13,6 @@ export default function MapPage({ onOpenQuoteModal }) {
     <div className="text-black min-h-screen bg-white">
       <PageHero
         images="/real-photos/zenitek_photo_21.jpeg"
-        badge={t('mapShowcaseBadge')}
         title={<>{t('mapTitle1')} <br /><span className="text-[#1A822B]">{t('mapTitle2')}</span></>}
         subtitle={t('mapSubtitle')}
       />

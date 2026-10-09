@@ -32,17 +32,22 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const location = useLocation();
   const { t, tf, lang } = useLanguage();
 
-  // The full desktop menu is shown only when it actually fits on one row for the current
-  // language and width (Tamil/Malayalam labels are much longer); otherwise the menu button is used.
+  // Desktop (lg+) always gets the desktop menu; the phone menu button is only used below lg.
+  // When the labels don't fit on one row (long languages such as Tamil/Malayalam, or narrow laptops)
+  // the bar tightens step by step: 0 = normal, 1 = tighter spacing, 2 = compact language + quote
+  // buttons, 3 = two rows (logo + buttons on top, the full menu centred on a second row).
   const rowRef = useRef(null);
-  const [collapsed, setCollapsed] = useState(false);
+  const [density, setDensity] = useState(0);
+  const twoRow = density >= 3;
+  const densityRef = useRef(0);
+  densityRef.current = density;
   const [viewportWidth, setViewportWidth] = useState(() => window.innerWidth);
   useEffect(() => {
     const onResize = () => setViewportWidth(window.innerWidth);
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
-  // Re-measure once web fonts finish loading: fallback fonts are wider and would force the menu button
+  // Re-measure once web fonts and the logo finish loading (both change the bar's width)
   const [fontTick, setFontTick] = useState(0);
   useEffect(() => {
     if (!document.fonts) return undefined;
@@ -51,11 +56,30 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
     document.fonts.addEventListener('loadingdone', bump);
     return () => document.fonts.removeEventListener('loadingdone', bump);
   }, []);
-  useLayoutEffect(() => { setCollapsed(false); }, [lang, viewportWidth, fontTick]);
+  useLayoutEffect(() => { setDensity(0); }, [lang, viewportWidth, fontTick]);
   useLayoutEffect(() => {
     const row = rowRef.current;
-    if (!collapsed && row && row.scrollWidth > row.clientWidth + 1) setCollapsed(true);
-  }, [collapsed, lang, viewportWidth, fontTick]);
+    if (!row || density >= 3) return;
+    // Sum the real widths of logo, menu and buttons (offsetWidth ignores the opening-animation
+    // transforms, which made scrollWidth report overflow while the bar was still sliding in)
+    const needed = [...row.children].reduce((sum, el) => sum + el.offsetWidth, 0) + 24;
+    if (needed > row.clientWidth) setDensity(d => d + 1);
+  }, [density, lang, viewportWidth, fontTick]);
+  // Anything that widens the bar later (late fonts, images) tightens it again
+  useEffect(() => {
+    const row = rowRef.current;
+    if (!row || typeof ResizeObserver === 'undefined') return undefined;
+    const ro = new ResizeObserver(() => {
+      if (densityRef.current >= 3) return;
+      const needed = [...row.children].reduce((sum, el) => sum + el.offsetWidth, 0) + 24;
+      if (needed > row.clientWidth) setDensity(d => Math.min(3, d + 1));
+    });
+    [row, ...row.children].forEach(el => ro.observe(el));
+    return () => ro.disconnect();
+  }, []);
+  const navItemCls = density === 0
+    ? 'px-3 py-1.5 rounded-xl text-sm xl:text-base'
+    : density === 1 || twoRow ? 'px-2 py-1.5 rounded-lg text-sm' : 'px-1.5 py-1.5 rounded-lg text-sm';
   // Freeze the page behind the open mobile menu; Esc closes it
   useScrollLock(mobileMenuOpen);
   useEscapeKey(mobileMenuOpen, () => setMobileMenuOpen(false));
@@ -167,8 +191,8 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
     <header className="sticky top-0 z-40 relative bg-white/95 backdrop-blur-md shadow-sm w-full transition-colors duration-500 border-b border-slate-100">
       
       {/* MAIN NAVBAR CONTAINER */}
-      <div className="w-full px-5 sm:px-8 md:px-[60px]">
-        <div ref={rowRef} className="flex items-center justify-between h-14 sm:h-16 lg:h-[68px] w-full">
+      <div className={`w-full px-5 sm:px-8 ${density === 0 ? 'md:px-[60px]' : 'lg:px-6'}`}>
+        <div ref={rowRef} className={`flex flex-wrap items-center justify-between w-full h-14 sm:h-16 ${twoRow ? 'lg:h-auto lg:py-2' : 'lg:h-[68px]'}`}>
           
           {/* Logo - Stage 1 Animation */}
           <Link
@@ -179,7 +203,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               setMobileMenuOpen(false);
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className={`flex items-center shrink-0 transition-all duration-700 ease-out transform ${
+            className={`flex items-center shrink-0 transition-[opacity,transform] duration-700 ease-out transform ${
               animStage >= 1
                 ? 'opacity-100 scale-100 translate-x-0'
                 : 'opacity-0 scale-90 -translate-x-6 pointer-events-none'
@@ -187,6 +211,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
           >
             <img
               src="/logo.png"
+              onLoad={() => setFontTick(n => n + 1)}
               alt="ZeniTEK - Towards Sustainable Future"
               className="h-9 xs:h-10 sm:h-11 md:h-12 lg:h-[52px] xl:h-14 w-auto object-contain py-0.5"
             />
@@ -194,7 +219,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
 
           {/* Desktop Nav Items - Stage 2 Animation */}
           <nav
-            className={`${collapsed ? 'hidden' : 'hidden lg:flex'} items-center space-x-1 xl:space-x-2 2xl:space-x-3 transition-all duration-700 ease-out transform ${
+            className={`hidden lg:flex items-center ${twoRow ? 'order-last w-full justify-center flex-wrap gap-y-1 mt-2 pt-2 border-t border-slate-100 space-x-1' : density === 0 ? 'space-x-1 xl:space-x-2 2xl:space-x-3' : 'space-x-0.5'} transition-[opacity,transform] duration-700 ease-out transform ${
               animStage >= 2
                 ? 'opacity-100 translate-y-0 scale-100'
                 : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'
@@ -203,7 +228,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {/* 1. HOME */}
             <Link
               to="/"
-              className={`px-3 py-1.5 rounded-xl text-sm xl:text-base font-bold transition-all duration-200 whitespace-nowrap ${
+              className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap ${
                 location.pathname === '/'
                   ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
@@ -225,7 +250,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                   setGalleryDropdownOpen(false);
                   setProductsDropdownOpen(!productsDropdownOpen);
                 }}
-                className={`px-3 py-1.5 rounded-xl text-sm xl:text-base font-bold transition-all duration-200 whitespace-nowrap flex items-center space-x-1.5 cursor-pointer ${
+                className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap flex items-center space-x-1.5 cursor-pointer ${
                   isProductsActive || productsDropdownOpen
                     ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'
                     : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
@@ -238,7 +263,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               {/* PRODUCTS 7 CATEGORIES DROPDOWN MENU */}
               {productsDropdownOpen && (
                 <div 
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[760px] xl:w-[820px] bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-4 z-50 animate-fade-in space-y-3"
+                  className={`absolute top-full ${twoRow ? 'left-0' : 'left-1/2 -translate-x-1/2'} mt-2 w-[760px] xl:w-[820px] bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-4 z-50 animate-fade-in space-y-3`}
                   onMouseEnter={handleProductsEnter}
                   onMouseLeave={handleProductsLeave}
                 >
@@ -332,7 +357,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                   setProductsDropdownOpen(false);
                   setGalleryDropdownOpen(!galleryDropdownOpen);
                 }}
-                className={`px-3 py-1.5 rounded-xl text-sm xl:text-base font-bold transition-all duration-200 whitespace-nowrap flex items-center space-x-1.5 cursor-pointer ${
+                className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap flex items-center space-x-1.5 cursor-pointer ${
                   isGalleryActive || galleryDropdownOpen
                     ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'
                     : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
@@ -379,7 +404,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {/* 4. SUBSIDIES */}
             <Link
               to="/subsidies"
-              className={`px-3 py-1.5 rounded-xl text-sm xl:text-base font-bold transition-all duration-200 whitespace-nowrap flex items-center space-x-1 ${
+              className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap flex items-center space-x-1 ${
                 isSubsidiesActive
                   ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
@@ -391,7 +416,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {/* 5. R&D (RESEARCH & DEVELOPMENT SHORT FORM) */}
             <Link
               to="/about#rnd"
-              className={`px-3 py-1.5 rounded-xl text-sm xl:text-base font-bold transition-all duration-200 whitespace-nowrap flex items-center space-x-1 ${
+              className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap flex items-center space-x-1 ${
                 isRnDActive
                   ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
@@ -403,7 +428,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {/* 6. ABOUT US */}
             <Link
               to="/about"
-              className={`px-3 py-1.5 rounded-xl text-sm xl:text-base font-bold transition-all duration-200 whitespace-nowrap ${
+              className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap ${
                 isAboutActive
                   ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
@@ -415,7 +440,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {/* 7. CONTACT US */}
             <Link
               to="/contact"
-              className={`px-3 py-1.5 rounded-xl text-sm xl:text-base font-bold transition-all duration-200 whitespace-nowrap ${
+              className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap ${
                 isContactActive
                   ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
@@ -428,30 +453,30 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
 
           {/* Right Action & Mobile Toggle - Stage 2 Animation */}
           <div
-            className={`flex items-center space-x-2 sm:space-x-3 shrink-0 transition-all duration-700 ease-out transform ${
+            className={`flex items-center space-x-2 sm:space-x-3 shrink-0 transition-[opacity,transform] duration-700 ease-out transform ${
               animStage >= 2
                 ? 'opacity-100 scale-100 translate-x-0'
                 : 'opacity-0 scale-90 translate-x-6 pointer-events-none'
             }`}
           >
             {/* Language switcher (desktop; mobile has it inside the menu) */}
-            <div className={collapsed ? 'hidden' : 'hidden lg:block'}>
-              <LanguageWidget />
+            <div className="hidden lg:block">
+              <LanguageWidget compact={density >= 2} />
             </div>
 
             {/* Quote CTA Button */}
             <button
               onClick={onOpenQuoteModal}
-              className="px-3.5 py-1.5 sm:px-4 sm:py-2 lg:px-[18px] lg:py-2 text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white bg-[#23AC39] hover:bg-[#1f9632] rounded-xl shadow-md shadow-[#23AC39]/20 transition-all flex items-center shrink-0 cursor-pointer hover:shadow-lg active:scale-95"
+              className={`px-3.5 py-1.5 sm:px-4 sm:py-2 ${density >= 2 ? 'lg:px-3' : 'lg:px-[18px]'} lg:py-2 text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white bg-[#23AC39] hover:bg-[#1f9632] rounded-xl shadow-md shadow-[#23AC39]/20 transition-[background-color,box-shadow,transform] flex items-center shrink-0 cursor-pointer hover:shadow-lg active:scale-95`}
             >
-              <span>{t('getQuote')}</span>
-              <ArrowRight className="w-4 h-4 ml-1.5 shrink-0" />
+              <span className="whitespace-nowrap">{t('getQuote')}</span>
+              {density < 2 && <ArrowRight className="w-4 h-4 ml-1.5 shrink-0" />}
             </button>
 
             {/* Mobile Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`${collapsed ? '' : 'lg:hidden'} p-2 rounded-xl text-[#123B92] hover:bg-[#F0F4FD] border border-[#123B92]/20 shrink-0 transition-colors cursor-pointer`}
+              className={`lg:hidden p-2 rounded-xl text-[#123B92] hover:bg-[#F0F4FD] border border-[#123B92]/20 shrink-0 transition-colors cursor-pointer`}
               aria-label={t('navbar_toggleMenu')}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -474,7 +499,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
 
       {/* MOBILE MENU ACCORDION DRAWER */}
       {mobileMenuOpen && (
-        <div className={`${collapsed ? '' : 'lg:hidden'} bg-white border-t border-slate-200 p-4 space-y-1 shadow-2xl max-h-[85vh] overflow-y-auto animate-fade-in w-full`}>
+        <div className={`lg:hidden bg-white border-t border-slate-200 p-4 space-y-1 shadow-2xl max-h-[85vh] overflow-y-auto animate-fade-in w-full`}>
           
           {/* Mobile: 1. Home */}
           <Link

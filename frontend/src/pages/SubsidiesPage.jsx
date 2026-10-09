@@ -74,7 +74,6 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
       {/* SECTION 1: HERO HEADER (background photo, left-aligned heading) */}
       <PageHero
         images="/real-photos/zenitek_photo_33.jpeg"
-        badge={<><Landmark className="w-5 h-5 text-[#002DC2] shrink-0" /><span className="text-balance">{t('sections_subHeroBadge')}</span></>}
         title={<>{t('sections_subHeroTitle1')} <br /><span className="text-[#002DC2]">{t('sections_subHeroTitle2')}{' '}<span className="whitespace-nowrap">(40% – 60%)</span></span></>}
         subtitle={<>{t('sections_subHeroSubPre')} <strong>{t('sections_subHeroSubStrong')}</strong> {t('sections_subHeroSubPost')}</>}
         actions={<>

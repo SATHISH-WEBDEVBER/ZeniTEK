@@ -62,7 +62,6 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
       {/* Hero Header — full-bleed photo with left-aligned heading (matches Home hero) */}
       <PageHero
         images="/real-photos/zenitek_photo_04.jpeg"
-        badge={t('contactBadge')}
         title={
           <>
             {t('contactTitle1')} <br />

@@ -1,5 +1,6 @@
 import express from 'express';
 import Project from '../models/Project.js';
+import { requireAdmin } from '../middleware/auth.js';
 import { initialProjects } from './seed.js';
 
 const router = express.Router();
@@ -40,7 +41,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST /api/projects - Add new project installation
-router.post('/', async (req, res) => {
+router.post('/', requireAdmin, async (req, res) => {
   try {
     const { title, locationName, latitude, longitude, cropDrying, dryerType, capacity, imageUrl, description } = req.body;
     
@@ -77,7 +78,7 @@ router.post('/', async (req, res) => {
 });
 
 // PUT /api/projects/:id - Update existing project
-router.put('/:id', async (req, res) => {
+router.put('/:id', requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     let updated = null;
@@ -101,7 +102,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE /api/projects/:id - Delete project
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     try {

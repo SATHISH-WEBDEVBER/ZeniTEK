@@ -29,7 +29,6 @@ export default function ProductsPage() {
     <div className="text-black min-h-screen bg-white">
       <PageHero
         images="/real-photos/zenitek_photo_18.jpeg"
-        badge={t('site_productsBadge')}
         title={<>{t('site_productsTitle1')} <br /><span className="text-[#002DC2]">{t('site_productsTitle2')}</span></>}
         subtitle={t('site_productsSubtitle')}
       />

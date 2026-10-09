@@ -7,12 +7,13 @@ import {
   adminFetchSections, adminCreateSection, adminUpdateSection,
   adminAddSectionImages, adminDeleteSectionImage, adminToggleSection,
   adminDeleteSection, adminSeedSections,
-  isAdminLoggedIn, clearAdminToken
+  isAdminLoggedIn, clearAdminToken, getAdminUsername, CLIENT_UNAUTHORIZED_EVENT
 } from '../utils/api';
+import { Link } from 'react-router-dom';
 import {
   Package, Image, LogIn, LogOut, Plus, Edit2, Trash2, Eye, EyeOff,
   X, Upload, CheckCircle, AlertCircle, Loader, ChevronDown, ChevronUp,
-  RefreshCw, Tag, Star, Layers, ExternalLink
+  RefreshCw, Tag, Star, Layers, ExternalLink, User, Lock
 } from 'lucide-react';
 import useScrollLock from '../hooks/useScrollLock';
 
@@ -828,7 +829,8 @@ function SectionForm({ section, onSave, onCancel, toast }) {
 /* ─── Main Admin Panel ────────────────────────────────────────────────────── */
 export default function AdminPanel() {
   const [loggedIn, setLoggedIn] = useState(isAdminLoggedIn());
-  const [loginKey, setLoginKey] = useState('');
+  const [loginUser, setLoginUser] = useState('');
+  const [loginPass, setLoginPass] = useState('');
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
 
@@ -909,7 +911,8 @@ export default function AdminPanel() {
     setLoginLoading(true);
     setLoginError('');
     try {
-      await adminLogin(loginKey);
+      await adminLogin(loginUser.trim(), loginPass);
+      setLoginPass('');
       setLoggedIn(true);
     } catch (err) {
       setLoginError(err.message);
@@ -922,6 +925,16 @@ export default function AdminPanel() {
     clearAdminToken();
     setLoggedIn(false);
   };
+
+  // Session expired or revoked: any 401 from a CMS call returns to the sign-in screen
+  useEffect(() => {
+    const onUnauthorized = () => {
+      setLoggedIn(false);
+      setLoginError('Your session has expired. Please sign in again.');
+    };
+    window.addEventListener(CLIENT_UNAUTHORIZED_EVENT, onUnauthorized);
+    return () => window.removeEventListener(CLIENT_UNAUTHORIZED_EVENT, onUnauthorized);
+  }, []);
 
   // Product actions
   const toggleProductStatus = async (product) => {
@@ -1027,21 +1040,42 @@ export default function AdminPanel() {
         <div className="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl space-y-6">
           <div className="text-center space-y-2">
             <img src="/logo.png" alt="ZeniTEK" className="h-12 mx-auto object-contain" />
-            <h1 className="text-xl font-black text-[#123B92]">Admin Panel</h1>
+            <h1 className="text-xl font-black text-[#123B92]">Client Admin</h1>
             <p className="text-sm text-slate-500">ZeniTEK CMS — Products & Gallery Management</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Admin API Key</label>
-              <input
-                type="password"
-                value={loginKey}
-                onChange={e => setLoginKey(e.target.value)}
-                className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#002DC2]/30 focus:border-[#002DC2]"
-                placeholder="Enter admin API key"
-                required
-              />
+              <label htmlFor="client-username" className="block text-xs font-bold text-slate-700 mb-1">Username</label>
+              <div className="relative">
+                <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  id="client-username"
+                  type="text"
+                  autoComplete="username"
+                  value={loginUser}
+                  onChange={e => setLoginUser(e.target.value)}
+                  className="w-full border border-slate-200 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#002DC2]/30 focus:border-[#002DC2]"
+                  placeholder="Client admin username"
+                  required
+                />
+              </div>
+            </div>
+            <div>
+              <label htmlFor="client-password" className="block text-xs font-bold text-slate-700 mb-1">Password</label>
+              <div className="relative">
+                <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  id="client-password"
+                  type="password"
+                  autoComplete="current-password"
+                  value={loginPass}
+                  onChange={e => setLoginPass(e.target.value)}
+                  className="w-full border border-slate-200 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#002DC2]/30 focus:border-[#002DC2]"
+                  placeholder="Password"
+                  required
+                />
+              </div>
             </div>
             {loginError && (
               <div className="flex items-center space-x-2 text-red-600 text-xs bg-red-50 rounded-xl px-3 py-2">
@@ -1055,6 +1089,9 @@ export default function AdminPanel() {
               <span>{loginLoading ? 'Authenticating...' : 'Sign In'}</span>
             </button>
           </form>
+          <p className="text-center text-xs text-slate-500">
+            Developer or tester? <Link to="/admin/login" className="font-bold text-[#002DC2] hover:underline">Choose another sign-in</Link>
+          </p>
         </div>
       </div>
     );
@@ -1068,7 +1105,8 @@ export default function AdminPanel() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <img src="/logo.png" alt="ZeniTEK" className="h-8 object-contain" />
-            <span className="text-sm font-black text-slate-700">Admin CMS</span>
+            <span className="text-sm font-black text-slate-700">Client Admin</span>
+            {getAdminUsername() && <span className="hidden sm:inline text-xs text-slate-500 truncate">Signed in as {getAdminUsername()}</span>}
           </div>
           <button onClick={handleLogout}
             className="flex items-center space-x-2 text-xs font-bold text-slate-500 hover:text-red-600 cursor-pointer transition-colors">

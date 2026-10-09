@@ -282,12 +282,6 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       {/* 1. HERO — full-bleed photo with left-aligned heading (matches Home hero) */}
       <PageHero
         images="/real-photos/zenitek_photo_42.jpeg"
-        badge={
-          <>
-            <span className="w-2.5 h-2.5 rounded-full bg-[#23AC39] animate-pulse shrink-0" />
-            <span className="normal-case sm:uppercase">{t('about_heroBadge')}</span>
-          </>
-        }
         title={
           <>
             {renderRich(t('about_heroTitle'), { br: 'hidden sm:block', hl: 'text-[#002DC2]' })}
@@ -835,9 +829,6 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-blue-500/20 rounded-full blur-2xl pointer-events-none" />
 
             <div className="relative z-10 text-center max-w-3xl mx-auto space-y-3 mb-10">
-              <span className="text-xs sm:text-sm font-black text-[#23AC39] uppercase tracking-wider bg-white/10 px-4 py-1.5 rounded-full inline-block">
-                {t('about_ctaEyebrow')}
-              </span>
               <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight break-words">
                 {t('about_ctaTitle')}
               </h2>

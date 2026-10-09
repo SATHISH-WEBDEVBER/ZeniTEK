@@ -169,17 +169,6 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
       {/* SECTION 1: HERO HEADER (background photo, left-aligned heading) */}
       <PageHero
         images="/real-photos/zenitek_photo_44.jpeg"
-        top={
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/95 border border-[#23AC39]/30 text-[#1A822B] text-xs font-extrabold uppercase tracking-wider shadow-sm">
-              <Sun className="w-4 h-4 text-[#23AC39] animate-spin-slow" />
-              <span>{t('dryers_heroBadge')}</span>
-            </span>
-            <span className="text-xs text-[#002DC2] font-bold bg-white/95 px-3 py-1 rounded-full border border-[#002DC2]/20 shadow-sm">
-              {t('dryers_heroTagline')}
-            </span>
-          </div>
-        }
         title={<>{t('dryers_heroTitle1')} <span className="text-[#1A822B]">{t('dryers_heroTitle2')}</span></>}
         subtitle={<>{richT('dryers_heroSubtitle', { pct: <strong className="text-slate-900">40%</strong> })}</>}
         actions={<>
@@ -280,9 +269,6 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         <section className="w-full section-odd py-12 sm:py-16" id="cms-products-section">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-              <span className="text-xs font-bold text-[#1A822B] uppercase tracking-wide sm:tracking-widest text-balance bg-[#23AC39]/10 px-3 py-1 rounded-full border border-[#23AC39]/30 inline-block">
-                {t('dryers_cmsBadge')}
-              </span>
               <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('dryers_cmsTitle')}</h2>
             </div>
 
@@ -357,9 +343,6 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <span className="text-xs font-bold text-[#002DC2] uppercase tracking-wide sm:tracking-widest text-balance bg-[#F0F4FD] px-3 py-1 rounded-full border border-[#002DC2]/20 inline-block">
-              {t('dryers_modelsBadge')}
-            </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               {t('dryers_modelsTitle')}
             </h2>
@@ -523,9 +506,6 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         <div className="bg-white p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-xl space-y-8">
           
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-              <span className="text-xs font-bold text-[#1A822B] uppercase tracking-wide sm:tracking-widest text-balance bg-[#23AC39]/10 px-3 py-1 rounded-full border border-[#23AC39]/30 inline-flex items-center">
-                <Ruler className="w-4 h-4 mr-1 text-[#1A822B]" /> {t('dryers_profileBadge')}
-              </span>
               <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
                 {t('dryers_profileTitle')}
               </h2>
@@ -623,9 +603,6 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         <div className="bg-white text-slate-900 p-6 sm:p-10 rounded-3xl shadow-xl space-y-8 border border-slate-200">
           
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-              <span className="text-xs font-bold text-[#1A822B] uppercase tracking-wide sm:tracking-widest text-balance bg-[#23AC39]/10 border border-[#23AC39]/30 px-3 py-1 rounded-full inline-flex items-center">
-                <Sun className="w-4 h-4 mr-1.5 text-[#23AC39] animate-spin-slow" /> {t('dryers_principleBadge')}
-              </span>
               <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
                 {t('dryers_principleTitle')}
               </h2>
@@ -704,9 +681,6 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <span className="text-xs font-bold text-[#002DC2] uppercase tracking-wide sm:tracking-widest text-balance bg-[#F0F4FD] px-3 py-1 rounded-full border border-[#002DC2]/20 inline-flex items-center">
-              <FileText className="w-4 h-4 mr-1 text-[#002DC2]" /> {t('dryers_catalogBadge')}
-            </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               {t('dryers_catalogTitle')}
             </h2>
@@ -825,9 +799,6 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
       <section className="w-full section-even py-14 sm:py-20" id="real-photos-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <span className="text-xs font-bold text-[#002DC2] uppercase tracking-wide sm:tracking-widest text-balance bg-[#F0F4FD] px-3 py-1 rounded-full border border-[#002DC2]/20 inline-flex items-center">
-              <Camera className="w-4 h-4 mr-1 text-[#002DC2]" /> {t('dryers_photosBadge')}
-            </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               {t('dryers_photosTitle')}
             </h2>
@@ -925,9 +896,6 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <span className="text-xs font-bold text-[#1A822B] uppercase tracking-wide sm:tracking-widest text-balance bg-[#23AC39]/10 px-3 py-1 rounded-full border border-[#23AC39]/30 inline-flex items-center">
-              <Factory className="w-4 h-4 mr-1 text-[#1A822B]" /> {t('dryers_instBadge')}
-            </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               {t('dryers_instTitle')}
             </h2>
@@ -1192,9 +1160,6 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
       <section className="w-full section-even py-14 sm:py-20" id="map-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-              <span className="text-xs font-bold text-[#1A822B] uppercase tracking-wider bg-[#23AC39]/10 px-2.5 py-1 rounded-full border border-[#23AC39]/30 inline-flex items-center">
-                <MapIcon className="w-4 h-4 mr-1 text-[#1A822B]" /> {t('dryers_mapBadge')}
-              </span>
               <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
                 {t('dryers_mapTitle')}
               </h2>
@@ -1219,9 +1184,6 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-slate-50 text-slate-900 p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-md flex flex-col items-center gap-6">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-2xs font-extrabold text-[#1A822B] bg-[#23AC39]/10 border border-[#23AC39]/30 px-3 py-1 rounded-full uppercase tracking-wider inline-block">
-              {t('dryers_ctaBadge')}
-            </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               {t('dryers_ctaTitle')}
             </h2>

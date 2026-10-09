@@ -1,5 +1,6 @@
 import express from 'express';
 import Review from '../models/Review.js';
+import { requireAdmin } from '../middleware/auth.js';
 import { initialReviews } from './seed.js';
 
 const router = express.Router();
@@ -22,7 +23,7 @@ router.get('/', async (req, res) => {
 });
 
 // GET /api/reviews/all - Admin route for all reviews
-router.get('/all', async (req, res) => {
+router.get('/all', requireAdmin, async (req, res) => {
   try {
     const reviews = await Review.find();
     if (reviews.length > 0) {
@@ -94,7 +95,7 @@ router.post('/', async (req, res) => {
 });
 
 // PUT /api/reviews/:id/approve - Approve review
-router.put('/:id/approve', async (req, res) => {
+router.put('/:id/approve', requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     let updated = null;
@@ -118,7 +119,7 @@ router.put('/:id/approve', async (req, res) => {
 });
 
 // DELETE /api/reviews/:id - Delete review
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     try {

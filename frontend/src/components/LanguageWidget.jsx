@@ -12,9 +12,10 @@ export const LANGUAGES = [
 ];
 
 // Language switcher.
-//  variant="dropdown": compact globe button for the desktop navbar (closes on outside click / Esc)
+//  variant="dropdown": globe button for the desktop navbar (closes on outside click / Esc);
+//                      `compact` shows only the globe + language code when the navbar is short of space
 //  variant="list":     full-width button grid for the mobile menu
-export default function LanguageWidget({ variant = 'dropdown', onSelect }) {
+export default function LanguageWidget({ variant = 'dropdown', onSelect, compact = false }) {
   const { lang, setLang, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const rootRef = useRef(null);
@@ -70,10 +71,12 @@ export default function LanguageWidget({ variant = 'dropdown', onSelect }) {
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-label={`${t('navbar_language')}: ${current.label}`}
-        className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-[#123B92]/20 text-[#123B92] hover:border-[#002DC2] hover:bg-[#F0F4FD] text-sm font-bold transition-colors cursor-pointer"
+        className={`flex items-center gap-1.5 ${compact ? 'px-2.5' : 'px-3'} py-2 rounded-xl border border-[#123B92]/20 text-[#123B92] hover:border-[#002DC2] hover:bg-[#F0F4FD] text-sm font-bold transition-colors cursor-pointer`}
       >
         <Globe className="w-5 h-5 text-[#002DC2]" />
-        <span lang={current.code}>{current.native}</span>
+        {compact
+          ? <span className="uppercase">{current.code}</span>
+          : <span lang={current.code} className="whitespace-nowrap">{current.native}</span>}
         <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 

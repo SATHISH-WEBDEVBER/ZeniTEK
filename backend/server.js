@@ -1,6 +1,7 @@
+// Load .env before any other module reads process.env
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
 import leadsRouter from './routes/leads.js';
@@ -10,26 +11,51 @@ import seedRouter from './routes/seed.js';
 import productsRouter, { publicProductsRouter } from './routes/products.js';
 import galleryRouter, { publicGalleryRouter } from './routes/gallery.js';
 import sectionsRouter, { publicSectionsRouter } from './routes/sections.js';
-import adminRouter from './routes/admin.js';
+import authRouter from './routes/auth.js';
+import bugsRouter, { syncOverdueFlags } from './routes/bugs.js';
+import { validateAuthConfig } from './middleware/auth.js';
 
 import path from 'path';
 
-dotenv.config();
+// Refuse to start without a JWT secret and the role accounts (no insecure defaults)
+const authProblems = validateAuthConfig();
+if (authProblems.length) {
+  console.error('❌ Authentication is not configured correctly in backend/.env:');
+  authProblems.forEach(p => console.error(`   - ${p}`));
+  console.error('   See backend/.env.example for the required variables.');
+  process.exit(1);
+}
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/zenitek';
 
 // Middleware
+// FRONTEND_URL: the site(s) allowed to call this API, comma-separated
+// (e.g. "http://localhost:3000,https://www.zenitek.in"). Unset = allow any origin (development only).
+const allowedOrigins = (process.env.FRONTEND_URL || '')
+  .split(',')
+  .map(url => url.trim().replace(/\/+$/, ''))
+  .filter(Boolean);
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',
-  credentials: true
+  origin: allowedOrigins.length ? allowedOrigins : '*',
+  credentials: true,
+  exposedHeaders: ['Content-Disposition'] // lets the dashboard read the Excel report filename
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+// Bug screenshots: random, never-reused filenames -> safe to cache for a long time
+app.use('/uploads/bugs', express.static(path.resolve(process.cwd(), 'uploads', 'bugs'), {
+  maxAge: '30d',
+  immutable: true,
+  setHeaders: res => res.setHeader('X-Content-Type-Options', 'nosniff')
+}));
+
 // Static uploads directory
-app.use('/uploads', express.static(path.resolve(process.cwd(), 'uploads')));
+app.use('/uploads', express.static(path.resolve(process.cwd(), 'uploads'), {
+  setHeaders: res => res.setHeader('X-Content-Type-Options', 'nosniff')
+}));
 
 // ─── Existing Routes ────────────────────────────────────────────────────────
 app.use('/api/leads', leadsRouter);
@@ -37,8 +63,11 @@ app.use('/api/projects', projectsRouter);
 app.use('/api/reviews', reviewsRouter);
 app.use('/api/seed', seedRouter);
 
-// ─── Admin Auth Route ────────────────────────────────────────────────────────
-app.use('/api/admin', adminRouter);
+// ─── Authentication (client admin / developer / tester) ─────────────────────
+app.use('/api/auth', authRouter);
+
+// ─── Bug Tracker (tester + developer) ────────────────────────────────────────
+app.use('/api/bugs', bugsRouter);
 
 // ─── Admin CMS Routes (protected) ───────────────────────────────────────────
 app.use('/api/products', productsRouter);
@@ -58,7 +87,10 @@ app.get('/api', (req, res) => {
     version: '2.0.0',
     endpoints: [
       { path: '/api/health', methods: ['GET'], description: 'Server and Database Health Status' },
-      { path: '/api/admin/login', methods: ['POST'], description: 'Admin Authentication' },
+      { path: '/api/auth/login', methods: ['POST'], description: 'Login (role: client | developer | tester)' },
+      { path: '/api/bugs', methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], description: 'Bug Tracker (tester / developer)' },
+      { path: '/api/bugs/reports/summary', methods: ['GET'], description: 'Bug report summary (developer)' },
+      { path: '/api/bugs/reports/excel', methods: ['GET'], description: 'Bug report Excel download (developer)' },
       { path: '/api/products', methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], description: 'Products CMS (Admin)' },
       { path: '/api/gallery', methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], description: 'Gallery CMS (Admin)' },
       { path: '/api/public/products', methods: ['GET'], description: 'Public Products API (published only)' },
@@ -112,6 +144,12 @@ mongoose
     } else {
       console.log('ℹ️ No MONGODB_URI in .env — Connected to LOCAL MongoDB service on your PC (127.0.0.1:27017/zenitek)');
     }
+    // Persist the bug "overdue" flag now and every hour
+    const runOverdueJob = () => syncOverdueFlags()
+      .then(r => { if (r.markedOverdue || r.cleared) console.log(`🐞 Overdue sync: ${r.markedOverdue} marked overdue, ${r.cleared} cleared`); })
+      .catch(err => console.warn('⚠️ Overdue sync failed:', err.message));
+    runOverdueJob();
+    setInterval(runOverdueJob, 60 * 60 * 1000).unref();
   })
   .catch((err) => {
     console.warn('⚠️ MongoDB connection warning (app running in fallback mode):', err.message);

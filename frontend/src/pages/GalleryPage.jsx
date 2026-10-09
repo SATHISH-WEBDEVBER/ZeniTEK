@@ -114,7 +114,6 @@ export default function GalleryPage({ onOpenQuoteModal }) {
       {/* SECTION 1: HERO (background photo, left-aligned heading) */}
       <PageHero
         images="/real-photos/zenitek_photo_43.jpeg"
-        badge={<><Camera className="w-4 h-4 text-[#002DC2]" /><span>{t('gallery_heroBadge')}</span></>}
         title={<>{t('gallery_heroTitle1')} <br /><span className="text-[#002DC2]">{t('gallery_heroTitle2')}</span></>}
         subtitle={t('gallery_heroSubtitle')}
       >
@@ -338,9 +337,6 @@ export default function GalleryPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-[#123B92] text-white rounded-3xl p-6 sm:p-10 shadow-xl flex flex-col items-center gap-6 border-2 border-[#23AC39]">
             <div className="text-center max-w-3xl mx-auto space-y-3">
-              <span className="inline-block max-w-full text-2xs leading-snug font-bold text-[#23AC39] bg-white/10 px-3 py-1 rounded-2xl uppercase tracking-wider border border-[#23AC39]/60">
-                {t('gallery_ctaBadge')}
-              </span>
               <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
                 {t('gallery_ctaTitle')}
               </h2>

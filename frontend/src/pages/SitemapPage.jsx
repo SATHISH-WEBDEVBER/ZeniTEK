@@ -13,9 +13,6 @@ export default function SitemapPage() {
       <section className="w-full py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3.5 py-1.5 rounded-full inline-block">
-              {t('site_sitemapBadge')}
-            </span>
             <h1 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('site_sitemapTitle')}</h1>
             <p className="text-base sm:text-lg text-slate-600">{t('site_sitemapSubtitle')}</p>
           </div>

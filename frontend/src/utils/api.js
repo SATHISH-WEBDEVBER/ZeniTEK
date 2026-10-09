@@ -5,40 +5,51 @@
 
 export const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 
-// ─── Admin Auth Helpers ──────────────────────────────────────────────────────
+// ─── Client Admin Auth Helpers ───────────────────────────────────────────────
+// The Client Admin (website CMS) signs in with username/password (role "client").
+// The JWT lives in sessionStorage, so closing the browser tab signs out.
 
-export function getAdminToken() {
-  return localStorage.getItem('zenitek_admin_token') || null;
+const CLIENT_SESSION_KEY = 'zenitek_session_client';
+export const CLIENT_UNAUTHORIZED_EVENT = 'zenitek:client-unauthorized';
+
+// Remove the token left behind by the old API-key login
+try { localStorage.removeItem('zenitek_admin_token'); } catch { /* storage unavailable */ }
+
+function readClientSession() {
+  try { return JSON.parse(sessionStorage.getItem(CLIENT_SESSION_KEY) || 'null'); } catch { return null; }
 }
 
-export function setAdminToken(token) {
-  localStorage.setItem('zenitek_admin_token', token);
+export function getAdminToken() {
+  return readClientSession()?.token || null;
+}
+
+export function getAdminUsername() {
+  return readClientSession()?.username || '';
+}
+
+export function setAdminToken(token, username = '') {
+  try { sessionStorage.setItem(CLIENT_SESSION_KEY, JSON.stringify({ token, username })); } catch { /* storage unavailable */ }
 }
 
 export function clearAdminToken() {
-  localStorage.removeItem('zenitek_admin_token');
+  try { sessionStorage.removeItem(CLIENT_SESSION_KEY); } catch { /* storage unavailable */ }
 }
 
 export function isAdminLoggedIn() {
   return Boolean(getAdminToken());
 }
 
-/**
- * Build authenticated headers for admin API calls.
- * Uses the JWT token if available; falls back to API key.
- */
+/** Authenticated headers for Client Admin API calls (Bearer JWT). */
 export function adminHeaders(extraHeaders = {}) {
   const token = getAdminToken();
-  const base = token
-    ? { Authorization: `Bearer ${token}` }
-    : { 'X-Admin-Key': import.meta.env.VITE_ADMIN_API_KEY || 'zenitek_admin_2025_secret' };
-  return { ...base, ...extraHeaders };
+  return { ...(token ? { Authorization: `Bearer ${token}` } : {}), ...extraHeaders };
 }
 
 // ─── Generic fetch wrapper ───────────────────────────────────────────────────
 
 /**
  * apiFetch - wraps fetch with base URL, JSON parsing, and error extraction.
+ * A 401 on a Client Admin request clears the session and notifies the admin panel.
  * @param {string} path - relative path e.g. '/products'
  * @param {RequestInit} options
  * @returns {Promise<any>} parsed JSON
@@ -55,6 +66,11 @@ export async function apiFetch(path, options = {}) {
   }
 
   if (!response.ok) {
+    const sentClientToken = Boolean(options.headers?.Authorization) && options.headers.Authorization === adminHeaders().Authorization;
+    if (response.status === 401 && sentClientToken) {
+      clearAdminToken();
+      window.dispatchEvent(new Event(CLIENT_UNAUTHORIZED_EVENT));
+    }
     const message = data?.message || `Request failed (${response.status})`;
     throw new Error(message);
   }
@@ -189,14 +205,14 @@ export async function adminDeleteGalleryItem(id) {
 
 // ─── Admin Auth ──────────────────────────────────────────────────────────────
 
-/** Authenticate admin and store JWT */
-export async function adminLogin(apiKey) {
-  const data = await apiFetch('/admin/login', {
+/** Authenticate the Client Admin (username + password from backend .env) and store the JWT */
+export async function adminLogin(username, password) {
+  const data = await apiFetch('/auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ apiKey })
+    body: JSON.stringify({ username, password, role: 'client' })
   });
-  if (data.token) setAdminToken(data.token);
+  if (data.token) setAdminToken(data.token, data.user?.username || username);
   return data;
 }
 

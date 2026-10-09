@@ -312,21 +312,6 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
       {/* ─── BREADCRUMBS & HERO SECTION — full-bleed photo, left-aligned heading (matches Home hero) ─── */}
       <PageHero
         images={HERO_BACKGROUNDS[slug] || section.thumbnail?.url}
-        top={
-          <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold text-slate-600">
-            <Link to="/" className="hover:text-[#002DC2] transition-colors">{t('navHome')}</Link>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
-            <span className="text-slate-500">{t('navbar_products')}</span>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
-            <span className="text-[#002DC2] font-bold">{sectionTitle}</span>
-          </nav>
-        }
-        badge={
-          <>
-            <Lightbulb className="w-4 h-4 text-[#002DC2] shrink-0" />
-            <span>{t('sections_solutionBadge')}</span>
-          </>
-        }
         title={sectionTitle}
         subtitle={sectionSubtitle}
         actions={
@@ -375,9 +360,6 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
       {section.highlights && section.highlights.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center max-w-3xl mx-auto mb-8 space-y-2">
-            <span className="text-xs font-extrabold text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] px-3 py-1 rounded-full inline-block">
-              {copy.highlightsEyebrow}
-            </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">
               {copy.highlightsTitle}
             </h2>
@@ -427,9 +409,6 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="bg-gradient-to-br from-[#001b69] to-[#002DC2] text-white rounded-3xl p-6 sm:p-10 shadow-xl space-y-8">
             <div className="text-center max-w-3xl mx-auto space-y-3">
-              <span className="text-2xs sm:text-xs font-bold uppercase tracking-wide sm:tracking-widest text-[#23AC39] bg-[#123B92]/70 px-3 py-1 rounded-full border border-[#23AC39]/40 inline-block whitespace-nowrap">
-                {t('sections_calcBadge')}
-              </span>
               <h2 className="text-3xl sm:text-4xl font-black text-white">
                 {t('sections_calcTitle')}
               </h2>
@@ -606,9 +585,6 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
       {section.images && section.images.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <span className="text-xs font-extrabold text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] px-3 py-1 rounded-full inline-block">
-              {t('sections_photosCount', { count: section.images.length })}
-            </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">{t('sections_photosTitle')}</h2>
             <p className="text-base sm:text-lg text-slate-600">{t('sections_photosSub')}</p>
           </div>

@@ -17,6 +17,9 @@ import GalleryDetailPage from './pages/GalleryDetailPage';
 import ContactUsPage from './pages/ContactUsPage';
 import SubsidiesPage from './pages/SubsidiesPage';
 import AdminPanel from './pages/AdminPanel';
+import AdminLoginChooser from './pages/bugs/AdminLoginChooser';
+import DeveloperApp from './pages/bugs/DeveloperApp';
+import TesterApp from './pages/bugs/TesterApp';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import SectionDetailPage from './pages/SectionDetailPage';
@@ -141,6 +144,9 @@ export default function App() {
               <Route path="/terms" element={<LegalPage type="terms" />} />
               <Route path="/sitemap" element={<SitemapPage />} />
               <Route path="/admin" element={<AdminPanel />} />
+              <Route path="/admin/login" element={<AdminLoginChooser />} />
+              <Route path="/admin/developer/*" element={<DeveloperApp />} />
+              <Route path="/admin/tester/*" element={<TesterApp />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>

@@ -326,9 +326,6 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
       <section className="py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <span className="text-xs font-bold text-[#002DC2] uppercase tracking-widest bg-[#F0F4FD] px-3 py-1 rounded-full border border-[#002DC2]/20 inline-flex items-center">
-              <MapPin className="w-4 h-4 mr-1 text-[#002DC2]" /> {t('gallery_mapBadge')}
-            </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               {t('gallery_mapTitle', { place: `${item.location}, ${item.state}` })}
             </h2>

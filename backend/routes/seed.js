@@ -1,6 +1,7 @@
 import express from 'express';
 import Project from '../models/Project.js';
 import Review from '../models/Review.js';
+import { requireAdmin } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -453,7 +454,7 @@ const seedHandler = async (req, res) => {
   }
 };
 
-router.post('/', seedHandler);
-router.get('/', seedHandler);
+router.post('/', requireAdmin, seedHandler);
+router.get('/', requireAdmin, seedHandler);
 
 export default router;

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 // Page hero matching the Home hero: full-bleed background photo (or auto-rotating photos),
 // a white fade from the left, and the heading block aligned left.
 // `images` may be a single path or an array (cross-fades every 5s).
-export default function PageHero({ images, badge, title, subtitle, actions, children, top, objectPosition = 'center' }) {
+export default function PageHero({ images, title, subtitle, actions, children, top, objectPosition = 'center' }) {
   const list = (Array.isArray(images) ? images : [images]).filter(Boolean);
   const [active, setActive] = useState(0);
 
@@ -32,11 +32,6 @@ export default function PageHero({ images, badge, title, subtitle, actions, chil
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-20 space-y-6">
         {top}
         <div className="max-w-2xl space-y-5 text-left">
-          {badge && (
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-2xl sm:rounded-full bg-white/95 border border-[#123B92]/30 text-[#123B92] text-xs font-bold uppercase tracking-wider shadow-md">
-              {badge}
-            </span>
-          )}
           <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#123B92] leading-tight">
             {title}
           </h1>

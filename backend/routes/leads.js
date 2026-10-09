@@ -1,6 +1,7 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
 import Lead from '../models/Lead.js';
+import { requireAdmin } from '../middleware/auth.js';
 import nodemailer from 'nodemailer';
 
 const router = express.Router();
@@ -113,7 +114,7 @@ router.post(
 );
 
 // GET /api/leads - Fetch all leads
-router.get('/', async (req, res) => {
+router.get('/', requireAdmin, async (req, res) => {
   try {
     const leads = await Lead.find().sort({ submittedAt: -1 });
     return res.json({ success: true, count: leads.length, leads });
@@ -123,7 +124,7 @@ router.get('/', async (req, res) => {
 });
 
 // GET /api/leads/:id - Fetch single lead by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     let lead = null;
@@ -143,7 +144,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // DELETE /api/leads/:id - Delete lead by ID
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     try {
