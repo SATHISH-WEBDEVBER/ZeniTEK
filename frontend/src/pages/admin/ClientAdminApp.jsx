@@ -9,33 +9,42 @@
 //   /admin/bugs               bug status (read-only)
 //   /admin/bugs/:id           one bug (read-only)
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Routes, Route, Link, Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { Routes, Route, Link, Navigate, useNavigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, Inbox, Package, Layers, Image, Star, Bug as BugIcon, RefreshCw, Search, Download,
   Trash2, Phone, MapPin, Sprout, Gauge, Building2, MessageCircle, Calendar, ArrowUpDown, ChevronRight,
-  CheckCircle2, EyeOff, AlertTriangle, ListChecks, CircleDot, Timer, ExternalLink, X
+  CheckCircle2, EyeOff, AlertTriangle, ListChecks, CircleDot, Timer, ExternalLink, X, Edit2, Plus
 } from 'lucide-react';
 import {
   adminFetchOverview, adminFetchLeads, adminFetchLead, adminDeleteLead,
   adminFetchReviews, adminApproveReview, adminDeleteReview,
   adminFetchBugs, adminFetchBug, adminFetchBugSummary
 } from '../../utils/api';
-import { useRoleSession } from '../../utils/bugApi';
+import { useRoleSession, bugRequest } from '../../utils/bugApi';
 import { AdminPage, AdminShellContext, AdminLoginCard, StatCard, adminCard } from '../../components/admin/AdminLayout';
 import { ProductsManager, SectionsManager, GalleryManager } from './cms/CmsPages';
 import {
   BugList, BugBadges, DeadlineText, ScreenshotGallery, HistoryList, Field, ErrorNote, Loading,
-  SeverityBadge, PriorityBadge, useNow, formatDateTime, bugCode, isOverdueAt, inputCls, btnGhost, btnPrimary, btnDanger
+  SeverityBadge, PriorityBadge, useNow, formatDateTime, bugCode, isOverdueAt, inputCls, btnGhost, btnPrimary, btnDanger,
+  ReportExtraFields, TechnicalDetails
 } from '../bugs/BugUi';
+import BugForm from '../bugs/BugForm';
 
 const BASE = '/admin';
 
 export default function ClientAdminApp() {
   const session = useRoleSession('client');
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   if (!session.session) {
+    // Signing in at /admin lands on the website (with the bug-report button); deep links stay put
+    const onLogin = async (username, password) => {
+      await session.login(username, password);
+      if (pathname.replace(/\/+$/, '') === BASE) navigate('/');
+    };
     return (
-      <AdminLoginCard roleTitle="Client Admin" subtitle="Manage the ZeniTEK website, enquiries and reviews" Icon={LayoutDashboard}
-        onLogin={session.login} notice={session.expired ? 'Your session has expired. Please sign in again.' : ''} />
+      <AdminLoginCard roleTitle="Client Admin" subtitle="Sign in to review the website, report problems and manage content." Icon={LayoutDashboard}
+        onLogin={onLogin} notice={session.expired ? 'Your session has expired. Please sign in again.' : ''} />
     );
   }
   const shell = {
@@ -65,7 +74,9 @@ export default function ClientAdminApp() {
         <Route path="gallery" element={<GalleryManager />} />
         <Route path="reviews" element={<Reviews />} />
         <Route path="bugs" element={<BugStatus />} />
+        <Route path="bugs/new" element={<BugForm role="client" listPath={`${BASE}/bugs`} detailPath={id => `${BASE}/bugs/${id}`} />} />
         <Route path="bugs/:id" element={<BugStatusDetail />} />
+        <Route path="bugs/:id/edit" element={<BugForm editing role="client" listPath={`${BASE}/bugs`} detailPath={id => `${BASE}/bugs/${id}`} />} />
         <Route path="*" element={<Navigate to={BASE} replace />} />
       </Routes>
     </AdminShellContext.Provider>
@@ -563,6 +574,7 @@ function BugStatus() {
   const now = useNow();
   const [params, setParams] = useSearchParams();
   const view = ['open', 'in-progress', 'completed', 'overdue'].includes(params.get('view')) ? params.get('view') : '';
+  const mine = params.get('mine') === 'true';
   const [summary, setSummary] = useState(null);
   const [bugs, setBugs] = useState(null);
   const [search, setSearch] = useState('');
@@ -573,13 +585,13 @@ function BugStatus() {
     setLoading(true);
     setError('');
     try {
-      const query = view === 'overdue' ? { overdue: 'true' } : view ? { status: view } : {};
+      const query = { ...(view === 'overdue' ? { overdue: 'true' } : view ? { status: view } : {}), ...(mine ? { mine: 'true' } : {}) };
       const [s, l] = await Promise.all([adminFetchBugSummary(), adminFetchBugs(query)]);
       setSummary(s.summary);
       setBugs(l.bugs || []);
     } catch (err) { setError(err.message); setBugs(b => b || []); }
     setLoading(false);
-  }, [view]);
+  }, [view, mine]);
   useEffect(() => { load(); }, [load]);
 
   const shown = useMemo(() => {
@@ -587,13 +599,17 @@ function BugStatus() {
     return (bugs || []).filter(b => !term || [b.title, b.affectedPage, bugCode(b)].some(v => String(v || '').toLowerCase().includes(term)));
   }, [bugs, search]);
 
-  const setView = v => setParams(v ? { view: v } : {}, { replace: true });
+  const setView = v => setParams({ ...(v ? { view: v } : {}), ...(mine ? { mine: 'true' } : {}) }, { replace: true });
+  const setMine = m => setParams({ ...(view ? { view } : {}), ...(m ? { mine: 'true' } : {}) }, { replace: true });
   const actions = (
-    <button type="button" onClick={load} className={btnGhost} disabled={loading}><RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} /> Refresh</button>
+    <>
+      <button type="button" onClick={load} className={btnGhost} disabled={loading}><RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} /> Refresh</button>
+      <Link to={`${BASE}/bugs/new`} className={btnPrimary}><Plus className="w-4 h-4" /> Report a bug</Link>
+    </>
   );
 
   return (
-    <AdminPage title="Bug Status" subtitle="Follow the progress of bugs reported by the testers. Each bug has a 7-day fix deadline." actions={actions}>
+    <AdminPage title="Bug Status" subtitle="Follow the progress of reported bugs (each has a 7-day fix deadline). Report new ones with the bug button on any website page." actions={actions}>
       <div className="space-y-5">
         <ErrorNote>{error}</ErrorNote>
         {summary && (
@@ -611,7 +627,11 @@ function BugStatus() {
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input className={`${inputCls} pl-9`} placeholder="Search title, page or #number" value={search} onChange={e => setSearch(e.target.value)} aria-label="Search bugs" />
           </div>
-          <select className={`${inputCls} sm:w-56`} value={view} onChange={e => setView(e.target.value)} aria-label="Show">
+          <select className={`${inputCls} sm:w-48`} value={mine ? 'mine' : 'all'} onChange={e => setMine(e.target.value === 'mine')} aria-label="Reported by">
+            <option value="all">Everyone's reports</option>
+            <option value="mine">Reported by me</option>
+          </select>
+          <select className={`${inputCls} sm:w-48`} value={view} onChange={e => setView(e.target.value)} aria-label="Show">
             <option value="">All bugs</option>
             <option value="open">Open</option>
             <option value="in-progress">In progress</option>
@@ -638,8 +658,12 @@ function BugStatus() {
 function BugStatusDetail() {
   const { id } = useParams();
   const now = useNow();
+  const navigate = useNavigate();
+  const { username } = React.useContext(AdminShellContext);
   const [bug, setBug] = useState(null);
   const [error, setError] = useState('');
+  const [confirm, setConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -647,13 +671,39 @@ function BugStatusDetail() {
     return () => { cancelled = true; };
   }, [id]);
 
+  const remove = async () => {
+    setDeleting(true);
+    try {
+      await bugRequest('client', `/bugs/${id}`, { method: 'DELETE' });
+      navigate(`${BASE}/bugs?mine=true`, { replace: true });
+    } catch (err) { setError(err.message); setDeleting(false); setConfirm(false); }
+  };
+
   const back = { to: `${BASE}/bugs`, label: 'Bug status' };
   if (!bug) return <AdminPage title="Bug" back={back}>{error ? <ErrorNote>{error}</ErrorNote> : <Loading />}</AdminPage>;
   const overdue = isOverdueAt(bug, now);
+  // The client admin may edit / delete only their own, not yet completed, reports
+  const own = bug.reporterRole === 'client' && bug.reportedBy === username && bug.status !== 'completed';
+  const actions = own ? (
+    <>
+      <Link to={`${BASE}/bugs/${bug._id}/edit`} className={btnGhost}><Edit2 className="w-4 h-4" /> Edit</Link>
+      {!confirm && <button type="button" onClick={() => setConfirm(true)} className={`${btnGhost} text-red-600 hover:bg-red-50`}><Trash2 className="w-4 h-4" /> Delete</button>}
+    </>
+  ) : null;
 
   return (
-    <AdminPage title={bugCode(bug)} subtitle={bug.title} back={back}>
+    <AdminPage title={bugCode(bug)} subtitle={bug.title} back={back} actions={actions}>
       <div className="space-y-5 max-w-5xl">
+        {confirm && (
+          <div className="rounded-2xl border border-red-200 bg-red-50 p-4 space-y-3">
+            <p className="text-sm font-bold text-red-800">Delete your bug report and its screenshots? This cannot be undone.</p>
+            <div className="flex flex-wrap gap-2">
+              <button type="button" onClick={remove} disabled={deleting} className={btnDanger}><Trash2 className="w-4 h-4" /> {deleting ? 'Deleting…' : 'Yes, delete'}</button>
+              <button type="button" onClick={() => setConfirm(false)} className={btnGhost}>Cancel</button>
+            </div>
+          </div>
+        )}
+        <ErrorNote>{bug && error}</ErrorNote>
         {overdue && (
           <div className="flex items-start gap-3 rounded-2xl bg-red-50 border border-red-200 text-red-800 p-4" role="alert">
             <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
@@ -672,10 +722,18 @@ function BugStatusDetail() {
             <Field label="Deadline (7 days)"><span className="block">{formatDateTime(bug.deadline)}</span><DeadlineText bug={bug} now={now} /></Field>
             {bug.assignedTo && <Field label="Assigned developer">{bug.assignedTo}</Field>}
             {bug.completedAt && <Field label="Fixed">{formatDateTime(bug.completedAt)} by {bug.completedBy}{bug.completedLate ? ' (after the deadline)' : ''}</Field>}
+            <ReportExtraFields bug={bug} />
             <Field label="Description" wide>{bug.description}</Field>
+            <Field label="Steps to reproduce" wide>{bug.stepsToReproduce}</Field>
+            <Field label="Expected result">{bug.expectedResult}</Field>
+            <Field label="Actual result">{bug.actualResult}</Field>
             {bug.developerNotes && <Field label="Developer notes" wide>{bug.developerNotes}</Field>}
           </dl>
         </div>
+        <section className={`${adminCard} p-5 sm:p-6 space-y-3`}>
+          <h2 className="font-black text-[#123B92]">Technical details</h2>
+          <TechnicalDetails context={bug.context} />
+        </section>
         <section className={`${adminCard} p-5 sm:p-6 space-y-3`}>
           <h2 className="font-black text-[#123B92]">Screenshots ({bug.screenshots.length})</h2>
           <ScreenshotGallery screenshots={bug.screenshots} />

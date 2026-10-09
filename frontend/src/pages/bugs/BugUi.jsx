@@ -8,6 +8,7 @@ import { AdminLoginCard } from '../../components/admin/AdminLayout';
 import { PAGES } from '../../data/siteMap';
 import { useLanguage } from '../../context/LanguageContext';
 import { assetUrl } from '../../utils/bugApi';
+import { categoryLabel, reproducibilityLabel } from '../../utils/bugReporting';
 
 const DAY = 24 * 60 * 60 * 1000;
 const HOUR = 60 * 60 * 1000;
@@ -213,9 +214,13 @@ export function BackLink({ to, children }) {
 }
 
 /** Sign-in screen for one role (shared admin login card) */
-export function RoleLogin({ title, subtitle, Icon, session }) {
+export function RoleLogin({ title, subtitle, Icon, session, afterLogin }) {
+  const onLogin = async (username, password) => {
+    await session.login(username, password);
+    afterLogin?.();
+  };
   return (
-    <AdminLoginCard roleTitle={title} subtitle={subtitle} Icon={Icon} onLogin={session.login}
+    <AdminLoginCard roleTitle={title} subtitle={subtitle} Icon={Icon} onLogin={onLogin}
       notice={session.expired ? 'Your session has expired. Please sign in again.' : ''} />
   );
 }
@@ -264,7 +269,7 @@ export function BugList({ bugs, now, linkFor }) {
                       </span>
                     </Link>
                   </td>
-                  <td className="px-3 py-3 text-slate-700">{b.reportedBy}<span className="block"><SeverityBadge severity={b.severity} /></span></td>
+                  <td className="px-3 py-3 text-slate-700">{b.reportedBy}{b.reporterRole === 'client' && <span className="block mt-0.5"><ReporterRoleBadge role="client" /></span>}<span className="block mt-0.5"><SeverityBadge severity={b.severity} /></span></td>
                   <td className="px-3 py-3 text-slate-600 whitespace-nowrap">{formatDateTime(b.submittedAt)}</td>
                   <td className="px-3 py-3 whitespace-nowrap"><span className="block text-slate-600">{formatDateTime(b.deadline)}</span><DeadlineText bug={b} now={now} /></td>
                   <td className="px-3 py-3"><PriorityBadge priority={b.priority} /></td>
@@ -290,7 +295,7 @@ export function BugList({ bugs, now, linkFor }) {
                 </div>
                 <BugBadges bug={b} now={now} />
                 <div className="text-xs text-slate-500 space-y-0.5 min-w-0">
-                  <p className="truncate">{b.reportedBy} · {b.affectedPage}</p>
+                  <p className="truncate">{b.reportedBy}{b.reporterRole === 'client' ? ' (client admin)' : ''} · {b.affectedPage}</p>
                   <p>Submitted {formatDateTime(b.submittedAt)}</p>
                 </div>
                 <DeadlineText bug={b} now={now} />
@@ -333,5 +338,62 @@ export function BreakdownBars({ rows }) {
         );
       })}
     </ul>
+  );
+}
+
+/** "Tester" / "Client admin" chip */
+export function ReporterRoleBadge({ role }) {
+  const client = role === 'client';
+  return <span className={`${pill} ${client ? 'bg-purple-50 text-purple-700 ring-1 ring-purple-200' : 'bg-slate-100 text-slate-600'}`}>{client ? 'Client admin' : 'Tester'}</span>;
+}
+
+/** Reporter-entered classification fields (category, reproducibility, element, suggested fix) */
+export function ReportExtraFields({ bug }) {
+  return (
+    <>
+      <Field label="Category">{categoryLabel(bug.category)}</Field>
+      <Field label="Reproducibility">{reproducibilityLabel(bug.reproducibility)}</Field>
+      <Field label="Affected element / section">{bug.affectedElement}</Field>
+      <Field label="Reporter role"><ReporterRoleBadge role={bug.reporterRole} /></Field>
+      {bug.suggestedFix ? <Field label="Suggested fix" wide>{bug.suggestedFix}</Field> : null}
+    </>
+  );
+}
+
+/** Browser / page details captured automatically when the bug was reported */
+export function TechnicalDetails({ context }) {
+  const c = context || {};
+  const rows = [
+    ['Page URL', c.url ? <a href={c.url} target="_blank" rel="noopener noreferrer" className="text-[#002DC2] hover:underline break-all">{c.url}</a> : ''],
+    ['Page title', c.pageTitle],
+    ['Browser', c.browser],
+    ['Operating system', c.os],
+    ['Device', c.deviceType],
+    ['Viewport', c.viewport],
+    ['Screen', c.screen],
+    ['Pixel ratio', c.pixelRatio ? `${c.pixelRatio}x` : ''],
+    ['Site language', c.language],
+    ['Scroll position', c.scroll],
+    ['Network', typeof c.online === 'boolean' ? (c.online ? 'Online' : 'Offline') : ''],
+    ['Captured at', c.capturedAt ? formatDateTime(c.capturedAt) : '']
+  ].filter(([, v]) => v);
+  if (!rows.length && !(c.consoleErrors || []).length) {
+    return <p className="text-sm text-slate-500">No technical details were captured for this report.</p>;
+  }
+  return (
+    <div className="space-y-4">
+      <dl className="grid sm:grid-cols-2 gap-x-6 gap-y-3">
+        {rows.map(([k, v]) => <Field key={k} label={k}>{v}</Field>)}
+      </dl>
+      {c.userAgent && <Field label="User agent"><span className="text-xs font-mono">{c.userAgent}</span></Field>}
+      <div>
+        <p className="text-[11px] font-bold uppercase tracking-wide text-slate-500 mb-1">Recent console errors ({(c.consoleErrors || []).length})</p>
+        {(c.consoleErrors || []).length ? (
+          <ul className="text-xs font-mono text-red-700 bg-red-50 rounded-xl p-3 space-y-1 max-h-60 overflow-y-auto">
+            {c.consoleErrors.map((e, i) => <li key={i} className="break-all">{e}</li>)}
+          </ul>
+        ) : <p className="text-sm text-slate-500">None recorded.</p>}
+      </div>
+    </div>
   );
 }

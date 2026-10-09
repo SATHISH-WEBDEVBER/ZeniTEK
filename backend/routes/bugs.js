@@ -17,11 +17,12 @@
  *   GET    /api/bugs/reports/summary    live report counts
  *   GET    /api/bugs/reports/excel      .xlsx download (developer ONLY)
  *
- * Client Admin (read-only progress view, all bugs):
- *   GET    /api/bugs                    list/filter all bugs (same filters as developer)
+ * Client Admin (reads every bug, reports bugs like a tester):
+ *   GET    /api/bugs                    list/filter all bugs (?mine=true = only my own reports)
  *   GET    /api/bugs/:id                any bug
  *   GET    /api/bugs/reports/summary    live report counts
- *   Every write endpoint and the Excel report reject the client role (403).
+ *   POST / PUT / DELETE                  report a bug, edit / delete MY OWN reports (same rules as testers)
+ *   Developer endpoints (PATCH, complete, meta) and the Excel report reject the client role (403).
  *
  * Developers cannot delete a tester's report: reports are the testers' record of work and
  * deleting them would hide bugs from the tracking reports. Developers close bugs by completing them.
@@ -29,7 +30,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import Bug, {
-  SEVERITIES, PRIORITIES, STATUSES, DAY_MS, computeIsOverdue, serializeBug
+  SEVERITIES, PRIORITIES, STATUSES, CATEGORIES, REPRODUCIBILITY, DEVICE_TYPES, DAY_MS, computeIsOverdue, serializeBug
 } from '../models/Bug.js';
 import { requireAuth, requireRole, getAccounts } from '../middleware/auth.js';
 import {
@@ -41,6 +42,10 @@ router.use(requireAuth, requireRole('tester', 'developer', 'client'));
 
 // Developers and the client admin see every bug; testers only see their own reports
 const seesAllBugs = req => req.user.role === 'developer' || req.user.role === 'client';
+// Testers and the client admin report bugs; each may edit / delete only their own reports
+const REPORTERS = ['tester', 'client'];
+const roleOf = bug => bug.reporterRole || 'tester';
+const isOwnReport = (req, bug) => bug.reportedBy === req.user.username && roleOf(bug) === req.user.role;
 const fail = (res, status, message) => res.status(status).json({ success: false, message });
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -94,29 +99,72 @@ function validateReport(body, { partial = false } = {}) {
   const out = {};
   const fields = {
     title: 200, description: 5000, affectedPage: 500, stepsToReproduce: 5000,
-    expectedResult: 2000, actualResult: 2000, environment: 300
+    expectedResult: 2000, actualResult: 2000, environment: 300, affectedElement: 300, suggestedFix: 2000
   };
   for (const [key, max] of Object.entries(fields)) {
     if (body[key] === undefined) continue;
     if (typeof body[key] === 'string' && body[key].trim().length > max) errors.push(`${key} is too long (max ${max} characters)`);
     out[key] = str(body[key], max);
   }
-  if (body.severity !== undefined) {
-    if (!SEVERITIES.includes(body.severity)) errors.push(`severity must be one of ${SEVERITIES.join(', ')}`);
-    else out.severity = body.severity;
-  }
+  const enumField = (key, list, allowEmpty = false) => {
+    if (body[key] === undefined) return;
+    if (allowEmpty && body[key] === '') { out[key] = ''; return; }
+    if (!list.includes(body[key])) errors.push(`${key} must be one of ${list.join(', ')}`);
+    else out[key] = body[key];
+  };
+  enumField('severity', SEVERITIES);
+  enumField('category', CATEGORIES);
+  enumField('reproducibility', REPRODUCIBILITY, true);
   for (const req of ['title', 'description', 'affectedPage']) {
     if ((!partial || body[req] !== undefined) && !out[req]) errors.push(`${req} is required`);
+  }
+  if (!partial) {
+    if (body.category === undefined) errors.push('category is required');
+    if (body.severity === undefined) errors.push('severity is required');
   }
   return { errors, data: out };
 }
 
-async function findBugFor(req, res) {
+/** Sanitise the browser-captured "context" (JSON string in the multipart body). Never trusted for identity. */
+function parseContext(raw) {
+  if (raw === undefined || raw === '') return { context: undefined };
+  let c;
+  try { c = typeof raw === 'string' ? JSON.parse(raw) : raw; } catch { return { error: 'context must be valid JSON' }; }
+  if (!c || typeof c !== 'object' || Array.isArray(c)) return { error: 'context must be an object' };
+  const text = (v, max) => (typeof v === 'string' ? v.slice(0, max) : '');
+  const ratio = Number(c.pixelRatio);
+  const at = c.capturedAt ? new Date(c.capturedAt) : null;
+  return {
+    context: {
+      url: text(c.url, 1000),
+      path: text(c.path, 500),
+      pageTitle: text(c.pageTitle, 300),
+      browser: text(c.browser, 100),
+      os: text(c.os, 100),
+      deviceType: DEVICE_TYPES.includes(c.deviceType) ? c.deviceType : '',
+      screen: text(c.screen, 40),
+      viewport: text(c.viewport, 40),
+      pixelRatio: Number.isFinite(ratio) && ratio > 0 && ratio < 10 ? Math.round(ratio * 100) / 100 : null,
+      language: text(c.language, 20),
+      scroll: text(c.scroll, 40),
+      online: typeof c.online === 'boolean' ? c.online : null,
+      userAgent: text(c.userAgent, 500),
+      consoleErrors: Array.isArray(c.consoleErrors)
+        ? c.consoleErrors.filter(e => typeof e === 'string').slice(-10).map(e => e.slice(0, 500))
+        : [],
+      capturedAt: at && !Number.isNaN(at.getTime()) ? at : null
+    }
+  };
+}
+
+async function findBugFor(req, res, { ownOnly = false } = {}) {
   const { id } = req.params;
   if (!mongoose.isValidObjectId(id)) { fail(res, 404, 'Bug not found'); return null; }
   const bug = await Bug.findById(id);
-  // Testers only ever see their own reports; others look like "not found"
-  if (!bug || (!seesAllBugs(req) && bug.reportedBy !== req.user.username)) {
+  // Testers only ever see their own reports; edits and deletes are limited to the reporter.
+  // Bugs the caller may not access look like "not found".
+  const allowed = bug && (ownOnly ? isOwnReport(req, bug) : (seesAllBugs(req) || isOwnReport(req, bug)));
+  if (!allowed) {
     fail(res, 404, 'Bug not found');
     return null;
   }
@@ -147,14 +195,15 @@ router.get('/meta', requireRole('developer'), async (req, res, next) => {
       success: true,
       developers: getAccounts('developer').map(a => a.username),
       testers,
-      priorities: PRIORITIES, statuses: STATUSES, severities: SEVERITIES
+      priorities: PRIORITIES, statuses: STATUSES, severities: SEVERITIES,
+      categories: CATEGORIES, reproducibility: REPRODUCIBILITY
     });
   } catch (err) { return next(err); }
 });
 
 async function buildSummary(now = new Date()) {
   const in2days = new Date(now.getTime() + 2 * DAY_MS);
-  const [total, open, inProgress, completed, overdue, completedLate, byPriority, bySeverity, byTester, dueSoon] =
+  const [total, open, inProgress, completed, overdue, completedLate, byPriority, bySeverity, byTester, dueSoon, byCategory, byRole] =
     await Promise.all([
       Bug.countDocuments(),
       Bug.countDocuments({ status: 'open' }),
@@ -179,8 +228,10 @@ async function buildSummary(now = new Date()) {
       ]),
       Bug.find({ status: { $ne: 'completed' }, deadline: { $gte: now, $lte: in2days } })
         .sort({ deadline: 1 })
-        .select('bugNumber title deadline priority status reportedBy')
-        .lean()
+        .select('bugNumber title deadline priority status reportedBy reporterRole')
+        .lean(),
+      Bug.aggregate([{ $group: { _id: '$category', count: { $sum: 1 } } }]),
+      Bug.aggregate([{ $group: { _id: { $ifNull: ['$reporterRole', 'tester'] }, count: { $sum: 1 } } }])
     ]);
 
   const toMap = (rows, keys) => Object.fromEntries(keys.map(k => [k, rows.find(r => r._id === k)?.count || 0]));
@@ -190,6 +241,11 @@ async function buildSummary(now = new Date()) {
     completedOnTime: completed - completedLate,
     byPriority: toMap(byPriority, PRIORITIES),
     bySeverity: toMap(bySeverity, SEVERITIES),
+    byCategory: {
+      ...toMap(byCategory, CATEGORIES),
+      uncategorised: byCategory.filter(r => !r._id).reduce((n, r) => n + r.count, 0)
+    },
+    byReporterRole: toMap(byRole, REPORTERS),
     byTester: byTester.map(r => ({ tester: r._id, total: r.total, completed: r.completed, overdue: r.overdue })),
     dueSoon: dueSoon.map(b => serializeBug(b, now))
   };
@@ -230,7 +286,10 @@ router.get('/reports/excel', requireRole('developer'), async (req, res, next) =>
       { header: 'Title', key: 'title', width: 36 },
       { header: 'Affected Page', key: 'affectedPage', width: 28 },
       { header: 'Reported By', key: 'reportedBy', width: 16 },
+      { header: 'Reporter Role', key: 'reporterRole', width: 13 },
+      { header: 'Category', key: 'category', width: 16 },
       { header: 'Severity', key: 'severity', width: 11 },
+      { header: 'Reproducibility', key: 'reproducibility', width: 15 },
       { header: 'Priority', key: 'priority', width: 11 },
       { header: 'Status', key: 'status', width: 13 },
       { header: 'Overdue', key: 'overdue', width: 10 },
@@ -245,7 +304,21 @@ router.get('/reports/excel', requireRole('developer'), async (req, res, next) =>
       { header: 'Steps to Reproduce', key: 'stepsToReproduce', width: 40 },
       { header: 'Expected Result', key: 'expectedResult', width: 30 },
       { header: 'Actual Result', key: 'actualResult', width: 30 },
+      { header: 'Affected Element', key: 'affectedElement', width: 24 },
+      { header: 'Suggested Fix', key: 'suggestedFix', width: 36 },
       { header: 'Environment', key: 'environment', width: 22 },
+      { header: 'Page URL', key: 'ctxUrl', width: 40 },
+      { header: 'Page Title', key: 'ctxTitle', width: 28 },
+      { header: 'Browser', key: 'ctxBrowser', width: 16 },
+      { header: 'OS', key: 'ctxOs', width: 14 },
+      { header: 'Device', key: 'ctxDevice', width: 10 },
+      { header: 'Viewport', key: 'ctxViewport', width: 12 },
+      { header: 'Screen', key: 'ctxScreen', width: 12 },
+      { header: 'Pixel Ratio', key: 'ctxRatio', width: 10 },
+      { header: 'Site Language', key: 'ctxLang', width: 12 },
+      { header: 'Scroll Position', key: 'ctxScroll', width: 14 },
+      { header: 'Online', key: 'ctxOnline', width: 8 },
+      { header: 'Console Errors', key: 'ctxErrors', width: 60 },
       { header: 'Developer Notes', key: 'developerNotes', width: 40 },
       { header: 'Screenshots', key: 'screenshots', width: 60 },
       { header: 'Last Updated', key: 'updatedAt', width: 20, style: { numFmt: 'yyyy-mm-dd hh:mm' } }
@@ -269,6 +342,19 @@ router.get('/reports/excel', requireRole('developer'), async (req, res, next) =>
       submittedAt: new Date(b.submittedAt),
       deadline: new Date(b.deadline),
       updatedAt: b.updatedAt ? new Date(b.updatedAt) : null,
+      reporterRole: b.reporterRole || 'tester',
+      ctxUrl: b.context?.url || '',
+      ctxTitle: b.context?.pageTitle || '',
+      ctxBrowser: b.context?.browser || '',
+      ctxOs: b.context?.os || '',
+      ctxDevice: b.context?.deviceType || '',
+      ctxViewport: b.context?.viewport || '',
+      ctxScreen: b.context?.screen || '',
+      ctxRatio: b.context?.pixelRatio ?? '',
+      ctxLang: b.context?.language || '',
+      ctxScroll: b.context?.scroll || '',
+      ctxOnline: typeof b.context?.online === 'boolean' ? (b.context.online ? 'Yes' : 'No') : '',
+      ctxErrors: (b.context?.consoleErrors || []).join('\n'),
       screenshots: (b.screenshots || []).map(s => origin + s.url).join('\n')
     });
 
@@ -306,7 +392,9 @@ router.get('/reports/excel', requireRole('developer'), async (req, res, next) =>
       ['Overdue (not completed, past 7-day deadline)', summary.overdue],
       ['Due within 2 days', summary.dueSoon.length],
       ...PRIORITIES.map(p => [`Priority: ${p}`, summary.byPriority[p]]),
-      ...SEVERITIES.map(s => [`Severity (tester): ${s}`, summary.bySeverity[s]])
+      ...SEVERITIES.map(s => [`Severity (reporter): ${s}`, summary.bySeverity[s]]),
+      ...CATEGORIES.map(c => [`Category: ${c}`, summary.byCategory[c]]),
+      ...REPORTERS.map(r => [`Reported by role: ${r}`, summary.byReporterRole[r]])
     ];
     rows.forEach(([metric, value]) => ws.addRow({ metric, value }));
     ws.getRow(9).font = { bold: true, color: { argb: 'FFB91C1C' } };
@@ -335,11 +423,16 @@ router.get('/', async (req, res, next) => {
   try {
     const now = new Date();
     const query = {};
-    if (!seesAllBugs(req)) {
+    if (!seesAllBugs(req) || (req.user.role === 'client' && req.query.mine === 'true')) {
       query.reportedBy = req.user.username;
-    } else if (req.query.tester) {
-      query.reportedBy = String(req.query.tester);
+      query.reporterRole = req.user.role === 'tester' ? { $ne: 'client' } : req.user.role;
+    } else {
+      if (req.query.tester) query.reportedBy = String(req.query.tester);
+      if (REPORTERS.includes(req.query.reporterRole)) {
+        query.reporterRole = req.query.reporterRole === 'tester' ? { $ne: 'client' } : 'client';
+      }
     }
+    if (req.query.category && CATEGORIES.includes(req.query.category)) query.category = req.query.category;
     const { status, priority, overdue, search } = req.query;
     if (status && STATUSES.includes(status)) query.status = status;
     if (priority && PRIORITIES.includes(priority)) query.priority = priority;
@@ -352,7 +445,7 @@ router.get('/', async (req, res, next) => {
     if (search && String(search).trim()) {
       const term = String(search).trim().slice(0, 100);
       const rx = new RegExp(escapeRegex(term), 'i');
-      const or = [{ title: rx }, { description: rx }, { affectedPage: rx }, { reportedBy: rx }, { assignedTo: rx }];
+      const or = [{ title: rx }, { description: rx }, { affectedPage: rx }, { reportedBy: rx }, { assignedTo: rx }, { affectedElement: rx }];
       const num = Number(term.replace(/^#|^bug-?/i, ''));
       if (Number.isInteger(num) && num > 0) or.push({ bugNumber: num });
       query.$and = [...(query.$and || []), { $or: or }];
@@ -372,10 +465,12 @@ router.get('/:id', async (req, res, next) => {
 
 // ─── Tester: create / edit / delete ─────────────────────────────────────────
 
-router.post('/', requireRole('tester'), handleUpload, async (req, res, next) => {
+router.post('/', requireRole(...REPORTERS), handleUpload, async (req, res, next) => {
   const files = req.files || [];
   try {
     const { errors, data } = validateReport(req.body || {});
+    const { context, error: contextError } = parseContext(req.body?.context);
+    if (contextError) errors.push(contextError);
     if (errors.length) {
       await removeScreenshotFiles(files.map(f => f.filename));
       return fail(res, 400, errors.join('; '));
@@ -384,10 +479,17 @@ router.post('/', requireRole('tester'), handleUpload, async (req, res, next) => 
     const bug = new Bug({
       ...data,
       bugNumber: await nextBugNumber(),
+      ...(context ? { context } : {}),
       screenshots: files.map(fileToScreenshot),
       reportedBy: req.user.username,
+      reporterRole: req.user.role,
       submittedAt: now,
-      history: [{ at: now, by: req.user.username, action: 'Reported', note: files.length ? `${files.length} screenshot(s) attached` : '' }]
+      history: [{
+        at: now,
+        by: req.user.username,
+        action: req.user.role === 'client' ? 'Reported by client admin' : 'Reported',
+        note: files.length ? `${files.length} screenshot(s) attached` : ''
+      }]
     });
     await bug.save();
     return res.status(201).json({ success: true, message: 'Bug reported successfully', bug: serializeBug(bug) });
@@ -397,11 +499,11 @@ router.post('/', requireRole('tester'), handleUpload, async (req, res, next) => 
   }
 });
 
-router.put('/:id', requireRole('tester'), handleUpload, async (req, res, next) => {
+router.put('/:id', requireRole(...REPORTERS), handleUpload, async (req, res, next) => {
   const files = req.files || [];
   const cleanup = () => removeScreenshotFiles(files.map(f => f.filename));
   try {
-    const bug = await findBugFor(req, res);
+    const bug = await findBugFor(req, res, { ownOnly: true });
     if (!bug) { await cleanup(); return undefined; }
     if (bug.status === 'completed') {
       await cleanup();
@@ -433,7 +535,7 @@ router.put('/:id', requireRole('tester'), handleUpload, async (req, res, next) =
     if (changed.length) notes.push(`Updated: ${changed.join(', ')}`);
     if (files.length) notes.push(`${files.length} screenshot(s) added`);
     if (removed.length) notes.push(`${removed.length} screenshot(s) removed`);
-    if (notes.length) bug.history.push({ at: new Date(), by: req.user.username, action: 'Edited by tester', note: notes.join('; ') });
+    if (notes.length) bug.history.push({ at: new Date(), by: req.user.username, action: req.user.role === 'client' ? 'Edited by client admin' : 'Edited by tester', note: notes.join('; ') });
     await bug.save();
     await removeScreenshotFiles(removed.map(s => s.filename));
     return res.json({ success: true, message: 'Bug updated', bug: serializeBug(bug) });
@@ -443,9 +545,9 @@ router.put('/:id', requireRole('tester'), handleUpload, async (req, res, next) =
   }
 });
 
-router.delete('/:id', requireRole('tester'), async (req, res, next) => {
+router.delete('/:id', requireRole(...REPORTERS), async (req, res, next) => {
   try {
-    const bug = await findBugFor(req, res);
+    const bug = await findBugFor(req, res, { ownOnly: true });
     if (!bug) return undefined;
     if (bug.status === 'completed') return fail(res, 409, 'Completed bugs cannot be deleted');
     await Bug.deleteOne({ _id: bug._id });

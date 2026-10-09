@@ -14,9 +14,11 @@ import { bugRequest, useRoleSession, downloadExcelReport } from '../../utils/bug
 import {
   RoleLogin, BugBadges, DeadlineText, ScreenshotGallery, HistoryList, Field, ErrorNote,
   Loading, SeverityBadge, useNow, formatDateTime,
-  bugCode, isOverdueAt, inputCls, btnPrimary, btnGhost, btnGreen, cardCls, BugList, BreakdownBars
+  bugCode, isOverdueAt, inputCls, btnPrimary, btnGhost, btnGreen, cardCls, BugList, BreakdownBars,
+  ReportExtraFields, TechnicalDetails
 } from './BugUi';
 import { AdminPage, AdminShellContext, StatCard } from '../../components/admin/AdminLayout';
+import { BUG_CATEGORIES } from '../../utils/bugReporting';
 
 const ROLE = 'developer';
 const BASE = '/admin/developer';
@@ -137,7 +139,7 @@ function DeveloperDashboard() {
               <StatCard label="Overdue" value={summary.overdue} Icon={AlertTriangle} tone="red" to={`${BASE}/overdue`} danger={summary.overdue > 0} />
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-4">
+            <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
               <section className={`${cardCls} p-5 space-y-4`}>
                 <h2 className="font-black text-[#123B92]">By status</h2>
                 <BreakdownBars rows={[
@@ -156,11 +158,24 @@ function DeveloperDashboard() {
                 }))} />
               </section>
               <section className={`${cardCls} p-5 space-y-4`}>
-                <h2 className="font-black text-[#123B92]">By severity (tester rating)</h2>
+                <h2 className="font-black text-[#123B92]">By severity (reporter rating)</h2>
                 <BreakdownBars rows={SEVERITIES.map(s => ({
                   label: label(s), value: summary.bySeverity[s],
                   tone: { low: 'slate', medium: 'blue', high: 'orange', critical: 'red' }[s]
                 }))} />
+                {summary.byReporterRole && (
+                  <p className="text-xs text-slate-500 pt-2 border-t border-slate-100">
+                    Reported by testers: <b>{summary.byReporterRole.tester}</b> · client admin: <b>{summary.byReporterRole.client}</b>
+                  </p>
+                )}
+              </section>
+              <section className={`${cardCls} p-5 space-y-4`}>
+                <h2 className="font-black text-[#123B92]">By category</h2>
+                <BreakdownBars rows={[
+                  ...BUG_CATEGORIES.map(([v, l]) => ({ label: l, value: summary.byCategory?.[v] || 0, tone: 'navy', onClick: () => navigate(`${BASE}/bugs?category=${v}`) })),
+                  ...(summary.byCategory?.uncategorised ? [{ label: 'Not categorised', value: summary.byCategory.uncategorised, tone: 'slate' }] : [])
+                ].filter(r => r.value > 0)} />
+                {!Object.values(summary.byCategory || {}).some(Boolean) && <p className="text-sm text-slate-500">No reports yet.</p>}
               </section>
             </div>
 
@@ -225,6 +240,7 @@ function BugsBrowser({ title, subtitle, fixed = {} }) {
     priority: params.get('priority') || '',
     overdue: fixed.overdue || params.get('overdue') || '',
     tester: params.get('tester') || '',
+    category: params.get('category') || '',
     search: params.get('search') || ''
   };
   const [searchText, setSearchText] = useState(filters.search);
@@ -268,7 +284,7 @@ function BugsBrowser({ title, subtitle, fixed = {} }) {
   useEffect(() => { const t = setInterval(load, 60000); return () => clearInterval(t); }, [load]);
   useEffect(() => { bugRequest(ROLE, '/bugs/meta').then(setMeta).catch(() => {}); }, []);
 
-  const userFilters = ['priority', 'tester', 'search', 'status', 'overdue'].filter(k => !fixed[k] && filters[k]);
+  const userFilters = ['priority', 'tester', 'category', 'search', 'status', 'overdue'].filter(k => !fixed[k] && filters[k]);
   const activeFilters = userFilters.length > 0;
 
   const actions = (
@@ -284,7 +300,7 @@ function BugsBrowser({ title, subtitle, fixed = {} }) {
     <AdminPage title={title} subtitle={subtitle} actions={actions}>
       <div className="space-y-5">
         <div className={`${cardCls} p-3 sm:p-4 space-y-3`}>
-          <div className="grid grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr_1fr] gap-2">
+          <div className="grid grid-cols-2 lg:grid-cols-[2fr_repeat(5,minmax(0,1fr))] gap-2">
             <div className="relative col-span-2 lg:col-span-1">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input className={`${inputCls} pl-9`} placeholder="Search title, page, tester, #number" value={searchText} onChange={e => setSearchText(e.target.value)} aria-label="Search bugs" />
@@ -308,8 +324,12 @@ function BugsBrowser({ title, subtitle, fixed = {} }) {
                 <option value="false">Not overdue</option>
               </select>
             )}
-            <select className={inputCls} value={filters.tester} onChange={e => setFilter('tester', e.target.value)} aria-label="Tester">
-              <option value="">All testers</option>
+            <select className={inputCls} value={filters.category} onChange={e => setFilter('category', e.target.value)} aria-label="Category">
+              <option value="">All categories</option>
+              {BUG_CATEGORIES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+            </select>
+            <select className={inputCls} value={filters.tester} onChange={e => setFilter('tester', e.target.value)} aria-label="Reporter">
+              <option value="">All reporters</option>
               {(meta.testers || []).map(t => <option key={t} value={t}>{t}</option>)}
             </select>
           </div>
@@ -428,6 +448,7 @@ function DeveloperBugDetail({ me }) {
                 <Field label="Deadline (7 days)"><span className="block">{formatDateTime(bug.deadline)}</span><DeadlineText bug={bug} now={now} /></Field>
                 {done && <Field label="Completed">{formatDateTime(bug.completedAt)} by {bug.completedBy}{bug.completedLate ? ' (after deadline)' : ''}</Field>}
                 <Field label="Environment">{bug.environment}</Field>
+                <ReportExtraFields bug={bug} />
                 <Field label="Description" wide>{bug.description}</Field>
                 <Field label="Steps to reproduce" wide>{bug.stepsToReproduce}</Field>
                 <Field label="Expected result">{bug.expectedResult}</Field>
@@ -438,6 +459,11 @@ function DeveloperBugDetail({ me }) {
               <h2 className="font-black text-[#123B92]">Screenshots ({bug.screenshots.length})</h2>
               <p className="text-xs text-slate-500">Click an image to open it full size.</p>
               <ScreenshotGallery screenshots={bug.screenshots} />
+            </section>
+            <section className={`${cardCls} p-5 sm:p-6 space-y-3`}>
+              <h2 className="font-black text-[#123B92]">Technical details</h2>
+              <p className="text-xs text-slate-500">Captured automatically by the reporter's browser.</p>
+              <TechnicalDetails context={bug.context} />
             </section>
             <section className={`${cardCls} p-5 sm:p-6 space-y-3`}>
               <h2 className="font-black text-[#123B92]">History</h2>

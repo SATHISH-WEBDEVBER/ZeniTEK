@@ -16,9 +16,12 @@ Base URL: `http://localhost:5000/api` in development (the frontend reads `VITE_A
 
 | Role | Who | Accounts (backend/.env) |
 |---|---|---|
-| `client` | Client Admin: website CMS, enquiries, reviews, read-only bug progress | `CLIENT_ADMIN_USERNAME` / `CLIENT_ADMIN_PASSWORD` |
+| `client` | Client Admin: website CMS, enquiries, reviews; reads every bug and reports bugs (edits / deletes only their own) | `CLIENT_ADMIN_USERNAME` / `CLIENT_ADMIN_PASSWORD` |
 | `developer` | Developer Admin: triage and fix bugs, Excel report | `DEVELOPER_USERS=user:pass,...` |
 | `tester` | Tester: report and track their own bugs | `TESTER_USERS=user:pass,...` |
+
+After signing in, testers and the client admin land on the public website, where a floating bug button
+(above the WhatsApp icon) takes a screenshot and opens a report drawer on the same page.
 
 ---
 
@@ -96,8 +99,12 @@ Bug object (as returned by every bug endpoint):
 
 ```text
 _id, bugNumber, title, description, affectedPage, stepsToReproduce, expectedResult, actualResult,
-severity (low|medium|high|critical, set by the tester), environment, screenshots: [{ _id, url, filename, originalName }],
-reportedBy, priority (unset|low|medium|high|critical, set by a developer), status (open|in-progress|completed),
+severity (low|medium|high|critical, set by the reporter), environment, screenshots: [{ _id, url, filename, originalName }],
+category (ui-design|functionality|content-text|translation|performance|broken-link|image-media|form|mobile-responsive|other),
+reproducibility (always|sometimes|once|unable|""), affectedElement, suggestedFix,
+context: { url, path, pageTitle, browser, os, deviceType (desktop|tablet|mobile), screen, viewport, pixelRatio,
+           language, scroll, online, userAgent, consoleErrors: [string, max 10], capturedAt }   (captured by the browser),
+reportedBy, reporterRole (tester|client), priority (unset|low|medium|high|critical, set by a developer), status (open|in-progress|completed),
 assignedTo, developerNotes, history: [{ at, by, action, note }], submittedAt, deadline (submittedAt + 7 days),
 completedAt, completedBy, completedLate, overdue, createdAt, updatedAt,
 computed: isOverdue, displayStatus (open|in-progress|completed|overdue), daysRemaining, hoursRemaining
@@ -107,20 +114,21 @@ Screenshots are served from `/uploads/bugs/<file>` (outside `/api`).
 
 | Method | Path | tester | developer | client | Request | Response |
 |---|---|---|---|---|---|---|
-| GET | `/api/bugs` | own bugs | all | all (read-only) | query: `status`, `priority`, `overdue=true\|false`, `tester`, `search` | `{ success, count, bugs }` |
-| GET | `/api/bugs/:id` | own only (else `404`) | yes | yes (read-only) | | `{ success, bug }` |
-| POST | `/api/bugs` | yes | `403` | `403` | multipart: `title`*, `description`*, `affectedPage`*, `stepsToReproduce`, `expectedResult`, `actualResult`, `severity`, `environment`, `screenshots` (up to 5 images, 5 MB each, PNG/JPG/WEBP/GIF) | `201 { success, message, bug }` |
-| PUT | `/api/bugs/:id` | own, not completed | `403` | `403` | multipart: any report field, new `screenshots`, `removeScreenshots` (JSON array of screenshot ids) | `{ success, message, bug }`, `409` if completed |
-| DELETE | `/api/bugs/:id` | own, not completed | `403` | `403` | | `{ success, message }`, `409` if completed |
+| GET | `/api/bugs` | own bugs | all | all (`?mine=true` = own reports) | query: `status`, `priority`, `overdue=true\|false`, `tester` (reporter username), `reporterRole`, `category`, `search` | `{ success, count, bugs }` |
+| GET | `/api/bugs/:id` | own only (else `404`) | yes | yes | | `{ success, bug }` |
+| POST | `/api/bugs` | yes | `403` | yes | multipart: `title`*, `description`*, `affectedPage`*, `category`*, `severity`*, `reproducibility`, `stepsToReproduce`, `expectedResult`, `actualResult`, `affectedElement`, `suggestedFix`, `environment`, `context` (JSON string, see above), `screenshots` (up to 5 images, 5 MB each, PNG/JPG/WEBP/GIF) | `201 { success, message, bug }`; `reportedBy` / `reporterRole` come from the token |
+| PUT | `/api/bugs/:id` | own, not completed | `403` | own, not completed | multipart: any report field, new `screenshots`, `removeScreenshots` (JSON array of screenshot ids) | `{ success, message, bug }`, `404` if not yours, `409` if completed |
+| DELETE | `/api/bugs/:id` | own, not completed | `403` | own, not completed | | `{ success, message }`, `404` if not yours, `409` if completed |
 | PATCH | `/api/bugs/:id` | `403` | yes | `403` | JSON: `priority`, `status`, `assignedTo` (developer username or `""`), `developerNotes`, `note` (adds a history entry) | `{ success, message, bug }` |
 | POST | `/api/bugs/:id/complete` | `403` | yes | `403` | JSON: `{ note? }` | `{ success, message, bug }`, `409` if already completed |
-| GET | `/api/bugs/meta` | `403` | yes | `403` | | `{ success, developers, testers, priorities, statuses, severities }` |
+| GET | `/api/bugs/meta` | `403` | yes | `403` | | `{ success, developers, testers, priorities, statuses, severities, categories, reproducibility }` |
 | GET | `/api/bugs/reports/summary` | `403` | yes | yes | | `{ success, summary }` (below) |
 | GET | `/api/bugs/reports/excel` | `403` | yes | `403` | | `.xlsx` file (sheets: All Bugs, Summary, Overdue, Completed) |
 
 ```text
 summary: { generatedAt, total, open, inProgress, completed, overdue, completedLate, completedOnTime,
            byPriority: { unset, low, medium, high, critical }, bySeverity: { low, medium, high, critical },
+           byCategory: { <category>: n, ..., uncategorised }, byReporterRole: { tester, client },
            byTester: [{ tester, total, completed, overdue }], dueSoon: [bug] }
 ```
 

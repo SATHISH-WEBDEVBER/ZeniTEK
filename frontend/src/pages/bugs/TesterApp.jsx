@@ -4,31 +4,33 @@
 //   /admin/tester/new            report a bug (?page=/some/path prefills "Affected page")
 //   /admin/tester/bugs/:id       report details
 //   /admin/tester/bugs/:id/edit  edit a report
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Routes, Route, Link, useNavigate, useParams, Navigate, useSearchParams } from 'react-router-dom';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Routes, Route, Link, useNavigate, useParams, Navigate, useSearchParams, useLocation } from 'react-router-dom';
 import {
-  Bug as BugIcon, Plus, Edit2, Trash2, Upload, X, RefreshCw, FileText, Search, Save, ClipboardList,
+  Bug as BugIcon, Plus, Edit2, Trash2, RefreshCw, FileText, Search, ClipboardList,
   LayoutDashboard, ListChecks, CircleDot, Timer, CheckCircle2, AlertTriangle, Globe
 } from 'lucide-react';
 import { bugRequest, useRoleSession, assetUrl } from '../../utils/bugApi';
 import {
   RoleLogin, BugBadges, DeadlineText, ScreenshotGallery, HistoryList, Field, ErrorNote,
-  Loading, SeverityBadge, usePageOptions, useNow, formatDateTime, bugCode, isOverdueAt,
-  inputCls, btnPrimary, btnGhost, btnDanger, cardCls
+  Loading, SeverityBadge, useNow, formatDateTime, bugCode, isOverdueAt,
+  inputCls, btnPrimary, btnGhost, btnDanger, cardCls, ReportExtraFields, TechnicalDetails
 } from './BugUi';
+import BugForm from './BugForm';
 import { AdminPage, AdminShellContext, StatCard } from '../../components/admin/AdminLayout';
 
 const ROLE = 'tester';
 const BASE = '/admin/tester';
-const MAX_FILES = 5;
-const MAX_SIZE = 5 * 1024 * 1024;
-const ACCEPT = 'image/png,image/jpeg,image/webp,image/gif';
-const OTHER = '__other__';
 
 export default function TesterApp() {
   const session = useRoleSession(ROLE);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   if (!session.session) {
-    return <RoleLogin title="Tester" subtitle="Report and track website bugs" Icon={BugIcon} session={session} />;
+    // After signing in from the portal's front door, go straight to the website to test it;
+    // a deep link (e.g. a report page) stays where it is.
+    const afterLogin = () => { if (pathname.replace(/\/+$/, '') === BASE) navigate('/'); };
+    return <RoleLogin title="Tester" subtitle="Sign in, then test the website. Use the bug button above the WhatsApp icon to report problems." Icon={BugIcon} session={session} afterLogin={afterLogin} />;
   }
   const shell = {
     roleTitle: 'Tester',
@@ -47,9 +49,9 @@ export default function TesterApp() {
       <Routes>
         <Route index element={<TesterDashboard />} />
         <Route path="bugs" element={<MyBugs />} />
-        <Route path="new" element={<BugForm />} />
+        <Route path="new" element={<BugForm role={ROLE} listPath={`${BASE}/bugs`} detailPath={id => `${BASE}/bugs/${id}`} />} />
         <Route path="bugs/:id" element={<TesterBugDetail />} />
-        <Route path="bugs/:id/edit" element={<BugForm editing />} />
+        <Route path="bugs/:id/edit" element={<BugForm editing role={ROLE} listPath={`${BASE}/bugs`} detailPath={id => `${BASE}/bugs/${id}`} />} />
         <Route path="*" element={<Navigate to={BASE} replace />} />
       </Routes>
     </AdminShellContext.Provider>
@@ -142,8 +144,8 @@ function TesterDashboard() {
               <section className={`${cardCls} p-5 space-y-3`}>
                 <h2 className="font-black text-[#123B92]">Testing the website</h2>
                 <p className="text-sm text-slate-600">
-                  While you are signed in, every website page shows a <b>Report a bug</b> button in the bottom-left corner.
-                  It opens the report form with the page already filled in.
+                  While you are signed in, every website page shows a round <b>bug button</b> just above the WhatsApp icon.
+                  It takes a screenshot of what you see and opens the report form on the same page.
                 </p>
                 <a href="/" target="_blank" rel="opener" className={`${btnGhost} w-full`}><Globe className="w-4 h-4" /> Open the website</a>
               </section>
@@ -331,9 +333,14 @@ function TesterBugDetail() {
             <Field label="Expected result">{bug.expectedResult}</Field>
             <Field label="Actual result">{bug.actualResult}</Field>
             <Field label="Environment (browser / device)" wide>{bug.environment}</Field>
+            <ReportExtraFields bug={bug} />
             {bug.developerNotes && <Field label="Developer notes" wide>{bug.developerNotes}</Field>}
           </dl>
         </div>
+        <section className={`${cardCls} p-5 sm:p-6 space-y-3`}>
+          <h2 className="font-black text-[#123B92]">Technical details</h2>
+          <TechnicalDetails context={bug.context} />
+        </section>
         <section className={`${cardCls} p-5 sm:p-6 space-y-3`}>
           <h2 className="font-black text-[#123B92]">Screenshots ({bug.screenshots.length})</h2>
           <ScreenshotGallery screenshots={bug.screenshots} />
@@ -345,236 +352,4 @@ function TesterBugDetail() {
       </div>
     </AdminPage>
   );
-}
-
-/* ─── Create / edit form ──────────────────────────────────────────────────── */
-const EMPTY = {
-  title: '', affectedPage: '/', description: '', stepsToReproduce: '', expectedResult: '',
-  actualResult: '', severity: 'medium', environment: ''
-};
-
-/** "?page=/gallery?x=1" -> a safe path to prefill (same-site paths only) */
-function pageFromQuery(value) {
-  if (!value || typeof value !== 'string') return '';
-  const v = value.trim().slice(0, 500);
-  return v.startsWith('/') && !v.startsWith('//') ? v : '';
-}
-
-function BugForm({ editing = false }) {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [params] = useSearchParams();
-  const pageOptions = usePageOptions();
-  const fileInput = useRef(null);
-  const prefillPage = editing ? '' : pageFromQuery(params.get('page'));
-
-  const [form, setForm] = useState(EMPTY);
-  const [pageChoice, setPageChoice] = useState('/');
-  const [existing, setExisting] = useState([]);
-  const [removeIds, setRemoveIds] = useState([]);
-  const [files, setFiles] = useState([]); // { file, url }
-  const [loading, setLoading] = useState(editing);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    if (!editing) {
-      setForm(f => ({ ...f, environment: f.environment || guessEnvironment() }));
-      if (prefillPage) {
-        // A listed page is picked in the dropdown; anything else (query strings, detail pages) goes in "Other"
-        if (pageOptions.some(o => o.value === prefillPage)) setPageChoice(prefillPage);
-        else { setPageChoice(OTHER); setForm(f => ({ ...f, affectedPage: prefillPage })); }
-      }
-      return undefined;
-    }
-    // Ignore responses from a superseded load so they never overwrite what the user typed
-    let cancelled = false;
-    bugRequest(ROLE, `/bugs/${id}`)
-      .then(({ bug }) => {
-        if (cancelled) return;
-        if (bug.status === 'completed') { navigate(`${BASE}/bugs/${id}`, { replace: true }); return; }
-        setForm(Object.fromEntries(Object.keys(EMPTY).map(k => [k, bug[k] || ''])));
-        setPageChoice(pageOptions.some(o => o.value === bug.affectedPage) ? bug.affectedPage : OTHER);
-        setExisting(bug.screenshots);
-        setLoading(false);
-      })
-      .catch(err => { if (!cancelled) { setError(err.message); setLoading(false); } });
-    return () => { cancelled = true; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editing, id, prefillPage]);
-
-  // Revoke preview URLs on unmount
-  const filesRef = useRef(files);
-  filesRef.current = files;
-  useEffect(() => () => filesRef.current.forEach(f => URL.revokeObjectURL(f.url)), []);
-
-  const set = key => e => setForm(f => ({ ...f, [key]: e.target.value }));
-  const keptCount = existing.filter(s => !removeIds.includes(s._id)).length;
-  const slotsLeft = MAX_FILES - keptCount - files.length;
-
-  const addFiles = list => {
-    setError('');
-    const picked = Array.from(list || []);
-    const problems = [];
-    const ok = [];
-    for (const file of picked) {
-      if (!ACCEPT.split(',').includes(file.type)) problems.push(`${file.name}: not a PNG/JPG/WEBP/GIF image`);
-      else if (file.size > MAX_SIZE) problems.push(`${file.name}: larger than 5 MB`);
-      else ok.push(file);
-    }
-    if (ok.length > slotsLeft) problems.push(`Only ${MAX_FILES} screenshots per bug — ${ok.length - Math.max(slotsLeft, 0)} not added`);
-    const accepted = ok.slice(0, Math.max(slotsLeft, 0)).map(file => ({ file, url: URL.createObjectURL(file) }));
-    setFiles(prev => [...prev, ...accepted]);
-    if (problems.length) setError(problems.join('. '));
-    if (fileInput.current) fileInput.current.value = '';
-  };
-
-  const submit = async e => {
-    e.preventDefault();
-    const affectedPage = (pageChoice === OTHER ? form.affectedPage : pageChoice).trim();
-    if (!form.title.trim() || !form.description.trim() || !affectedPage) {
-      setError('Title, affected page and description are required.');
-      return;
-    }
-    setSaving(true);
-    setError('');
-    const fd = new FormData();
-    Object.entries({ ...form, affectedPage }).forEach(([k, v]) => fd.append(k, v));
-    files.forEach(f => fd.append('screenshots', f.file, f.file.name));
-    if (editing && removeIds.length) fd.append('removeScreenshots', JSON.stringify(removeIds));
-    try {
-      const data = await bugRequest(ROLE, editing ? `/bugs/${id}` : '/bugs', { method: editing ? 'PUT' : 'POST', form: fd });
-      navigate(`${BASE}/bugs/${data.bug._id}`, { replace: editing });
-    } catch (err) {
-      setError(err.message);
-      setSaving(false);
-    }
-  };
-
-  const back = editing ? { to: `${BASE}/bugs/${id}`, label: 'Back to report' } : { to: `${BASE}/bugs`, label: 'My bugs' };
-  const title = editing ? 'Edit Bug Report' : 'Report a Bug';
-  if (loading) return <AdminPage title={title} back={back}><Loading /></AdminPage>;
-
-  const fieldLabel = (text, required) => (
-    <span className="block text-xs font-bold text-slate-700 mb-1">{text}{required && <span className="text-red-600"> *</span>}</span>
-  );
-
-  return (
-    <AdminPage title={title} subtitle="Describe what went wrong so a developer can reproduce and fix it." back={back}>
-      <form onSubmit={submit} className={`${cardCls} p-5 sm:p-6 space-y-5 max-w-4xl`} noValidate>
-        {prefillPage && (
-          <p className="text-xs text-[#123B92] bg-blue-50 rounded-xl px-3 py-2 break-words">
-            Reporting from <b>{prefillPage}</b>. The affected page has been filled in for you.
-          </p>
-        )}
-        <label className="block">
-          {fieldLabel('Title', true)}
-          <input className={inputCls} value={form.title} onChange={set('title')} maxLength={200} placeholder="e.g. Quote form does not submit on mobile" required />
-        </label>
-
-        <div className="grid sm:grid-cols-2 gap-4">
-          <label className="block min-w-0">
-            {fieldLabel('Affected page', true)}
-            <select className={inputCls} value={pageChoice} onChange={e => setPageChoice(e.target.value)} name="affectedPageChoice">
-              {pageOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-              <option value={OTHER}>Other page / full URL…</option>
-            </select>
-          </label>
-          <label className="block min-w-0">
-            {fieldLabel('Severity')}
-            <select className={inputCls} value={form.severity} onChange={set('severity')}>
-              <option value="low">Low — cosmetic / minor</option>
-              <option value="medium">Medium — something works incorrectly</option>
-              <option value="high">High — a main feature is broken</option>
-              <option value="critical">Critical — site unusable / data loss</option>
-            </select>
-          </label>
-        </div>
-        {pageChoice === OTHER && (
-          <label className="block">
-            {fieldLabel('Page path or URL', true)}
-            <input className={inputCls} name="affectedPage" value={form.affectedPage === '/' ? '' : form.affectedPage} onChange={set('affectedPage')} maxLength={500} placeholder="/installations/12 or https://zenitek.in/…" />
-          </label>
-        )}
-
-        <label className="block">
-          {fieldLabel('Description', true)}
-          <textarea className={`${inputCls} min-h-[110px]`} value={form.description} onChange={set('description')} maxLength={5000} placeholder="What is the problem?" required />
-        </label>
-        <label className="block">
-          {fieldLabel('Steps to reproduce')}
-          <textarea className={`${inputCls} min-h-[90px]`} value={form.stepsToReproduce} onChange={set('stepsToReproduce')} maxLength={5000} placeholder={'1. Open the page\n2. Click …\n3. …'} />
-        </label>
-        <div className="grid sm:grid-cols-2 gap-4">
-          <label className="block">
-            {fieldLabel('Expected result')}
-            <textarea className={`${inputCls} min-h-[70px]`} value={form.expectedResult} onChange={set('expectedResult')} maxLength={2000} />
-          </label>
-          <label className="block">
-            {fieldLabel('Actual result')}
-            <textarea className={`${inputCls} min-h-[70px]`} value={form.actualResult} onChange={set('actualResult')} maxLength={2000} />
-          </label>
-        </div>
-        <label className="block">
-          {fieldLabel('Environment (browser / device)')}
-          <input className={inputCls} name="environment" value={form.environment} onChange={set('environment')} maxLength={300} placeholder="e.g. Chrome 130 on Android, 390px wide" />
-        </label>
-
-        <div className="space-y-2">
-          {fieldLabel(`Screenshots (up to ${MAX_FILES}, 5 MB each)`)}
-          <div className="flex flex-wrap gap-3">
-            {existing.filter(s => !removeIds.includes(s._id)).map(s => (
-              <Thumb key={s._id} src={assetUrl(s.url)} name={s.originalName} onRemove={() => setRemoveIds(r => [...r, s._id])} />
-            ))}
-            {files.map((f, i) => (
-              <Thumb key={f.url} src={f.url} name={f.file.name} isNew onRemove={() => { URL.revokeObjectURL(f.url); setFiles(prev => prev.filter((_, j) => j !== i)); }} />
-            ))}
-            {slotsLeft > 0 && (
-              <button
-                type="button"
-                onClick={() => fileInput.current?.click()}
-                onDragOver={e => e.preventDefault()}
-                onDrop={e => { e.preventDefault(); addFiles(e.dataTransfer.files); }}
-                className="w-28 h-24 rounded-xl border-2 border-dashed border-slate-300 hover:border-[#002DC2] text-slate-500 hover:text-[#002DC2] flex flex-col items-center justify-center gap-1 text-xs font-bold cursor-pointer transition-colors"
-              >
-                <Upload className="w-5 h-5" /> Add image
-              </button>
-            )}
-          </div>
-          <input ref={fileInput} type="file" accept={ACCEPT} multiple className="hidden" onChange={e => addFiles(e.target.files)} data-testid="screenshot-input" />
-          {removeIds.length > 0 && <p className="text-xs text-amber-700">{removeIds.length} existing screenshot(s) will be removed when you save.</p>}
-        </div>
-
-        <ErrorNote>{error}</ErrorNote>
-        <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
-          <button type="submit" disabled={saving} className={btnPrimary}>
-            {editing ? <Save className="w-4 h-4" /> : <BugIcon className="w-4 h-4" />}
-            {saving ? 'Saving…' : editing ? 'Save Changes' : 'Submit Bug Report'}
-          </button>
-          <Link to={back.to} className={btnGhost}>Cancel</Link>
-        </div>
-      </form>
-    </AdminPage>
-  );
-}
-
-function Thumb({ src, name, onRemove, isNew }) {
-  return (
-    <div className="relative w-28 h-24 rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
-      <img src={src} alt={name || 'Screenshot'} className="w-full h-full object-cover" />
-      {isNew && <span className="absolute left-1 top-1 rounded bg-[#23AC39] px-1.5 py-0.5 text-[10px] font-bold text-white">NEW</span>}
-      <button type="button" onClick={onRemove} title="Remove" aria-label={`Remove ${name || 'screenshot'}`}
-        className="absolute right-1 top-1 w-6 h-6 rounded-full bg-black/60 hover:bg-red-600 text-white flex items-center justify-center cursor-pointer">
-        <X className="w-4 h-4" />
-      </button>
-    </div>
-  );
-}
-
-function guessEnvironment() {
-  const ua = navigator.userAgent;
-  const browser = /Edg\//.test(ua) ? 'Edge' : /Chrome\//.test(ua) ? 'Chrome' : /Firefox\//.test(ua) ? 'Firefox' : /Safari\//.test(ua) ? 'Safari' : 'Browser';
-  const version = (/(?:Edg|Chrome|Firefox|Version)\/(\d+)/.exec(ua) || [])[1];
-  const os = /Android/.test(ua) ? 'Android' : /iPhone|iPad/.test(ua) ? 'iOS' : /Windows/.test(ua) ? 'Windows' : /Mac OS/.test(ua) ? 'macOS' : /Linux/.test(ua) ? 'Linux' : '';
-  return `${browser}${version ? ` ${version}` : ''}${os ? ` on ${os}` : ''}, ${window.innerWidth}×${window.innerHeight} viewport`;
 }
