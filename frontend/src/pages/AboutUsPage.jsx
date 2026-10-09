@@ -431,9 +431,9 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     </span>
 
                     <div className="absolute bottom-4 inset-x-4 sm:bottom-5 sm:inset-x-5 text-white">
-                      <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[#23AC39] text-xs sm:text-sm font-bold mb-1.5">
-                        <Icon className="w-4 h-4 shrink-0" />
-                        <span className="text-white font-black whitespace-nowrap">{domain.metric}</span>
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-white/90 text-xs sm:text-sm font-bold mb-1.5 drop-shadow">
+                        <Icon className="w-4 h-4 shrink-0 text-[#23AC39]" />
+                        <span className="text-[#23AC39] font-black whitespace-nowrap">{domain.metric}</span>
                         <span>{domain.metricLabel}</span>
                       </div>
                       <h3 className="text-2xl font-black text-white leading-tight">
