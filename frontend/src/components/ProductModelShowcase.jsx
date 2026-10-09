@@ -282,7 +282,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
                     capacityNeeded: currentProduct.quoteCategory,
                     message: `Inquiry for ${currentProduct.name} (${currentProduct.capacity})`
                   })}
-                  className="px-7 py-3 sm:px-9 sm:py-3.5 bg-[#002DC2] hover:bg-[#123B92] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xl transition-all active:scale-95 cursor-pointer flex items-center justify-center"
+                  className="px-4 xs:px-5 py-3 sm:px-9 sm:py-3.5 leading-snug text-center bg-[#002DC2] hover:bg-[#123B92] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xl transition-all active:scale-95 cursor-pointer flex items-center justify-center"
                 >
                   {t('common_showcase_getQuote')}
                 </button>
@@ -291,7 +291,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
                 <button
                   type="button"
                   onClick={() => onOpenDetailModal && onOpenDetailModal(currentProduct)}
-                  className="px-7 py-3 sm:px-9 sm:py-3.5 bg-white hover:bg-slate-100 text-[#123B92] font-bold text-xs sm:text-sm rounded-xl shadow-xl transition-all active:scale-95 cursor-pointer flex items-center justify-center"
+                  className="px-4 xs:px-5 py-3 sm:px-9 sm:py-3.5 leading-snug text-center bg-white hover:bg-slate-100 text-[#123B92] font-bold text-xs sm:text-sm rounded-xl shadow-xl transition-all active:scale-95 cursor-pointer flex items-center justify-center"
                 >
                   {t('common_showcase_learnMore')}
                 </button>

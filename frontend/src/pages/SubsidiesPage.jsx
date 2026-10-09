@@ -46,64 +46,27 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
     subsidyPercent = 40;
   }
 
-  const subsidySchemes = [
-    {
-      title: "State Horticulture Mission (MIDH / SHM)",
-      coverage: "40% – 50% Direct Capital Subsidy",
-      target: "Farmers, FPOs, Agri-Entrepreneurs",
-      description: "Direct back-ended capital subsidy under Mission for Integrated Development of Horticulture for solar polyhouse and tunnel dryers.",
-      criteria: ["Farmer Land Ownership (Patta / Chitta)", "Aadhaar Card & Bank Account", "MNRE Approved Dryer Quotation (Provided by ZeniTEK)"]
-    },
-    {
-      title: "Ministry of New & Renewable Energy (MNRE)",
-      coverage: "Direct Enlisted Manufacturer Subsidy",
-      target: "Pan-India Agricultural Beneficiaries",
-      description: "Central government subsidy for decentralized renewable solar thermal applications and food dehydration equipment.",
-      criteria: ["Manufacturer must be MNRE Enlisted (ZeniTEK is Enlisted)", "Valid Soil & Water Test (if required)", "Photographic Geo-tagged Installation"]
-    },
-    {
-      title: "Agriculture Infrastructure Fund (AIF)",
-      coverage: "3% Interest Subvention + Credit Guarantee",
-      target: "Agri-Entrepreneurs, Startups, PACS & FPOs",
-      description: "Financing facility for post-harvest management infrastructure with collateral-free loans up to ₹2 Crore under CGTMSE.",
-      criteria: ["Viable Post-Harvest Processing Proposal", "Bank DPR Approval Assistance", "Joint Inspection Verification"]
-    },
-    {
-      title: "PM-FME & MSME Food Processing Scheme",
-      coverage: "35% – 50% Subsidy (Up to ₹10 Lakhs)",
-      target: "Micro Food Processing Units & SHGs",
-      description: "Credit-linked capital subsidy for establishing micro food processing enterprises, drying spices, fruits, vegetables, and herbal tea.",
-      criteria: ["Existing or New Micro Enterprise", "10% Beneficiary Contribution", "FSSAI Registration Assistance"]
-    }
-  ];
+  // Scheme cards and steps: text lives in src/i18n/sections.js (sections_scheme<N>_* / sections_step<N>_*)
+  const subsidySchemes = [1, 2, 3, 4].map((n) => ({
+    title: t(`sections_scheme${n}_title`),
+    coverage: t(`sections_scheme${n}_coverage`),
+    target: t(`sections_scheme${n}_target`),
+    description: t(`sections_scheme${n}_desc`),
+    criteria: [1, 2, 3].map((c) => t(`sections_scheme${n}_c${c}`))
+  }));
 
-  const subsidySteps = [
-    {
-      step: "01",
-      title: "Select Model & Get Official Quote",
-      desc: "Our engineering team provides an official MNRE-compliant technical specification and GST invoice quotation."
-    },
-    {
-      step: "02",
-      title: "DPR & Document Preparation",
-      desc: "ZeniTEK prepares the Detailed Project Report (DPR), technical layout drawing, and required documentation."
-    },
-    {
-      step: "03",
-      title: "Government Portal Submission",
-      desc: "Submit application to the State Horticulture/Agriculture Department with full end-to-end guidance from our liaisons."
-    },
-    {
-      step: "04",
-      title: "Manufacturing & Installation",
-      desc: "ZeniTEK installs the complete solar dryer on your farm foundation with GPS geo-tagging and test batch runs."
-    },
-    {
-      step: "05",
-      title: "Department Inspection & Direct Credit",
-      desc: "Government officials conduct field verification, and the subsidy amount is directly credited to your bank account."
-    }
-  ];
+  const subsidySteps = [1, 2, 3, 4, 5].map((n) => ({
+    step: `0${n}`,
+    title: t(`sections_step${n}_title`),
+    desc: t(`sections_step${n}_desc`)
+  }));
+
+  // Display name of the selected state (the select value stays English for the enquiry message)
+  const STATE_KEYS = {
+    'Tamil Nadu': 'TN', 'Karnataka': 'KA', 'Kerala': 'KL', 'Maharashtra': 'MH',
+    'Andhra Pradesh': 'AP', 'All India': 'ALL'
+  };
+  const stateName = STATE_KEYS[calcState] ? t(`sections_state_${STATE_KEYS[calcState]}`) : calcState;
 
   return (
     <div className="text-slate-900 min-h-screen bg-white">
@@ -111,16 +74,16 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
       {/* SECTION 1: HERO HEADER (background photo, left-aligned heading) */}
       <PageHero
         images="/real-photos/zenitek_photo_33.jpeg"
-        badge={<><Landmark className="w-4 h-4 text-[#002DC2] shrink-0" /><span className="text-balance">Govt of India & State Department Schemes</span></>}
-        title={<>Government Subsidies for <br /><span className="text-[#002DC2]">ZeniTEK Solar Dryers{' '}<span className="whitespace-nowrap">(40% – 60%)</span></span></>}
-        subtitle={<>ZeniTEK is an <strong>MNRE Enlisted & ISO 9001:2015 Certified</strong> manufacturer. Our solar drying systems are eligible for central and state capital subsidies across Tamil Nadu, Karnataka, Kerala, Maharashtra, and all Indian states.</>}
+        badge={<><Landmark className="w-4 h-4 text-[#002DC2] shrink-0" /><span className="text-balance">{t('sections_subHeroBadge')}</span></>}
+        title={<>{t('sections_subHeroTitle1')} <br /><span className="text-[#002DC2]">{t('sections_subHeroTitle2')}{' '}<span className="whitespace-nowrap">(40% – 60%)</span></span></>}
+        subtitle={<>{t('sections_subHeroSubPre')} <strong>{t('sections_subHeroSubStrong')}</strong> {t('sections_subHeroSubPost')}</>}
         actions={<>
           <button
             type="button"
             onClick={() => onOpenQuoteModal({ capacityNeeded: "Subsidy Assistance", message: "I want subsidy assistance for ZeniTEK Solar Dryer." })}
             className="px-6 py-3.5 bg-[#23AC39] hover:bg-[#1f9632] text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer hover:shadow-xl active:scale-95"
           >
-            <span>Check My Subsidy Eligibility</span>
+            <span>{t('sections_checkEligibility')}</span>
             <ArrowRight className="w-4 h-4 shrink-0" />
           </button>
           <a
@@ -131,7 +94,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
             }}
             className="px-6 py-3.5 bg-white hover:bg-slate-50 border-2 border-[#123B92] text-[#123B92] font-black text-xs uppercase tracking-wider rounded-xl shadow-sm transition-all flex items-center justify-center gap-2"
           >
-            <span>View Schemes & Guidelines</span>
+            <span>{t('sections_viewSchemes')}</span>
           </a>
         </>}
       />
@@ -147,10 +110,10 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
               </div>
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
-              Instant State Subsidy Estimator
+              {t('sections_estTitle')}
             </h2>
             <p className="text-base sm:text-lg text-slate-600">
-              Select your state and beneficiary profile to calculate eligible subsidy assistance.
+              {t('sections_estSub')}
             </p>
           </div>
 
@@ -159,53 +122,53 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div className="lg:col-span-2">
                 <label className="block text-xs font-bold text-[#123B92] uppercase tracking-wider mb-1.5">
-                  State / Region
+                  {t('sections_stateRegion')}
                 </label>
                 <WrapSelect
-                  ariaLabel="State / Region"
+                  ariaLabel={t('sections_stateRegion')}
                   value={calcState}
                   onChange={(e) => setCalcState(e.target.value)}
                   options={[
-                    ["Tamil Nadu", "Tamil Nadu (Horticulture & TEDA)"],
-                    ["Karnataka", "Karnataka (KREDL & Dept of Agri)"],
-                    ["Kerala", "Kerala (ANERT & Agri Dept)"],
-                    ["Maharashtra", "Maharashtra (MEDA & MahaAgri)"],
-                    ["Andhra Pradesh", "Andhra Pradesh / Telangana"],
-                    ["All India", "Other Indian States (Central Schemes)"],
+                    ["Tamil Nadu", t('sections_optTN')],
+                    ["Karnataka", t('sections_optKA')],
+                    ["Kerala", t('sections_optKL')],
+                    ["Maharashtra", t('sections_optMH')],
+                    ["Andhra Pradesh", t('sections_state_APTS')],
+                    ["All India", t('sections_optOther')],
                   ]}
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-[#123B92] uppercase tracking-wider mb-1.5">
-                  Product Capacity Needed
+                  {t('sections_capacityNeeded')}
                 </label>
                 <WrapSelect
-                  ariaLabel="Product Capacity Needed"
+                  ariaLabel={t('sections_capacityNeeded')}
                   value={calcModel}
                   onChange={(e) => setCalcModel(e.target.value)}
                   options={[
-                    ["SUNDRY 50 (50-100 kg)", "SUNDRY 50 Commercial Box (50–100 kg)"],
-                    ["SOLDRY 1210 (Commercial)", "SOLDRY 1210 Polyhouse Tunnel (150–500 kg)"],
-                    ["SOLDRY 1709 (Parabolic)", "SOLDRY 1709 Parabolic Tunnel (400–1200 kg)"],
-                    ["Industrial Multi-Tunnel (1 Ton+)", "Industrial Multi-Tunnel Plant (1 Ton+)"],
+                    ["SUNDRY 50 (50-100 kg)", t('sections_subModel1')],
+                    ["SOLDRY 1210 (Commercial)", t('sections_subModel2')],
+                    ["SOLDRY 1709 (Parabolic)", t('sections_subModel3')],
+                    ["Industrial Multi-Tunnel (1 Ton+)", t('sections_subModel4')],
                   ]}
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-[#123B92] uppercase tracking-wider mb-1.5">
-                  Beneficiary Category
+                  {t('sections_beneficiaryCategory')}
                 </label>
                 <WrapSelect
-                  ariaLabel="Beneficiary Category"
+                  ariaLabel={t('sections_beneficiaryCategory')}
                   value={calcFarmerType}
                   onChange={(e) => setCalcFarmerType(e.target.value)}
                   options={[
-                    ["Small / Marginal Farmer", "Small / Marginal Farmer (50% Subsidy)"],
-                    ["SC / ST / Women Farmer", "SC / ST / Women Farmer (60% Subsidy)"],
-                    ["FPO / SHG Group", "FPO / SHG / Cooperative (60% Subsidy)"],
-                    ["General Commercial Exporter", "General Agri-Business / Exporter (40% Subsidy)"],
+                    ["Small / Marginal Farmer", t('sections_farmerSmall')],
+                    ["SC / ST / Women Farmer", t('sections_farmerSc')],
+                    ["FPO / SHG Group", t('sections_farmerFpo')],
+                    ["General Commercial Exporter", t('sections_farmerGeneral')],
                   ]}
                 />
               </div>
@@ -215,13 +178,13 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
             <div className="bg-gradient-to-br from-[#123B92] via-[#0D2E73] to-[#0A225C] text-white p-5 rounded-2xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 shadow-lg">
               <div>
                 <div className="text-xs text-white/85 uppercase font-bold tracking-wider">
-                  Estimated Subsidy Coverage
+                  {t('sections_estCoverage')}
                 </div>
                 <div className="text-2xl sm:text-3xl font-black text-[#23AC39] leading-tight text-balance">
-                  {subsidyPercent}% Government Assistance
+                  {t('sections_estPercent', { percent: subsidyPercent })}
                 </div>
                 <div className="text-sm text-white/80 mt-1">
-                  Valid for {calcState} under National & State Horticulture Mission
+                  {t('sections_estValid', { state: stateName })}
                 </div>
               </div>
 
@@ -233,7 +196,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
                 })}
                 className="w-full sm:w-auto px-6 py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all shrink-0 cursor-pointer flex items-center justify-center space-x-1.5"
               >
-                <span>Apply with ZeniTEK</span>
+                <span>{t('sections_applyZenitek')}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -249,10 +212,10 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
           
           <div className="text-center max-w-3xl mx-auto space-y-2">
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">
-              Available Central & State Subsidy Schemes
+              {t('sections_schemesTitle')}
             </h2>
             <p className="text-base sm:text-lg text-slate-600 font-medium">
-              ZeniTEK equipment complies with all MNRE and state nodal agency specifications.
+              {t('sections_schemesSub')}
             </p>
           </div>
 
@@ -268,7 +231,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
                       {scheme.title}
                     </h3>
                     <div className="text-sm text-slate-500 font-semibold mt-1">
-                      Target: {scheme.target}
+                      {t('sections_schemeTarget', { target: scheme.target })}
                     </div>
                   </div>
                 </div>
@@ -278,7 +241,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
                 </p>
 
                 <div className="pt-3 border-t border-slate-100 space-y-2">
-                  <div className="text-xs font-bold uppercase text-slate-600">Key Requirements:</div>
+                  <div className="text-xs font-bold uppercase text-slate-600">{t('sections_keyReq')}</div>
                   {scheme.criteria.map((c, idx) => (
                     <div key={idx} className="flex items-start text-sm text-slate-800 leading-snug">
                       <CheckCircle2 className="w-4 h-4 text-[#23AC39] mr-2 mt-0.5 shrink-0" />
@@ -300,10 +263,10 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
           
           <div className="text-center max-w-3xl mx-auto space-y-2">
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">
-              How ZeniTEK Handles Your Subsidy <span className="whitespace-nowrap">End-to-End</span>
+              {t('sections_stepsTitle')}
             </h2>
             <p className="text-base sm:text-lg text-slate-600 font-medium">
-              We eliminate paperwork friction so you receive maximum government benefits without delays.
+              {t('sections_stepsSub')}
             </p>
           </div>
 
@@ -327,17 +290,17 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
           <div className="bg-[#123B92] text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="space-y-1 text-center md:text-left">
               <h3 className="text-2xl font-black text-white">
-                Have questions about your state subsidy or paperwork?
+                {t('sections_ctaQ')}
               </h3>
               <p className="text-sm text-white/85">
-                Speak directly with ZeniTEK's Government Scheme Documentation Specialist today.
+                {t('sections_ctaQSub')}
               </p>
             </div>
             <button
               onClick={() => onOpenQuoteModal({ capacityNeeded: "Subsidy Consultation", message: "I want a free telephone consultation regarding government subsidy for solar dryer." })}
               className="w-full md:w-auto px-8 py-3.5 bg-[#23AC39] hover:bg-[#1f9632] text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-lg transition-all shrink-0 cursor-pointer text-balance md:whitespace-nowrap"
             >
-              Get Free Subsidy Consultation
+              {t('sections_freeConsult')}
             </button>
           </div>
 

@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { fetchPublicSection } from '../utils/api';
 import { defaultSectionsData } from '../data/defaultSectionsData';
 import { useLanguage } from '../context/LanguageContext';
+import sectionsText from '../i18n/sections';
 import { brochures } from '../data/brochuresData';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import PageHero from '../components/PageHero';
@@ -22,65 +23,32 @@ const HERO_BACKGROUNDS = {
   'technical-spec-sheets': '/real-photos/zenitek_photo_10.jpeg',
 };
 
-// Per-slug copy for the generic section headers and the bottom CTA
-const SECTION_COPY = {
-  'solar-thermal-system': {
-    highlightsEyebrow: 'Engineered Excellence',
-    highlightsTitle: 'Key Capabilities & Impact',
-    overviewTitle: 'Technical Overview & Operations',
-    overviewSubtitle: 'Engineering design and operating methodology',
-    ctaTitle: 'Ready to Upgrade to High-Efficiency Solar Thermal?',
-    ctaBody: 'Our engineering team provides end-to-end site assessment, solar thermal sizing, MNRE subsidy processing, and commissioning.'
-  },
-  'agri-solar-innovation': {
-    highlightsEyebrow: 'Farmer Impact',
-    highlightsTitle: 'Key Benefits for Growers',
-    overviewTitle: 'How Agri-Solar Drying Works',
-    overviewSubtitle: 'From open-yard losses to export-ready produce',
-    ctaTitle: 'Ready to Bring Agri-Solar Drying to Your Farm?',
-    ctaBody: 'Our engineering team provides site assessment, dryer sizing for your crops, MNRE subsidy processing, and commissioning.'
-  },
-  'photovoltaic-solutions': {
-    highlightsEyebrow: 'Self-Powered Operation',
-    highlightsTitle: 'Key Capabilities & Impact',
-    overviewTitle: 'Technical Overview & Operations',
-    overviewSubtitle: 'Solar PV integration, blowers, and energy storage',
-    ctaTitle: 'Ready to Run Your Dryer on Solar Power?',
-    ctaBody: 'Our engineering team provides site assessment, PV and blower sizing, MNRE subsidy processing, and commissioning.'
-  },
-  'government-subsidies': {
-    highlightsEyebrow: 'Eligible Schemes',
-    highlightsTitle: 'Subsidy Schemes & Support',
-    overviewTitle: 'How the Subsidy Process Works',
-    overviewSubtitle: 'Eligibility and step-by-step application support',
-    ctaTitle: 'Ready to Claim Your Solar Dryer Subsidy?',
-    ctaBody: 'Our liaison desk supports DPR preparation, portal registration, inspections, and subsidy processing for your installation.'
-  },
-  'crop-preservation-guide': {
-    highlightsEyebrow: 'Drying Best Practices',
-    highlightsTitle: 'Key Preservation Guidelines',
-    overviewTitle: 'Crop Drying Guidelines',
-    overviewSubtitle: 'Temperature benchmarks and tray loading recommendations',
-    ctaTitle: 'Ready to Dry Your Crops to Export Grade?',
-    ctaBody: 'Our engineering team helps you size the right dryer for your crops, set drying temperatures, process MNRE subsidies, and commission the system.'
-  },
-  'technical-spec-sheets': {
-    highlightsEyebrow: 'Build Quality',
-    highlightsTitle: 'Key Specifications',
-    overviewTitle: 'Technical Specifications',
-    overviewSubtitle: 'Structural, material, and foundation requirements',
-    ctaTitle: 'Need Detailed Specs for Your Project?',
-    ctaBody: 'Our engineering team provides site assessment, dryer sizing, project-specific specifications, MNRE subsidy processing, and commissioning.'
+// Per-slug copy for the generic section headers and the bottom CTA. The text lives in
+// src/i18n/sections.js as sections_copy_<slug>_<field>; other slugs use sections_copyDefault_*.
+const SECTION_COPY_SLUGS = [
+  'solar-thermal-system', 'agri-solar-innovation', 'photovoltaic-solutions',
+  'government-subsidies', 'crop-preservation-guide', 'technical-spec-sheets'
+];
+const COPY_FIELDS = ['highlightsEyebrow', 'highlightsTitle', 'overviewTitle', 'overviewSubtitle', 'ctaTitle', 'ctaBody'];
+
+const getSectionCopy = (t, slug, title) => {
+  if (SECTION_COPY_SLUGS.includes(slug)) {
+    return Object.fromEntries(COPY_FIELDS.map((f) => [f, t(`sections_copy_${slug}_${f}`)]));
   }
+  return {
+    highlightsEyebrow: t('sections_copyDefault_highlightsEyebrow'),
+    highlightsTitle: t('sections_copyDefault_highlightsTitle'),
+    overviewTitle: t('sections_copyDefault_overviewTitle'),
+    overviewSubtitle: title,
+    ctaTitle: t('sections_copyDefault_ctaTitle', { title }),
+    ctaBody: t('sections_copyDefault_ctaBody')
+  };
 };
 
-const getSectionCopy = (slug, title) => SECTION_COPY[slug] || {
-  highlightsEyebrow: 'At a Glance',
-  highlightsTitle: 'Key Highlights',
-  overviewTitle: 'Overview',
-  overviewSubtitle: title,
-  ctaTitle: `Interested in ${title}?`,
-  ctaBody: 'Our engineering team provides end-to-end site assessment, dryer sizing, MNRE subsidy processing, and commissioning.'
+// Display names for the calculator's state values (values stay English for the enquiry)
+const STATE_KEYS = {
+  'Tamil Nadu': 'TN', 'Karnataka': 'KA', 'Kerala': 'KL', 'Maharashtra': 'MH',
+  'Andhra Pradesh': 'AP', 'Other States': 'OTHER'
 };
 
 // Render **bold** segments inside a line of text as React elements
@@ -200,7 +168,7 @@ function WrapSelect({ value, onChange, options, ariaLabel }) {
 export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) {
   const { slug: paramSlug } = useParams();
   const slug = propSlug || paramSlug;
-  const { t } = useLanguage();
+  const { t, tf } = useLanguage();
 
   const [section, setSection] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -233,14 +201,14 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
         } else if (fallback) {
           setSection(fallback);
         } else {
-          setError('Section not found or not published');
+          setError('sections_errNotFound');
         }
       })
       .catch(err => {
         if (fallback) {
           setSection(fallback);
         } else {
-          setError(err.message || 'Error loading page content');
+          setError('sections_errLoading');
         }
       })
       .finally(() => {
@@ -251,15 +219,15 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
   // Update page title
   useEffect(() => {
     if (section?.title) {
-      document.title = `${section.title} | ZeniTEK Solar Thermal Solutions`;
+      document.title = `${tf(`section_${slug}_title`, section.title)} | ZeniTEK Solar Thermal Solutions`;
     }
-  }, [section]);
+  }, [section, slug, tf]);
 
   if (loading) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center bg-white py-20">
         <Loader className="w-10 h-10 text-[#002DC2] animate-spin mb-4" />
-        <p className="text-slate-600 font-bold text-sm">Loading dynamic section content...</p>
+        <p className="text-slate-600 font-bold text-sm">{t('sections_loading')}</p>
       </div>
     );
   }
@@ -270,29 +238,31 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
         <div className="w-16 h-16 rounded-full bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center mb-4">
           <AlertCircle className="w-8 h-8" />
         </div>
-        <h1 className="text-2xl font-black text-[#123B92] mb-2">Section Unavailable</h1>
+        <h1 className="text-2xl font-black text-[#123B92] mb-2">{t('sections_unavailable')}</h1>
         <p className="text-slate-600 max-w-md mb-6 text-sm">
-          {error || 'This section is currently in draft mode or being updated by the administrator.'}
+          {error ? t(error) : t('sections_unavailableDesc')}
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
           <Link
             to="/solar-dryer-models"
             className="px-5 py-2.5 bg-[#002DC2] hover:bg-[#002299] text-white font-bold rounded-xl text-sm transition-colors"
           >
-            Explore Solar Dryer Models
+            {t('sections_exploreModels')}
           </Link>
           <Link
             to="/"
             className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-sm transition-colors"
           >
-            Return to Home
+            {t('sections_returnHome')}
           </Link>
         </div>
       </div>
     );
   }
 
-  const copy = getSectionCopy(slug, section.title);
+  const sectionTitle = tf(`section_${slug}_title`, section.title);
+  const sectionSubtitle = tf(`section_${slug}_subtitle`, section.subtitle);
+  const copy = getSectionCopy(t, slug, sectionTitle);
 
   // Subsidy percentage calculation for the calculator widget
   let subsidyPercent = 50;
@@ -303,20 +273,40 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
   }
 
   // Crop guide benchmark table data
+  // Crop guide benchmark table data (crop names / benefits: sections_crop<N> / sections_benefit<N>)
   const cropGuideData = [
-    { crop: 'Turmeric (Finger & Bulb)', freshMoisture: '80%', dryMoisture: '8-10%', temp: '55°C - 60°C', duration: '2.5 Days (vs 12-15 Days)', benefit: 'Retains 4.8% high curcumin; 0% aflatoxin' },
-    { crop: 'Coconut (Copra for Oil)', freshMoisture: '52%', dryMoisture: '6%', temp: '50°C - 58°C', duration: '28-36 Hours', benefit: '100% Grade-1 sulfur-free white copra' },
-    { crop: 'Moringa Leaf Powder', freshMoisture: '78%', dryMoisture: '7%', temp: '42°C - 48°C', duration: '8-10 Hours', benefit: 'Retains vibrant green chlorophyll & nutrients' },
-    { crop: 'Red Chillies', freshMoisture: '82%', dryMoisture: '9%', temp: '50°C - 60°C', duration: '3 Days (vs 10 Days)', benefit: 'Maintains capsaicin & deep natural red luster' },
-    { crop: 'Cardamom & Pepper', freshMoisture: '75%', dryMoisture: '10%', temp: '45°C - 52°C', duration: '24-30 Hours', benefit: 'Essential oils lock; premium export auction grade' },
-    { crop: 'Banana & Mango Chips', freshMoisture: '85%', dryMoisture: '12%', temp: '55°C - 62°C', duration: '18-24 Hours', benefit: 'Uniform pliable texture without sugar or sulfur' },
-    { crop: 'Ginger / Sonth', freshMoisture: '80%', dryMoisture: '9%', temp: '50°C - 55°C', duration: '2.5 Days', benefit: 'Full gingerol retention with clean fiber' }
-  ];
+    { freshMoisture: '80%', dryMoisture: '8-10%', temp: '55°C - 60°C', duration: t('sections_daysVs', { n: '2.5', m: '12-15' }) },
+    { freshMoisture: '52%', dryMoisture: '6%', temp: '50°C - 58°C', duration: t('sections_hours', { n: '28-36' }) },
+    { freshMoisture: '78%', dryMoisture: '7%', temp: '42°C - 48°C', duration: t('sections_hours', { n: '8-10' }) },
+    { freshMoisture: '82%', dryMoisture: '9%', temp: '50°C - 60°C', duration: t('sections_daysVs', { n: '3', m: '10' }) },
+    { freshMoisture: '75%', dryMoisture: '10%', temp: '45°C - 52°C', duration: t('sections_hours', { n: '24-30' }) },
+    { freshMoisture: '85%', dryMoisture: '12%', temp: '55°C - 62°C', duration: t('sections_hours', { n: '18-24' }) },
+    { freshMoisture: '80%', dryMoisture: '9%', temp: '50°C - 55°C', duration: t('sections_days', { n: '2.5' }) }
+  ].map((row, i) => ({ ...row, crop: t(`sections_crop${i + 1}`), benefit: t(`sections_benefit${i + 1}`) }));
 
-  const filteredCrops = cropGuideData.filter(c =>
-    c.crop.toLowerCase().includes(cropSearch.toLowerCase()) ||
-    c.benefit.toLowerCase().includes(cropSearch.toLowerCase())
-  );
+  // Search matches the shown language and English names
+  const query = cropSearch.trim().toLowerCase();
+  const filteredCrops = cropGuideData.filter((c, i) => !query || [
+    c.crop, c.benefit, sectionsText.en[`sections_crop${i + 1}`], sectionsText.en[`sections_benefit${i + 1}`]
+  ].some(v => String(v || '').toLowerCase().includes(query)));
+
+  // Calculator select options: values stay English (sent with the enquiry), labels are translated
+  const stateOptions = [
+    ['Tamil Nadu', `${t('sections_state_TN')} (TNAU / SHM)`],
+    ['Karnataka', `${t('sections_state_KA')} (UAS / MIDH)`],
+    ['Kerala', `${t('sections_state_KL')} (VFPCK / SHM)`],
+    ['Maharashtra', `${t('sections_state_MH')} (MahaDBT)`],
+    ['Andhra Pradesh', t('sections_state_APTS')],
+    ['Other States', t('sections_otherStatesMnre')],
+  ];
+  const modelOptions = [
+    ['SOLDRY 1210 (Commercial)', 'SOLDRY 1210 (300-500 kg)'],
+    ['SOLDRY 1709 (Industrial)', 'SOLDRY 1709 (500 kg - 1 Ton)'],
+    ['SOLDRY 300 (Multi-Unit)', t('sections_calcModel3')],
+    ['SUNDRY 50 (Stainless Box)', t('sections_calcModel4')],
+  ];
+  const stateName = STATE_KEYS[calcState] ? t(`sections_state_${STATE_KEYS[calcState]}`) : calcState;
+  const modelLabel = (modelOptions.find(([v]) => v === calcModel) || [calcModel, calcModel])[1];
 
   return (
     <div className="min-h-screen bg-white text-slate-900 pb-20">
@@ -326,21 +316,21 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
         images={HERO_BACKGROUNDS[slug] || section.thumbnail?.url}
         top={
           <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold text-slate-600">
-            <Link to="/" className="hover:text-[#002DC2] transition-colors">Home</Link>
+            <Link to="/" className="hover:text-[#002DC2] transition-colors">{t('navHome')}</Link>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            <span className="text-slate-500">Products</span>
+            <span className="text-slate-500">{t('navbar_products')}</span>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            <span className="text-[#002DC2] font-bold">{section.title}</span>
+            <span className="text-[#002DC2] font-bold">{sectionTitle}</span>
           </nav>
         }
         badge={
           <>
             <Sparkles className="w-3.5 h-3.5 text-[#002DC2] shrink-0" />
-            <span>ZeniTEK Solution Category</span>
+            <span>{t('sections_solutionBadge')}</span>
           </>
         }
-        title={section.title}
-        subtitle={section.subtitle}
+        title={sectionTitle}
+        subtitle={sectionSubtitle}
         actions={
           <>
             <button
@@ -350,7 +340,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
               }}
               className="px-6 py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold rounded-xl shadow-lg shadow-[#23AC39]/25 hover:shadow-xl transition-all flex items-center justify-center space-x-2 cursor-pointer active:scale-95"
             >
-              <span>Get Free Quote & Subsidy DPR</span>
+              <span>{t('sections_quoteDpr')}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 
@@ -361,7 +351,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
               className="px-5 py-3 bg-white border border-slate-300 hover:border-[#002DC2] text-[#123B92] hover:text-[#002DC2] font-bold rounded-xl transition-all shadow-sm flex items-center justify-center space-x-2"
             >
               <PhoneCall className="w-4 h-4 text-[#23AC39]" />
-              <span>WhatsApp Enquiry</span>
+              <span>{t('sections_waEnquiry')}</span>
             </a>
           </>
         }
@@ -370,15 +360,15 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
         <div className="flex flex-wrap gap-2">
           <span className="inline-flex items-center text-xs font-semibold text-slate-700 bg-white/90 border border-slate-200 shadow-sm px-3 py-1 rounded-lg">
             <ShieldCheck className="w-3.5 h-3.5 text-[#23AC39] mr-1.5" />
-            MNRE Approved Quality
+            {t('sections_badgeMnre')}
           </span>
           <span className="inline-flex items-center text-xs font-semibold text-slate-700 bg-white/90 border border-slate-200 shadow-sm px-3 py-1 rounded-lg">
             <Sun className="w-3.5 h-3.5 text-[#23AC39] mr-1.5" />
-            100% Clean Solar Energy
+            {t('sections_badgeSolar')}
           </span>
           <span className="inline-flex items-center text-xs font-semibold text-slate-700 bg-white/90 border border-slate-200 shadow-sm px-3 py-1 rounded-lg">
             <Zap className="w-3.5 h-3.5 text-[#002DC2] mr-1.5" />
-            Zero Electricity Bills
+            {t('sections_badgeZeroBill')}
           </span>
         </div>
       </PageHero>
@@ -440,60 +430,48 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
           <div className="bg-gradient-to-br from-[#001b69] to-[#002DC2] text-white rounded-3xl p-6 sm:p-10 shadow-xl space-y-8">
             <div className="text-center max-w-3xl mx-auto space-y-3">
               <span className="text-2xs sm:text-xs font-bold uppercase tracking-wide sm:tracking-widest text-[#23AC39] bg-[#123B92]/70 px-3 py-1 rounded-full border border-[#23AC39]/40 inline-block whitespace-nowrap">
-                Live State & Central Subsidy Tool
+                {t('sections_calcBadge')}
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-white">
-                Calculate Your Solar Dryer Subsidy
+                {t('sections_calcTitle')}
               </h2>
               <p className="text-base sm:text-lg text-slate-200">
-                Check estimated subsidy benefits under MIDH, SHM, and MNRE schemes for your state.
+                {t('sections_calcSub')}
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-200 mb-1.5">Your State</label>
+                <label className="block text-xs font-bold text-slate-200 mb-1.5">{t('sections_yourState')}</label>
                 <WrapSelect
-                  ariaLabel="Your State"
+                  ariaLabel={t('sections_yourState')}
                   value={calcState}
                   onChange={(e) => setCalcState(e.target.value)}
-                  options={[
-                    ["Tamil Nadu", "Tamil Nadu (TNAU / SHM)"],
-                    ["Karnataka", "Karnataka (UAS / MIDH)"],
-                    ["Kerala", "Kerala (VFPCK / SHM)"],
-                    ["Maharashtra", "Maharashtra (MahaDBT)"],
-                    ["Andhra Pradesh", "Andhra Pradesh / Telangana"],
-                    ["Other States", "Other States (Central MNRE)"],
-                  ]}
+                  options={stateOptions}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-200 mb-1.5">Dryer Model / Capacity</label>
+                <label className="block text-xs font-bold text-slate-200 mb-1.5">{t('sections_dryerModelCap')}</label>
                 <WrapSelect
-                  ariaLabel="Dryer Model / Capacity"
+                  ariaLabel={t('sections_dryerModelCap')}
                   value={calcModel}
                   onChange={(e) => setCalcModel(e.target.value)}
-                  options={[
-                    ["SOLDRY 1210 (Commercial)", "SOLDRY 1210 (300-500 kg)"],
-                    ["SOLDRY 1709 (Industrial)", "SOLDRY 1709 (500 kg - 1 Ton)"],
-                    ["SOLDRY 300 (Multi-Unit)", "SOLDRY 300 (Multi-Unit Plant)"],
-                    ["SUNDRY 50 (Stainless Box)", "SUNDRY 50 (50 kg Farm Unit)"],
-                  ]}
+                  options={modelOptions}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-200 mb-1.5">Beneficiary Farmer Category</label>
+                <label className="block text-xs font-bold text-slate-200 mb-1.5">{t('sections_beneficiaryFarmer')}</label>
                 <WrapSelect
-                  ariaLabel="Beneficiary Farmer Category"
+                  ariaLabel={t('sections_beneficiaryFarmer')}
                   value={calcFarmerType}
                   onChange={(e) => setCalcFarmerType(e.target.value)}
                   options={[
-                    ["Small / Marginal Farmer", "Small / Marginal Farmer (50% Subsidy)"],
-                    ["SC / ST / Women Farmer", "SC / ST / Women Farmer (60% Subsidy)"],
-                    ["FPO / SHG Group", "FPO / SHG Farmer Group (60% Subsidy)"],
-                    ["General Commercial Exporter", "General Commercial Exporter (40% Subsidy)"],
+                    ["Small / Marginal Farmer", t('sections_farmerSmall')],
+                    ["SC / ST / Women Farmer", t('sections_farmerSc')],
+                    ["FPO / SHG Group", t('sections_farmerFpo2')],
+                    ["General Commercial Exporter", t('sections_farmerGeneral2')],
                   ]}
                 />
               </div>
@@ -501,12 +479,12 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
 
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
               <div>
-                <div className="text-xs font-bold text-slate-300 uppercase tracking-wider">Estimated Government Assistance</div>
+                <div className="text-xs font-bold text-slate-300 uppercase tracking-wider">{t('sections_calcAssist')}</div>
                 <div className="text-2xl sm:text-3xl font-black text-[#23AC39] mt-1 leading-tight">
-                  {subsidyPercent}% Capital Subsidy Available
+                  {t('sections_calcPercent', { percent: subsidyPercent })}
                 </div>
                 <p className="text-sm text-slate-300 mt-1">
-                  For {calcState} · {calcModel} under active Horticulture schemes.
+                  {t('sections_calcFor', { state: stateName, model: modelLabel })}
                 </p>
               </div>
 
@@ -521,7 +499,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
                 }}
                 className="w-full md:w-auto px-6 py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold rounded-xl shadow-lg transition-colors shrink-0 cursor-pointer text-sm text-center text-balance md:whitespace-nowrap"
               >
-                Apply for Subsidy DPR & Invoice
+                {t('sections_calcApply')}
               </button>
             </div>
           </div>
@@ -532,14 +510,15 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
       {slug === 'crop-preservation-guide' && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">Validated Crop Dehydration Matrix</h2>
-            <p className="text-base sm:text-lg text-slate-600">Benchmark drying curves, operating temperatures, and quality results</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">{t('sections_cropTitle')}</h2>
+            <p className="text-base sm:text-lg text-slate-600">{t('sections_cropSub')}</p>
             <div className="pt-3 flex justify-center">
               <input
                 type="text"
                 value={cropSearch}
                 onChange={(e) => setCropSearch(e.target.value)}
-                placeholder="Search crop or spice..."
+                placeholder={t('sections_cropSearch')}
+                aria-label={t('sections_cropSearch')}
                 className="w-full sm:w-72 border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#002DC2]"
               />
             </div>
@@ -547,18 +526,18 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
 
           <p className="sm:hidden text-sm font-semibold text-slate-500 flex items-center">
             <ArrowRight className="w-3.5 h-3.5 mr-1 text-[#002DC2]" />
-            Swipe the table sideways to see all columns
+            {t('sections_swipeHint')}
           </p>
           <div className="bg-white rounded-2xl border border-slate-200 overflow-x-auto overscroll-x-contain shadow-sm">
             <table className="w-full min-w-[860px] text-left border-collapse text-xs sm:text-sm">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold whitespace-nowrap">
-                  <th className="p-3.5">Crop / Commodity</th>
-                  <th className="p-3.5">Fresh Moisture</th>
-                  <th className="p-3.5">Target Dry</th>
-                  <th className="p-3.5">Safe Temp</th>
-                  <th className="p-3.5">Drying Duration</th>
-                  <th className="p-3.5">Value Addition Benefit</th>
+                  <th className="p-3.5">{t('sections_thCrop')}</th>
+                  <th className="p-3.5">{t('sections_thFresh')}</th>
+                  <th className="p-3.5">{t('sections_thTarget')}</th>
+                  <th className="p-3.5">{t('sections_thTemp')}</th>
+                  <th className="p-3.5">{t('sections_thDuration')}</th>
+                  <th className="p-3.5">{t('sections_thBenefit')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
@@ -582,8 +561,8 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
       {slug === 'technical-spec-sheets' && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">Official Specification Sheets & CAD Blueprints</h2>
-            <p className="text-base sm:text-lg text-slate-600">Download complete manufacturer engineering documents in PDF format</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">{t('sections_specSheetsTitle')}</h2>
+            <p className="text-base sm:text-lg text-slate-600">{t('sections_specSheetsSub')}</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -591,8 +570,8 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
               <div key={idx} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-xs text-slate-500">
-                    <span className="font-bold text-[#002DC2] bg-[#F0F4FD] px-2 py-0.5 rounded-md">PDF Spec Sheet</span>
-                    <span>{b.pageCount} Pages · {b.size}</span>
+                    <span className="font-bold text-[#002DC2] bg-[#F0F4FD] px-2 py-0.5 rounded-md">{t('sections_pdfSpecSheet')}</span>
+                    <span>{t('sections_pagesSize', { pages: b.pageCount, size: b.size })}</span>
                   </div>
                   <h4 className="text-lg font-bold text-[#123B92] leading-snug">{b.title}</h4>
                   <p className="text-sm text-slate-500 leading-relaxed">{b.subtitle}</p>
@@ -602,13 +581,14 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
                     to={`/brochures/${b.id}`}
                     className="flex-1 py-2 text-center text-xs font-bold text-[#002DC2] bg-[#F0F4FD] hover:bg-[#002DC2] hover:text-white rounded-xl transition-colors"
                   >
-                    View Brochure
+                    {t('sections_viewBrochure')}
                   </Link>
                   <a
                     href={b.url}
                     download={b.downloadName}
                     className="p-2 text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors"
-                    title="Download PDF"
+                    title={t('sections_downloadPdf')}
+                    aria-label={t('sections_downloadPdf')}
                   >
                     <Download className="w-4 h-4" />
                   </a>
@@ -624,10 +604,10 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <span className="text-xs font-extrabold text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] px-3 py-1 rounded-full inline-block">
-              {section.images.length} Photos
+              {t('sections_photosCount', { count: section.images.length })}
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">Project Field Photos & Installations</h2>
-            <p className="text-base sm:text-lg text-slate-600">Live operational systems photographed at customer sites</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">{t('sections_photosTitle')}</h2>
+            <p className="text-base sm:text-lg text-slate-600">{t('sections_photosSub')}</p>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -639,7 +619,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
               >
                 <img
                   src={img.url}
-                  alt={img.alt || section.title}
+                  alt={img.alt || sectionTitle}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -661,7 +641,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
         <div className="bg-gradient-to-br from-slate-900 via-[#001f7a] to-slate-900 text-white rounded-3xl p-6 sm:p-12 text-center space-y-5 shadow-2xl relative overflow-hidden">
           <div className="relative z-10 max-w-2xl mx-auto space-y-3">
             <span className="text-xs font-bold uppercase tracking-widest text-[#23AC39]">
-              Empower Your Farm or Facility
+              {t('sections_ctaEyebrow')}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight">
               {copy.ctaTitle}
@@ -677,13 +657,13 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
                 }}
                 className="px-6 py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold rounded-xl shadow-lg transition-transform active:scale-95 cursor-pointer text-sm w-full sm:w-auto text-balance sm:whitespace-nowrap"
               >
-                Request Free Engineering Quote
+                {t('sections_ctaQuote')}
               </button>
               <Link
                 to="/solar-dryer-models"
                 className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-xl transition-colors text-sm w-full sm:w-auto text-balance sm:whitespace-nowrap"
               >
-                Browse All Dryer Models
+                {t('sections_ctaBrowse')}
               </Link>
             </div>
           </div>
@@ -699,11 +679,12 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
           <div className="relative max-w-4xl max-h-[90vh] w-full" onClick={e => e.stopPropagation()}>
             <img
               src={activeImageModal}
-              alt="Field Photo"
+              alt={t('sections_fieldPhoto')}
               className="max-w-full max-h-[85vh] mx-auto object-contain rounded-2xl shadow-2xl"
             />
             <button
               onClick={() => setActiveImageModal(null)}
+              aria-label={t('close')}
               className="absolute -top-3 -right-3 w-8 h-8 bg-white text-[#123B92] rounded-full flex items-center justify-center font-bold shadow-lg hover:bg-slate-100 cursor-pointer"
             >
               <X className="w-5 h-5" />
