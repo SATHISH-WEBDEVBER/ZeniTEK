@@ -173,6 +173,12 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
           {/* Logo - Stage 1 Animation */}
           <Link
             to="/"
+            aria-label="ZeniTEK - Home"
+            onClick={() => {
+              // Already on Home: the route doesn't change, so jump back to the top
+              setMobileMenuOpen(false);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
             className={`flex items-center shrink-0 transition-all duration-700 ease-out transform ${
               animStage >= 1
                 ? 'opacity-100 scale-100 translate-x-0'

@@ -118,11 +118,6 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-20">
           <div className="max-w-xl lg:max-w-3xl text-left flex flex-col items-start space-y-6">
 
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-2xl sm:rounded-full bg-white/95 border border-[#123B92]/30 text-[#123B92] text-xs font-bold shadow-md max-w-full">
-              <Sun className="w-4 h-4 text-[#002DC2] shrink-0" />
-              <span>{t('heroBadge')}</span>
-            </div>
-
             <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#123B92] leading-tight">
               {t('heroTitle1')} <br />
               <span className="text-[#002DC2]">{t('heroTitle2')}</span>
@@ -133,13 +128,6 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
             </p>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3 pt-2 w-full sm:w-auto">
-              <a
-                href="#roi-calculator"
-                className="px-6 py-3.5 sm:px-8 sm:py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 active:scale-95"
-              >
-                <span>{t('calcSavings')}</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
               <Link
                 to="/solar-dryer-models"
                 className="px-6 py-3.5 sm:px-8 sm:py-4 bg-white hover:bg-slate-50 border-2 border-[#123B92] text-[#123B92] font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl transition-all flex items-center justify-center space-x-2 shadow-md active:scale-95"
@@ -184,9 +172,6 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       {/* SECTION 2: TRUST STRIP */}
       <section className="w-full section-even py-10 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto space-y-3 mb-8">
-            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('homeTrustTitle')}</h2>
-          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
             {[
               { Icon: BadgeCheck, key: 'mnreBadge' },
@@ -280,9 +265,6 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
 
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <span className="text-xs font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3.5 py-1.5 rounded-full inline-block">
-              {t('homeAboutBadge')}
-            </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               {t('homeAboutTitle1')} <span className="text-[#002DC2]">{t('homeAboutTitle2')}</span>
             </h2>
