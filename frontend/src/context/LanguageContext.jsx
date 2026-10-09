@@ -273,7 +273,29 @@ export const translations = {
     // Models
     modelPortable: "Portable DIY Solar Dryer",
     modelPolyhouse: "Commercial Polyhouse Tunnel Dryer",
-    modelIndustrial: "Multi-Tunnel Industrial Hybrid Dryer"
+    modelIndustrial: "Multi-Tunnel Industrial Hybrid Dryer",
+    // Home page (concise)
+    homeMapDesc: "35 working sites across 9 states, most in Tamil Nadu and Karnataka. Tap a marker for details.",
+    homeHerbsTitle: "Herbs & Flowers",
+    homeHerbsDesc: "Leaves, herbs and flowers keep their natural colour and aroma.",
+    homeSpicesDesc: "No rain damage or mould. Natural oils stay locked in.",
+    homeFishDesc: "Enclosed, fly-free drying that stays hygienic.",
+    homeAboutBadge: "About ZeniTEK · Erode, Tamil Nadu",
+    homeAboutTitle1: "Towards a",
+    homeAboutTitle2: "Sustainable Future",
+    homeAboutDesc: "Founded in 2021 in Erode, we design, build and install solar thermal and solar drying systems, backed by research with leading institutes.",
+    homePillarThermal: "Solar Thermal",
+    homePillarAgri: "Solar Dryers",
+    homePillarPV: "Photovoltaics",
+    homePillarRnd: "Applied R&D",
+    homeAboutCta: "Our Story & Projects",
+    homePartnersTitle: "Trusted by Academic & Industry Partners",
+    homeStoriesDesc: "What growers, exporters and food entrepreneurs say about ZeniTEK.",
+    homeDistrictPh: "e.g. Coimbatore",
+    homeMessagePh: "Target moisture, location or any questions",
+    notFoundTitle: "Page not found",
+    notFoundDesc: "The page you're looking for doesn't exist or has moved.",
+    notFoundHome: "Back to Home"
   },
 
   ta: {
@@ -546,7 +568,29 @@ export const translations = {
     // Models
     modelPortable: "சிறிய கையடக்க சோலார் உலர்த்தி",
     modelPolyhouse: "வணிக பாலிஹவுஸ் சோலார் உலர்த்தி",
-    modelIndustrial: "தொழில்முறை சோலார் உலர்த்தி"
+    modelIndustrial: "தொழில்முறை சோலார் உலர்த்தி",
+    // Home page (concise)
+    homeMapDesc: "9 மாநிலங்களில் 35 இயங்கும் தளங்கள்; பெரும்பாலானவை தமிழ்நாடு மற்றும் கர்நாடகாவில். விவரங்களுக்கு குறியீட்டைத் தட்டவும்.",
+    homeHerbsTitle: "மூலிகைகள் & மலர்கள்",
+    homeHerbsDesc: "இலைகள், மூலிகைகள், மலர்கள் இயற்கை நிறமும் மணமும் மாறாமல் உலர்கின்றன.",
+    homeSpicesDesc: "மழைச் சேதமோ பூஞ்சையோ இல்லை. இயற்கை எண்ணெய்கள் பாதுகாக்கப்படுகின்றன.",
+    homeFishDesc: "மூடிய, ஈ இல்லாத சுகாதாரமான உலர்த்தல்.",
+    homeAboutBadge: "ZeniTEK பற்றி · ஈரோடு, தமிழ்நாடு",
+    homeAboutTitle1: "நிலையான",
+    homeAboutTitle2: "எதிர்காலத்தை நோக்கி",
+    homeAboutDesc: "2021-ல் ஈரோட்டில் தொடங்கப்பட்ட நாங்கள், முன்னணி கல்வி நிறுவனங்களுடன் இணைந்த ஆராய்ச்சியின் துணையுடன் சோலார் வெப்ப மற்றும் சோலார் உலர்த்தி அமைப்புகளை வடிவமைத்து, தயாரித்து, நிறுவுகிறோம்.",
+    homePillarThermal: "சோலார் வெப்பம்",
+    homePillarAgri: "சோலார் உலர்த்திகள்",
+    homePillarPV: "ஒளிமின்னழுத்தம்",
+    homePillarRnd: "பயன்பாட்டு ஆராய்ச்சி",
+    homeAboutCta: "எங்கள் கதை & திட்டங்கள்",
+    homePartnersTitle: "கல்வி மற்றும் தொழில் கூட்டாளிகளின் நம்பிக்கை",
+    homeStoriesDesc: "விவசாயிகள், ஏற்றுமதியாளர்கள் மற்றும் உணவுத் தொழில்முனைவோர் ZeniTEK பற்றி கூறுவது.",
+    homeDistrictPh: "எ.கா. கோயம்புத்தூர்",
+    homeMessagePh: "இலக்கு ஈரப்பதம், இடம் அல்லது கேள்விகள்",
+    notFoundTitle: "பக்கம் கிடைக்கவில்லை",
+    notFoundDesc: "நீங்கள் தேடும் பக்கம் இல்லை அல்லது இடம் மாற்றப்பட்டுள்ளது.",
+    notFoundHome: "முகப்புக்குத் திரும்பு"
   },
 
   hi: {
@@ -819,7 +863,29 @@ export const translations = {
     // Models
     modelPortable: "पोर्टेबल DIY सोलर ड्रायर",
     modelPolyhouse: "कमर्शियल पॉलीहाउस सोलर ड्रायर",
-    modelIndustrial: "औद्योगिक मल्टी-टनल सोलर ड्रायर"
+    modelIndustrial: "औद्योगिक मल्टी-टनल सोलर ड्रायर",
+    // Home page (concise)
+    homeMapDesc: "9 राज्यों में 35 चालू साइटें, ज़्यादातर तमिलनाडु और कर्नाटक में। विवरण के लिए मार्कर पर टैप करें।",
+    homeHerbsTitle: "जड़ी-बूटियाँ और फूल",
+    homeHerbsDesc: "पत्तियाँ, जड़ी-बूटियाँ और फूल अपना प्राकृतिक रंग और सुगंध बनाए रखते हैं।",
+    homeSpicesDesc: "बारिश से नुकसान या फफूंद नहीं। प्राकृतिक तेल सुरक्षित रहते हैं।",
+    homeFishDesc: "बंद, मक्खी-मुक्त और स्वच्छ सुखाई।",
+    homeAboutBadge: "ZeniTEK के बारे में · ईरोड, तमिलनाडु",
+    homeAboutTitle1: "एक टिकाऊ",
+    homeAboutTitle2: "भविष्य की ओर",
+    homeAboutDesc: "2021 में ईरोड में स्थापित, हम प्रमुख संस्थानों के साथ शोध के आधार पर सोलर थर्मल और सोलर ड्राइंग सिस्टम डिज़ाइन, निर्माण और स्थापित करते हैं।",
+    homePillarThermal: "सोलर थर्मल",
+    homePillarAgri: "सोलर ड्रायर",
+    homePillarPV: "फोटोवोल्टिक्स",
+    homePillarRnd: "अनुप्रयुक्त अनुसंधान",
+    homeAboutCta: "हमारी कहानी और परियोजनाएँ",
+    homePartnersTitle: "शैक्षणिक और उद्योग भागीदारों का भरोसा",
+    homeStoriesDesc: "किसान, निर्यातक और खाद्य उद्यमी ZeniTEK के बारे में क्या कहते हैं।",
+    homeDistrictPh: "जैसे कोयंबटूर",
+    homeMessagePh: "लक्षित नमी, स्थान या कोई प्रश्न",
+    notFoundTitle: "पेज नहीं मिला",
+    notFoundDesc: "आप जो पेज ढूंढ रहे हैं वह मौजूद नहीं है या हटा दिया गया है।",
+    notFoundHome: "होम पर वापस जाएँ"
   },
 
   ml: {
@@ -1092,7 +1158,29 @@ export const translations = {
     // Models
     modelPortable: "പോർട്ടബിൾ സോളാർ ഡ്രയർ",
     modelPolyhouse: "പോളിഹൗസ് സോളാർ ഡ്രയർ",
-    modelIndustrial: "ഇൻഡസ്ട്രിയൽ സോളാർ ഡ്രയർ"
+    modelIndustrial: "ഇൻഡസ്ട്രിയൽ സോളാർ ഡ്രയർ",
+    // Home page (concise)
+    homeMapDesc: "9 സംസ്ഥാനങ്ങളിലായി 35 പ്രവർത്തിക്കുന്ന സൈറ്റുകൾ, കൂടുതലും തമിഴ്നാട്ടിലും കർണാടകയിലും. വിവരങ്ങൾക്കായി മാർക്കറിൽ ടാപ്പ് ചെയ്യുക.",
+    homeHerbsTitle: "ഔഷധസസ്യങ്ങളും പൂക്കളും",
+    homeHerbsDesc: "ഇലകളും ഔഷധസസ്യങ്ങളും പൂക്കളും സ്വാഭാവിക നിറവും സുഗന്ധവും നിലനിർത്തുന്നു.",
+    homeSpicesDesc: "മഴക്കേടോ പൂപ്പലോ ഇല്ല. സ്വാഭാവിക എണ്ണകൾ സംരക്ഷിക്കപ്പെടുന്നു.",
+    homeFishDesc: "അടച്ച, ഈച്ചയില്ലാത്ത ശുചിത്വമുള്ള ഉണക്കൽ.",
+    homeAboutBadge: "ZeniTEK-നെക്കുറിച്ച് · ഈറോഡ്, തമിഴ്നാട്",
+    homeAboutTitle1: "സുസ്ഥിര",
+    homeAboutTitle2: "ഭാവിയിലേക്ക്",
+    homeAboutDesc: "2021-ൽ ഈറോഡിൽ സ്ഥാപിതമായ ഞങ്ങൾ, പ്രമുഖ സ്ഥാപനങ്ങളുമായുള്ള ഗവേഷണത്തിന്റെ പിന്തുണയോടെ സോളാർ തെർമൽ, സോളാർ ഡ്രയിംഗ് സംവിധാനങ്ങൾ രൂപകൽപ്പന ചെയ്യുകയും നിർമ്മിക്കുകയും സ്ഥാപിക്കുകയും ചെയ്യുന്നു.",
+    homePillarThermal: "സോളാർ തെർമൽ",
+    homePillarAgri: "സോളാർ ഡ്രയറുകൾ",
+    homePillarPV: "ഫോട്ടോവോൾട്ടായിക്സ്",
+    homePillarRnd: "പ്രായോഗിക ഗവേഷണം",
+    homeAboutCta: "ഞങ്ങളുടെ കഥയും പദ്ധതികളും",
+    homePartnersTitle: "അക്കാദമിക്, വ്യവസായ പങ്കാളികളുടെ വിശ്വാസം",
+    homeStoriesDesc: "കർഷകരും കയറ്റുമതിക്കാരും ഭക്ഷ്യ സംരംഭകരും ZeniTEK-നെക്കുറിച്ച് പറയുന്നത്.",
+    homeDistrictPh: "ഉദാ. കോയമ്പത്തൂർ",
+    homeMessagePh: "ലക്ഷ്യ ഈർപ്പം, സ്ഥലം അല്ലെങ്കിൽ ചോദ്യങ്ങൾ",
+    notFoundTitle: "പേജ് കണ്ടെത്തിയില്ല",
+    notFoundDesc: "നിങ്ങൾ തിരയുന്ന പേജ് നിലവിലില്ല അല്ലെങ്കിൽ മാറ്റിയിരിക്കുന്നു.",
+    notFoundHome: "ഹോമിലേക്ക് മടങ്ങുക"
   },
 
   te: {
@@ -1365,7 +1453,29 @@ export const translations = {
     // Models
     modelPortable: "చిన్న సోలార్ డ్రైయర్",
     modelPolyhouse: "పాలిహౌస్ సోలార్ డ్రైయర్",
-    modelIndustrial: "ఇండస్ట్రియల్ సోలార్ డ్రైయర్"
+    modelIndustrial: "ఇండస్ట్రియల్ సోలార్ డ్రైయర్",
+    // Home page (concise)
+    homeMapDesc: "9 రాష్ట్రాల్లో 35 పనిచేస్తున్న సైట్లు, ఎక్కువగా తమిళనాడు మరియు కర్ణాటకలో. వివరాల కోసం మార్కర్‌ను నొక్కండి.",
+    homeHerbsTitle: "మూలికలు & పువ్వులు",
+    homeHerbsDesc: "ఆకులు, మూలికలు, పువ్వులు సహజ రంగు, సువాసనను నిలుపుకుంటాయి.",
+    homeSpicesDesc: "వర్షం నష్టం లేదా బూజు ఉండదు. సహజ నూనెలు నిలిచి ఉంటాయి.",
+    homeFishDesc: "మూసి ఉన్న, ఈగలు లేని పరిశుభ్రమైన ఎండబెట్టడం.",
+    homeAboutBadge: "ZeniTEK గురించి · ఈరోడ్, తమిళనాడు",
+    homeAboutTitle1: "సుస్థిర",
+    homeAboutTitle2: "భవిష్యత్తు వైపు",
+    homeAboutDesc: "2021లో ఈరోడ్‌లో స్థాపించబడిన మేము, ప్రముఖ సంస్థలతో పరిశోధన ఆధారంగా సోలార్ థర్మల్ మరియు సోలార్ డ్రైయింగ్ వ్యవస్థలను రూపొందించి, తయారు చేసి, అమర్చుతాము.",
+    homePillarThermal: "సోలార్ థర్మల్",
+    homePillarAgri: "సోలార్ డ్రైయర్లు",
+    homePillarPV: "ఫోటోవోల్టాయిక్స్",
+    homePillarRnd: "అనువర్తిత పరిశోధన",
+    homeAboutCta: "మా కథ & ప్రాజెక్టులు",
+    homePartnersTitle: "విద్యా మరియు పరిశ్రమ భాగస్వాముల నమ్మకం",
+    homeStoriesDesc: "రైతులు, ఎగుమతిదారులు మరియు ఆహార వ్యవస్థాపకులు ZeniTEK గురించి ఏమంటున్నారు.",
+    homeDistrictPh: "ఉదా. కోయంబత్తూరు",
+    homeMessagePh: "లక్ష్య తేమ, ప్రదేశం లేదా ప్రశ్నలు",
+    notFoundTitle: "పేజీ కనుగొనబడలేదు",
+    notFoundDesc: "మీరు వెతుకుతున్న పేజీ లేదు లేదా తరలించబడింది.",
+    notFoundHome: "హోమ్‌కు తిరిగి వెళ్ళండి"
   },
 
   kn: {
@@ -1638,7 +1748,29 @@ export const translations = {
     // Models
     modelPortable: "ಸಣ್ಣ ಸೋಲಾರ್ ಡ್ರೈಯರ್",
     modelPolyhouse: "ಪಾಲಿಹೌಸ್ ಸೋಲಾರ್ ಡ್ರೈಯರ್",
-    modelIndustrial: "ಇಂಡಸ್ಟ್ರಿಯಲ್ ಸೋಲಾರ್ ಡ್ರೈಯರ್"
+    modelIndustrial: "ಇಂಡಸ್ಟ್ರಿಯಲ್ ಸೋಲಾರ್ ಡ್ರೈಯರ್",
+    // Home page (concise)
+    homeMapDesc: "9 ರಾಜ್ಯಗಳಲ್ಲಿ 35 ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತಿರುವ ತಾಣಗಳು, ಹೆಚ್ಚಿನವು ತಮಿಳುನಾಡು ಮತ್ತು ಕರ್ನಾಟಕದಲ್ಲಿ. ವಿವರಗಳಿಗಾಗಿ ಮಾರ್ಕರ್ ಒತ್ತಿರಿ.",
+    homeHerbsTitle: "ಗಿಡಮೂಲಿಕೆಗಳು ಮತ್ತು ಹೂವುಗಳು",
+    homeHerbsDesc: "ಎಲೆಗಳು, ಗಿಡಮೂಲಿಕೆಗಳು ಮತ್ತು ಹೂವುಗಳು ನೈಸರ್ಗಿಕ ಬಣ್ಣ ಮತ್ತು ಸುವಾಸನೆಯನ್ನು ಉಳಿಸಿಕೊಳ್ಳುತ್ತವೆ.",
+    homeSpicesDesc: "ಮಳೆ ಹಾನಿ ಅಥವಾ ಬೂಷ್ಟು ಇಲ್ಲ. ನೈಸರ್ಗಿಕ ಎಣ್ಣೆಗಳು ಉಳಿಯುತ್ತವೆ.",
+    homeFishDesc: "ಮುಚ್ಚಿದ, ನೊಣ-ರಹಿತ ಸ್ವಚ್ಛ ಒಣಗಿಸುವಿಕೆ.",
+    homeAboutBadge: "ZeniTEK ಬಗ್ಗೆ · ಈರೋಡ್, ತಮಿಳುನಾಡು",
+    homeAboutTitle1: "ಸುಸ್ಥಿರ",
+    homeAboutTitle2: "ಭವಿಷ್ಯದತ್ತ",
+    homeAboutDesc: "2021ರಲ್ಲಿ ಈರೋಡ್‌ನಲ್ಲಿ ಸ್ಥಾಪಿತವಾದ ನಾವು, ಪ್ರಮುಖ ಸಂಸ್ಥೆಗಳೊಂದಿಗಿನ ಸಂಶೋಧನೆಯ ಬೆಂಬಲದೊಂದಿಗೆ ಸೋಲಾರ್ ಥರ್ಮಲ್ ಮತ್ತು ಸೋಲಾರ್ ಒಣಗಿಸುವ ವ್ಯವಸ್ಥೆಗಳನ್ನು ವಿನ್ಯಾಸಗೊಳಿಸಿ, ತಯಾರಿಸಿ, ಅಳವಡಿಸುತ್ತೇವೆ.",
+    homePillarThermal: "ಸೋಲಾರ್ ಥರ್ಮಲ್",
+    homePillarAgri: "ಸೋಲಾರ್ ಡ್ರೈಯರ್‌ಗಳು",
+    homePillarPV: "ಫೋಟೋವೋಲ್ಟಾಯಿಕ್ಸ್",
+    homePillarRnd: "ಅನ್ವಯಿಕ ಸಂಶೋಧನೆ",
+    homeAboutCta: "ನಮ್ಮ ಕಥೆ ಮತ್ತು ಯೋಜನೆಗಳು",
+    homePartnersTitle: "ಶೈಕ್ಷಣಿಕ ಮತ್ತು ಉದ್ಯಮ ಪಾಲುದಾರರ ವಿಶ್ವಾಸ",
+    homeStoriesDesc: "ರೈತರು, ರಫ್ತುದಾರರು ಮತ್ತು ಆಹಾರ ಉದ್ಯಮಿಗಳು ZeniTEK ಬಗ್ಗೆ ಹೇಳುವುದು.",
+    homeDistrictPh: "ಉದಾ. ಕೊಯಮತ್ತೂರು",
+    homeMessagePh: "ಗುರಿ ತೇವಾಂಶ, ಸ್ಥಳ ಅಥವಾ ಪ್ರಶ್ನೆಗಳು",
+    notFoundTitle: "ಪುಟ ಕಂಡುಬಂದಿಲ್ಲ",
+    notFoundDesc: "ನೀವು ಹುಡುಕುತ್ತಿರುವ ಪುಟ ಅಸ್ತಿತ್ವದಲ್ಲಿಲ್ಲ ಅಥವಾ ಸ್ಥಳಾಂತರಗೊಂಡಿದೆ.",
+    notFoundHome: "ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ"
   }
 };
 

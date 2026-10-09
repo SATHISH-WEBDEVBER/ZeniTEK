@@ -269,10 +269,10 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
           {/* Top Headline & Quick Metrics */}
           <div className="text-center max-w-4xl mx-auto space-y-6">
 
-            <div className="inline-flex items-center space-x-2.5 px-5 py-2 rounded-full bg-white border border-[#002DC2]/25 shadow-sm">
-              <span className="w-3 h-3 rounded-full bg-[#23AC39] animate-pulse" />
-              <span className="text-sm sm:text-base font-black uppercase tracking-wider text-[#002DC2]">
-                ZeniTEK • Renewable Energy Engineering • Erode, Tamil Nadu
+            <div className="inline-flex items-center gap-2.5 max-w-full px-4 sm:px-5 py-2 rounded-2xl sm:rounded-full bg-white border border-[#002DC2]/25 shadow-sm">
+              <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#23AC39] animate-pulse shrink-0" />
+              <span className="text-2xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider text-[#002DC2] text-balance leading-snug">
+                {'ZeniTEK • Renewable Energy Engineering • Erode, Tamil Nadu'}
               </span>
             </div>
 
@@ -289,21 +289,21 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             </p>
 
             {/* 4 Large Bold Stat Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto pt-4">
-              <div className="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/90 shadow-sm text-center hover:border-[#002DC2]/40 transition-all hover:shadow-lg">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#002DC2]">2021</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto pt-4">
+              <div className="bg-white px-3 py-5 sm:p-5 lg:p-6 rounded-3xl border border-slate-200/90 shadow-sm text-center hover:border-[#002DC2]/40 transition-all hover:shadow-lg min-w-0">
+                <div className="text-3xl lg:text-4xl leading-tight font-black tracking-tight text-[#002DC2] break-words">2021</div>
                 <div className="text-xs sm:text-sm font-black text-slate-600 uppercase tracking-wider mt-1.5">Established</div>
               </div>
-              <div className="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/90 shadow-sm text-center hover:border-[#002DC2]/40 transition-all hover:shadow-lg">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900">Erode</div>
+              <div className="bg-white px-3 py-5 sm:p-5 lg:p-6 rounded-3xl border border-slate-200/90 shadow-sm text-center hover:border-[#002DC2]/40 transition-all hover:shadow-lg min-w-0">
+                <div className="text-3xl lg:text-4xl leading-tight font-black tracking-tight text-slate-900 break-words">Erode</div>
                 <div className="text-xs sm:text-sm font-black text-slate-600 uppercase tracking-wider mt-1.5">Tamil Nadu</div>
               </div>
-              <div className="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/90 shadow-sm text-center hover:border-[#002DC2]/40 transition-all hover:shadow-lg">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#23AC39]">Turnkey</div>
+              <div className="bg-white px-3 py-5 sm:p-5 lg:p-6 rounded-3xl border border-slate-200/90 shadow-sm text-center hover:border-[#002DC2]/40 transition-all hover:shadow-lg min-w-0">
+                <div className="text-3xl lg:text-4xl leading-tight font-black tracking-tight text-[#23AC39] break-words">Turnkey</div>
                 <div className="text-xs sm:text-sm font-black text-slate-600 uppercase tracking-wider mt-1.5">Design & EPC</div>
               </div>
-              <div className="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/90 shadow-sm text-center hover:border-[#002DC2]/40 transition-all hover:shadow-lg">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92]">100%</div>
+              <div className="bg-white px-3 py-5 sm:p-5 lg:p-6 rounded-3xl border border-slate-200/90 shadow-sm text-center hover:border-[#002DC2]/40 transition-all hover:shadow-lg min-w-0">
+                <div className="text-3xl lg:text-4xl leading-tight font-black tracking-tight text-[#123B92] break-words">100%</div>
                 <div className="text-xs sm:text-sm font-black text-slate-600 uppercase tracking-wider mt-1.5">Clean Energy</div>
               </div>
             </div>
@@ -429,9 +429,9 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
               {/* Mentorship Gratitude Card (Highlighting NISE & Pro-Target Germany) */}
               <div className="p-6 rounded-3xl bg-[#F0F4FD] border-2 border-[#002DC2]/20 relative overflow-hidden space-y-3 shadow-sm">
-                <div className="flex items-center space-x-2 text-sm sm:text-base font-black uppercase tracking-wider text-[#002DC2]">
-                  <Award className="w-5 h-5 text-[#002DC2]" />
-                  <span>Technical Gratitude & Mentorship</span>
+                <div className="flex items-start gap-2 text-sm sm:text-base font-black uppercase tracking-wider text-[#002DC2] leading-snug">
+                  <Award className="w-5 h-5 text-[#002DC2] shrink-0 -mt-px" />
+                  <span className="text-balance">Technical Gratitude & Mentorship</span>
                 </div>
                 <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium">
                   We express our deepest gratitude to <strong className="text-slate-950 font-black">Shri. S.K. Singh</strong> (Former Director of Solar Thermal Energy, NISE) and <strong className="text-slate-950 font-black">Mr. John Mitchell</strong> (Technical Director of Pro-Target, Germany) for their invaluable guidance in developing our first commercial parabolic trough collector.
@@ -442,9 +442,9 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
               <div className="pt-2">
                 <button
                   onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: "About Us Consultation" })}
-                  className="px-7 py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-sm uppercase tracking-wider rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center space-x-2.5 cursor-pointer hover:scale-102"
+                  className="w-full sm:w-auto max-w-full px-6 sm:px-7 py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-sm uppercase tracking-wide sm:tracking-wider rounded-2xl shadow-md hover:shadow-lg transition-all inline-flex items-center justify-center gap-2.5 text-center cursor-pointer hover:scale-[1.02]"
                 >
-                  <span>Connect With Our Engineering Team</span>
+                  <span className="text-balance">Connect With Our Engineering Team</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -461,7 +461,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 />
 
                 {/* Floating Glassmorphic Emblem */}
-                <div className="absolute top-5 left-5 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-white/60 shadow-xl flex items-center space-x-3.5">
+                <div className="absolute top-4 left-4 sm:top-5 sm:left-5 bg-white/95 backdrop-blur-md px-4 sm:px-5 py-3 rounded-2xl border border-white/60 shadow-xl flex items-center space-x-3.5">
                   <img src="/emblem.png" alt="ZeniTEK Emblem" className="w-10 h-10 object-contain" />
                   <div>
                     <div className="text-sm font-black text-slate-900">ZeniTEK R&D Hub</div>
@@ -470,14 +470,14 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 </div>
 
                 {/* Floating Project Pill */}
-                <div className="absolute bottom-5 inset-x-5 bg-slate-950/90 backdrop-blur-md p-5 rounded-2xl text-white border border-white/10 shadow-2xl">
-                  <div className="flex items-center justify-between text-xs sm:text-sm font-bold text-emerald-400 pb-1.5">
-                    <span>Field Verified System</span>
-                    <span className="bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full text-xs font-black">
+                <div className="absolute bottom-4 inset-x-4 sm:bottom-5 sm:inset-x-5 bg-slate-950/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-white border border-white/10 shadow-2xl">
+                  <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 text-xs sm:text-sm font-bold text-emerald-400 pb-2">
+                    <span className="whitespace-nowrap">Field Verified System</span>
+                    <span className="bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full text-xs font-black whitespace-nowrap">
                       Patented Aerodynamics
                     </span>
                   </div>
-                  <div className="text-base sm:text-lg font-black text-white">
+                  <div className="text-base sm:text-lg font-black text-white leading-snug text-balance">
                     Large-Scale Commercial Solar Polyhouse Facility
                   </div>
                 </div>
@@ -529,16 +529,17 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
 
-                    <span className="absolute top-5 left-5 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full text-xs sm:text-sm font-black text-[#002DC2] shadow-sm">
+                    <span className="absolute top-4 left-4 sm:top-5 sm:left-5 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full text-xs sm:text-sm font-black text-[#002DC2] shadow-sm whitespace-nowrap">
                       {domain.badge}
                     </span>
 
-                    <div className="absolute bottom-5 left-5 right-5 text-white">
-                      <div className="flex items-center space-x-2 text-emerald-400 text-xs sm:text-sm font-bold mb-1.5">
-                        <Icon className="w-4 h-4" />
+                    <div className="absolute bottom-4 inset-x-4 sm:bottom-5 sm:inset-x-5 text-white">
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-emerald-300 text-xs sm:text-sm font-bold mb-1.5">
+                        <Icon className="w-4 h-4 shrink-0" />
+                        <span className="text-white font-black whitespace-nowrap">{domain.metric}</span>
                         <span>{domain.metricLabel}</span>
                       </div>
-                      <h3 className="text-2xl sm:text-3xl font-black text-white">
+                      <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
                         {domain.title}
                       </h3>
                     </div>
@@ -566,7 +567,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     <div className="pt-2">
                       <button
                         onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: domain.title })}
-                        className="w-full py-3.5 bg-[#F0F4FD] hover:bg-[#002DC2] text-[#002DC2] hover:text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-2xl transition-colors flex items-center justify-center space-x-2 cursor-pointer shadow-xs"
+                        className="w-full py-3.5 bg-[#F0F4FD] hover:bg-[#002DC2] text-[#002DC2] hover:text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-2xl transition-colors flex items-center justify-center space-x-2 cursor-pointer shadow-sm"
                       >
                         <span>Request Specifications</span>
                         <ArrowRight className="w-4 h-4" />
@@ -666,14 +667,14 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 {/* Content with Large Legible Font */}
                 <div className="p-7 space-y-4 flex-1 flex flex-col justify-between">
                   <div className="space-y-3">
-                    <div className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-slate-500">
-                      <MapPin className="w-4 h-4 text-[#23AC39] shrink-0" />
-                      <span>{proj.location}</span>
-                    </div>
-
                     <h3 className="text-lg sm:text-xl font-black text-slate-900 leading-snug group-hover:text-[#002DC2] transition-colors">
                       {proj.title}
                     </h3>
+
+                    <div className="flex items-start gap-2 text-xs sm:text-sm font-bold text-slate-500 leading-snug">
+                      <MapPin className="w-4 h-4 text-[#23AC39] shrink-0 mt-px" />
+                      <span>{proj.location}</span>
+                    </div>
 
                     <div className="text-xs sm:text-sm font-bold text-blue-800 bg-blue-50 px-3 py-1.5 rounded-xl inline-block">
                       {proj.client}
@@ -739,7 +740,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                       key={`acad-h1-${idx}`}
                       className="bg-white p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-lg transition-shadow flex items-center space-x-5 w-[380px] sm:w-[470px] shrink-0"
                     >
-                      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white border border-slate-200 shadow-xs p-2.5 sm:p-3 flex items-center justify-center shrink-0">
+                      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white border border-slate-200 shadow-sm p-2.5 sm:p-3 flex items-center justify-center shrink-0">
                         <img
                           src={client.logo}
                           alt={client.name}
@@ -754,7 +755,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                         <div className="text-lg sm:text-xl font-black text-slate-900 truncate mt-1">
                           {client.name}
                         </div>
-                        <div className="text-xs sm:text-sm text-slate-600 font-medium truncate mt-1">
+                        <div className="text-xs sm:text-sm text-slate-600 font-medium line-clamp-2 leading-snug mt-1">
                           {client.branch}
                         </div>
                       </div>
@@ -769,7 +770,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                       key={`acad-h2-${idx}`}
                       className="bg-white p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-lg transition-shadow flex items-center space-x-5 w-[380px] sm:w-[470px] shrink-0"
                     >
-                      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white border border-slate-200 shadow-xs p-2.5 sm:p-3 flex items-center justify-center shrink-0">
+                      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white border border-slate-200 shadow-sm p-2.5 sm:p-3 flex items-center justify-center shrink-0">
                         <img
                           src={client.logo}
                           alt={client.name}
@@ -784,7 +785,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                         <div className="text-lg sm:text-xl font-black text-slate-900 truncate mt-1">
                           {client.name}
                         </div>
-                        <div className="text-xs sm:text-sm text-slate-600 font-medium truncate mt-1">
+                        <div className="text-xs sm:text-sm text-slate-600 font-medium line-clamp-2 leading-snug mt-1">
                           {client.branch}
                         </div>
                       </div>
@@ -815,7 +816,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                       key={`ind-h1-${idx}`}
                       className="bg-white p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-lg transition-shadow flex items-center space-x-5 w-[380px] sm:w-[470px] shrink-0"
                     >
-                      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white border border-slate-200 shadow-xs p-2.5 sm:p-3 flex items-center justify-center shrink-0">
+                      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white border border-slate-200 shadow-sm p-2.5 sm:p-3 flex items-center justify-center shrink-0">
                         <img
                           src={client.logo}
                           alt={client.name}
@@ -830,7 +831,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                         <div className="text-lg sm:text-xl font-black text-slate-900 truncate mt-1.5">
                           {client.name}
                         </div>
-                        <div className="text-xs sm:text-sm text-slate-600 font-medium truncate mt-1">
+                        <div className="text-xs sm:text-sm text-slate-600 font-medium line-clamp-2 leading-snug mt-1">
                           {client.detail}
                         </div>
                       </div>
@@ -845,7 +846,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                       key={`ind-h2-${idx}`}
                       className="bg-white p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-lg transition-shadow flex items-center space-x-5 w-[380px] sm:w-[470px] shrink-0"
                     >
-                      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white border border-slate-200 shadow-xs p-2.5 sm:p-3 flex items-center justify-center shrink-0">
+                      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white border border-slate-200 shadow-sm p-2.5 sm:p-3 flex items-center justify-center shrink-0">
                         <img
                           src={client.logo}
                           alt={client.name}
@@ -860,7 +861,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                         <div className="text-lg sm:text-xl font-black text-slate-900 truncate mt-1.5">
                           {client.name}
                         </div>
-                        <div className="text-xs sm:text-sm text-slate-600 font-medium truncate mt-1">
+                        <div className="text-xs sm:text-sm text-slate-600 font-medium line-clamp-2 leading-snug mt-1">
                           {client.detail}
                         </div>
                       </div>
@@ -925,7 +926,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
 
               <div className="lg:col-span-8 space-y-5 text-left">
-                <span className="text-xs sm:text-sm font-black text-emerald-400 uppercase tracking-wider bg-white/10 px-4 py-1.5 rounded-full">
+                <span className="text-xs sm:text-sm font-black text-emerald-400 uppercase tracking-wider bg-white/10 px-4 py-1.5 rounded-full inline-block">
                   Direct EPC Consultation
                 </span>
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
@@ -936,7 +937,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 </p>
 
                 {/* Registered Address & GST Info */}
-                <div className="pt-3 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm sm:text-base text-slate-200 font-semibold">
+                <div className="pt-3 flex flex-col sm:flex-row sm:flex-wrap gap-x-8 gap-y-3 text-sm sm:text-base text-slate-200 font-semibold">
                   <div className="flex items-center space-x-2.5">
                     <MapPin className="w-5 h-5 text-emerald-400 shrink-0" />
                     <span className="whitespace-nowrap">Erode, Tamil Nadu — 638 112</span>
@@ -958,17 +959,17 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
               <div className="lg:col-span-4 flex flex-col gap-3 justify-center">
                 <button
                   onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: "About Us Consultation" })}
-                  className="w-full px-6 py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-sm sm:text-base uppercase tracking-wider rounded-2xl shadow-lg hover:shadow-xl hover:scale-101 transition-all flex items-center justify-center space-x-2.5 cursor-pointer"
+                  className="w-full px-6 py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-sm sm:text-base uppercase tracking-wide sm:tracking-wider rounded-2xl shadow-lg hover:shadow-xl hover:scale-101 transition-all flex items-center justify-center gap-2.5 text-center cursor-pointer"
                 >
-                  <span>Request Engineering Quote</span>
+                  <span className="text-balance">Request Engineering Quote</span>
                   <ArrowRight className="w-5 h-5" />
                 </button>
 
                 {/* Direct Call & WhatsApp Action Buttons */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
                   <a
                     href="tel:+918903852623"
-                    className="px-4 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-2xl border border-white/20 hover:border-white/40 transition-all flex items-center justify-center space-x-2 text-center hover:scale-101 shadow-sm"
+                    className="px-3 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm uppercase tracking-wide whitespace-nowrap rounded-2xl border border-white/20 hover:border-white/40 transition-all flex items-center justify-center space-x-2 text-center hover:scale-101 shadow-sm"
                   >
                     <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
                     <span>Call Directly</span>
@@ -978,7 +979,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     href="https://wa.me/918903852623?text=Hello%20ZeniTEK%20Team,%20I%20would%20like%20to%20consult%20regarding%20solar%20thermal%20and%20drying%20solutions."
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-3.5 bg-[#25D366] hover:bg-[#20ba59] text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2 text-center hover:scale-101"
+                    className="px-3 py-3.5 bg-[#25D366] hover:bg-[#20ba59] text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wide whitespace-nowrap rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2 text-center hover:scale-101"
                   >
                     <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
                       <path d="M12.031 2C6.495 2 2 6.494 2 12.03c0 1.769.46 3.498 1.334 5.018L2 22l5.122-1.342a10.016 10.016 0 004.909 1.272h.004c5.535 0 10.03-4.494 10.03-10.03A10.03 10.03 0 0012.031 2zm0 18.366h-.003a8.318 8.318 0 01-4.238-1.163l-.304-.18-3.148.825.84-3.068-.198-.315A8.32 8.32 0 013.7 12.03c0-4.595 3.738-8.332 8.334-8.332a8.3 8.3 0 015.892 2.44 8.3 8.3 0 012.44 5.892c0 4.596-3.738 8.336-8.335 8.336zm4.568-6.242c-.25-.125-1.48-.73-1.71-.813-.23-.083-.398-.125-.565.125-.168.25-.65.813-.797.98-.146.166-.293.187-.543.062a6.93 6.93 0 01-2.02-1.246 7.64 7.64 0 01-1.398-1.74c-.146-.25-.016-.385.109-.51.112-.112.25-.292.375-.438.125-.146.167-.25.25-.417.084-.167.042-.313-.02-.438-.063-.125-.564-1.36-.773-1.862-.204-.49-.41-.423-.564-.431-.146-.008-.313-.01-.48-.01-.167 0-.438.063-.667.313-.23.25-.875.855-.875 2.085s.896 2.418 1.021 2.585c.125.167 1.76 2.688 4.264 3.77.596.257 1.061.411 1.424.526.598.19 1.143.163 1.573.099.48-.072 1.48-.605 1.688-1.189.209-.584.209-1.084.146-1.189-.062-.104-.23-.166-.48-.291z" />

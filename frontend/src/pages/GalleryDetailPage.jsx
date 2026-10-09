@@ -10,6 +10,9 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
+// Keep short parenthetical notes like "(with casters)" from splitting across lines
+const keepParens = (s) => String(s ?? '').replace(/\(([^)]{1,16})\)/g, (m) => m.replace(/ /g, ' '));
+
 // Custom ZeniTEK Map Pin Marker
 const createCustomIcon = () => {
   return L.divIcon({
@@ -88,18 +91,18 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
       <section className="bg-white border-b border-slate-200 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex items-center space-x-2 text-xs font-semibold text-slate-500 overflow-x-auto py-1">
-              <Link to="/" className="hover:text-blue-700">Home</Link>
+            <div className="flex items-center min-w-0 space-x-2 text-xs font-semibold text-slate-500 py-1">
+              <Link to="/" className="hover:text-blue-700 whitespace-nowrap shrink-0">Home</Link>
               <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-              <Link to="/gallery" className="hover:text-blue-700">Authentic Gallery</Link>
+              <Link to="/gallery" className="hover:text-blue-700 whitespace-nowrap shrink-0">Authentic Gallery</Link>
               <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-              <span className="text-[#002DC2] font-bold truncate max-w-xs">{item.title}</span>
+              <span className="text-[#002DC2] font-bold truncate min-w-0 max-w-xs" title={item.title}>{item.title}</span>
             </div>
 
             <div className="flex items-center space-x-3 shrink-0">
               <button
                 onClick={handleShare}
-                className="px-3.5 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-100 flex items-center space-x-1.5 transition-all shadow-xs"
+                className="px-3.5 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-100 flex items-center space-x-1.5 transition-all shadow-sm"
               >
                 <Share2 className="w-3.5 h-3.5 text-slate-600" />
                 <span>{copied ? 'Link Copied!' : 'Share Site'}</span>
@@ -120,7 +123,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
       <section className="py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start lg:items-stretch">
             
             {/* Left 7 cols: Photo Showcase with angle thumbnails */}
             <div className="lg:col-span-7 space-y-4">
@@ -133,15 +136,15 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                   <img
                     src={activeImage}
                     alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                   />
                   <div className="absolute top-3 right-3 bg-black/60 hover:bg-black/80 backdrop-blur-md text-white p-2 rounded-xl text-xs flex items-center space-x-1.5 transition-all">
                     <Maximize2 className="w-4 h-4" />
-                    <span className="font-bold text-[11px] hidden sm:inline">Zoom Photo</span>
+                    <span className="font-bold text-xs hidden sm:inline">Zoom Photo</span>
                   </div>
                   <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md text-white px-3 py-1.5 rounded-xl text-xs flex items-center space-x-2">
                     <ShieldCheck className="w-4 h-4 text-[#23AC39]" />
-                    <span className="font-bold text-[11px]">Authentic ZeniTEK Field Site</span>
+                    <span className="font-bold text-xs">Authentic ZeniTEK Field Site</span>
                   </div>
                 </div>
 
@@ -151,7 +154,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                     <button
                       onClick={() => setActiveImage(item.image)}
                       className={`relative w-20 h-16 rounded-xl overflow-hidden border-2 shrink-0 transition-all ${
-                        activeImage === item.image ? 'border-[#002DC2] ring-2 ring-[#002DC2]/30 scale-102' : 'border-slate-200 opacity-70 hover:opacity-100'
+                        activeImage === item.image ? 'border-[#002DC2] ring-2 ring-[#002DC2]/30 scale-[1.02]' : 'border-slate-200 opacity-70 hover:opacity-100'
                       }`}
                     >
                       <img src={item.image} alt="Primary" className="w-full h-full object-cover" />
@@ -161,7 +164,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                         key={idx}
                         onClick={() => setActiveImage(imgSrc)}
                         className={`relative w-20 h-16 rounded-xl overflow-hidden border-2 shrink-0 transition-all ${
-                          activeImage === imgSrc ? 'border-[#002DC2] ring-2 ring-[#002DC2]/30 scale-102' : 'border-slate-200 opacity-70 hover:opacity-100'
+                          activeImage === imgSrc ? 'border-[#002DC2] ring-2 ring-[#002DC2]/30 scale-[1.02]' : 'border-slate-200 opacity-70 hover:opacity-100'
                         }`}
                       >
                         <img src={imgSrc} alt={`Angle ${idx + 1}`} className="w-full h-full object-cover" />
@@ -178,10 +181,10 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                     <Award className="w-4 h-4 mr-1.5 text-[#002DC2]" />
                     Commissioned Installation Details
                   </div>
-                  <div className="text-sm font-extrabold text-[#123B92]">
+                  <div className="text-base font-extrabold text-[#123B92] leading-snug">
                     Operational in {item.location}, {item.state}
                   </div>
-                  <div className="text-xs text-slate-600">
+                  <div className="text-sm text-slate-600">
                     MNRE enlisted model eligible for 40% – 60% agricultural capital subsidies.
                   </div>
                 </div>
@@ -192,7 +195,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                     cropType: item.crop,
                     district: `${item.location}, ${item.state}`
                   })}
-                  className="px-5 py-2.5 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md shrink-0 cursor-pointer"
+                  className="px-5 py-2.5 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md shrink-0 cursor-pointer whitespace-nowrap"
                 >
                   Request Sizing Quote
                 </button>
@@ -200,13 +203,13 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
             </div>
 
             {/* Right 5 cols: Technical Specs & Metadata */}
-            <div className="lg:col-span-5 space-y-6">
+            <div className="lg:col-span-5 flex flex-col">
               
-              <div className="bg-white p-6 sm:p-7 rounded-3xl border border-slate-200 shadow-md space-y-5">
+              <div className="flex-1 flex flex-col bg-white p-6 sm:p-7 rounded-3xl border border-slate-200 shadow-md space-y-5">
                 
                 {/* Badges */}
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="bg-[#123B92] text-white font-black text-xs uppercase px-3 py-1 rounded-full shadow-xs">
+                  <span className="bg-[#123B92] text-white font-black text-xs uppercase px-3 py-1 rounded-full shadow-sm inline-block">
                     {item.categoryLabel}
                   </span>
                   <span className="bg-green-100 text-green-800 font-extrabold text-xs px-3 py-1 rounded-full border border-green-200">
@@ -220,16 +223,18 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                 </h1>
 
                 {/* Location Pill */}
-                <div className="flex items-center text-xs font-bold text-[#002DC2] bg-blue-50/80 px-3.5 py-2 rounded-2xl border border-blue-100">
-                  <MapPin className="w-4 h-4 mr-1.5 text-[#002DC2] shrink-0" />
-                  <span>{item.location}, {item.state}</span>
-                  <span className="ml-auto text-[10px] text-slate-500 font-mono">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-bold text-[#002DC2] bg-blue-50/80 px-3.5 py-2 rounded-2xl border border-blue-100">
+                  <span className="flex items-start min-w-0">
+                    <MapPin className="w-4 h-4 mr-1.5 mt-0.5 text-[#002DC2] shrink-0" />
+                    <span className="text-balance">{item.location}, {item.state}</span>
+                  </span>
+                  <span className="pl-[1.375rem] sm:pl-0 sm:ml-auto text-2xs text-slate-500 font-mono whitespace-nowrap">
                     {item.lat.toFixed(4)}°N, {item.lng.toFixed(4)}°E
                   </span>
                 </div>
 
                 {/* Description */}
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+                <p className="text-sm text-slate-700 leading-relaxed font-medium">
                   {item.description}
                 </p>
 
@@ -239,56 +244,59 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                     Engineering Specifications
                   </h3>
 
-                  <div className="grid grid-cols-2 gap-3 text-xs">
+                  <div className="grid grid-cols-2 gap-3 text-sm">
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                      <div className="text-[10px] font-bold text-slate-400 uppercase">Model Series</div>
+                      <div className="text-2xs font-bold text-slate-400 uppercase">Model Series</div>
                       <div className="font-extrabold text-slate-900 mt-0.5">{item.productModel}</div>
                     </div>
 
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                      <div className="text-[10px] font-bold text-slate-400 uppercase">Batch Capacity</div>
-                      <div className="font-extrabold text-blue-700 mt-0.5">{item.capacity}</div>
+                      <div className="text-2xs font-bold text-slate-400 uppercase">Batch Capacity</div>
+                      <div className="font-extrabold text-blue-700 mt-0.5">{keepParens(item.capacity)}</div>
                     </div>
 
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                      <div className="text-[10px] font-bold text-slate-400 uppercase">Footprint / Size</div>
-                      <div className="font-extrabold text-slate-900 mt-0.5">{item.dimensions}</div>
+                      <div className="text-2xs font-bold text-slate-400 uppercase">Footprint / Size</div>
+                      <div className="font-extrabold text-slate-900 mt-0.5">{keepParens(item.dimensions)}</div>
                     </div>
 
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                      <div className="text-[10px] font-bold text-slate-400 uppercase">Primary Crops</div>
-                      <div className="font-extrabold text-green-700 mt-0.5 truncate">{item.crop}</div>
+                      <div className="text-2xs font-bold text-slate-400 uppercase">Primary Crops</div>
+                      <div className="font-extrabold text-green-700 mt-0.5 break-words">{item.crop}</div>
                     </div>
 
                     {item.dryingTime && (
                       <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div className="text-[10px] font-bold text-slate-400 uppercase">Drying Time</div>
+                        <div className="text-2xs font-bold text-slate-400 uppercase">Drying Time</div>
                         <div className="font-extrabold text-slate-900 mt-0.5">{item.dryingTime}</div>
                       </div>
                     )}
 
                     {item.solarPV && (
                       <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div className="text-[10px] font-bold text-slate-400 uppercase">Solar Power</div>
-                        <div className="font-extrabold text-slate-900 mt-0.5 truncate">{item.solarPV}</div>
+                        <div className="text-2xs font-bold text-slate-400 uppercase">Solar Power</div>
+                        <div className="font-extrabold text-slate-900 mt-0.5 break-words">{keepParens(item.solarPV)}</div>
                       </div>
                     )}
 
                     {item.temperatureRange && (
                       <div className="col-span-2 p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div className="text-[10px] font-bold text-slate-400 uppercase">Operating Temperature</div>
+                        <div className="text-2xs font-bold text-slate-400 uppercase">Operating Temperature</div>
                         <div className="font-extrabold text-slate-900 mt-0.5">{item.temperatureRange}</div>
                       </div>
                     )}
 
                     {item.traySpecs && (
                       <div className="col-span-2 p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div className="text-[10px] font-bold text-slate-400 uppercase">Food-Grade Tray Details</div>
-                        <div className="font-semibold text-slate-800 mt-0.5">{item.traySpecs}</div>
+                        <div className="text-2xs font-bold text-slate-400 uppercase">Food-Grade Tray Details</div>
+                        <div className="font-semibold text-slate-800 mt-0.5">{keepParens(item.traySpecs)}</div>
                       </div>
                     )}
                   </div>
                 </div>
+
+                {/* Spacer keeps CTAs pinned to the card bottom when the column stretches */}
+                <div className="hidden lg:block flex-1" aria-hidden="true" />
 
                 {/* Primary CTA Buttons */}
                 <div className="pt-2 space-y-2.5">
@@ -298,10 +306,10 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                       cropType: item.crop,
                       district: `${item.location}, ${item.state}`
                     })}
-                    className="w-full py-3.5 bg-[#002DC2] hover:bg-[#123B92] text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-lg transition-all hover:scale-101 flex items-center justify-center space-x-2 cursor-pointer"
+                    className="w-full py-3.5 bg-[#002DC2] hover:bg-[#123B92] text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-lg transition-all hover:scale-101 flex items-center justify-center gap-2 px-4 text-center cursor-pointer"
                   >
-                    <SlidersHorizontal className="w-4 h-4" />
-                    <span>Get Pricing & Subsidy Quote for this Model</span>
+                    <SlidersHorizontal className="w-4 h-4 shrink-0" />
+                    <span className="text-balance">Get Pricing & Subsidy Quote for this Model</span>
                   </button>
 
                   <a
@@ -331,7 +339,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                 <h3 className="text-xl sm:text-2xl font-black text-slate-900">
                   Installation Site Map: {item.location}, {item.state}
                 </h3>
-                <p className="text-xs text-slate-600">
+                <p className="text-sm text-slate-600">
                   Interactive field coordinate preview. Zoom and pan to inspect the geographical agricultural cluster.
                 </p>
               </div>
@@ -359,9 +367,9 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                   <Popup>
                     <div className="p-1 space-y-1 text-xs">
                       <div className="font-bold text-slate-900">{item.title}</div>
-                      <div className="text-[11px] text-blue-700 font-semibold">{item.productModel}</div>
-                      <div className="text-[10px] text-slate-500">{item.location}, {item.state}</div>
-                      <div className="text-[10px] text-green-700 font-bold">Crop: {item.crop}</div>
+                      <div className="text-xs text-blue-700 font-semibold">{item.productModel}</div>
+                      <div className="text-2xs text-slate-500">{item.location}, {item.state}</div>
+                      <div className="text-2xs text-green-700 font-bold">Crop: {item.crop}</div>
                     </div>
                   </Popup>
                 </Marker>
@@ -372,14 +380,14 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
           {/* SECTION 4: RELATED REAL INSTALLATIONS */}
           {relatedItems.length > 0 && (
             <div className="space-y-4 pt-4">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 sm:gap-4">
                 <div>
-                  <h3 className="text-xl font-black text-slate-900">Related Real Installations</h3>
-                  <p className="text-xs text-slate-600">Explore other commissioned projects in this category</p>
+                  <h3 className="text-xl sm:text-2xl font-black text-slate-900">Related Real Installations</h3>
+                  <p className="text-sm text-slate-600">Explore other commissioned projects in this category</p>
                 </div>
                 <Link
                   to="/gallery"
-                  className="text-xs font-bold text-[#002DC2] hover:underline flex items-center space-x-1"
+                  className="self-start sm:self-auto shrink-0 whitespace-nowrap text-sm font-bold text-[#002DC2] hover:underline flex items-center gap-1"
                 >
                   <span>View All 30 Sites</span>
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -391,7 +399,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                   <Link
                     key={rel.id}
                     to={`/gallery/${rel.id}`}
-                    className="group bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-xs hover:shadow-xl hover:border-[#002DC2] transition-all flex flex-col justify-between"
+                    className="group bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:border-[#002DC2] transition-all flex flex-col justify-between"
                   >
                     <div>
                       <div className="relative h-48 overflow-hidden bg-black">
@@ -400,17 +408,17 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                           alt={rel.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
-                        <div className="absolute bottom-2 left-2 bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                        <div className="absolute bottom-2 left-2 bg-black/70 backdrop-blur-sm text-white text-2xs font-bold px-2 py-0.5 rounded">
                           {rel.productModel}
                         </div>
                       </div>
 
                       <div className="p-4 space-y-2">
-                        <div className="flex items-center text-[11px] text-[#002DC2] font-bold">
-                          <MapPin className="w-3 h-3 mr-1 shrink-0" />
-                          <span className="truncate">{rel.location}, {rel.state}</span>
+                        <div className="flex items-start text-xs text-[#002DC2] font-bold leading-snug">
+                          <MapPin className="w-3.5 h-3.5 mr-1 mt-px shrink-0" />
+                          <span>{rel.location}, {rel.state}</span>
                         </div>
-                        <h4 className="font-extrabold text-slate-900 text-xs sm:text-sm group-hover:text-[#002DC2] transition-colors line-clamp-2">
+                        <h4 className="font-extrabold text-slate-900 text-base sm:text-base group-hover:text-[#002DC2] transition-colors line-clamp-2">
                           {rel.title}
                         </h4>
                       </div>

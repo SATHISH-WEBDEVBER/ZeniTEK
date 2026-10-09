@@ -17,10 +17,10 @@ export default function DryerDetailModal({ isOpen, onClose, model, onOpenQuoteMo
         {/* Modal Header */}
         <div className="px-4 py-3 sm:px-6 sm:py-4 border-b-2 border-[#23AC39] flex items-center justify-between bg-[#123B92] text-white shrink-0">
           <div className="flex items-center space-x-2">
-            <span className="text-[9px] sm:text-[10px] font-extrabold text-[#23AC39] bg-black/40 border border-[#23AC39]/50 px-2 sm:px-2.5 py-0.5 rounded uppercase tracking-wider">
+            <span className="text-2xs sm:text-2xs font-extrabold text-[#23AC39] bg-black/40 border border-[#23AC39]/50 px-2 sm:px-2.5 py-0.5 rounded uppercase tracking-wider inline-block">
               {model.badge}
             </span>
-            <h3 className="text-sm sm:text-base lg:text-xl font-black text-white line-clamp-1">{model.name}</h3>
+            <h3 className="text-base sm:text-base lg:text-xl font-black text-white line-clamp-1">{model.name}</h3>
           </div>
           <button
             onClick={onClose}
@@ -67,27 +67,27 @@ export default function DryerDetailModal({ isOpen, onClose, model, onOpenQuoteMo
             <div className="lg:col-span-6 space-y-4">
               <div>
                 <div className="flex items-center space-x-2">
-                  <span className="bg-[#002DC2] text-white font-bold text-[10px] px-2.5 py-0.5 rounded shadow-2xs">
+                  <span className="bg-[#002DC2] text-white font-bold text-2xs px-2.5 py-0.5 rounded shadow-sm">
                     {model.capacityRange}
                   </span>
-                  <span className="text-[10px] font-bold text-black/60 uppercase tracking-widest">PRODUCT SPECIFICATION</span>
+                  <span className="text-2xs font-bold text-black/60 uppercase tracking-widest">PRODUCT SPECIFICATION</span>
                 </div>
                 <h4 className="text-xl font-black text-[#123B92] mt-1">{model.name}</h4>
-                <p className="text-xs text-black leading-relaxed mt-2 font-medium">{model.description}</p>
+                <p className="text-sm text-black leading-relaxed mt-2 font-medium">{model.description}</p>
               </div>
 
               <div className="p-3 bg-[#F0F4FD] rounded-2xl border border-[#123B92]/20 space-y-2 text-xs">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-black/60 uppercase">Target Audience:</span>
+                  <span className="text-2xs font-bold text-black/60 uppercase">Target Audience:</span>
                   <span className="font-extrabold text-[#123B92]">{model.targetAudience}</span>
                 </div>
                 <div className="flex items-center justify-between border-t border-[#123B92]/10 pt-1.5">
-                  <span className="text-[10px] font-bold text-black/60 uppercase">Subsidy Eligibility:</span>
+                  <span className="text-2xs font-bold text-black/60 uppercase">Subsidy Eligibility:</span>
                   <span className="font-extrabold text-[#002DC2]">{model.subsidyEligibility}</span>
                 </div>
                 {model.paybackPeriod && (
                   <div className="flex items-center justify-between border-t border-[#123B92]/10 pt-1.5">
-                    <span className="text-[10px] font-bold text-black/60 uppercase">Est. Payback Period:</span>
+                    <span className="text-2xs font-bold text-black/60 uppercase">Est. Payback Period:</span>
                     <span className="font-extrabold text-[#123B92]">{model.paybackPeriod}</span>
                   </div>
                 )}
@@ -109,48 +109,48 @@ export default function DryerDetailModal({ isOpen, onClose, model, onOpenQuoteMo
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
               <div className="p-3 bg-white rounded-xl border border-[#123B92]/20 shadow-sm">
-                <div className="text-[10px] text-black/60 font-bold uppercase flex items-center">
+                <div className="text-2xs text-black/60 font-bold uppercase flex items-center">
                   <Grid className="w-3.5 h-3.5 text-[#002DC2] mr-1" /> Floor & Tray Area
                 </div>
                 <div className="font-black text-[#123B92] mt-1 text-xs">Floor: {model.floorArea || 'Custom'}</div>
-                <div className="text-[11px] text-[#002DC2] font-bold">Tray Area: {model.totalTrayArea || model.trays || 'Food-grade Trays'}</div>
+                <div className="text-xs text-[#002DC2] font-bold">Tray Area: {model.totalTrayArea || model.trays || 'Food-grade Trays'}</div>
               </div>
 
               <div className="p-3 bg-white rounded-xl border border-[#123B92]/20 shadow-sm">
-                <div className="text-[10px] text-black/60 font-bold uppercase flex items-center">
+                <div className="text-2xs text-black/60 font-bold uppercase flex items-center">
                   <Layers className="w-3.5 h-3.5 text-[#002DC2] mr-1" /> Trays & Trolleys
                 </div>
                 <div className="font-bold text-black mt-1 text-xs">{model.trayCount || 'SS304 Trays'}</div>
-                {model.trayTrolleys && <div className="text-[10.5px] text-black/60 font-medium">Trolleys: {model.trayTrolleys}</div>}
+                {model.trayTrolleys && <div className="text-2xs text-black/60 font-medium">Trolleys: {model.trayTrolleys}</div>}
               </div>
 
               <div className="p-3 bg-white rounded-xl border border-[#123B92]/20 shadow-sm">
-                <div className="text-[10px] text-black/60 font-bold uppercase flex items-center">
+                <div className="text-2xs text-black/60 font-bold uppercase flex items-center">
                   <Sun className="w-3.5 h-3.5 text-[#002DC2] mr-1" /> Solar Power & Battery
                 </div>
                 <div className="font-bold text-black mt-1 text-xs">{model.solarPower || 'Solar DC System'}</div>
               </div>
 
               <div className="p-3 bg-white rounded-xl border border-[#123B92]/20 shadow-sm">
-                <div className="text-[10px] text-black/60 font-bold uppercase flex items-center">
+                <div className="text-2xs text-black/60 font-bold uppercase flex items-center">
                   <Wind className="w-3.5 h-3.5 text-[#002DC2] mr-1" /> Airflow & Fans
                 </div>
                 <div className="font-bold text-black mt-1 text-xs">Exhaust: {model.exhaustFans || 'Automated'}</div>
-                <div className="text-[10.5px] text-black/60">Circulation: {model.circulationFans || 'Convection'}</div>
+                <div className="text-2xs text-black/60">Circulation: {model.circulationFans || 'Convection'}</div>
               </div>
 
               <div className="p-3 bg-white rounded-xl border border-[#123B92]/20 shadow-sm">
-                <div className="text-[10px] text-black/60 font-bold uppercase flex items-center">
+                <div className="text-2xs text-black/60 font-bold uppercase flex items-center">
                   <Zap className="w-3.5 h-3.5 text-[#002DC2] mr-1" /> Heater & Grid Backup
                 </div>
                 <div className="font-bold text-black mt-1 text-xs">{model.electricalHeater || 'Thermostat Heater'}</div>
-                <div className="text-[10.5px] text-black/60">Grid: {model.gridBackup || '24V DC SMPS'}</div>
+                <div className="text-2xs text-black/60">Grid: {model.gridBackup || '24V DC SMPS'}</div>
               </div>
 
               <div className="p-3 bg-white rounded-xl border border-[#123B92]/20 shadow-sm">
-                <div className="text-[10px] text-black/60 font-bold uppercase">Dimensions & Structure</div>
+                <div className="text-2xs text-black/60 font-bold uppercase">Dimensions & Structure</div>
                 <div className="font-bold text-black mt-1 text-xs">{model.dimensions || 'Modular Standard'}</div>
-                <div className="text-[10px] text-black/60 leading-tight mt-0.5">{model.structure || model.buildMaterial || 'GI Steel & UV Polycarbonate'}</div>
+                <div className="text-2xs text-black/60 leading-tight mt-0.5">{model.structure || model.buildMaterial || 'GI Steel & UV Polycarbonate'}</div>
               </div>
             </div>
           </div>

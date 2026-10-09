@@ -227,7 +227,7 @@ function ProductForm({ product, onSave, onCancel, toast }) {
             {existingImages.map(img => (
               <div key={img._id} className="relative group">
                 <img src={img.url} alt={img.alt} className="w-20 h-20 object-cover rounded-xl border border-slate-200" />
-                {img.isPrimary && <span className="absolute top-1 left-1 bg-amber-500 text-white text-[9px] font-black px-1.5 rounded">PRIMARY</span>}
+                {img.isPrimary && <span className="absolute top-1 left-1 bg-amber-500 text-white text-2xs font-black px-1.5 rounded">PRIMARY</span>}
                 <button type="button" onClick={() => removeExistingImage(img._id)}
                   className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                   <X className="w-3 h-3" />
@@ -254,7 +254,7 @@ function ProductForm({ product, onSave, onCancel, toast }) {
           <button type="button" onClick={() => fileRef.current.click()}
             className="w-20 h-20 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:border-[#002DC2] hover:text-[#002DC2] cursor-pointer transition-colors">
             <Upload className="w-5 h-5" />
-            <span className="text-[9px] mt-1">Upload</span>
+            <span className="text-2xs mt-1">Upload</span>
           </button>
           <input ref={fileRef} type="file" multiple accept="image/*" onChange={handleFiles} className="hidden" />
         </div>
@@ -369,7 +369,7 @@ function GalleryForm({ item, onSave, onCancel, toast }) {
             <button type="button" onClick={() => fileRef.current.click()}
               className="w-32 h-24 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:border-[#002DC2] cursor-pointer transition-colors">
               <Upload className="w-6 h-6" />
-              <span className="text-[10px] mt-1">Choose Image</span>
+              <span className="text-2xs mt-1">Choose Image</span>
             </button>
           )}
           {preview && (
@@ -629,7 +629,7 @@ function SectionForm({ section, onSave, onCancel, toast }) {
               className="w-36 h-24 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:border-[#002DC2] cursor-pointer transition-colors shrink-0"
             >
               <Upload className="w-6 h-6" />
-              <span className="text-[10px] mt-1 font-bold">Upload Image</span>
+              <span className="text-2xs mt-1 font-bold">Upload Image</span>
             </button>
           )}
 
@@ -1025,7 +1025,7 @@ export default function AdminPanel() {
           <div className="text-center space-y-2">
             <img src="/logo.png" alt="ZeniTEK" className="h-12 mx-auto object-contain" />
             <h1 className="text-xl font-black text-slate-900">Admin Panel</h1>
-            <p className="text-xs text-slate-500">ZeniTEK CMS — Products & Gallery Management</p>
+            <p className="text-sm text-slate-500">ZeniTEK CMS — Products & Gallery Management</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
@@ -1077,7 +1077,7 @@ export default function AdminPanel() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {/* Tabs */}
-        <div className="flex space-x-1 bg-white rounded-2xl border border-slate-200 p-1 shadow-xs w-fit">
+        <div className="flex space-x-1 bg-white rounded-2xl border border-slate-200 p-1 shadow-sm w-fit">
           {[
             { id: 'products', label: 'Products', Icon: Package },
             { id: 'sections', label: 'Product Sections (7)', Icon: Layers },
@@ -1105,10 +1105,10 @@ export default function AdminPanel() {
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-lg font-black text-slate-900">Products</h2>
-                <p className="text-xs text-slate-500 mt-0.5">{products.length} total · {products.filter(p => p.published).length} published</p>
+                <p className="text-sm text-slate-500 mt-0.5">{products.length} total · {products.filter(p => p.published).length} published</p>
               </div>
               <div className="flex items-center space-x-2">
-                <button onClick={loadProducts} className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-500 hover:text-slate-700 cursor-pointer shadow-xs transition-colors" title="Refresh">
+                <button onClick={loadProducts} className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-500 hover:text-slate-700 cursor-pointer shadow-sm transition-colors" title="Refresh">
                   <RefreshCw className={`w-4 h-4 ${productsLoading ? 'animate-spin' : ''}`} />
                 </button>
                 <button onClick={() => setProductModal('new')}
@@ -1125,7 +1125,7 @@ export default function AdminPanel() {
                 <Loader className="w-8 h-8 text-[#002DC2] animate-spin" />
               </div>
             ) : products.length === 0 ? (
-              <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center shadow-xs">
+              <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center shadow-sm">
                 <Package className="w-12 h-12 text-slate-300 mx-auto mb-3" />
                 <p className="text-slate-500 font-semibold text-sm">No products yet</p>
                 <button onClick={() => setProductModal('new')}
@@ -1138,7 +1138,7 @@ export default function AdminPanel() {
                 {products.map(product => {
                   const primaryImg = product.images?.find(i => i.isPrimary) || product.images?.[0];
                   return (
-                    <div key={product._id} className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition-shadow p-4 flex items-center space-x-4">
+                    <div key={product._id} className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-4 flex items-center space-x-4">
                       {/* Thumbnail */}
                       <div className="w-16 h-16 rounded-xl overflow-hidden bg-slate-100 shrink-0">
                         {primaryImg
@@ -1150,22 +1150,22 @@ export default function AdminPanel() {
                       {/* Info */}
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
-                          <h3 className="font-bold text-slate-900 text-sm truncate">{product.name}</h3>
-                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                          <h3 className="font-bold text-slate-900 text-base truncate">{product.name}</h3>
+                          <span className={`text-2xs font-bold px-2 py-0.5 rounded-full ${
                             product.published ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'
                           }`}>
                             {product.published ? '● Live' : '○ Draft'}
                           </span>
                         </div>
                         <div className="flex items-center space-x-3 mt-1">
-                          <span className="text-[11px] text-slate-500 bg-slate-50 px-2 py-0.5 rounded-lg font-medium">{product.category}</span>
-                          <span className="text-[11px] text-slate-400">/{product.slug}</span>
+                          <span className="text-xs text-slate-500 bg-slate-50 px-2 py-0.5 rounded-lg font-medium">{product.category}</span>
+                          <span className="text-xs text-slate-400">/{product.slug}</span>
                           {product.images?.length > 0 && (
-                            <span className="text-[11px] text-slate-400">{product.images.length} image{product.images.length !== 1 ? 's' : ''}</span>
+                            <span className="text-xs text-slate-400">{product.images.length} image{product.images.length !== 1 ? 's' : ''}</span>
                           )}
                         </div>
                         {product.shortDescription && (
-                          <p className="text-[11px] text-slate-500 mt-1 truncate">{product.shortDescription}</p>
+                          <p className="text-sm text-slate-500 mt-1 truncate">{product.shortDescription}</p>
                         )}
                       </div>
 
@@ -1203,7 +1203,7 @@ export default function AdminPanel() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h2 className="text-lg font-black text-slate-900">Product Sections & Solutions (7 Categories)</h2>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <p className="text-sm text-slate-500 mt-0.5">
                   {sections.length} total · {sections.filter(s => s.published).length} published (live on navbar & pages)
                 </p>
               </div>
@@ -1217,7 +1217,7 @@ export default function AdminPanel() {
                 </button>
                 <button
                   onClick={loadSections}
-                  className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-500 hover:text-slate-700 cursor-pointer shadow-xs transition-colors"
+                  className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-500 hover:text-slate-700 cursor-pointer shadow-sm transition-colors"
                   title="Refresh"
                 >
                   <RefreshCw className={`w-4 h-4 ${sectionsLoading ? 'animate-spin' : ''}`} />
@@ -1238,7 +1238,7 @@ export default function AdminPanel() {
                 <Loader className="w-8 h-8 text-[#002DC2] animate-spin" />
               </div>
             ) : sections.length === 0 ? (
-              <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center shadow-xs">
+              <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center shadow-sm">
                 <Layers className="w-12 h-12 text-slate-300 mx-auto mb-3" />
                 <p className="text-slate-500 font-semibold text-sm">No sections found</p>
                 <button
@@ -1253,7 +1253,7 @@ export default function AdminPanel() {
                 {sections.map(sec => (
                   <div
                     key={sec._id || sec.slug}
-                    className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition-shadow p-4 flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-4"
+                    className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-4 flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-4"
                   >
                     {/* Thumbnail */}
                     <div className="w-20 h-16 rounded-xl overflow-hidden bg-slate-100 shrink-0 border border-slate-200">
@@ -1269,18 +1269,18 @@ export default function AdminPanel() {
                     {/* Info */}
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="font-bold text-slate-900 text-sm truncate">{sec.title}</h3>
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        <h3 className="font-bold text-slate-900 text-base truncate">{sec.title}</h3>
+                        <span className={`text-2xs font-bold px-2 py-0.5 rounded-full ${
                           sec.published ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'
                         }`}>
                           {sec.published ? '● Live on Navbar' : '○ Draft (Hidden)'}
                         </span>
-                        <span className="text-[10px] font-bold bg-blue-50 text-[#002DC2] px-2 py-0.5 rounded-full">
+                        <span className="text-2xs font-bold bg-blue-50 text-[#002DC2] px-2 py-0.5 rounded-full">
                           Order: {sec.displayOrder ?? 0}
                         </span>
                       </div>
                       
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-[11px] text-slate-500">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-xs text-slate-500">
                         <span className="font-mono text-slate-400">/{sec.slug}</span>
                         {sec.highlights?.length > 0 && (
                           <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-medium">
@@ -1295,7 +1295,7 @@ export default function AdminPanel() {
                       </div>
 
                       {sec.subtitle && (
-                        <p className="text-[11px] text-slate-500 mt-1 line-clamp-1">{sec.subtitle}</p>
+                        <p className="text-sm text-slate-500 mt-1 line-clamp-1">{sec.subtitle}</p>
                       )}
                     </div>
 
@@ -1347,10 +1347,10 @@ export default function AdminPanel() {
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-lg font-black text-slate-900">Gallery</h2>
-                <p className="text-xs text-slate-500 mt-0.5">{galleryItems.length} total · {galleryItems.filter(i => i.published).length} published</p>
+                <p className="text-sm text-slate-500 mt-0.5">{galleryItems.length} total · {galleryItems.filter(i => i.published).length} published</p>
               </div>
               <div className="flex items-center space-x-2">
-                <button onClick={loadGallery} className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-500 hover:text-slate-700 cursor-pointer shadow-xs transition-colors" title="Refresh">
+                <button onClick={loadGallery} className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-500 hover:text-slate-700 cursor-pointer shadow-sm transition-colors" title="Refresh">
                   <RefreshCw className={`w-4 h-4 ${galleryLoading ? 'animate-spin' : ''}`} />
                 </button>
                 <button onClick={() => setGalleryModal('new')}
@@ -1366,7 +1366,7 @@ export default function AdminPanel() {
                 <Loader className="w-8 h-8 text-[#002DC2] animate-spin" />
               </div>
             ) : galleryItems.length === 0 ? (
-              <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center shadow-xs">
+              <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center shadow-sm">
                 <Image className="w-12 h-12 text-slate-300 mx-auto mb-3" />
                 <p className="text-slate-500 font-semibold text-sm">No gallery items yet</p>
                 <button onClick={() => setGalleryModal('new')}
@@ -1377,11 +1377,11 @@ export default function AdminPanel() {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {galleryItems.map(item => (
-                  <div key={item._id} className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition-shadow overflow-hidden">
+                  <div key={item._id} className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
                     <div className="relative h-40">
                       <img src={item.image?.url} alt={item.title} className="w-full h-full object-cover" />
                       <div className="absolute top-2 left-2 flex space-x-1.5">
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        <span className={`text-2xs font-bold px-2 py-0.5 rounded-full ${
                           item.published ? 'bg-emerald-500 text-white' : 'bg-slate-900/70 text-slate-200'
                         }`}>
                           {item.published ? '● Live' : '○ Draft'}
@@ -1389,9 +1389,9 @@ export default function AdminPanel() {
                       </div>
                     </div>
                     <div className="p-3 space-y-2">
-                      <h3 className="font-bold text-slate-900 text-xs leading-snug line-clamp-2">{item.title}</h3>
+                      <h3 className="font-bold text-slate-900 text-base leading-snug line-clamp-2">{item.title}</h3>
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] text-slate-500 bg-slate-50 px-2 py-0.5 rounded-lg font-medium">{item.category}</span>
+                        <span className="text-2xs text-slate-500 bg-slate-50 px-2 py-0.5 rounded-lg font-medium">{item.category}</span>
                         <div className="flex items-center space-x-1">
                           <button onClick={() => toggleGalleryStatus(item)}
                             title={item.published ? 'Unpublish' : 'Publish'}

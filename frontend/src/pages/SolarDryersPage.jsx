@@ -125,6 +125,14 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
     }
   };
 
+  // Build "Locality • State" without repeating the state (locality strings often already end in "| State")
+  const formatProjectLocation = (proj) => {
+    const state = String(proj.state || '').trim();
+    const parts = String(proj.locality || '').split('|').map(p => p.trim()).filter(Boolean);
+    const place = parts.filter(p => p.toLowerCase() !== state.toLowerCase()).join(', ');
+    return place ? (state ? `${place} • ${state}` : place) : state;
+  };
+
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (el) {
@@ -159,27 +167,27 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                   </span>
                 </h1>
 
-                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed max-w-2xl">
+                <p className="text-sm text-slate-600 font-medium leading-relaxed max-w-2xl">
                   Efficient drying powered by the sun with smart automatic control. Reduces drying time by <strong className="text-slate-900">40%</strong> while 100% preserving natural color, vitamins, and aroma. Certified for FSSAI, export quality, and eligible for 40% – 60% government subsidies.
                 </p>
 
                 {/* Direct Brochure Value Props */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
-                  <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-center shadow-xs">
+                  <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-center shadow-sm">
                     <div className="text-lg font-black text-green-700">40%</div>
-                    <div className="text-[10px] text-slate-600 font-bold mt-0.5">Faster Drying</div>
+                    <div className="text-2xs text-slate-600 font-bold mt-0.5">Faster Drying</div>
                   </div>
-                  <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-center shadow-xs">
+                  <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-center shadow-sm">
                     <div className="text-lg font-black text-blue-700">SS304</div>
-                    <div className="text-[10px] text-slate-600 font-bold mt-0.5">Food-Grade Trays</div>
+                    <div className="text-2xs text-slate-600 font-bold mt-0.5">Food-Grade Trays</div>
                   </div>
-                  <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-center shadow-xs">
+                  <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-center shadow-sm">
                     <div className="text-lg font-black text-amber-600">PLC + HMI</div>
-                    <div className="text-[10px] text-slate-600 font-bold mt-0.5">Auto Moisture Control</div>
+                    <div className="text-2xs text-slate-600 font-bold mt-0.5">Auto Moisture Control</div>
                   </div>
-                  <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-center shadow-xs">
+                  <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-center shadow-sm">
                     <div className="text-lg font-black text-green-700">40%-60%</div>
-                    <div className="text-[10px] text-slate-600 font-bold mt-0.5">Govt Subsidy</div>
+                    <div className="text-2xs text-slate-600 font-bold mt-0.5">Govt Subsidy</div>
                   </div>
                 </div>
               </div>
@@ -213,8 +221,8 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
             </div>
 
             {/* Quick Sticky Anchor Navigation Pills */}
-            <div className="pt-4 border-t border-slate-200 flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
-              <span className="text-[11px] font-bold text-slate-500 uppercase shrink-0 mr-1">Quick Jump:</span>
+            <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center gap-2 pb-1 text-xs">
+              <span className="w-full sm:w-auto text-xs font-bold text-slate-500 uppercase shrink-0 mr-1">Quick Jump:</span>
               <button
                 onClick={() => scrollToSection('models-section')}
                 className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-blue-50 border border-slate-200 text-slate-700 hover:text-blue-900 font-bold shrink-0 transition-colors cursor-pointer"
@@ -243,7 +251,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                 onClick={() => scrollToSection('real-photos-section')}
                 className="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-800 font-bold shrink-0 transition-colors cursor-pointer"
               >
-                📷 Real Photos Gallery (45)
+                📷 Real Photos Gallery ({zenitekRealGallery.length})
               </button>
               <button
                 onClick={() => scrollToSection('map-section')}
@@ -262,7 +270,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
         <section className="w-full section-odd py-12 sm:py-16" id="cms-products-section">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             <div className="space-y-1">
-              <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+              <span className="text-xs font-bold text-emerald-700 uppercase tracking-wide sm:tracking-widest text-balance bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 inline-block">
                 New Additions
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-[#123B92]">Featured Products</h2>
@@ -285,20 +293,24 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                           <img src={primaryImg.url} alt={primaryImg.alt || product.name}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <Package className="w-16 h-16 text-slate-200" />
+                          <div className="w-full h-full flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-[#F0F4FD] via-white to-emerald-50 px-6 text-center">
+                            <span className="w-14 h-14 rounded-2xl bg-white border border-[#123B92]/15 shadow-sm flex items-center justify-center">
+                              <Package className="w-7 h-7 text-[#123B92]/60" />
+                            </span>
+                            <span className="text-sm font-black text-[#123B92] line-clamp-1">{product.name}</span>
+                            <span className="text-2xs font-bold uppercase tracking-wider text-slate-400">Product photo coming soon</span>
                           </div>
                         )}
                         <div className="absolute top-3 left-3">
-                          <span className="bg-slate-900/80 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-lg">{product.category}</span>
+                          <span className="bg-slate-900/80 backdrop-blur-sm text-white text-2xs font-bold px-2.5 py-1 rounded-lg">{product.category}</span>
                         </div>
                       </div>
 
                       {/* Product Info */}
                       <div className="p-5 flex-1 flex flex-col space-y-3">
-                        <h3 className="font-black text-slate-900 text-sm leading-snug">{product.name}</h3>
+                        <h3 className="font-black text-slate-900 text-base leading-snug">{product.name}</h3>
                         {product.shortDescription && (
-                          <p className="text-xs text-slate-600 leading-relaxed line-clamp-2">{product.shortDescription}</p>
+                          <p className="text-sm text-slate-600 leading-relaxed line-clamp-2">{product.shortDescription}</p>
                         )}
 
                         {/* Features */}
@@ -336,24 +348,24 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
         
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4">
           <div className="space-y-1">
-            <span className="text-[11px] font-bold text-blue-700 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+            <span className="text-xs font-bold text-blue-700 uppercase tracking-wide sm:tracking-widest text-balance bg-blue-50 px-3 py-1 rounded-full border border-blue-200 inline-block">
               Complete Product Engineering Lineup
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-[#123B92]">
               Solar Dryer Models & Technical Specifications
             </h2>
-            <p className="text-xs sm:text-sm text-black/70 font-medium">
+            <p className="text-sm text-black/70 font-medium">
               From compact household box dryers to high-capacity walk-in commercial tunnel systems
             </p>
           </div>
 
           {/* Model Category Switcher */}
-          <div className="flex items-center gap-1.5 bg-[#F0F4FD] border border-[#123B92]/20 p-1 rounded-2xl shrink-0">
+          <div className="flex flex-wrap items-center gap-1.5 bg-[#F0F4FD] border border-[#123B92]/20 p-1 rounded-2xl shrink-0 self-start md:self-auto">
             {['All', 'Box Type', 'Tunnel Type'].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setModelCategoryFilter(cat)}
-                className={`px-4 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+                className={`px-3 sm:px-4 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all cursor-pointer ${
                   modelCategoryFilter === cat 
                     ? 'bg-[#002DC2] text-white shadow' 
                     : 'text-black hover:text-[#002DC2]'
@@ -386,35 +398,32 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                       className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
-
-                    {/* Floating Badges */}
-                    <div className="absolute top-3 left-3 flex items-center gap-1.5">
-                      <span className="bg-slate-900/80 backdrop-blur-xs text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg">
-                        {model.tier}
-                      </span>
-                    </div>
-                    <div className="absolute top-3 right-3 flex items-center gap-1.5">
-                      {model.floorArea && (
-                        <span className="bg-white/95 backdrop-blur-xs text-slate-800 font-extrabold text-[10px] px-2.5 py-1 rounded-lg border border-slate-200 shadow-xs">
-                          {model.floorArea}
-                        </span>
-                      )}
-                      <span className="bg-blue-700 text-white font-extrabold text-[10px] uppercase px-2.5 py-1 rounded-lg shadow-xs">
-                        {model.badge}
-                      </span>
-                    </div>
                   </div>
 
                   {/* Clean Model Header & Image-First Action Button */}
                   <div className="p-4 sm:p-5 space-y-3">
+                    {/* Model Badges (kept below the image so they never cover the brochure artwork) */}
+                    <div className="flex flex-wrap items-center content-start gap-1.5 md:min-h-14">
+                      <span className="bg-slate-900 text-white text-2xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg whitespace-nowrap inline-block">
+                        {model.tier}
+                      </span>
+                      <span className="bg-blue-700 text-white font-extrabold text-2xs uppercase px-2.5 py-1 rounded-lg shadow-sm whitespace-nowrap inline-block">
+                        {model.badge}
+                      </span>
+                      {model.floorArea && (
+                        <span className="bg-white text-slate-800 font-extrabold text-2xs px-2.5 py-1 rounded-lg border border-slate-200 shadow-sm whitespace-nowrap">
+                          {model.floorArea}
+                        </span>
+                      )}
+                    </div>
                     <div>
                       <h3 
                         onClick={() => onOpenDetailModal && onOpenDetailModal(model)}
-                        className="text-base font-black text-slate-900 group-hover:text-blue-700 transition-colors cursor-pointer leading-tight"
+                        className="text-lg font-black text-slate-900 group-hover:text-blue-700 transition-colors cursor-pointer leading-6 md:min-h-12"
                       >
                         {model.name}
                       </h3>
-                      <p className="text-xs font-bold text-green-700 mt-1">{model.capacityRange}</p>
+                      <p className="text-sm font-bold text-green-700 mt-1 md:min-h-12">{model.capacityRange}</p>
                     </div>
 
                     {/* Button to toggle content - Image Priority Requirement */}
@@ -423,7 +432,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                       onClick={() => toggleModelExpand(model.id)}
                       className={`w-full py-2.5 px-4 rounded-xl border font-bold text-xs flex items-center justify-between transition-all cursor-pointer ${
                         isExpanded 
-                          ? 'bg-blue-50 border-blue-400 text-blue-900 shadow-xs' 
+                          ? 'bg-blue-50 border-blue-400 text-blue-900 shadow-sm' 
                           : 'bg-slate-50 hover:bg-blue-50 border-slate-300 hover:border-blue-500 text-slate-800'
                       }`}
                     >
@@ -437,26 +446,26 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                     {/* In-Card Expandable / Slide-Up Panel */}
                     {isExpanded && (
                       <div className="pt-3 space-y-3 border-t border-slate-100 animate-fade-in text-left">
-                        <p className="text-xs text-slate-600 leading-relaxed">
+                        <p className="text-sm text-slate-600 leading-relaxed">
                           {model.description}
                         </p>
 
                         {/* 4-Item Key Spec Metric Chips */}
-                        <div className="grid grid-cols-2 gap-2 text-[11px]">
+                        <div className="grid grid-cols-2 gap-2 text-xs">
                           <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
-                            <span className="text-[9.5px] text-slate-400 font-bold uppercase block">Tray Area</span>
+                            <span className="text-2xs text-slate-400 font-bold uppercase block">Tray Area</span>
                             <span className="font-extrabold text-slate-800">{model.totalTrayArea}</span>
                           </div>
                           <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
-                            <span className="text-[9.5px] text-slate-400 font-bold uppercase block">Trays / Trolleys</span>
+                            <span className="text-2xs text-slate-400 font-bold uppercase block">Trays / Trolleys</span>
                             <span className="font-extrabold text-slate-800 line-clamp-1">{model.trayCount}</span>
                           </div>
                           <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
-                            <span className="text-[9.5px] text-slate-400 font-bold uppercase block">Solar Power</span>
+                            <span className="text-2xs text-slate-400 font-bold uppercase block">Solar Power</span>
                             <span className="font-extrabold text-slate-800 line-clamp-1">{model.solarPower}</span>
                           </div>
                           <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
-                            <span className="text-[9.5px] text-slate-400 font-bold uppercase block">Night Heating</span>
+                            <span className="text-2xs text-slate-400 font-bold uppercase block">Night Heating</span>
                             <span className="font-extrabold text-slate-800 line-clamp-1">{model.electricalHeater}</span>
                           </div>
                         </div>
@@ -474,7 +483,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                           <button
                             type="button"
                             onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: model.name })}
-                            className="w-full py-2.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow hover:scale-102 flex items-center justify-center space-x-1.5 cursor-pointer"
+                            className="w-full py-2.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow hover:scale-[1.02] flex items-center justify-center space-x-1.5 cursor-pointer"
                           >
                             <span>Request Price Quote</span>
                             <ArrowRight className="w-3.5 h-3.5" />
@@ -500,13 +509,13 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
           
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-5">
             <div className="space-y-1">
-              <span className="text-[11px] font-bold text-green-700 uppercase tracking-widest bg-green-50 px-3 py-1 rounded-full border border-green-200 inline-flex items-center">
+              <span className="text-xs font-bold text-green-700 uppercase tracking-wide sm:tracking-widest text-balance bg-green-50 px-3 py-1 rounded-full border border-green-200 inline-flex items-center">
                 <SlidersHorizontal className="w-3.5 h-3.5 mr-1 text-green-600" /> Engineering Profile Architecture • Page 3
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-blue-950">
                 SOLDRY Profile Comparison — 150 · 200 · 250 Sq.Ft
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 font-medium">
+              <p className="text-sm text-slate-600 font-medium">
                 Same construction technology. Different profiles. More usable floor area.
               </p>
             </div>
@@ -525,7 +534,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-black uppercase text-blue-700 bg-blue-100 px-2.5 py-0.5 rounded">
+                    <span className="text-2xs font-black uppercase text-blue-700 bg-blue-100 px-2.5 py-0.5 rounded inline-block">
                       {item.profileBadge}
                     </span>
                     <span className="text-xs font-extrabold text-green-700">{item.floorArea}</span>
@@ -537,27 +546,27 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
 
                   <div className="grid grid-cols-2 gap-2 text-xs bg-white p-3 rounded-xl border border-slate-200">
                     <div>
-                      <span className="text-[10px] text-slate-400 font-bold block">Front Width:</span>
+                      <span className="text-2xs text-slate-400 font-bold block">Front Width:</span>
                       <span className="font-extrabold text-blue-950">{item.frontWidth}</span>
                     </div>
                     <div>
-                      <span className="text-[10px] text-slate-400 font-bold block">Centre Height:</span>
+                      <span className="text-2xs text-slate-400 font-bold block">Centre Height:</span>
                       <span className="font-extrabold text-blue-950">{item.centreHeight}</span>
                     </div>
                   </div>
 
                   <div className="p-2.5 bg-green-50 rounded-xl border border-green-200 text-xs">
-                    <span className="text-[10px] uppercase font-bold text-green-800 block">Recommended For:</span>
+                    <span className="text-2xs uppercase font-bold text-green-800 block">Recommended For:</span>
                     <span className="font-extrabold text-green-900">{item.recommendedFor}</span>
                   </div>
 
-                  <p className="text-xs text-slate-600 leading-relaxed">
+                  <p className="text-sm text-slate-600 leading-relaxed">
                     {item.profileDescription}
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-slate-200 text-[11px] font-semibold text-slate-700">
-                  <span className="text-[10px] font-bold text-slate-400 block uppercase">Arrangement:</span>
+                <div className="pt-3 border-t border-slate-200 text-xs font-semibold text-slate-700">
+                  <span className="text-2xs font-bold text-slate-400 block uppercase">Arrangement:</span>
                   {item.suitableArrangement}
                 </div>
               </div>
@@ -571,7 +580,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                 <CheckCircle2 className="w-4 h-4" />
                 <span>MODULAR & SCALABLE DESIGN (UP TO 1,000 SQ.FT)</span>
               </div>
-              <p className="text-xs text-blue-100 max-w-2xl">
+              <p className="text-sm text-blue-100 max-w-2xl">
                 Tunnel length can be increased using additional interlocking prefabricated sections up to 53 ft length and 1,000 sq.ft floor area. Tray and trolley quantities can be customized as per your farm throughput requirements.
               </p>
             </div>
@@ -596,13 +605,13 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
           
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6">
             <div className="space-y-2">
-              <span className="text-[11px] font-bold text-green-700 uppercase tracking-widest bg-green-50 border border-green-200 px-3 py-1 rounded-full inline-flex items-center">
+              <span className="text-xs font-bold text-green-700 uppercase tracking-wide sm:tracking-widest text-balance bg-green-50 border border-green-200 px-3 py-1 rounded-full inline-flex items-center">
                 <Sun className="w-3.5 h-3.5 mr-1.5 text-amber-500 animate-spin-slow" /> PDF Technical Guide • Page 8
               </span>
               <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-blue-950">
                 Solar Dryer Working Principle
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-2xl">
+              <p className="text-sm text-slate-600 font-medium max-w-2xl">
                 Smart, Efficient, Sustainable — 7-step thermodynamic cycle engineered by ZeniTEK for 40% faster moisture reduction with zero contamination.
               </p>
             </div>
@@ -625,25 +634,25 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                 }`}
               >
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="w-8 h-8 rounded-xl bg-blue-700 text-white font-black text-xs flex items-center justify-center shadow">
+                  <div className="flex items-center gap-3 min-h-8">
+                    <span className="w-8 h-8 shrink-0 rounded-xl bg-blue-700 text-white font-black text-xs flex items-center justify-center shadow">
                       {stepItem.step}
                     </span>
-                    <span className="text-[10px] uppercase font-bold text-blue-700 tracking-wider">
+                    <span className="flex-1 min-w-0 text-2xs uppercase font-bold text-blue-700 tracking-normal leading-4">
                       {stepItem.subtitle}
                     </span>
                   </div>
 
-                  <h4 className="text-sm font-bold text-slate-900 leading-snug">
+                  <h4 className="text-base font-bold text-slate-900 leading-snug lg:min-h-11">
                     {stepItem.title}
                   </h4>
 
-                  <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                  <p className="text-sm text-slate-600 leading-relaxed font-normal">
                     {stepItem.description}
                   </p>
                 </div>
 
-                <div className="pt-3 mt-3 border-t border-slate-200 flex items-center text-[10px] text-green-700 font-semibold">
+                <div className="pt-3 mt-3 border-t border-slate-200 flex items-center text-2xs text-green-700 font-semibold">
                   <CheckCircle2 className="w-3 h-3 mr-1 text-green-600" /> Step {stepItem.step} of 7
                 </div>
               </div>
@@ -651,18 +660,18 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
           </div>
 
           {/* Technical Airflow Callout */}
-          <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-            <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-xs">
-              <span className="font-bold text-green-700 block mb-1">1. Fresh Air Inlet</span>
-              <p className="text-slate-600 leading-relaxed">Bottom air inlets on both sides of the front door draw fresh dry ambient air continuously.</p>
+          <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-base font-bold text-green-700 block mb-1">1. Fresh Air Inlet</span>
+              <p className="text-sm text-slate-600 leading-relaxed">Bottom air inlets on both sides of the front door draw fresh dry ambient air continuously.</p>
             </div>
-            <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-xs">
-              <span className="font-bold text-amber-700 block mb-1">2. Internal Circulation Fans</span>
-              <p className="text-slate-600 leading-relaxed">High-CFM fans force heated air downward through all tray layers to eliminate temperature stratification.</p>
+            <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-base font-bold text-amber-700 block mb-1">2. Internal Circulation Fans</span>
+              <p className="text-sm text-slate-600 leading-relaxed">High-CFM fans force heated air downward through all tray layers to eliminate temperature stratification.</p>
             </div>
-            <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-xs">
-              <span className="font-bold text-blue-700 block mb-1">3. Moist Air Exhaust</span>
-              <p className="text-slate-600 leading-relaxed">Automated top exhaust blowers at the rear expel saturated moisture to prevent reabsorption.</p>
+            <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-base font-bold text-blue-700 block mb-1">3. Moist Air Exhaust</span>
+              <p className="text-sm text-slate-600 leading-relaxed">Automated top exhaust blowers at the rear expel saturated moisture to prevent reabsorption.</p>
             </div>
           </div>
 
@@ -677,13 +686,13 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
         
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-4">
           <div className="space-y-1">
-            <span className="text-[11px] font-bold text-blue-700 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full border border-blue-200 inline-flex items-center">
+            <span className="text-xs font-bold text-blue-700 uppercase tracking-wide sm:tracking-widest text-balance bg-blue-50 px-3 py-1 rounded-full border border-blue-200 inline-flex items-center">
               <FileText className="w-3.5 h-3.5 mr-1 text-blue-600" /> Authentic Manufacturer Documentation
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-blue-950">
               Official ZeniTEK PDF Product Brochure Catalog
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium">
+            <p className="text-sm text-slate-600 font-medium">
               Click any brochure page to view in full crystal-clear high-definition resolution
             </p>
           </div>
@@ -711,18 +720,18 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                     <img
                       src={bPage.image}
                       alt={bPage.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
 
                     {/* Floating Badges */}
                     <div className="absolute top-3 left-3">
-                      <span className="bg-[#123B92]/90 backdrop-blur-xs text-white font-black text-[10px] px-2.5 py-1 rounded-lg shadow-xs">
+                      <span className="bg-[#123B92]/90 backdrop-blur-sm text-white font-black text-2xs px-2.5 py-1 rounded-lg shadow-sm whitespace-nowrap">
                         PAGE {bPage.page}
                       </span>
                     </div>
                     <div className="absolute top-3 right-3">
-                      <span className="bg-[#23AC39]/95 backdrop-blur-xs text-white font-black text-[10px] px-2.5 py-1 rounded-lg shadow-xs">
+                      <span className="bg-[#23AC39]/95 backdrop-blur-sm text-white font-black text-2xs px-2.5 py-1 rounded-lg shadow-sm whitespace-nowrap">
                         {bPage.category}
                       </span>
                     </div>
@@ -731,7 +740,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                   <div className="p-4 sm:p-5 space-y-3">
                     <h4 
                       onClick={() => setSelectedBrochureModalPage(bPage)}
-                      className="text-sm font-black text-[#123B92] group-hover:text-[#002DC2] transition-colors line-clamp-1 cursor-pointer"
+                      className="text-base font-black text-[#123B92] group-hover:text-[#002DC2] transition-colors line-clamp-2 leading-6 sm:min-h-12 cursor-pointer"
                     >
                       {bPage.title}
                     </h4>
@@ -742,7 +751,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                       onClick={() => toggleBrochureExpand(bPage.page)}
                       className={`w-full py-2.5 px-4 rounded-xl border font-bold text-xs flex items-center justify-between transition-all cursor-pointer ${
                         isExpanded 
-                          ? 'bg-blue-50 border-blue-400 text-blue-900 shadow-xs' 
+                          ? 'bg-blue-50 border-blue-400 text-blue-900 shadow-sm' 
                           : 'bg-slate-50 hover:bg-blue-50 border-slate-300 hover:border-blue-500 text-slate-800'
                       }`}
                     >
@@ -756,7 +765,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                     {/* In-Card Expandable / Slide-Up Panel */}
                     {isExpanded && (
                       <div className="pt-3 space-y-3 border-t border-slate-100 animate-fade-in text-left">
-                        <p className="text-xs text-black/80 leading-relaxed font-normal">
+                        <p className="text-sm text-black/80 leading-relaxed font-normal">
                           {bPage.summary}
                         </p>
 
@@ -787,13 +796,13 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4">
           <div className="space-y-1">
-            <span className="text-[11px] font-bold text-amber-800 uppercase tracking-widest bg-amber-50 px-3 py-1 rounded-full border border-amber-200 inline-flex items-center">
+            <span className="text-xs font-bold text-amber-800 uppercase tracking-wide sm:tracking-widest text-balance bg-amber-50 px-3 py-1 rounded-full border border-amber-200 inline-flex items-center">
               <Camera className="w-3.5 h-3.5 mr-1 text-amber-600" /> 100% Authentic Field Photography
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-blue-950">
               Real Operational Solar Dryers in Action
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium">
+            <p className="text-sm text-slate-600 font-medium">
               Real high-resolution photographs of commercial walk-in polyhouse tunnels, compact box dryers, SS304 food-grade trays, and produce drying.
             </p>
           </div>
@@ -803,7 +812,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
             className="inline-flex items-center space-x-2 px-5 py-2.5 bg-gradient-to-r from-blue-900 to-blue-800 hover:from-blue-800 hover:to-blue-700 text-white font-bold text-xs rounded-2xl shadow-md hover:shadow-lg transition-all shrink-0 group"
           >
             <ImageIcon className="w-4 h-4 text-green-400 group-hover:scale-110 transition-transform" />
-            <span>Open All 45 Real Photos Gallery</span>
+            <span>Open All {zenitekRealGallery.length} Real Photos Gallery</span>
             <ArrowRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
@@ -828,26 +837,26 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                 </div>
 
                 <div className="p-3.5 space-y-1.5">
-                  <div className="flex items-center justify-between gap-1">
-                    <span className="bg-blue-950 text-white font-bold text-[9px] px-2 py-0.5 rounded">
+                  <div className="flex flex-col items-start gap-1">
+                    <span className="bg-blue-950 text-white font-bold text-2xs px-2 py-0.5 rounded whitespace-nowrap">
                       {photo.category.replace('_', ' ').toUpperCase()}
                     </span>
                     {photo.crop && (
-                      <span className="bg-green-700 text-white font-bold text-[9px] px-2 py-0.5 rounded">
+                      <span className="bg-green-700 text-white font-bold text-2xs px-2 py-0.5 rounded whitespace-nowrap">
                         {photo.crop}
                       </span>
                     )}
                   </div>
-                  <h4 className="text-xs font-black text-slate-900 group-hover:text-blue-700 transition-colors line-clamp-1">
+                  <h4 className="text-lg font-black text-slate-900 group-hover:text-blue-700 transition-colors line-clamp-2 leading-6 sm:min-h-12">
                     {photo.title}
                   </h4>
-                  <p className="text-[11px] text-slate-500 line-clamp-2 leading-relaxed">
+                  <p className="text-sm text-slate-500 line-clamp-2 leading-6 sm:min-h-12">
                     {photo.description}
                   </p>
                 </div>
               </div>
 
-              <div className="p-3.5 pt-0 border-t border-slate-100 mt-2 flex items-center justify-between text-[10px] text-slate-500 font-semibold">
+              <div className="p-3.5 pt-0 border-t border-slate-100 mt-2 flex items-center justify-between text-2xs text-slate-500 font-semibold">
                 <span>{photo.productModel}</span>
                 <span className="text-blue-700 font-bold group-hover:underline flex items-center">
                   Full View <ArrowRight className="w-2.5 h-2.5 ml-0.5" />
@@ -864,7 +873,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
               <Sparkles className="w-5 h-5 text-amber-400" />
               Looking for More Site Photos & Factory Trays?
             </h3>
-            <p className="text-xs text-blue-200">
+            <p className="text-sm text-blue-200">
               Browse all 45 real photographs filtered by Polyhouse Tunnels, Internal Trolleys & Trays, Box Dryers, SS304 Trays, and Packaging.
             </p>
           </div>
@@ -887,13 +896,13 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
         
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4">
           <div className="space-y-1">
-            <span className="text-[11px] font-bold text-green-700 uppercase tracking-widest bg-green-50 px-3 py-1 rounded-full border border-green-200 inline-flex items-center">
+            <span className="text-xs font-bold text-green-700 uppercase tracking-wide sm:tracking-widest text-balance bg-green-50 px-3 py-1 rounded-full border border-green-200 inline-flex items-center">
               <Sparkles className="w-3.5 h-3.5 mr-1 text-green-600" /> Operational Installations • 2023 - 2026
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-blue-950">
               Verified Project Installation Gallery
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium">
+            <p className="text-sm text-slate-600 font-medium">
               Agricultural solar drying sites operating across 6 Indian states. Click "View Details" to open complete site case study.
             </p>
           </div>
@@ -926,15 +935,15 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
             </div>
 
             {/* Year Filters */}
-            <div className="flex items-center space-x-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
-              <span className="text-[10px] uppercase font-bold text-slate-400 mr-1 flex items-center">
+            <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto pb-1 sm:pb-0">
+              <span className="text-2xs uppercase font-bold text-slate-400 mr-1 flex items-center">
                 <Calendar className="w-3 h-3 mr-1" /> Year:
               </span>
               {yearOptions.map(yr => (
                 <button
                   key={yr}
                   onClick={() => setSelectedYear(yr)}
-                  className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${selectedYear === yr ? 'bg-green-700 text-white shadow' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                  className={`px-3 py-1 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${selectedYear === yr ? 'bg-blue-800 text-white shadow' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
                 >
                   {yr}
                 </button>
@@ -943,8 +952,8 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
           </div>
 
           {/* State Filter Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs font-bold pt-1 border-t border-slate-100 no-scrollbar">
-            <span className="text-[10px] uppercase font-bold text-slate-400 shrink-0 mr-1 flex items-center">
+          <div className="flex flex-wrap items-center gap-1.5 pb-1 text-xs font-bold pt-1 border-t border-slate-100">
+            <span className="text-2xs uppercase font-bold text-slate-400 shrink-0 mr-1 flex items-center">
               <MapPin className="w-3 h-3 mr-1" /> State:
             </span>
             {stateOptions.map(st => (
@@ -954,7 +963,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                 className={`px-3 py-1 rounded-xl transition-all whitespace-nowrap shrink-0 flex items-center space-x-1.5 cursor-pointer ${selectedState === st.value ? 'bg-blue-800 text-white shadow' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
               >
                 <span>{st.label}</span>
-                <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${selectedState === st.value ? 'bg-blue-900 text-blue-200' : 'bg-slate-200 text-slate-600'}`}>
+                <span className={`text-2xs px-1.5 py-0.5 rounded-full ${selectedState === st.value ? 'bg-blue-900 text-blue-200' : 'bg-slate-200 text-slate-600'}`}>
                   {st.count}
                 </span>
               </button>
@@ -996,15 +1005,15 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
 
                     {/* Floating Badges */}
                     <div className="absolute top-3 left-3 flex items-center gap-1.5">
-                      <span className="bg-blue-950/90 backdrop-blur-xs text-white font-mono font-bold text-[10px] px-2.5 py-1 rounded-lg border border-blue-800/60 shadow-xs">
+                      <span className="bg-blue-950/90 backdrop-blur-sm text-white font-mono font-bold text-2xs px-2.5 py-1 rounded-lg border border-blue-800/60 shadow-sm">
                         #{proj.id}
                       </span>
-                      <span className="bg-slate-900/90 backdrop-blur-xs text-amber-300 font-mono font-bold text-[10px] px-2.5 py-1 rounded-lg shadow-xs">
+                      <span className="bg-slate-900/90 backdrop-blur-sm text-amber-300 font-mono font-bold text-2xs px-2.5 py-1 rounded-lg shadow-sm">
                         {proj.dryerCode}
                       </span>
                     </div>
                     <div className="absolute top-3 right-3">
-                      <span className="bg-green-700/95 backdrop-blur-xs text-white font-bold text-[10px] px-2.5 py-1 rounded-lg shadow-xs">
+                      <span className="bg-green-700/95 backdrop-blur-sm text-white font-bold text-2xs px-2.5 py-1 rounded-lg shadow-sm">
                         {proj.year}
                       </span>
                     </div>
@@ -1015,9 +1024,9 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                       <h3 className="text-base font-black text-slate-900 group-hover:text-blue-700 transition-colors leading-snug">
                         {proj.title}
                       </h3>
-                      <p className="text-xs text-slate-500 flex items-center font-medium mt-1">
+                      <p className="text-sm text-slate-500 flex items-center font-medium mt-1">
                         <MapPin className="w-3.5 h-3.5 text-green-600 mr-1 shrink-0" />
-                        <span>{proj.locality} • {proj.state}</span>
+                        <span>{formatProjectLocation(proj)}</span>
                       </p>
                     </div>
 
@@ -1027,7 +1036,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                       onClick={() => toggleProjectExpand(proj.id)}
                       className={`w-full py-2.5 px-4 rounded-xl border font-bold text-xs flex items-center justify-between transition-all cursor-pointer ${
                         isExpanded 
-                          ? 'bg-blue-50 border-blue-400 text-blue-900 shadow-xs' 
+                          ? 'bg-blue-50 border-blue-400 text-blue-900 shadow-sm' 
                           : 'bg-slate-50 hover:bg-blue-50 border-slate-300 hover:border-blue-500 text-slate-800'
                       }`}
                     >
@@ -1042,9 +1051,9 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
                     {isExpanded && (
                       <div className="pt-3 space-y-3 border-t border-slate-100 animate-fade-in text-left">
                         <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1 text-xs">
-                          <div className="text-[10px] font-bold text-slate-400 uppercase">DRYING APPLICATION</div>
+                          <div className="text-2xs font-bold text-slate-400 uppercase">DRYING APPLICATION</div>
                           <div className="font-extrabold text-blue-950">{proj.application}</div>
-                          <div className="text-[10px] font-semibold text-green-800">{proj.sector} • {proj.pinPrecision}</div>
+                          <div className="text-2xs font-semibold text-green-800">{proj.sector} • {proj.pinPrecision}</div>
                         </div>
 
                         <Link
@@ -1126,13 +1135,13 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-3">
             <div>
-              <span className="text-[11px] font-bold text-green-700 uppercase tracking-wider bg-green-50 px-2.5 py-1 rounded-full border border-green-200 inline-flex items-center">
+              <span className="text-xs font-bold text-green-700 uppercase tracking-wider bg-green-50 px-2.5 py-1 rounded-full border border-green-200 inline-flex items-center">
                 <Sparkles className="w-3 h-3 mr-1 text-green-600" /> Pan-India GPS Footprint
               </span>
               <h2 className="text-xl sm:text-2xl font-black text-blue-950 mt-1.5">
                 Verified Operational Solar Dryers Map (35 Active Sites)
               </h2>
-              <p className="text-xs text-slate-500">
+              <p className="text-sm text-slate-500">
                 Pinned GPS coordinates of all operational ZeniTEK commercial polyhouse dryer installations across 9 Indian states
               </p>
             </div>
@@ -1152,21 +1161,21 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-slate-50 text-slate-900 p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1.5 text-center md:text-left">
-            <span className="text-[10px] font-extrabold text-green-800 bg-green-100 border border-green-200 px-3 py-1 rounded-full uppercase tracking-wider">
+            <span className="text-2xs font-extrabold text-green-800 bg-green-100 border border-green-200 px-3 py-1 rounded-full uppercase tracking-wider inline-block">
               Govt Subsidy Assistance 40% – 60%
             </span>
             <h3 className="text-xl sm:text-3xl font-black text-blue-950">
               Need a Custom Solar Dryer Sized for Your Farm?
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-xl">
+            <p className="text-sm text-slate-600 max-w-xl">
               Our engineering team in Erode custom-calculates polyhouse tunnel dryers, airflow blowers, and solar power packs for any crop harvest volume.
             </p>
           </div>
 
-          <div className="flex items-center space-x-3 shrink-0">
+          <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
             <button
               onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: 'Custom Solar Dryer Project' })}
-              className="px-6 py-3.5 bg-green-600 hover:bg-green-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all hover:scale-105 flex items-center space-x-2 cursor-pointer"
+              className="whitespace-nowrap px-5 sm:px-6 py-3.5 bg-green-600 hover:bg-green-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all hover:scale-105 flex items-center space-x-2 cursor-pointer"
             >
               <span>{t('getQuote')}</span>
               <ArrowRight className="w-4 h-4" />
@@ -1174,7 +1183,7 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
 
             <a
               href="tel:+918903852623"
-              className="px-5 py-3.5 bg-white hover:bg-slate-100 border border-slate-300 text-slate-800 font-bold text-xs rounded-xl transition-all flex items-center space-x-1.5 shadow-xs"
+              className="whitespace-nowrap px-5 py-3.5 bg-white hover:bg-slate-100 border border-slate-300 text-slate-800 font-bold text-xs rounded-xl transition-all flex items-center space-x-1.5 shadow-sm"
             >
               <PhoneCall className="w-4 h-4 text-green-600" />
               <span>Call Support</span>
@@ -1198,10 +1207,10 @@ export default function SolarDryersPage({ onOpenQuoteModal, onOpenDetailModal })
             {/* Modal Header */}
             <div className="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800 shrink-0">
               <div className="flex items-center space-x-2">
-                <span className="text-[10px] font-black uppercase bg-green-600 text-white px-2 py-0.5 rounded">
+                <span className="text-2xs font-black uppercase bg-green-600 text-white px-2 py-0.5 rounded inline-block">
                   PAGE {selectedBrochureModalPage.page}
                 </span>
-                <h3 className="text-sm font-bold text-white line-clamp-1">
+                <h3 className="text-base font-bold text-white line-clamp-1">
                   {selectedBrochureModalPage.title}
                 </h3>
               </div>

@@ -2,9 +2,33 @@ import React, { useState } from 'react';
 import { 
   ShieldCheck, Award, ArrowRight, CheckCircle2, FileText, 
   HelpCircle, IndianRupee, Landmark, Sparkles, Building, PhoneCall,
-  Download, Calculator, Clock, Users, Check
+  Download, Calculator, Clock, Users, Check, ChevronDown
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+
+// Native <select> can't wrap its value, so long option labels got truncated on
+// mobile. Show the selected label in a wrapping box and overlay a transparent select.
+function WrapSelect({ value, onChange, options, ariaLabel }) {
+  const current = options.find(([v]) => v === value);
+  return (
+    <div className="relative w-full bg-[#F0F4FD] border border-[#123B92]/30 rounded-xl focus-within:border-[#002DC2] focus-within:ring-2 focus-within:ring-[#002DC2]/20">
+      <div aria-hidden="true" className="pl-3.5 pr-9 py-2.5 text-sm font-bold text-slate-900 leading-snug">
+        {(current ? current[1] : value).replace(/\(([^)]{1,16})\)/g, (m) => m.replace(/ /g, ' '))}
+      </div>
+      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#123B92] pointer-events-none" />
+      <select
+        value={value}
+        onChange={onChange}
+        aria-label={ariaLabel}
+        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+      >
+        {options.map(([v, label]) => (
+          <option key={v} value={v}>{label}</option>
+        ))}
+      </select>
+    </div>
+  );
+}
 
 export default function SubsidiesPage({ onOpenQuoteModal }) {
   const { t } = useLanguage();
@@ -86,14 +110,14 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
       {/* SECTION 1: HERO HEADER */}
       <section className="w-full section-odd py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#F0F4FD] border border-[#123B92]/30 text-[#123B92] text-xs font-bold uppercase tracking-wider shadow-xs">
-            <Landmark className="w-4 h-4 text-[#002DC2]" />
-            <span>Govt of India & State Department Schemes</span>
+          <div className="inline-flex items-center gap-2 max-w-full px-3.5 py-1.5 rounded-2xl sm:rounded-full bg-[#F0F4FD] border border-[#123B92]/30 text-[#123B92] text-xs font-bold uppercase tracking-wide sm:tracking-wider shadow-sm">
+            <Landmark className="w-4 h-4 text-[#002DC2] shrink-0" />
+            <span className="text-balance">Govt of India & State Department Schemes</span>
           </div>
 
-          <h1 className="text-3xl xs:text-4xl sm:text-5xl font-black text-[#123B92] tracking-tight leading-tight">
+          <h1 className="text-[1.75rem] xs:text-3xl sm:text-5xl font-black text-[#123B92] tracking-tight leading-tight">
             Government Subsidies for <br />
-            <span className="text-[#002DC2]">ZeniTEK Solar Dryers (40% – 60%)</span>
+            <span className="text-[#002DC2]">ZeniTEK Solar Dryers{' '}<span className="whitespace-nowrap">(40% – 60%)</span></span>
           </h1>
 
           <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
@@ -103,14 +127,14 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
           <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
             <button
               onClick={() => onOpenQuoteModal({ capacityNeeded: "Subsidy Assistance", message: "I want subsidy assistance for ZeniTEK Solar Dryer." })}
-              className="px-6 py-3.5 bg-[#23AC39] hover:bg-[#1f9632] text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center space-x-2 cursor-pointer hover:shadow-xl active:scale-95"
+              className="px-6 py-3.5 bg-[#23AC39] hover:bg-[#1f9632] text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer hover:shadow-xl active:scale-95"
             >
               <span>Check My Subsidy Eligibility</span>
               <ArrowRight className="w-4 h-4" />
             </button>
             <a
               href="#subsidy-schemes"
-              className="px-6 py-3.5 bg-white hover:bg-slate-50 border-2 border-[#123B92] text-[#123B92] font-black text-xs uppercase tracking-wider rounded-xl shadow-xs transition-all flex items-center space-x-2"
+              className="px-6 py-3.5 bg-white hover:bg-slate-50 border-2 border-[#123B92] text-[#123B92] font-black text-xs uppercase tracking-wider rounded-xl shadow-sm transition-all flex items-center gap-2 whitespace-nowrap"
             >
               <span>View Schemes & Guidelines</span>
             </a>
@@ -122,9 +146,9 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
       {/* SECTION 2: FAST ELIGIBILITY ESTIMATOR */}
       <section className="w-full section-even py-10 sm:py-14">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xl space-y-6">
+          <div className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-xl space-y-6">
             
-            <div className="flex items-center space-x-3 pb-4">
+            <div className="flex items-start gap-3 pb-4">
               <div className="w-10 h-10 rounded-xl bg-[#F0F4FD] border border-[#123B92]/20 flex items-center justify-center text-[#123B92] shrink-0">
                 <Calculator className="w-5 h-5" />
               </div>
@@ -132,74 +156,77 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
                 <h3 className="text-lg sm:text-xl font-black text-[#123B92]">
                   Instant State Subsidy Estimator
                 </h3>
-                <p className="text-xs text-slate-500 font-medium">
+                <p className="text-sm text-slate-500 font-medium">
                   Select your state and beneficiary profile to calculate eligible subsidy assistance.
                 </p>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="lg:col-span-2">
                 <label className="block text-xs font-bold text-[#123B92] uppercase tracking-wider mb-1.5">
                   State / Region
                 </label>
-                <select
+                <WrapSelect
+                  ariaLabel="State / Region"
                   value={calcState}
                   onChange={(e) => setCalcState(e.target.value)}
-                  className="w-full bg-[#F0F4FD] border border-[#123B92]/30 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-bold text-slate-900 cursor-pointer"
-                >
-                  <option value="Tamil Nadu">Tamil Nadu (Horticulture & TEDA)</option>
-                  <option value="Karnataka">Karnataka (KREDL & Dept of Agri)</option>
-                  <option value="Kerala">Kerala (ANERT & Agri Dept)</option>
-                  <option value="Maharashtra">Maharashtra (MEDA & MahaAgri)</option>
-                  <option value="Andhra Pradesh">Andhra Pradesh / Telangana</option>
-                  <option value="All India">Other Indian States (Central Schemes)</option>
-                </select>
+                  options={[
+                    ["Tamil Nadu", "Tamil Nadu (Horticulture & TEDA)"],
+                    ["Karnataka", "Karnataka (KREDL & Dept of Agri)"],
+                    ["Kerala", "Kerala (ANERT & Agri Dept)"],
+                    ["Maharashtra", "Maharashtra (MEDA & MahaAgri)"],
+                    ["Andhra Pradesh", "Andhra Pradesh / Telangana"],
+                    ["All India", "Other Indian States (Central Schemes)"],
+                  ]}
+                />
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-[#123B92] uppercase tracking-wider mb-1.5">
                   Product Capacity Needed
                 </label>
-                <select
+                <WrapSelect
+                  ariaLabel="Product Capacity Needed"
                   value={calcModel}
                   onChange={(e) => setCalcModel(e.target.value)}
-                  className="w-full bg-[#F0F4FD] border border-[#123B92]/30 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-bold text-slate-900 cursor-pointer"
-                >
-                  <option value="SUNDRY 50 (50-100 kg)">SUNDRY 50 Commercial Box (50–100 kg)</option>
-                  <option value="SOLDRY 1210 (Commercial)">SOLDRY 1210 Polyhouse Tunnel (150–500 kg)</option>
-                  <option value="SOLDRY 1709 (Parabolic)">SOLDRY 1709 Parabolic Tunnel (400–1200 kg)</option>
-                  <option value="Industrial Multi-Tunnel (1 Ton+)">Industrial Multi-Tunnel Plant (1 Ton+)</option>
-                </select>
+                  options={[
+                    ["SUNDRY 50 (50-100 kg)", "SUNDRY 50 Commercial Box (50–100 kg)"],
+                    ["SOLDRY 1210 (Commercial)", "SOLDRY 1210 Polyhouse Tunnel (150–500 kg)"],
+                    ["SOLDRY 1709 (Parabolic)", "SOLDRY 1709 Parabolic Tunnel (400–1200 kg)"],
+                    ["Industrial Multi-Tunnel (1 Ton+)", "Industrial Multi-Tunnel Plant (1 Ton+)"],
+                  ]}
+                />
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-[#123B92] uppercase tracking-wider mb-1.5">
                   Beneficiary Category
                 </label>
-                <select
+                <WrapSelect
+                  ariaLabel="Beneficiary Category"
                   value={calcFarmerType}
                   onChange={(e) => setCalcFarmerType(e.target.value)}
-                  className="w-full bg-[#F0F4FD] border border-[#123B92]/30 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-bold text-slate-900 cursor-pointer"
-                >
-                  <option value="Small / Marginal Farmer">Small / Marginal Farmer (50% Subsidy)</option>
-                  <option value="SC / ST / Women Farmer">SC / ST / Women Farmer (60% Subsidy)</option>
-                  <option value="FPO / SHG Group">FPO / SHG / Cooperative (60% Subsidy)</option>
-                  <option value="General Commercial Exporter">General Agri-Business / Exporter (40% Subsidy)</option>
-                </select>
+                  options={[
+                    ["Small / Marginal Farmer", "Small / Marginal Farmer (50% Subsidy)"],
+                    ["SC / ST / Women Farmer", "SC / ST / Women Farmer (60% Subsidy)"],
+                    ["FPO / SHG Group", "FPO / SHG / Cooperative (60% Subsidy)"],
+                    ["General Commercial Exporter", "General Agri-Business / Exporter (40% Subsidy)"],
+                  ]}
+                />
               </div>
             </div>
 
             {/* Calculated Result Box */}
-            <div className="bg-gradient-to-br from-[#123B92] via-[#0D2E73] to-[#0A225C] text-white p-5 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+            <div className="bg-gradient-to-br from-[#123B92] via-[#0D2E73] to-[#0A225C] text-white p-5 rounded-2xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 shadow-lg">
               <div>
-                <div className="text-[11px] text-blue-200 uppercase font-bold tracking-wider">
+                <div className="text-xs text-blue-200 uppercase font-bold tracking-wider">
                   Estimated Subsidy Coverage
                 </div>
-                <div className="text-2xl sm:text-3xl font-black text-green-300">
+                <div className="text-2xl sm:text-3xl font-black text-green-300 leading-tight text-balance">
                   {subsidyPercent}% Government Assistance
                 </div>
-                <div className="text-xs text-white/80 mt-0.5">
+                <div className="text-sm text-white/80 mt-1">
                   Valid for {calcState} under National & State Horticulture Mission
                 </div>
               </div>
@@ -230,37 +257,37 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
             <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black text-[#123B92]">
               Available Central & State Subsidy Schemes
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium">
+            <p className="text-sm text-slate-600 font-medium">
               ZeniTEK equipment complies with all MNRE and state nodal agency specifications.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {subsidySchemes.map((scheme, i) => (
-              <div key={i} className="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-md hover:shadow-xl transition-all space-y-4">
+              <div key={i} className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-md hover:shadow-xl transition-all space-y-4">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <span className="text-[10px] font-black uppercase text-[#23AC39] bg-green-50 border border-green-200 px-2.5 py-0.5 rounded">
+                    <span className="text-xs font-black uppercase tracking-normal sm:tracking-wide text-green-800 bg-green-50 border border-green-300 px-2.5 py-1 rounded-md inline-block max-w-full leading-snug text-balance">
                       {scheme.coverage}
                     </span>
                     <h3 className="text-lg font-black text-[#123B92] mt-2">
                       {scheme.title}
                     </h3>
-                    <div className="text-xs text-slate-500 font-semibold mt-0.5">
+                    <div className="text-sm text-slate-500 font-semibold mt-1">
                       Target: {scheme.target}
                     </div>
                   </div>
                 </div>
 
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+                <p className="text-sm text-slate-700 leading-relaxed font-medium">
                   {scheme.description}
                 </p>
 
-                <div className="pt-2 border-t border-slate-100 space-y-1.5">
-                  <div className="text-[11px] font-bold uppercase text-slate-600">Key Requirements:</div>
+                <div className="pt-3 border-t border-slate-100 space-y-2">
+                  <div className="text-xs font-bold uppercase text-slate-600">Key Requirements:</div>
                   {scheme.criteria.map((c, idx) => (
-                    <div key={idx} className="flex items-center text-xs text-slate-800">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#23AC39] mr-2 shrink-0" />
+                    <div key={idx} className="flex items-start text-sm text-slate-800 leading-snug">
+                      <CheckCircle2 className="w-4 h-4 text-[#23AC39] mr-2 mt-0.5 shrink-0" />
                       <span>{c}</span>
                     </div>
                   ))}
@@ -279,23 +306,23 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
           
           <div className="text-center max-w-3xl mx-auto space-y-2">
             <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black text-[#123B92]">
-              How ZeniTEK Handles Your Subsidy End-to-End
+              How ZeniTEK Handles Your Subsidy <span className="whitespace-nowrap">End-to-End</span>
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium">
+            <p className="text-sm text-slate-600 font-medium">
               We eliminate paperwork friction so you receive maximum government benefits without delays.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
             {subsidySteps.map((step) => (
-              <div key={step.step} className="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm relative">
-                <div className="text-3xl font-black text-[#002DC2]/20 mb-2">
+              <div key={step.step} className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-sm relative">
+                <div className="text-3xl font-black text-[#002DC2] mb-2">
                   {step.step}
                 </div>
-                <h4 className="text-sm font-black text-[#123B92] leading-snug mb-1.5">
+                <h4 className="text-lg sm:text-xl font-black text-[#123B92] leading-snug mb-2">
                   {step.title}
                 </h4>
-                <p className="text-xs text-slate-600 font-medium leading-relaxed">
+                <p className="text-sm text-slate-600 font-medium leading-relaxed">
                   {step.desc}
                 </p>
               </div>
@@ -305,16 +332,16 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
           {/* Bottom Action Card */}
           <div className="bg-[#123B92] text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="space-y-1 text-center md:text-left">
-              <h3 className="text-xl sm:text-2xl font-black">
+              <h3 className="text-xl sm:text-2xl font-black text-white">
                 Have questions about your state subsidy or paperwork?
               </h3>
-              <p className="text-xs sm:text-sm text-blue-200">
+              <p className="text-sm text-blue-200">
                 Speak directly with ZeniTEK's Government Scheme Documentation Specialist today.
               </p>
             </div>
             <button
               onClick={() => onOpenQuoteModal({ capacityNeeded: "Subsidy Consultation", message: "I want a free telephone consultation regarding government subsidy for solar dryer." })}
-              className="px-8 py-3.5 bg-[#23AC39] hover:bg-[#1f9632] text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-lg transition-all shrink-0 cursor-pointer"
+              className="w-full md:w-auto px-8 py-3.5 bg-[#23AC39] hover:bg-[#1f9632] text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-lg transition-all shrink-0 cursor-pointer text-balance md:whitespace-nowrap"
             >
               Get Free Subsidy Consultation
             </button>

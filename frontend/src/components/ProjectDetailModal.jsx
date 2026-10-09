@@ -26,10 +26,10 @@ export default function ProjectDetailModal({ isOpen, onClose, project, onEnquire
         {/* Modal Header */}
         <div className="px-4 py-3 sm:px-6 sm:py-4 border-b-2 border-[#23AC39] flex items-center justify-between bg-[#123B92] text-white shrink-0">
           <div>
-            <span className="text-[9px] sm:text-[10px] font-bold text-[#23AC39] bg-black/40 px-2 py-0.5 rounded uppercase tracking-wider border border-[#23AC39]/50">
+            <span className="text-2xs sm:text-2xs font-bold text-[#23AC39] bg-black/40 px-2 py-0.5 rounded uppercase tracking-wider border border-[#23AC39]/50 inline-block">
               INSTALLATION CASE STUDY
             </span>
-            <h3 className="text-sm sm:text-lg lg:text-xl font-black mt-0.5 text-white line-clamp-1">{project.title}</h3>
+            <h3 className="text-base sm:text-lg lg:text-xl font-black mt-0.5 text-white line-clamp-1">{project.title}</h3>
           </div>
           <button
             onClick={onClose}
@@ -95,7 +95,7 @@ export default function ProjectDetailModal({ isOpen, onClose, project, onEnquire
                 <div className="md:col-span-6 space-y-4">
                   <div>
                     <div className="flex items-center space-x-2">
-                      <span className="bg-[#002DC2] text-white font-bold text-[10px] uppercase px-2.5 py-0.5 rounded shadow-2xs">
+                      <span className="bg-[#002DC2] text-white font-bold text-2xs uppercase px-2.5 py-0.5 rounded shadow-sm inline-block">
                         {project.dryerType}
                       </span>
                       <span className="text-xs font-bold text-[#002DC2] flex items-center">
@@ -107,11 +107,11 @@ export default function ProjectDetailModal({ isOpen, onClose, project, onEnquire
 
                   <div className="grid grid-cols-2 gap-2 text-xs">
                     <div className="p-3 bg-[#F0F4FD] rounded-xl border border-[#123B92]/20">
-                      <div className="text-[10px] font-bold text-black/60 uppercase">Target Produce</div>
+                      <div className="text-2xs font-bold text-black/60 uppercase">Target Produce</div>
                       <div className="font-extrabold text-[#123B92] mt-0.5 text-sm">{project.cropDrying}</div>
                     </div>
                     <div className="p-3 bg-[#F0F4FD] rounded-xl border border-[#123B92]/20">
-                      <div className="text-[10px] font-bold text-black/60 uppercase">Batch Capacity</div>
+                      <div className="text-2xs font-bold text-black/60 uppercase">Batch Capacity</div>
                       <div className="font-extrabold text-[#002DC2] mt-0.5 text-sm">{project.capacity}</div>
                     </div>
                   </div>
@@ -127,7 +127,7 @@ export default function ProjectDetailModal({ isOpen, onClose, project, onEnquire
               {/* Description & Case Narrative */}
               <div className="bg-[#F0F4FD] p-5 rounded-2xl border border-[#123B92]/20 space-y-2">
                 <h5 className="text-xs font-bold text-[#123B92] uppercase tracking-wider">Installation Description & Case Metrics</h5>
-                <p className="text-xs text-black leading-relaxed font-medium">
+                <p className="text-sm text-black leading-relaxed font-medium">
                   {project.description}
                 </p>
               </div>
@@ -135,19 +135,19 @@ export default function ProjectDetailModal({ isOpen, onClose, project, onEnquire
               {/* Moisture Parameter Card */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                 <div className="p-3 bg-white rounded-xl border border-[#123B92]/20 shadow-sm text-center">
-                  <div className="text-[10px] text-black/60 font-bold uppercase">Drying Time Speedup</div>
+                  <div className="text-2xs text-black/60 font-bold uppercase">Drying Time Speedup</div>
                   <div className="text-base font-black text-[#002DC2] mt-1">{stats.solarDays}</div>
-                  <div className="text-[10px] text-black/50 font-medium">vs {stats.originalDays}</div>
+                  <div className="text-2xs text-black/50 font-medium">vs {stats.originalDays}</div>
                 </div>
                 <div className="p-3 bg-white rounded-xl border border-[#123B92]/20 shadow-sm text-center">
-                  <div className="text-[10px] text-black/60 font-bold uppercase">Moisture Target</div>
+                  <div className="text-2xs text-black/60 font-bold uppercase">Moisture Target</div>
                   <div className="text-base font-black text-[#002DC2] mt-1">{stats.moistureStart} → {stats.moistureEnd}</div>
-                  <div className="text-[10px] text-black/50 font-medium">{stats.qualityGrade}</div>
+                  <div className="text-2xs text-black/50 font-medium">{stats.qualityGrade}</div>
                 </div>
                 <div className="p-3 bg-white rounded-xl border border-[#123B92]/20 shadow-sm text-center">
-                  <div className="text-[10px] text-black/60 font-bold uppercase">Market Price Premium</div>
+                  <div className="text-2xs text-black/60 font-bold uppercase">Market Price Premium</div>
                   <div className="text-base font-black text-[#123B92] mt-1">{stats.priceAdd}</div>
-                  <div className="text-[10px] text-black/50 font-medium">Direct Mill & Export Linkage</div>
+                  <div className="text-2xs text-black/50 font-medium">Direct Mill & Export Linkage</div>
                 </div>
               </div>
             </>
@@ -163,7 +163,7 @@ export default function ProjectDetailModal({ isOpen, onClose, project, onEnquire
                   allowFullScreen
                 ></iframe>
               </div>
-              <p className="text-xs text-black/70 text-center font-medium">
+              <p className="text-sm text-black/70 text-center font-medium">
                 Live field demonstration video of {project.title} in operation.
               </p>
             </div>

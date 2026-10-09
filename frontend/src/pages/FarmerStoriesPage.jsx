@@ -28,7 +28,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
       {/* SECTION 1: HERO TITLE (ODD: WHITE) */}
       <section className="w-full section-odd py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <span className="text-xs font-bold text-[#123B92] uppercase tracking-widest bg-[#F0F4FD] border border-[#123B92]/30 px-3 py-1 rounded-full">
+          <span className="text-xs font-bold text-[#123B92] uppercase tracking-widest bg-[#F0F4FD] border border-[#123B92]/30 px-3 py-1 rounded-full inline-block">
             {t('storiesBadge')}
           </span>
           <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92]">
@@ -37,7 +37,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
               {t('storiesTitle2')}
             </span>
           </h1>
-          <p className="text-xs sm:text-sm text-black max-w-2xl mx-auto font-medium leading-relaxed">
+          <p className="text-sm text-black max-w-2xl mx-auto font-medium leading-relaxed">
             {t('storiesSubtitle')}
           </p>
         </div>
@@ -72,7 +72,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center space-y-2">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#123B92]">{t('videoReviewsTitle')}</h2>
-            <p className="text-xs text-black/60">{t('videoReviewsSub')}</p>
+            <p className="text-sm text-black/60">{t('videoReviewsSub')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
@@ -91,12 +91,12 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
                 <div className="p-5 sm:p-6 space-y-3">
                   <div className="flex items-center justify-between">
                     <h3 className="text-base font-bold text-[#123B92]">{rev.name}</h3>
-                    <span className="text-[10px] font-bold text-white bg-[#23AC39] px-2 py-0.5 rounded border border-[#23AC39]">
+                    <span className="text-2xs font-bold text-white bg-[#23AC39] px-2 py-0.5 rounded border border-[#23AC39]">
                       ★ {rev.rating}.0
                     </span>
                   </div>
                   <div className="text-xs font-bold text-[#002DC2]">{rev.role} • {rev.location}</div>
-                  <p className="text-xs text-black italic leading-relaxed">"{rev.comment}"</p>
+                  <p className="text-sm text-black italic leading-relaxed">"{rev.comment}"</p>
                 </div>
               </div>
             ))}
@@ -116,21 +116,21 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
               <img src="/real-photos/zenitek_photo_02.jpeg" alt="Commercial Field Case Study" className="w-full h-56 object-cover rounded-2xl border border-[#123B92]/20" />
             </div>
             <div className="lg:col-span-8 space-y-3">
-              <span className="text-[10px] font-bold text-[#123B92] bg-white border border-[#123B92]/20 px-2.5 py-0.5 rounded uppercase">
+              <span className="text-2xs font-bold text-[#123B92] bg-white border border-[#123B92]/20 px-2.5 py-0.5 rounded uppercase inline-block">
                 {t('pollachiCollective')}
               </span>
               <h3 className="text-xl font-bold text-[#123B92]">{t('pollachiTitle')}</h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-2">
-                <div className="p-3 bg-white rounded-xl border border-[#123B92]/20 shadow-xs">
+                <div className="p-3 bg-white rounded-xl border border-[#123B92]/20 shadow-sm">
                   <div className="text-[#123B92] font-bold">{t('probTitle')}</div>
                   <div className="text-black mt-1 leading-relaxed">{t('probDesc')}</div>
                 </div>
-                <div className="p-3 bg-white rounded-xl border border-[#123B92]/20 shadow-xs">
+                <div className="p-3 bg-white rounded-xl border border-[#123B92]/20 shadow-sm">
                   <div className="text-[#002DC2] font-bold">{t('solTitle')}</div>
                   <div className="text-black mt-1 leading-relaxed">{t('solDesc')}</div>
                 </div>
-                <div className="p-3 bg-white rounded-xl border border-[#123B92]/20 shadow-xs">
+                <div className="p-3 bg-white rounded-xl border border-[#123B92]/20 shadow-sm">
                   <div className="text-[#123B92] font-bold">{t('resTitle')}</div>
                   <div className="text-black mt-1 leading-relaxed">{t('resDesc')}</div>
                 </div>
@@ -147,18 +147,18 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm space-y-2">
               <CheckCircle2 className="w-6 h-6 text-[#002DC2] mx-auto" />
-              <h3 className="text-sm font-bold text-[#123B92]">{t('comm1Title')}</h3>
-              <p className="text-xs text-black leading-relaxed">{t('comm1Desc')}</p>
+              <h3 className="text-base font-bold text-[#123B92]">{t('comm1Title')}</h3>
+              <p className="text-sm text-black leading-relaxed">{t('comm1Desc')}</p>
             </div>
             <div className="p-6 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm space-y-2">
               <CheckCircle2 className="w-6 h-6 text-[#123B92] mx-auto" />
-              <h3 className="text-sm font-bold text-[#123B92]">{t('comm2Title')}</h3>
-              <p className="text-xs text-black leading-relaxed">{t('comm2Desc')}</p>
+              <h3 className="text-base font-bold text-[#123B92]">{t('comm2Title')}</h3>
+              <p className="text-sm text-black leading-relaxed">{t('comm2Desc')}</p>
             </div>
             <div className="p-6 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm space-y-2">
               <CheckCircle2 className="w-6 h-6 text-[#002DC2] mx-auto" />
-              <h3 className="text-sm font-bold text-[#123B92]">{t('comm3Title')}</h3>
-              <p className="text-xs text-black leading-relaxed">{t('comm3Desc')}</p>
+              <h3 className="text-base font-bold text-[#123B92]">{t('comm3Title')}</h3>
+              <p className="text-sm text-black leading-relaxed">{t('comm3Desc')}</p>
             </div>
           </div>
 

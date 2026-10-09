@@ -95,7 +95,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
       {/* SECTION 1: HERO BANNER (ODD: WHITE) */}
       <section className="w-full section-odd py-10 sm:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div className="inline-flex items-center space-x-1.5 px-3.5 py-1 rounded-full bg-[#F0F4FD] border border-[#123B92]/30 text-[#123B92] text-xs font-bold uppercase tracking-widest shadow-xs">
+          <div className="inline-flex items-center space-x-1.5 px-3.5 py-1 rounded-full bg-[#F0F4FD] border border-[#123B92]/30 text-[#123B92] text-xs font-bold uppercase tracking-widest shadow-sm">
             <Camera className="w-3.5 h-3.5 text-[#002DC2]" />
             <span>Authentic Field & Manufacturing Gallery</span>
           </div>
@@ -107,7 +107,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
             </span>
           </h1>
 
-          <p className="text-xs sm:text-sm text-black max-w-2xl mx-auto font-medium leading-relaxed">
+          <p className="text-sm text-black max-w-2xl mx-auto font-medium leading-relaxed">
             Explore authentic photographs of our commercial walk-in solar polyhouses, SS304 food-grade trolley trays, portable box dryers, and manufacturing craftsmanship across India. Click any card to view detailed specifications, multi-angle photos, and exact GPS installation coordinates.
           </p>
 
@@ -119,7 +119,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by crop, model, location, or state..."
-                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 rounded-2xl px-4 py-2.5 text-xs text-black placeholder-black/40 focus:outline-none focus:border-[#002DC2] focus:ring-2 focus:ring-[#002DC2]/20 shadow-xs"
+                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 rounded-2xl px-4 py-2.5 text-xs text-black placeholder-black/40 focus:outline-none focus:border-[#002DC2] focus:ring-2 focus:ring-[#002DC2]/20 shadow-sm"
               />
               {searchQuery && (
                 <button
@@ -145,7 +145,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                 }`}
               >
                 <span>{cat.label}</span>
-                <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                <span className={`text-2xs px-1.5 py-0.2 rounded-full font-bold ${
                   activeCategory === cat.id ? 'bg-[#123B92] text-white' : 'bg-[#F0F4FD] text-[#123B92]'
                 }`}>
                   {cat.count}
@@ -162,7 +162,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
           {apiLoading ? (
             <div className="flex flex-col items-center justify-center py-20 space-y-4">
               <Loader className="w-10 h-10 text-[#002DC2] animate-spin" />
-              <p className="text-xs text-black/50 font-medium">Loading gallery...</p>
+              <p className="text-sm text-black/50 font-medium">Loading gallery...</p>
             </div>
           ) : filteredItems.length === 0 ? (
             <div className="p-12 text-center bg-white rounded-3xl border border-[#123B92]/20 text-black/60 text-xs">
@@ -173,7 +173,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
               {filteredItems.map((item) => (
                 <div
                   key={item.id}
-                  className="group bg-white rounded-3xl overflow-hidden border border-[#123B92]/20 shadow-xs hover:shadow-xl hover:border-[#002DC2] transition-all duration-300 flex flex-col justify-between"
+                  className="group bg-white rounded-3xl overflow-hidden border border-[#123B92]/20 shadow-sm hover:shadow-xl hover:border-[#002DC2] transition-all duration-300 flex flex-col justify-between"
                 >
                   <Link to={`/gallery/${item.id}`} className="block flex-1">
                     {/* Clean, Visible Unobstructed Photo Container */}
@@ -200,7 +200,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                       </button>
 
                       {/* Map Coordinate Badge */}
-                      <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md text-white px-2.5 py-1 rounded-lg text-[10px] font-mono flex items-center space-x-1">
+                      <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md text-white px-2.5 py-1 rounded-lg text-2xs font-mono flex items-center space-x-1">
                         <MapPin className="w-3 h-3 text-[#23AC39]" />
                         <span>{item.lat.toFixed(2)}°N, {item.lng.toFixed(2)}°E</span>
                       </div>
@@ -209,34 +209,42 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                     {/* Photo Details & Metadata */}
                     <div className="p-4 sm:p-5 space-y-2.5">
                       {/* Category & Model Tag Row */}
-                      <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-[#123B92]/10 pb-2">
-                        <span className="bg-[#123B92] text-white font-bold text-[10px] uppercase px-2.5 py-0.5 rounded-md shadow-2xs">
+                      <div className="flex flex-wrap items-center content-start justify-between gap-1.5 border-b border-[#123B92]/10 pb-2 sm:min-h-14">
+                        <span className="bg-[#123B92] text-white font-bold text-2xs uppercase px-2.5 py-0.5 rounded-md shadow-sm inline-block whitespace-nowrap">
                           {item.categoryLabel || item.category}
                         </span>
                         {item.productModel && (
-                          <span className="bg-[#002DC2] text-white font-bold text-[10px] px-2 py-0.5 rounded shadow-2xs">
+                          <span className="bg-[#002DC2] text-white font-bold text-2xs px-2 py-0.5 rounded shadow-sm whitespace-nowrap">
                             {item.productModel}
                           </span>
                         )}
                       </div>
 
-                      <div className="flex items-center justify-between text-[11px] font-bold text-[#002DC2]">
-                        <div className="flex items-center line-clamp-1">
-                          <MapPin className="w-3.5 h-3.5 mr-1 text-[#002DC2] shrink-0" />
-                          <span>{item.location}{item.state ? `, ${item.state}` : ''}</span>
+                      <div className="space-y-1.5 text-xs font-bold text-[#002DC2]">
+                        <div
+                          className="flex items-start min-w-0 min-h-10"
+                          title={`${item.location}${item.state ? `, ${item.state}` : ''}`}
+                        >
+                          <MapPin className="w-3.5 h-3.5 mr-1 mt-[3px] text-[#002DC2] shrink-0" />
+                          <span className="line-clamp-2">{item.location}{item.state ? `, ${item.state}` : ''}</span>
                         </div>
-                        {item.capacity && (
-                          <span className="text-[10px] text-white bg-[#23AC39] px-2 py-0.5 rounded border border-[#23AC39] font-bold shrink-0">
-                            {item.capacity}
-                          </span>
-                        )}
+                        <div className="flex min-h-[20px]">
+                          {item.capacity && (
+                            <span
+                              title={item.capacity}
+                              className="max-w-full truncate text-2xs text-white bg-[#1E8A30] px-2 py-0.5 rounded border border-[#1E8A30] font-bold"
+                            >
+                              {item.capacity}
+                            </span>
+                          )}
+                        </div>
                       </div>
 
-                      <h4 className="font-extrabold text-[#123B92] text-xs sm:text-sm leading-snug group-hover:text-[#002DC2] transition-colors line-clamp-2">
+                      <h4 className="font-extrabold text-[#123B92] text-lg leading-6 group-hover:text-[#002DC2] transition-colors line-clamp-2 min-h-12">
                         {item.title}
                       </h4>
 
-                      <p className="text-[11.5px] text-slate-600 line-clamp-2 leading-relaxed font-medium">
+                      <p className="text-sm text-slate-600 line-clamp-2 leading-6 font-medium min-h-12">
                         {item.description}
                       </p>
                     </div>
@@ -265,13 +273,13 @@ export default function GalleryPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-[#123B92] text-white rounded-3xl p-6 sm:p-10 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border-2 border-[#23AC39]">
             <div className="space-y-2 text-center md:text-left">
-              <span className="text-[10px] font-bold text-[#23AC39] bg-black/40 px-3 py-1 rounded-full uppercase tracking-wider border border-[#23AC39]/50">
+              <span className="inline-block max-w-full text-2xs leading-snug font-bold text-[#9BF0A8] bg-white/10 px-3 py-1 rounded-2xl uppercase tracking-wider border border-[#9BF0A8]/60">
                 Turnkey Manufacturing & Field Commissioning
               </span>
               <h3 className="text-xl sm:text-2xl font-black text-white">
                 Looking for a Complete Commercial Polyhouse Dryer Installation?
               </h3>
-              <p className="text-xs sm:text-sm text-white/90 max-w-xl">
+              <p className="text-sm text-white/90 max-w-xl">
                 ZeniTEK handles structural engineering, CNC fabrication, food-grade SS304 tray carts, and government subsidy paperwork end-to-end.
               </p>
             </div>
@@ -301,7 +309,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
             {/* Modal Header */}
             <div className="p-4 bg-[#123B92] text-white flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <span className="bg-[#23AC39] text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                <span className="bg-[#23AC39] text-white text-2xs font-bold px-2 py-0.5 rounded">
                   {selectedPhoto.productModel}
                 </span>
                 <span className="text-xs font-bold truncate max-w-xs sm:max-w-md">

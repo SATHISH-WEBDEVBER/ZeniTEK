@@ -85,7 +85,7 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
         <div className="px-4 py-3 sm:px-6 sm:py-5 border-b-2 border-[#23AC39] flex items-center justify-between bg-[#123B92] text-white shrink-0">
           <div>
             <div className="flex items-center space-x-2">
-              <span className="bg-black/40 text-[#23AC39] border border-[#23AC39]/50 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
+              <span className="bg-black/40 text-[#23AC39] border border-[#23AC39]/50 text-2xs sm:text-2xs font-bold uppercase tracking-wider px-2 py-0.5 rounded inline-block">
                 Official Enquiry
               </span>
             </div>
@@ -105,7 +105,7 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
             <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-[#002DC2] shrink-0" />
             <div>
               <p className="font-bold text-[#123B92]">{successMsg}</p>
-              <p className="text-[11px] sm:text-xs text-black/70">Redirecting to WhatsApp for engineer response...</p>
+              <p className="text-sm text-black/70">Redirecting to WhatsApp for engineer response...</p>
             </div>
           </div>
         )}
@@ -126,7 +126,7 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
                 placeholder="e.g. Ramesh Kumar"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black"
+                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-base text-black"
               />
             </div>
 
@@ -141,7 +141,7 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
                 placeholder="+91 98765 43210"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black"
+                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-base text-black"
               />
             </div>
 
@@ -154,7 +154,7 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
                 placeholder="e.g. Tamil Nadu"
                 value={formData.state}
                 onChange={handleChange}
-                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black"
+                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-base text-black"
               />
             </div>
 
@@ -169,7 +169,7 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
                 placeholder="e.g. Pollachi / Coimbatore"
                 value={formData.district}
                 onChange={handleChange}
-                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black"
+                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-base text-black"
               />
             </div>
 
@@ -179,7 +179,7 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
                 name="clientType"
                 value={formData.clientType}
                 onChange={handleChange}
-                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black cursor-pointer"
+                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-base text-black cursor-pointer"
               >
                 <option value="Individual Farmer">Individual Farmer</option>
                 <option value="FPO / Cooperative Group">FPO / Farmer Cooperative</option>
@@ -195,7 +195,7 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
                 name="cropType"
                 value={formData.cropType}
                 onChange={handleChange}
-                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black cursor-pointer"
+                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-base text-black cursor-pointer"
               >
                 <option value="Copra/Coconut">Copra / Coconut</option>
                 <option value="Moringa/Herbs">Moringa / Herbs / Tea</option>
@@ -214,7 +214,7 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
               name="capacityNeeded"
               value={formData.capacityNeeded}
               onChange={handleChange}
-              className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black cursor-pointer"
+              className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-base text-black cursor-pointer"
             >
               <option value="Under 50 kg (Portable)">Under 50 kg (Portable DIY)</option>
               <option value="100 to 500 kg (Commercial)">100 to 500 kg (Commercial Polyhouse)</option>
@@ -230,12 +230,12 @@ export default function LeadModal({ isOpen, onClose, initialData = {} }) {
               placeholder="e.g. Please share subsidy documents and estimated installation time."
               value={formData.message}
               onChange={handleChange}
-              className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black"
+              className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-base text-black"
             ></textarea>
           </div>
 
           <div className="pt-4 border-t border-[#123B92]/20 flex items-center justify-between">
-            <div className="text-[10px] text-black/60 flex items-center">
+            <div className="text-2xs text-black/60 flex items-center">
               <ShieldCheck className="w-3.5 h-3.5 text-[#002DC2] mr-1" /> 100% Confidential
             </div>
             <button

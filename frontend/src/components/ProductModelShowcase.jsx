@@ -12,13 +12,12 @@ export const teslaDryerProducts = [
     leaseInfo: "Govt Subsidy Assistance 40% – 60%",
     quoteCategory: "100 to 500 kg (Commercial)",
     images: [
-      "/hero-carousel/slide-1.jpg",
       "/real-photos/zenitek_photo_04.jpeg",
-      "/real-photos/zenitek_photo_02.jpeg",
-      "/real-photos/zenitek_photo_11.jpeg",
       "/real-photos/zenitek_photo_12.jpeg",
-      "/real-photos/zenitek_photo_13.jpeg",
-      "/real-photos/zenitek_photo_24.jpeg",
+      "/real-photos/zenitek_photo_34.jpeg",
+      "/real-photos/zenitek_photo_10.jpeg",
+      "/real-photos/zenitek_photo_02.jpeg",
+      "/real-photos/zenitek_photo_38.jpeg",
       "/pdf-products/brochure_p1.png"
     ]
   },
@@ -31,12 +30,12 @@ export const teslaDryerProducts = [
     leaseInfo: "Govt Subsidy Assistance 50%",
     quoteCategory: "100 to 500 kg (Commercial)",
     images: [
-      "/hero-carousel/slide-2.jpg",
-      "/real-photos/zenitek_photo_18.jpeg",
+      "/real-photos/zenitek_photo_43.jpeg",
+      "/real-photos/zenitek_photo_44.jpeg",
       "/real-photos/zenitek_photo_19.jpeg",
       "/real-photos/zenitek_photo_20.jpeg",
-      "/real-photos/zenitek_photo_22.jpeg",
-      "/real-photos/zenitek_photo_28.jpeg",
+      "/real-photos/zenitek_photo_23.jpeg",
+      "/real-photos/zenitek_photo_33.jpeg",
       "/pdf-products/brochure_p2.png",
       "/pdf-products/brochure_p3.png"
     ]
@@ -53,10 +52,10 @@ export const teslaDryerProducts = [
       "/real-photos/zenitek_photo_27.jpeg",
       "/real-photos/zenitek_photo_01.jpeg",
       "/real-photos/zenitek_photo_26.jpeg",
-      "/real-photos/zenitek_photo_03.jpeg",
-      "/real-photos/zenitek_photo_07.jpeg",
-      "/real-photos/zenitek_photo_08.jpeg",
-      "/real-photos/zenitek_photo_17.jpeg",
+      "/real-photos/zenitek_photo_31.jpeg",
+      "/real-photos/zenitek_photo_35.jpeg",
+      "/real-photos/zenitek_photo_36.jpeg",
+      "/real-photos/zenitek_photo_28.jpeg",
       "/pdf-products/brochure_p6.png"
     ]
   },
@@ -69,13 +68,12 @@ export const teslaDryerProducts = [
     leaseInfo: "Govt Subsidy Assistance 50% – 60%",
     quoteCategory: "1 Ton+ (Industrial)",
     images: [
-      "/hero-carousel/slide-3.jpg",
-      "/real-photos/zenitek_photo_12.jpeg",
-      "/real-photos/zenitek_photo_02.jpeg",
-      "/real-photos/zenitek_photo_03.jpeg",
-      "/real-photos/zenitek_photo_11.jpeg",
-      "/real-photos/zenitek_photo_21.jpeg",
-      "/real-photos/zenitek_photo_24.jpeg",
+      "/real-photos/zenitek_photo_45.jpeg",
+      "/real-photos/zenitek_photo_39.jpeg",
+      "/real-photos/zenitek_photo_42.jpeg",
+      "/real-photos/zenitek_photo_32.jpeg",
+      "/real-photos/zenitek_photo_40.jpeg",
+      "/real-photos/zenitek_photo_41.jpeg",
       "/pdf-products/brochure_p9.png"
     ]
   },
@@ -89,12 +87,11 @@ export const teslaDryerProducts = [
     quoteCategory: "Under 50 kg (Portable)",
     images: [
       "/real-photos/zenitek_photo_25.jpeg",
-      "/real-photos/zenitek_photo_05.jpeg",
-      "/real-photos/zenitek_photo_10.jpeg",
-      "/real-photos/zenitek_photo_14.jpeg",
+      "/real-photos/zenitek_photo_09.jpeg",
+      "/real-photos/zenitek_photo_13.jpeg",
       "/real-photos/zenitek_photo_15.jpeg",
       "/real-photos/zenitek_photo_16.jpeg",
-      "/real-photos/zenitek_photo_17.jpeg",
+      "/real-photos/zenitek_photo_14.jpeg",
       "/pdf-products/brochure_p5.png"
     ]
   },
@@ -107,13 +104,12 @@ export const teslaDryerProducts = [
     leaseInfo: "Home & Kitchen Enterprise",
     quoteCategory: "Under 50 kg (Portable)",
     images: [
-      "/real-photos/zenitek_photo_23.jpeg",
-      "/real-photos/zenitek_photo_01.jpeg",
+      "/real-photos/zenitek_photo_22.jpeg",
       "/real-photos/zenitek_photo_05.jpeg",
       "/real-photos/zenitek_photo_06.jpeg",
-      "/real-photos/zenitek_photo_10.jpeg",
-      "/real-photos/zenitek_photo_14.jpeg",
-      "/real-photos/zenitek_photo_16.jpeg",
+      "/real-photos/zenitek_photo_37.jpeg",
+      "/real-photos/zenitek_photo_29.jpeg",
+      "/real-photos/zenitek_photo_30.jpeg",
       "/pdf-products/brochure_p4.png"
     ]
   }
@@ -213,45 +209,46 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
               key={currentImage}
               src={currentImage}
               alt={currentProduct.name}
-              className="w-full h-full object-cover object-center transform group-hover:scale-102 transition-transform duration-700 animate-fade-in"
+              className="w-full h-full object-cover object-center transform group-hover:scale-[1.02] transition-transform duration-700 animate-fade-in"
             />
 
             {/* Dark Bottom Gradient for Clean Text Readability */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/10 pointer-events-none" />
 
             {/* TOP-LEFT CATEGORY */}
-            <div className="absolute top-5 left-5 sm:top-7 sm:left-8 z-10">
-              <span className="text-white text-xs sm:text-sm font-bold tracking-wide drop-shadow-md">
+            {/* Mobile: category stacks above the counter pill; sm+: side by side */}
+            <div className="absolute top-5 inset-x-5 sm:top-7 sm:inset-x-8 z-10 flex flex-col items-start gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4 pointer-events-none">
+              <span className="text-white text-xs sm:text-sm font-bold tracking-wide leading-snug drop-shadow-md sm:max-w-[60%]">
                 {currentProduct.category}
               </span>
-            </div>
 
-            {/* TOP-RIGHT IMAGE COUNTER & AUTO-TIMER INDICATOR */}
-            <div className="absolute top-5 right-5 sm:top-7 sm:right-8 z-10 flex items-center space-x-2">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-[11px] font-bold text-white bg-black/60 px-3 py-1 rounded-full border border-white/30">
-                Photo {activeImageIndex + 1} of {currentProduct.images.length}
-              </span>
+              {/* TOP-RIGHT IMAGE COUNTER & AUTO-TIMER INDICATOR */}
+              <div className="flex items-center space-x-2 shrink-0">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-xs font-bold text-white bg-black/60 px-3 py-1 rounded-full border border-white/30 whitespace-nowrap">
+                  Model {activeIndex + 1} of {totalProducts}
+                </span>
+              </div>
             </div>
 
             {/* MOBILE ONLY: IN-CARD LEFT & RIGHT ARROWS */}
             <button
               onClick={handlePrev}
               aria-label="Previous Product"
-              className="md:hidden absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-xl bg-white text-slate-900 shadow-xl flex items-center justify-center cursor-pointer"
+              className="md:hidden absolute left-3 top-[40%] -translate-y-1/2 z-20 w-10 h-10 rounded-xl bg-white text-slate-900 shadow-xl flex items-center justify-center cursor-pointer"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={handleNext}
               aria-label="Next Product"
-              className="md:hidden absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-xl bg-white text-slate-900 shadow-xl flex items-center justify-center cursor-pointer"
+              className="md:hidden absolute right-3 top-[40%] -translate-y-1/2 z-20 w-10 h-10 rounded-xl bg-white text-slate-900 shadow-xl flex items-center justify-center cursor-pointer"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
 
             {/* BOTTOM-LEFT CONTENT (Tesla Style: Title, Subtitle, Order Now & Learn More) */}
-            <div className="absolute bottom-7 left-5 sm:bottom-9 sm:left-9 z-10 max-w-xl text-white space-y-2.5">
+            <div className="absolute bottom-7 inset-x-5 sm:bottom-9 sm:left-9 sm:right-9 z-10 max-w-xl text-white space-y-2.5">
               
               {/* Product Title */}
               <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight drop-shadow-lg">
@@ -259,12 +256,12 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
               </h3>
 
               {/* Subheading / Capacity */}
-              <div className="text-xs sm:text-sm lg:text-base text-white font-medium pb-2 drop-shadow-md">
+              <div className="text-xs sm:text-sm lg:text-base text-white font-medium pb-2 drop-shadow-md flex flex-col items-start gap-1.5 sm:block">
                 <span className="underline underline-offset-4 font-bold">
                   {currentProduct.capacity}
                 </span>
-                <span className="mx-2">•</span>
-                <span className="text-green-300 font-bold">
+                <span className="hidden sm:inline mx-2">•</span>
+                <span className="text-green-300 font-bold whitespace-nowrap">
                   {currentProduct.leaseInfo}
                 </span>
               </div>
@@ -361,7 +358,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
               aria-label={`Go to ${p.name}`}
               className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                 activeIndex === idx
-                  ? 'w-8 bg-slate-900 shadow-xs'
+                  ? 'w-8 bg-slate-900 shadow-sm'
                   : 'w-2 bg-slate-300 hover:bg-slate-500'
               }`}
             />

@@ -96,8 +96,8 @@ This hybrid integration guarantees unbroken dehumidification even through cloud 
     title: 'Government Subsidies',
     subtitle: '40% to 60% Capital Subsidy Assistance Under Central & State Agri Schemes',
     thumbnail: {
-      url: '/real-photos/zenitek_photo_07.jpeg',
-      alt: 'Government Subsidies'
+      url: '/real-photos/zenitek_photo_02.jpeg',
+      alt: 'Farmers loading drying trays inside a ZeniTEK solar tunnel dryer'
     },
     displayOrder: 5,
     published: true,

@@ -209,19 +209,19 @@ export default function ROICalculator({ onSelectModelQuote }) {
         
         {/* ================= LEFT SIDE (60%): PRODUCT SHOWCASE (AUTO-SWAPPING EVERY 5S) ================= */}
         <div 
-          className="lg:col-span-7 bg-slate-900 rounded-2xl border border-slate-200/80 shadow-lg overflow-hidden flex flex-col justify-between relative group select-none h-[420px] sm:h-[460px] lg:h-[500px]"
+          className="lg:col-span-7 bg-slate-900 rounded-2xl border border-slate-200/80 shadow-lg overflow-hidden flex flex-col justify-between relative group select-none h-[420px] sm:h-[460px] lg:h-auto lg:min-h-[500px]"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
           {/* Top Bar with 5s Timer Progress */}
-          <div className="relative z-20 px-4 py-3 bg-gradient-to-b from-black/70 via-black/30 to-transparent text-white flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-[11px] font-bold uppercase tracking-wider text-white/90">
-                Operational Installation • 5s Auto-Swap
+          <div className="relative z-20 px-4 py-3 bg-gradient-to-b from-black/70 via-black/30 to-transparent text-white flex items-center justify-between gap-3">
+            <div className="flex items-center space-x-2 min-w-0">
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse shrink-0" />
+              <span className="text-xs font-bold uppercase tracking-wider text-white/90 whitespace-nowrap truncate">
+                Operational Installation<span className="hidden sm:inline"> • 5s Auto-Swap</span>
               </span>
             </div>
-            <div className="text-[11px] font-bold bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/30 text-white">
+            <div className="shrink-0 whitespace-nowrap text-xs font-bold bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/30 text-white">
               {currentProductSlide + 1} / {productSlides.length}
             </div>
           </div>
@@ -261,7 +261,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
           <button
             onClick={handlePrevSlide}
             aria-label="Previous Product"
-            className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/85 hover:bg-white text-slate-800 shadow-md flex items-center justify-center transition-all active:scale-90 cursor-pointer"
+            className="absolute left-2.5 top-24 sm:top-1/2 sm:-translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/85 hover:bg-white text-slate-800 shadow-md flex items-center justify-center transition-all active:scale-90 cursor-pointer"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
@@ -269,18 +269,18 @@ export default function ROICalculator({ onSelectModelQuote }) {
           <button
             onClick={handleNextSlide}
             aria-label="Next Product"
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/85 hover:bg-white text-slate-800 shadow-md flex items-center justify-center transition-all active:scale-90 cursor-pointer"
+            className="absolute right-2.5 top-24 sm:top-1/2 sm:-translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/85 hover:bg-white text-slate-800 shadow-md flex items-center justify-center transition-all active:scale-90 cursor-pointer"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
 
           {/* Bottom Overlay Content */}
           <div className="relative z-20 p-4 sm:p-5 text-white space-y-2 mt-auto">
-            <div className="flex items-center space-x-2">
-              <span className="text-[10px] font-black uppercase bg-[#23AC39] text-white px-2 py-0.5 rounded shadow-xs">
+            <div className="flex flex-col items-start gap-1 sm:flex-row sm:items-center sm:gap-2">
+              <span className="text-2xs font-black uppercase bg-[#23AC39] text-white px-2 py-0.5 rounded shadow-sm inline-block whitespace-nowrap shrink-0">
                 {activeSlide.tag}
               </span>
-              <span className="text-[10px] text-green-300 font-semibold truncate">
+              <span className="text-2xs text-green-300 font-semibold leading-snug">
                 {activeSlide.cropFit}
               </span>
             </div>
@@ -289,7 +289,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
               <h3 className="text-lg sm:text-xl font-black text-white leading-tight drop-shadow-sm">
                 {activeSlide.title}
               </h3>
-              <p className="text-[11px] sm:text-xs text-white/80 font-medium">
+              <p className="text-sm text-white/80 font-medium">
                 {activeSlide.subtitle}
               </p>
             </div>
@@ -297,7 +297,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
             {/* Feature Pills */}
             <div className="flex flex-wrap items-center gap-1.5 pt-1 border-t border-white/20">
               {activeSlide.features.map((feat, i) => (
-                <span key={i} className="text-[10px] text-white/90 bg-white/10 backdrop-blur-xs px-2 py-0.5 rounded flex items-center">
+                <span key={i} className="text-2xs text-white/90 bg-white/10 backdrop-blur-sm px-2 py-0.5 rounded flex items-center">
                   <CheckCircle2 className="w-2.5 h-2.5 text-green-400 mr-1 shrink-0" />
                   {feat}
                 </span>
@@ -311,9 +311,10 @@ export default function ROICalculator({ onSelectModelQuote }) {
                   key={slide.id}
                   onClick={() => setCurrentProductSlide(idx)}
                   aria-label={`Go to product slide ${idx + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  aria-current={currentProductSlide === idx ? 'true' : undefined}
+                  className={`h-1.5 rounded-full transition-colors cursor-pointer ${
                     currentProductSlide === idx
-                      ? 'w-6 bg-white shadow-xs'
+                      ? 'w-6 bg-white shadow-sm'
                       : 'w-1.5 bg-white/40 hover:bg-white/70'
                   }`}
                 />
@@ -324,17 +325,17 @@ export default function ROICalculator({ onSelectModelQuote }) {
 
 
         {/* ================= RIGHT SIDE (40%): SYNCHRONIZED TECHNICAL ADVANTAGES & QUALITY METRICS ================= */}
-        <div className="lg:col-span-5 bg-white rounded-2xl p-4.5 sm:p-5.5 border border-slate-200/90 shadow-lg flex flex-col justify-between h-auto lg:h-[500px]">
+        <div className="lg:col-span-5 bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-lg flex flex-col justify-between lg:min-h-[500px]">
           
           {/* Header */}
           <div className="pb-2.5 border-b border-slate-100">
-            <span className="text-[10.5px] font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3 py-1 rounded-full inline-flex items-center">
+            <span className="text-2xs font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3 py-1 rounded-full inline-flex items-center">
               <Sparkles className="w-3.5 h-3.5 mr-1.5 text-[#002DC2]" /> DEHYDRATION PERFORMANCE METRICS
             </span>
             <h3 className="text-base sm:text-lg font-black text-slate-900 leading-snug mt-1.5">
               Operational Advantages & Quality Safeguards
             </h3>
-            <p className="text-xs text-slate-500 font-semibold truncate mt-0.5">
+            <p className="text-sm text-slate-500 font-semibold mt-0.5">
               Engineering specifications for {activeSlide.title}
             </p>
           </div>
@@ -345,73 +346,73 @@ export default function ROICalculator({ onSelectModelQuote }) {
             className="animate-calm-fade space-y-2.5 flex-1 my-2.5 flex flex-col justify-between"
           >
             {/* 1. Loading & Dry Ratio */}
-            <div className="p-2.5 sm:p-3 bg-[#F0F4FD] rounded-xl border border-[#123B92]/20 shadow-2xs hover:border-[#002DC2]/50 transition-colors">
+            <div className="p-2.5 sm:p-3 bg-[#F0F4FD] rounded-xl border border-[#123B92]/20 shadow-sm hover:border-[#002DC2]/50 transition-colors">
               <div className="flex items-center space-x-2">
                 <div className="w-6 h-6 rounded-lg bg-blue-100 text-[#002DC2] flex items-center justify-center shrink-0">
                   <Layers className="w-3.5 h-3.5" />
                 </div>
-                <div className="text-[10px] font-black text-slate-500 uppercase tracking-wider">
+                <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">
                   {activeSlide.specs.loadingRatio.label}
                 </div>
               </div>
               <div className="text-sm font-black text-[#123B92] mt-1 pl-8">
                 {activeSlide.specs.loadingRatio.value}
               </div>
-              <p className="text-[11px] text-slate-600 font-medium pl-8 mt-0.5 line-clamp-1">
+              <p className="text-sm text-slate-600 font-medium pl-8 mt-0.5 line-clamp-2">
                 {activeSlide.specs.loadingRatio.desc}
               </p>
             </div>
 
             {/* 2. Drying Speed & UV Protection */}
-            <div className="p-2.5 sm:p-3 bg-white rounded-xl border border-slate-200/90 shadow-2xs hover:border-[#23AC39]/60 transition-colors">
+            <div className="p-2.5 sm:p-3 bg-white rounded-xl border border-slate-200/90 shadow-sm hover:border-[#23AC39]/60 transition-colors">
               <div className="flex items-center space-x-2">
                 <div className="w-6 h-6 rounded-lg bg-emerald-100 text-[#23AC39] flex items-center justify-center shrink-0">
                   <Zap className="w-3.5 h-3.5" />
                 </div>
-                <div className="text-[10px] font-black text-slate-500 uppercase tracking-wider">
+                <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">
                   {activeSlide.specs.dryingSpeed.label}
                 </div>
               </div>
               <div className="text-sm font-black text-[#23AC39] mt-1 pl-8">
                 {activeSlide.specs.dryingSpeed.value}
               </div>
-              <p className="text-[11px] text-slate-600 font-medium pl-8 mt-0.5 line-clamp-1">
+              <p className="text-sm text-slate-600 font-medium pl-8 mt-0.5 line-clamp-2">
                 {activeSlide.specs.dryingSpeed.desc}
               </p>
             </div>
 
             {/* 3. 100% Hygienic Enclosed Processing */}
-            <div className="p-2.5 sm:p-3 bg-[#F0F4FD] rounded-xl border border-[#123B92]/20 shadow-2xs hover:border-[#002DC2]/50 transition-colors">
+            <div className="p-2.5 sm:p-3 bg-[#F0F4FD] rounded-xl border border-[#123B92]/20 shadow-sm hover:border-[#002DC2]/50 transition-colors">
               <div className="flex items-center space-x-2">
                 <div className="w-6 h-6 rounded-lg bg-blue-100 text-[#002DC2] flex items-center justify-center shrink-0">
                   <ShieldCheck className="w-3.5 h-3.5" />
                 </div>
-                <div className="text-[10px] font-black text-slate-500 uppercase tracking-wider">
+                <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">
                   {activeSlide.specs.hygiene.label}
                 </div>
               </div>
               <div className="text-sm font-black text-slate-900 mt-1 pl-8">
                 {activeSlide.specs.hygiene.value}
               </div>
-              <p className="text-[11px] text-slate-600 font-medium pl-8 mt-0.5 line-clamp-1">
+              <p className="text-sm text-slate-600 font-medium pl-8 mt-0.5 line-clamp-2">
                 {activeSlide.specs.hygiene.desc}
               </p>
             </div>
 
             {/* 4. Locks Original Aroma, Taste, Smell & Structure */}
-            <div className="p-2.5 sm:p-3 bg-white rounded-xl border border-slate-200/90 shadow-2xs hover:border-amber-400 transition-colors">
+            <div className="p-2.5 sm:p-3 bg-white rounded-xl border border-slate-200/90 shadow-sm hover:border-amber-400 transition-colors">
               <div className="flex items-center space-x-2">
                 <div className="w-6 h-6 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
                   <Sparkles className="w-3.5 h-3.5" />
                 </div>
-                <div className="text-[10px] font-black text-slate-500 uppercase tracking-wider">
+                <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">
                   {activeSlide.specs.retention.label}
                 </div>
               </div>
               <div className="text-sm font-black text-[#002DC2] mt-1 pl-8">
                 {activeSlide.specs.retention.value}
               </div>
-              <p className="text-[11px] text-slate-600 font-medium pl-8 mt-0.5 line-clamp-1">
+              <p className="text-sm text-slate-600 font-medium pl-8 mt-0.5 line-clamp-2">
                 {activeSlide.specs.retention.desc}
               </p>
             </div>
@@ -421,7 +422,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
           <div className="pt-2 border-t border-slate-100">
             <button
               onClick={handleQuoteClick}
-              className="w-full py-2.5 px-4 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer active:scale-98"
+              className="w-full py-2.5 px-3 sm:px-4 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-normal sm:tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer active:scale-[0.98]"
             >
               <span>Get Sizing & Pricing for This Model</span>
               <ArrowRight className="w-3.5 h-3.5" />

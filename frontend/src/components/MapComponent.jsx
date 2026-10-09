@@ -28,6 +28,34 @@ const INDIA_BOUNDS = [
   [36.5, 97.5]   // Northeast corner (Kashmir / Ladakh to Arunachal Pradesh)
 ];
 
+// Extra padding so markers never sit under the floating overlays
+// (top: 54px-tall pins + mode switcher; right: zoom controls; bottom: Survey of India badge)
+const MARKER_FIT_PADDING = {
+  paddingTopLeft: [28, 66],
+  paddingBottomRight: [56, 52]
+};
+
+// Fit the map to every visible marker (falls back to the whole of India when there are none)
+const fitMapToProjects = (map, projects, animate = false) => {
+  const points = (projects || [])
+    .filter(p => Number.isFinite(p.latitude) && Number.isFinite(p.longitude))
+    .map(p => [p.latitude, p.longitude]);
+
+  if (points.length === 0) {
+    map.fitBounds(INDIA_BOUNDS, { padding: [20, 20], maxZoom: 6 });
+    return;
+  }
+  if (points.length === 1) {
+    if (animate) map.flyTo(points[0], 11, { duration: 1.2 });
+    else map.setView(points[0], 11);
+    return;
+  }
+  const bounds = L.latLngBounds(points);
+  if (!bounds.isValid()) return;
+  if (animate) map.flyToBounds(bounds, { ...MARKER_FIT_PADDING, maxZoom: 11, duration: 1.2 });
+  else map.fitBounds(bounds, { ...MARKER_FIT_PADDING, maxZoom: 11 });
+};
+
 // Custom ZeniTEK Map Pin Marker (Zomato / Swiggy style teardrop badge with ZeniTEK emblem)
 const createCustomIcon = (isSelected = false) => {
   return L.divIcon({
@@ -60,19 +88,16 @@ function MapController({
 }) {
   const map = useMap();
   const prevFilterKeyRef = useRef('');
+  const latestProjectsRef = useRef(filteredProjects);
+  latestProjectsRef.current = filteredProjects;
 
-  // Strictly fit full India boundary on initial mount
+  // On mount (and when the mobile map tab becomes visible again) fit the view to all markers
   useEffect(() => {
     const timer = setTimeout(() => {
       map.invalidateSize();
-      if (filteredProjects && filteredProjects.length > 0 && filteredProjects.length < 35) {
-        const bounds = L.latLngBounds(filteredProjects.map(p => [p.latitude, p.longitude]));
-        if (bounds.isValid()) {
-          map.fitBounds(bounds, { padding: [35, 35], maxZoom: 8 });
-        }
-      } else {
-        map.fitBounds(INDIA_BOUNDS, { padding: [20, 20], maxZoom: 6 });
-      }
+      const list = latestProjectsRef.current || [];
+      prevFilterKeyRef.current = list.map(p => p._id || p.title).sort().join(',');
+      fitMapToProjects(map, list, false);
     }, 150);
     return () => clearTimeout(timer);
   }, [map, mobileTab]);
@@ -102,36 +127,19 @@ function MapController({
       const filterKey = filteredProjects.map(p => p._id || p.title).sort().join(',');
       
       if (filterKey === prevFilterKeyRef.current) return;
+      // First render: the mount effect above performs the initial (non-animated) fit
+      const isInitial = prevFilterKeyRef.current === '';
       prevFilterKeyRef.current = filterKey;
+      if (isInitial) return;
 
-      if (filteredProjects.length === 1) {
-        map.flyTo([filteredProjects[0].latitude, filteredProjects[0].longitude], 11, {
-          duration: 1.2
-        });
-      } else {
-        const bounds = L.latLngBounds(filteredProjects.map(p => [p.latitude, p.longitude]));
-        map.flyToBounds(bounds, {
-          padding: [50, 50],
-          maxZoom: 11,
-          duration: 1.2
-        });
-      }
+      fitMapToProjects(map, filteredProjects, true);
     }
   }, [filteredProjects, map]);
 
   // Manual trigger to fit all visible markers
   useEffect(() => {
     if (triggerFitAll && filteredProjects.length > 0) {
-      if (filteredProjects.length === 1) {
-        map.flyTo([filteredProjects[0].latitude, filteredProjects[0].longitude], 11, { duration: 1.2 });
-      } else {
-        const bounds = L.latLngBounds(filteredProjects.map(p => [p.latitude, p.longitude]));
-        map.flyToBounds(bounds, {
-          padding: [50, 50],
-          maxZoom: 11,
-          duration: 1.2
-        });
-      }
+      fitMapToProjects(map, filteredProjects, true);
       onResetFitTrigger();
     }
   }, [triggerFitAll, filteredProjects, map, onResetFitTrigger]);
@@ -146,10 +154,10 @@ function MapOverlayControls({ onFitAll, mapMode, setMapMode }) {
   return (
     <>
       {/* Top Left: Google Maps India Badge */}
-      <div className="leaflet-top leaflet-left" style={{ pointerEvents: 'auto', margin: '12px', zIndex: 1000 }}>
+      <div className="leaflet-top leaflet-left hidden sm:block" style={{ pointerEvents: 'auto', margin: '12px', zIndex: 1000 }}>
         <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-md border border-slate-200 px-3 py-1.5 flex items-center space-x-2">
           <span className="w-2.5 h-2.5 rounded-full bg-[#23AC39] animate-pulse" />
-          <span className="text-xs font-black text-[#123B92] tracking-wide">
+          <span className="text-xs font-black text-[#123B92] tracking-wide whitespace-nowrap">
             Google Maps • India
           </span>
         </div>
@@ -165,7 +173,7 @@ function MapOverlayControls({ onFitAll, mapMode, setMapMode }) {
               onClick={() => setMapMode('streets')}
               className={`px-3 py-1 text-xs font-black rounded-lg transition-all cursor-pointer ${
                 mapMode === 'streets'
-                  ? 'bg-[#002DC2] text-white shadow-xs'
+                  ? 'bg-[#002DC2] text-white shadow-sm'
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
               }`}
             >
@@ -176,7 +184,7 @@ function MapOverlayControls({ onFitAll, mapMode, setMapMode }) {
               onClick={() => setMapMode('satellite')}
               className={`px-3 py-1 text-xs font-black rounded-lg transition-all cursor-pointer ${
                 mapMode === 'satellite'
-                  ? 'bg-[#002DC2] text-white shadow-xs'
+                  ? 'bg-[#002DC2] text-white shadow-sm'
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
               }`}
             >
@@ -187,7 +195,7 @@ function MapOverlayControls({ onFitAll, mapMode, setMapMode }) {
               onClick={() => setMapMode('terrain')}
               className={`px-3 py-1 text-xs font-black rounded-lg transition-all cursor-pointer ${
                 mapMode === 'terrain'
-                  ? 'bg-[#002DC2] text-white shadow-xs'
+                  ? 'bg-[#002DC2] text-white shadow-sm'
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
               }`}
             >
@@ -293,7 +301,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
     layer.bindTooltip(
       `<div class="text-center font-sans py-0.5">
          <div class="font-black text-xs text-white">${stName}</div>
-         <div class="text-[11px] font-bold ${count > 0 ? 'text-[#38BDF8]' : 'text-slate-300'}">
+         <div class="text-xs font-bold ${count > 0 ? 'text-[#38BDF8]' : 'text-slate-300'}">
            ${count > 0 ? `${count} Active Installation${count > 1 ? 's' : ''}` : 'Official India Territory'}
          </div>
        </div>`,
@@ -449,7 +457,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
         {/* State Filter Chips */}
         <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 overflow-x-auto pb-1 md:pb-0">
           <span className="text-sm sm:text-base font-black text-[#123B92] mr-1 flex items-center shrink-0">
-            <SlidersHorizontal className="w-4.5 h-4.5 mr-1.5 text-[#002DC2]" /> {t('filterStateLabel')}
+            <SlidersHorizontal className="w-[18px] h-[18px] mr-1.5 text-[#002DC2]" /> {t('filterStateLabel')}
           </span>
           {statesList.map(st => (
             <button
@@ -459,7 +467,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                 setSelectedState(st.name);
                 setSelectedProject(null);
               }}
-              className={`text-sm sm:text-[15px] px-4 py-2 rounded-xl font-bold transition-all shrink-0 flex items-center space-x-2 cursor-pointer ${
+              className={`text-sm sm:text-base px-4 py-2 rounded-xl font-bold transition-all shrink-0 flex items-center space-x-2 cursor-pointer ${
                 selectedState === st.name 
                   ? 'bg-[#002DC2] text-white shadow-sm ring-2 ring-[#23AC39]' 
                   : 'bg-white text-slate-800 hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/20'
@@ -480,21 +488,21 @@ export default function MapComponent({ onSelectProjectQuote }) {
           <button
             type="button"
             onClick={() => setMobileTab('map')}
-            className={`flex-1 sm:flex-initial py-2.5 px-4 text-sm sm:text-base font-bold rounded-lg transition-all flex items-center justify-center space-x-2 ${
+            className={`flex-1 sm:flex-initial py-2.5 px-2 sm:px-4 text-sm sm:text-base font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 sm:gap-2 whitespace-nowrap ${
               mobileTab === 'map' ? 'bg-[#002DC2] text-white shadow' : 'text-slate-800'
             }`}
           >
-            <MapPin className="w-4 h-4" />
+            <MapPin className="hidden min-[400px]:block w-4 h-4 shrink-0" />
             <span>{t('interactiveMapTab')}</span>
           </button>
           <button
             type="button"
             onClick={() => setMobileTab('list')}
-            className={`flex-1 sm:flex-initial py-2.5 px-4 text-sm sm:text-base font-bold rounded-lg transition-all flex items-center justify-center space-x-2 ${
+            className={`flex-1 sm:flex-initial py-2.5 px-2 sm:px-4 text-sm sm:text-base font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 sm:gap-2 whitespace-nowrap ${
               mobileTab === 'list' ? 'bg-[#002DC2] text-white shadow' : 'text-slate-800'
             }`}
           >
-            <Tag className="w-4 h-4" />
+            <Tag className="hidden min-[400px]:block w-4 h-4 shrink-0" />
             <span>{t('projectListTab')} ({filteredProjects.length})</span>
           </button>
         </div>
@@ -505,7 +513,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
       <div className="w-full h-[460px] sm:h-[500px] lg:h-[540px] relative">
         
         {/* Mobile-Only Sites Directory (Shows only when mobileTab is 'list' on mobile screens) */}
-        <div className={`w-full flex-col h-full bg-[#F0F4FD] rounded-2xl p-3.5 sm:p-4.5 border border-[#123B92]/20 overflow-hidden lg:hidden ${mobileTab === 'list' ? 'flex' : 'hidden'}`}>
+        <div className={`w-full flex-col h-full bg-[#F0F4FD] rounded-2xl p-3.5 sm:p-[18px] border border-[#123B92]/20 overflow-hidden lg:hidden ${mobileTab === 'list' ? 'flex' : 'hidden'}`}>
           
           {/* Sidebar Header & Search */}
           <div className="mb-3.5 space-y-3 pb-3 border-b border-[#123B92]/20 shrink-0">
@@ -520,7 +528,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
 
             {/* Instant Search Bar */}
             <div className="relative">
-              <Search className="w-4.5 h-4.5 text-black/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-[18px] h-[18px] text-black/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchQuery}
@@ -553,28 +561,28 @@ export default function MapComponent({ onSelectProjectQuote }) {
                   <div
                     key={proj._id || proj.title}
                     onClick={() => handleSelectProjectFromList(proj)}
-                    className={`p-4 rounded-xl border cursor-pointer transition-all group shadow-xs ${
+                    className={`p-4 rounded-xl border cursor-pointer transition-all group shadow-sm ${
                       isSelected
                         ? 'bg-white border-[#002DC2] ring-2 ring-[#23AC39]'
                         : 'bg-white hover:bg-white border-[#123B92]/20 hover:border-[#002DC2]'
                     }`}
                   >
                     <div className="flex justify-between items-start gap-2">
-                      <h4 className={`text-base sm:text-[17px] font-black transition-colors line-clamp-1 leading-snug ${
+                      <h4 className={`text-base sm:text-lg font-black transition-colors line-clamp-1 leading-snug ${
                         isSelected ? 'text-[#002DC2]' : 'text-[#123B92] group-hover:text-[#002DC2]'
                       }`}>
                         {proj.title}
                       </h4>
-                      <span className="text-xs sm:text-[13px] font-black text-white bg-[#23AC39] px-2.5 py-1 rounded-md border border-[#23AC39] shrink-0">
+                      <span className="text-xs sm:text-sm font-black text-white bg-[#23AC39] px-2.5 py-1 rounded-md border border-[#23AC39] shrink-0">
                         {proj.capacity}
                       </span>
                     </div>
 
-                    <p className="text-sm sm:text-[15px] text-slate-700 font-semibold mt-2 flex items-center">
+                    <p className="text-sm sm:text-base text-slate-700 font-semibold mt-2 flex items-center">
                       <MapPin className="w-4 h-4 text-[#002DC2] mr-1.5 shrink-0" /> {proj.locationName}
                     </p>
 
-                    <div className="mt-3 flex items-center justify-between text-sm sm:text-[15px]">
+                    <div className="mt-3 flex items-center justify-between text-sm sm:text-base">
                       <span className="text-[#002DC2] font-bold flex items-center line-clamp-1">
                         <Tag className="w-4 h-4 mr-1.5 shrink-0" /> {proj.cropDrying}
                       </span>
@@ -601,7 +609,9 @@ export default function MapComponent({ onSelectProjectQuote }) {
           <MapContainer
             center={[22.5, 80.0]}
             zoom={4.8}
-            minZoom={4.6}
+            minZoom={3.5}
+            zoomSnap={0.25}
+            zoomDelta={0.5}
             maxZoom={18}
             maxBounds={[[6.0, 68.0], [37.5, 97.5]]}
             maxBoundsViscosity={1.0}
@@ -707,17 +717,17 @@ export default function MapComponent({ onSelectProjectQuote }) {
                       {/* Details: Model Name, Title, Place */}
                       <div onClick={() => setSelectedDetailProject(p)} className="cursor-pointer space-y-1.5 min-w-0">
                         {/* Model Name */}
-                        <div className="text-xs sm:text-[13px] font-black uppercase text-[#002DC2] tracking-wider truncate">
+                        <div className="text-xs sm:text-sm font-black uppercase text-[#002DC2] tracking-wider truncate">
                           {p.dryerType}
                         </div>
 
                         {/* Project Title (e.g. Kusumdhara Floral Solar Dryer) */}
-                        <h4 className="text-sm sm:text-base font-black text-slate-900 leading-snug line-clamp-2 hover:text-[#002DC2] transition-colors">
+                        <h4 className="text-base sm:text-base font-black text-slate-900 leading-snug line-clamp-2 hover:text-[#002DC2] transition-colors">
                           {p.title}
                         </h4>
 
                         {/* Place */}
-                        <p className="text-xs sm:text-[13px] font-bold text-slate-700 flex items-center truncate">
+                        <p className="text-sm font-bold text-slate-700 flex items-center truncate">
                           <MapPin className="w-3.5 h-3.5 text-[#002DC2] mr-1 shrink-0" />
                           <span className="truncate">{p.locationName || `${p.town}, ${p.state}`}</span>
                         </p>
@@ -732,7 +742,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                             e.stopPropagation();
                             setSelectedDetailProject(p);
                           }}
-                          className="w-full text-xs sm:text-sm font-black text-white bg-[#23AC39] hover:bg-[#002DC2] py-2.5 px-3 rounded-lg shadow-xs text-center flex items-center justify-center space-x-1.5 transition-colors cursor-pointer active:scale-98"
+                          className="w-full text-xs sm:text-sm font-black text-white bg-[#23AC39] hover:bg-[#002DC2] py-2.5 px-3 rounded-lg shadow-sm text-center flex items-center justify-center space-x-1.5 transition-colors cursor-pointer active:scale-[0.98]"
                         >
                           <Info className="w-4 h-4" />
                           <span>View More Details</span>
@@ -763,8 +773,8 @@ export default function MapComponent({ onSelectProjectQuote }) {
           {/* Official Survey of India Badge */}
           <div className="absolute bottom-3 left-3 z-[500] pointer-events-none select-none bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-[#123B92]/25 shadow-md flex items-center space-x-2">
             <span className="w-2.5 h-2.5 rounded-full bg-[#23AC39] animate-pulse" />
-            <span className="text-[11px] sm:text-xs font-black text-[#123B92] tracking-wide">
-              Official Survey of India Boundaries • 35 Active Field Sites
+            <span className="text-xs sm:text-xs font-black text-[#123B92] tracking-wide">
+              <span className="hidden sm:inline">Official Survey of India Boundaries • </span>35 Active Field Sites
             </span>
           </div>
         </div>

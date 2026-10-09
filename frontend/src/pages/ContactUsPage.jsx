@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import { MapPin, Phone, Mail, MessageCircle, ShieldCheck, ArrowRight, CheckCircle2, Building2, Send, Loader2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
+// Keep "Tamil Nadu - 638 112" style postcodes on one line
+const keepPostcode = (s = '') =>
+  s
+    .replace(/Tamil Nadu/g, 'Tamil Nadu')
+    .replace(/ - (\d{3}) (\d{3})/g, ' - $1 $2')
+    .replace(/(\d{3}) (\d{3})/g, '$1 $2');
+
 export default function ContactUsPage({ onOpenQuoteModal }) {
   const { t } = useLanguage();
   const [formData, setFormData] = useState({
@@ -51,7 +58,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
       
       {/* Hero Header */}
       <div className="text-center space-y-4">
-        <span className="text-xs font-bold text-[#123B92] uppercase tracking-widest bg-[#F0F4FD] border border-[#123B92]/30 px-3 py-1 rounded-full">
+        <span className="text-xs font-bold text-[#123B92] uppercase tracking-widest bg-[#F0F4FD] border border-[#123B92]/30 px-3 py-1 rounded-full inline-block">
           {t('contactBadge')}
         </span>
         <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92]">
@@ -66,14 +73,14 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
       </div>
 
       {/* Two-Column Workspace */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start lg:items-stretch">
         
         {/* Left Column */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="bg-white p-6 sm:p-7 rounded-3xl border border-[#123B92]/20 shadow-md space-y-6">
+          <div className="bg-white p-5 sm:p-7 rounded-3xl border border-[#123B92]/20 shadow-md space-y-6">
             <div className="flex items-center justify-between pb-3">
               <h3 className="text-xl font-bold text-[#123B92]">{t('factoryLocation')}</h3>
-              <span className="text-[10px] font-bold bg-[#F0F4FD] text-[#123B92] border border-[#123B92]/30 px-2 py-0.5 rounded-md">
+              <span className="text-2xs font-bold bg-[#F0F4FD] text-[#123B92] border border-[#123B92]/30 px-2 py-0.5 rounded-md">
                 Verified Hub
               </span>
             </div>
@@ -86,16 +93,16 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                     <Building2 className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#002DC2] bg-white border border-[#123B92]/20 px-2 py-0.5 rounded">
+                    <span className="text-2xs font-extrabold uppercase tracking-wider text-[#002DC2] bg-white border border-[#123B92]/20 px-2 py-0.5 rounded inline-block">
                       Main Address
                     </span>
-                    <h4 className="font-extrabold text-[#123B92] text-xs mt-0.5">
+                    <h4 className="font-extrabold text-[#123B92] text-base mt-0.5">
                       {t('regOfficeLabel')}
                     </h4>
                   </div>
                 </div>
-                <p className="text-black font-medium leading-relaxed pl-10 text-[11px]">
-                  {t('regOfficeAddress')}
+                <p className="text-black font-medium leading-relaxed sm:pl-10 text-sm">
+                  {keepPostcode(t('regOfficeAddress'))}
                 </p>
               </div>
 
@@ -106,16 +113,16 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                     <MapPin className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#002DC2] bg-white border border-[#123B92]/20 px-2 py-0.5 rounded">
+                    <span className="text-2xs font-extrabold uppercase tracking-wider text-[#002DC2] bg-white border border-[#123B92]/20 px-2 py-0.5 rounded inline-block">
                       Incubation Center
                     </span>
-                    <h4 className="font-extrabold text-[#123B92] text-xs mt-0.5">
+                    <h4 className="font-extrabold text-[#123B92] text-base mt-0.5">
                       {t('opOfficeLabel')}
                     </h4>
                   </div>
                 </div>
-                <p className="text-black font-medium leading-relaxed pl-10 text-[11px]">
-                  {t('opOfficeAddress')}
+                <p className="text-black font-medium leading-relaxed sm:pl-10 text-sm">
+                  {keepPostcode(t('opOfficeAddress'))}
                 </p>
               </div>
 
@@ -123,7 +130,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
               <div className="flex items-center justify-between p-3 rounded-xl bg-[#F0F4FD] border border-[#123B92]/20">
                 <div className="flex items-center space-x-2">
                   <ShieldCheck className="w-4 h-4 text-[#002DC2] shrink-0" />
-                  <span className="font-bold text-black text-[11px]">GSTIN:</span>
+                  <span className="font-bold text-black text-xs">GSTIN:</span>
                 </div>
                 <span className="font-mono font-bold text-[#123B92] tracking-wider text-xs bg-white px-2.5 py-1 rounded border border-[#123B92]/30 shadow-sm">
                   33AACFZ8530G1Z5
@@ -135,15 +142,15 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 <div className="w-9 h-9 rounded-xl bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center shrink-0 border border-[#123B92]/20">
                   <Phone className="w-5 h-5" />
                 </div>
-                <div className="space-y-1">
-                  <div className="font-bold text-black">{t('callUs')}</div>
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 text-black font-bold text-xs">
-                    <a href="tel:+918903852623" className="hover:text-[#002DC2] font-extrabold text-[#123B92]">+91-8903852623</a>
-                    <span className="hidden sm:inline text-black/30">|</span>
-                    <a href="tel:+918098613422" className="hover:text-[#002DC2] text-[#002DC2]">+91 80986 13422</a>
+                <div className="space-y-1 min-w-0">
+                  <div className="font-bold text-black/70 text-xs uppercase tracking-wider">{t('callUs')}</div>
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-x-3 gap-y-0.5 text-black font-extrabold text-lg leading-snug">
+                    <a href="tel:+918903852623" className="hover:text-[#002DC2] font-black text-[#123B92] whitespace-nowrap">+91-8903852623</a>
+                    <span className="hidden sm:inline text-black/30 font-normal">|</span>
+                    <a href="tel:+918098613422" className="hover:text-[#002DC2] text-[#002DC2] whitespace-nowrap">+91 80986 13422</a>
                   </div>
-                  <p className="text-[#123B92] font-semibold text-[11px]">Balakrishnan (Sales & Engineering)</p>
-                  <p className="text-black/60 text-[10px]">{t('workingHours')}</p>
+                  <p className="text-[#123B92] font-semibold text-sm">Balakrishnan (Sales & Engineering)</p>
+                  <p className="text-black/60 text-sm">{t('workingHours')}</p>
                 </div>
               </div>
 
@@ -152,12 +159,12 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 <div className="w-9 h-9 rounded-xl bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center shrink-0 border border-[#123B92]/20">
                   <Mail className="w-5 h-5" />
                 </div>
-                <div className="space-y-0.5">
-                  <div className="font-bold text-black">{t('emailUs')}</div>
-                  <p className="text-black font-medium">
-                    <a href="mailto:zenitek2k@gmail.com" className="hover:text-[#002DC2] font-semibold text-[#123B92]">zenitek2k@gmail.com</a>
+                <div className="space-y-0.5 min-w-0">
+                  <div className="font-bold text-black/70 text-xs uppercase tracking-wider">{t('emailUs')}</div>
+                  <p className="text-black font-medium text-lg leading-snug break-words">
+                    <a href="mailto:zenitek2k@gmail.com" className="hover:text-[#002DC2] font-extrabold text-[#123B92]">zenitek2k@gmail.com</a>
                   </p>
-                  <p className="text-black/80 text-[11px]">
+                  <p className="text-black/80 text-sm">
                     <a href="mailto:sales@zenitek.in" className="hover:text-[#002DC2] text-[#002DC2]">sales@zenitek.in</a> / <a href="mailto:info@zenitek.in" className="hover:text-[#002DC2] text-[#002DC2]">info@zenitek.in</a>
                   </p>
                 </div>
@@ -169,10 +176,10 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 href="https://wa.me/918098613422?text=Hi%20ZeniTEK%20Team!%20I%20want%20a%20quote%20for%20a%20ZeniTEK%20Solar%20Thermal%20Dryer."
                 target="_blank"
                 rel="noreferrer"
-                className="w-full py-3.5 px-4 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow flex items-center justify-center space-x-2 transition-all cursor-pointer"
+                className="w-full py-3.5 px-4 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow flex items-center justify-center gap-2 text-center transition-all cursor-pointer"
               >
-                <MessageCircle className="w-4 h-4 fill-current" />
-                <span>{t('chatWhatsapp')}</span>
+                <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+                <span className="text-balance">{t('chatWhatsapp')}</span>
               </a>
             </div>
 
@@ -181,19 +188,19 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
 
         {/* Right Column Form */}
         <div className="lg:col-span-7">
-          <div className="bg-white p-8 rounded-3xl border border-[#123B92]/20 shadow-md space-y-6">
+          <div className="h-full bg-white p-4 sm:p-8 rounded-3xl border border-[#123B92]/20 shadow-md space-y-6 flex flex-col">
             <h3 className="text-xl font-bold text-[#123B92]">{t('preQualTitle')}</h3>
 
             {submitted ? (
               <div className="p-6 rounded-2xl bg-[#F0F4FD] border-2 border-[#23AC39] text-center space-y-3">
                 <CheckCircle2 className="w-10 h-10 text-[#002DC2] mx-auto" />
                 <h4 className="text-lg font-bold text-[#123B92]">Thank You for Reaching Out!</h4>
-                <p className="text-xs text-black/70">
+                <p className="text-sm text-black/70">
                   Your enquiry has been logged. Our thermal engineers will connect with you on WhatsApp / Phone within 2 hours.
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4 flex-1 flex flex-col">
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -204,7 +211,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                       placeholder="e.g. Subramaniam"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black"
+                      className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3 sm:px-3.5 py-2.5 text-sm text-black min-w-0"
                     />
                   </div>
 
@@ -216,7 +223,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                       placeholder="+91 98765 43210"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black"
+                      className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3 sm:px-3.5 py-2.5 text-sm text-black min-w-0"
                     />
                   </div>
                 </div>
@@ -226,7 +233,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                   <select
                     value={formData.clientType}
                     onChange={(e) => setFormData({ ...formData, clientType: e.target.value })}
-                    className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black cursor-pointer"
+                    className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl pl-2.5 pr-1.5 sm:px-3.5 py-2.5 text-sm text-black min-w-0 cursor-pointer"
                   >
                     <option value="Individual Farmer">Individual Farmer</option>
                     <option value="FPO / Cooperative Group">FPO / Cooperative Group</option>
@@ -241,7 +248,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                   <select
                     value={formData.capacityNeeded}
                     onChange={(e) => setFormData({ ...formData, capacityNeeded: e.target.value })}
-                    className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black cursor-pointer"
+                    className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl pl-2.5 pr-1.5 sm:px-3.5 py-2.5 text-sm text-black min-w-0 cursor-pointer"
                   >
                     <option value="Under 50 kg (Portable)">Under 50 kg (Portable DIY)</option>
                     <option value="100 to 500 kg (Commercial)">100 to 500 kg (Commercial Polyhouse)</option>
@@ -254,7 +261,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                   <select
                     value={formData.cropType}
                     onChange={(e) => setFormData({ ...formData, cropType: e.target.value })}
-                    className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black cursor-pointer"
+                    className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl pl-2.5 pr-1.5 sm:px-3.5 py-2.5 text-sm text-black min-w-0 cursor-pointer"
                   >
                     <option value="Copra/Coconut">{t('cropCopra')}</option>
                     <option value="Moringa/Herbs">{t('cropMoringa')}</option>
@@ -265,23 +272,23 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                   </select>
                 </div>
 
-                <div>
+                <div className="flex-1 flex flex-col">
                   <label className="block text-xs font-bold text-black mb-1">{t('additionalReqs')}</label>
                   <textarea
                     rows="3"
                     placeholder="Mention location, target moisture levels, or subsidy questions..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3.5 py-2.5 text-xs text-black"
+                    className="w-full flex-1 bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3 sm:px-3.5 py-2.5 text-sm text-black min-w-0"
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3.5 px-6 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow transition-all flex items-center justify-center space-x-2 cursor-pointer"
+                  className="w-full py-3.5 px-6 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow transition-all flex items-center justify-center gap-2 text-center cursor-pointer"
                 >
-                  {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <span>{t('submitProposal')}</span>}
+                  {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <span className="text-balance">{t('submitProposal')}</span>}
                 </button>
 
               </form>
@@ -294,17 +301,17 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
       {/* Support Assurance Row */}
       <section className="bg-[#F0F4FD] p-6 rounded-2xl border border-[#123B92]/20 shadow-sm">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-          <div className="flex items-center justify-center space-x-2 text-xs font-bold text-black">
+          <div className="flex items-center justify-center gap-2 text-sm font-bold text-black">
             <ShieldCheck className="w-5 h-5 shrink-0 text-[#002DC2]" />
-            <span>{t('support1')}</span>
+            <span className="text-balance">{t('support1')}</span>
           </div>
-          <div className="flex items-center justify-center space-x-2 text-xs font-bold text-black">
+          <div className="flex items-center justify-center gap-2 text-sm font-bold text-black">
             <CheckCircle2 className="w-5 h-5 shrink-0 text-[#002DC2]" />
-            <span>{t('support2')}</span>
+            <span className="text-balance">{t('support2')}</span>
           </div>
-          <div className="flex items-center justify-center space-x-2 text-xs font-bold text-black">
+          <div className="flex items-center justify-center gap-2 text-sm font-bold text-black">
             <Building2 className="w-5 h-5 shrink-0 text-[#002DC2]" />
-            <span>{t('support3')}</span>
+            <span className="text-balance">{t('support3')}</span>
           </div>
         </div>
       </section>
@@ -312,18 +319,18 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
       {/* CSR Banner */}
       <section className="bg-[#123B92] text-white p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border-2 border-[#23AC39]">
         <div className="space-y-2">
-          <span className="text-[10px] font-bold text-[#23AC39] bg-black/40 px-2.5 py-0.5 rounded uppercase border border-[#23AC39]/50">
+          <span className="text-2xs font-bold text-[#8EE59D] bg-[#0A225C] px-2.5 py-0.5 rounded uppercase border border-[#23AC39]/70 inline-block">
             {t('csrBadge')}
           </span>
           <h3 className="text-2xl font-bold text-white">{t('csrTitle')}</h3>
-          <p className="text-xs text-white/90 max-w-xl">
+          <p className="text-sm text-white/90 max-w-xl">
             {t('csrDesc')}
           </p>
         </div>
 
         <button
           onClick={() => onOpenQuoteModal({ clientType: 'NGO / CSR Partner' })}
-          className="py-3 px-6 bg-[#23AC39] hover:bg-[#002DC2] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow transition-all shrink-0 cursor-pointer"
+          className="w-full md:w-auto py-3 px-6 bg-[#23AC39] hover:bg-[#002DC2] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow transition-all shrink-0 cursor-pointer text-center text-balance md:whitespace-nowrap"
         >
           {t('csrBtn')}
         </button>

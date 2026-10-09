@@ -22,7 +22,7 @@ export default function LanguageWidget() {
       {/* Dropdown Popup */}
       {isOpen && (
         <div className="mb-2 w-56 bg-white rounded-2xl border-2 border-[#123B92] shadow-2xl p-2 animate-fade-in space-y-1">
-          <div className="text-[11px] font-bold text-[#123B92] uppercase tracking-wider px-3 py-1.5 border-b border-[#123B92]/20 flex items-center justify-between">
+          <div className="text-xs font-bold text-[#123B92] uppercase tracking-wider px-3 py-1.5 border-b border-[#123B92]/20 flex items-center justify-between">
             <span>Select Language</span>
             <Globe className="w-3.5 h-3.5 text-[#002DC2]" />
           </div>
@@ -37,7 +37,7 @@ export default function LanguageWidget() {
             >
               <div className="flex items-center space-x-2">
                 <span className="font-semibold text-black">{l.native}</span>
-                <span className="text-[10px] text-black/60 font-normal">({l.label})</span>
+                <span className="text-2xs text-black/60 font-normal">({l.label})</span>
               </div>
               {lang === l.code && <Check className="w-4 h-4 text-[#002DC2]" />}
             </button>

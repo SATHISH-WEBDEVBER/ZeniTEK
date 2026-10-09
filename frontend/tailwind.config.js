@@ -46,18 +46,21 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
+      // Type scale (1rem = 16px). Small UI steps grow gently; headings step by ~1.2-1.25.
+      // Floor is 12px for legibility; body copy is 16px with ~1.6 line height.
       fontSize: {
-        '2xs': ['0.6875rem', { lineHeight: '0.875rem' }], // 11px
-        'xs': ['0.75rem', { lineHeight: '1.1rem' }],      // 12px
-        'sm': ['0.875rem', { lineHeight: '1.25rem' }],    // 14px
-        'base': ['0.9375rem', { lineHeight: '1.45rem' }], // 15px (clean, compact readability)
-        'lg': ['1.0625rem', { lineHeight: '1.6rem' }],    // 17px
-        'xl': ['1.25rem', { lineHeight: '1.75rem' }],     // 20px
-        '2xl': ['1.5rem', { lineHeight: '2rem' }],        // 24px
-        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],   // 30px
-        '4xl': ['2.25rem', { lineHeight: '2.6rem' }],     // 36px
-        '5xl': ['2.75rem', { lineHeight: '1.15' }],       // 44px
-        '6xl': ['3.25rem', { lineHeight: '1.1' }],        // 52px
+        '2xs': ['0.75rem', { lineHeight: '1rem' }],       // 12px  captions, badges (minimum)
+        'xs': ['0.8125rem', { lineHeight: '1.25rem' }],   // 13px  labels, meta text
+        'sm': ['0.9375rem', { lineHeight: '1.5rem' }],    // 15px  secondary text, buttons
+        'base': ['1rem', { lineHeight: '1.625rem' }],     // 16px  body copy
+        'lg': ['1.125rem', { lineHeight: '1.75rem' }],    // 18px  lead paragraphs
+        'xl': ['1.25rem', { lineHeight: '1.75rem' }],     // 20px  card titles
+        '2xl': ['1.5rem', { lineHeight: '2rem' }],        // 24px  h3
+        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],   // 30px  h2 (mobile)
+        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],     // 36px  h2
+        '5xl': ['3rem', { lineHeight: '1.1' }],           // 48px  h1
+        '6xl': ['3.75rem', { lineHeight: '1.05' }],       // 60px  hero h1
+        '7xl': ['4.5rem', { lineHeight: '1' }],           // 72px  display
       }
     },
   },

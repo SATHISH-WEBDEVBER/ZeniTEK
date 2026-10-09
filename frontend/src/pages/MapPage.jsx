@@ -11,7 +11,7 @@ export default function MapPage({ onOpenQuoteModal }) {
       
       {/* Header */}
       <div className="text-center space-y-3">
-        <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 border border-green-200 px-3 py-1 rounded-full">
+        <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 border border-green-200 px-3 py-1 rounded-full inline-block">
           {t('mapShowcaseBadge')}
         </span>
         <h1 className="text-4xl sm:text-5xl font-black text-blue-950">
@@ -20,7 +20,7 @@ export default function MapPage({ onOpenQuoteModal }) {
             {t('mapTitle2')}
           </span>
         </h1>
-        <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto font-medium">
+        <p className="text-sm text-slate-600 max-w-2xl mx-auto font-medium">
           {t('mapSubtitle')}
         </p>
       </div>

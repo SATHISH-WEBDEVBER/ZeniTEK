@@ -28,7 +28,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center p-6 text-center space-y-4">
         <h2 className="text-2xl font-black text-slate-900">Project Not Found</h2>
-        <p className="text-xs text-slate-500">The requested solar dryer installation could not be found.</p>
+        <p className="text-sm text-slate-500">The requested solar dryer installation could not be found.</p>
         <Link
           to="/dryers"
           className="px-6 py-2.5 bg-blue-700 text-white font-bold text-xs rounded-xl shadow hover:bg-blue-600 transition-all flex items-center space-x-2"
@@ -85,7 +85,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
             >
               <Share2 className="w-3.5 h-3.5" />
             </button>
-            {copied && <span className="text-[11px] font-bold text-green-600 animate-fade-in">Link Copied!</span>}
+            {copied && <span className="text-xs font-bold text-green-600 animate-fade-in">Link Copied!</span>}
           </div>
         </div>
 
@@ -148,7 +148,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
                 <div>
-                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-green-700 bg-green-50 px-2.5 py-1 rounded-md border border-green-200">
+                  <span className="text-2xs font-extrabold uppercase tracking-widest text-green-700 bg-green-50 px-2.5 py-1 rounded-md border border-green-200 inline-block">
                     TARGET CROP & DEHYDRATION APPLICATION
                   </span>
                   <h2 className="text-xl sm:text-2xl font-black text-slate-900 mt-2">
@@ -178,15 +178,15 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
               {/* Key Highlights Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
                 <div className="p-3 bg-blue-50/60 rounded-xl border border-blue-100">
-                  <div className="text-[10px] font-bold uppercase text-blue-700">Weather Defense</div>
+                  <div className="text-2xs font-bold uppercase text-blue-700">Weather Defense</div>
                   <div className="text-xs font-extrabold text-slate-900 mt-0.5">100% Rain & Dust Sealed</div>
                 </div>
                 <div className="p-3 bg-green-50/60 rounded-xl border border-green-100">
-                  <div className="text-[10px] font-bold uppercase text-green-700">Clean Tech</div>
+                  <div className="text-2xs font-bold uppercase text-green-700">Clean Tech</div>
                   <div className="text-xs font-extrabold text-slate-900 mt-0.5">Zero Fuel / Solar Driven</div>
                 </div>
                 <div className="p-3 bg-amber-50/60 rounded-xl border border-amber-100">
-                  <div className="text-[10px] font-bold uppercase text-amber-700">Value Gain</div>
+                  <div className="text-2xs font-bold uppercase text-amber-700">Value Gain</div>
                   <div className="text-xs font-extrabold text-slate-900 mt-0.5">+25% to 40% Grade Premium</div>
                 </div>
               </div>
@@ -201,7 +201,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-lg space-y-6">
               
               <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
+                <span className="text-2xs font-extrabold uppercase tracking-widest text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200 inline-block">
                   INSTALLATION SPECIFICATIONS
                 </span>
                 <h1 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2">
@@ -275,7 +275,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
                   <div className="text-sm font-extrabold">
                     Want an installation like {project.title}?
                   </div>
-                  <p className="text-[11px] text-blue-100">
+                  <p className="text-sm text-blue-100">
                     Receive customized capacity sizing, subsidy eligibility check, and factory-direct pricing on WhatsApp.
                   </p>
                 </div>
