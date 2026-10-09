@@ -74,7 +74,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
                 <div className="text-3xl">🥥</div>
-                <h3 className="text-lg font-bold text-[#123B92]">{t('cropCopra')}</h3>
+                <h3 className="text-xl font-bold text-[#123B92]">{t('cropCopra')}</h3>
                 <p className="text-sm text-black leading-relaxed">Moisture drop from 52% to &lt;6% in 2.5 days. Produces Grade-1 White Copra for oil extraction.</p>
                 <button onClick={() => onOpenQuoteModal({ cropType: 'Copra/Coconut' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
@@ -83,7 +83,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
 
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
                 <div className="text-3xl">🌿</div>
-                <h3 className="text-lg font-bold text-[#123B92]">{t('cropMoringa')}</h3>
+                <h3 className="text-xl font-bold text-[#123B92]">{t('cropMoringa')}</h3>
                 <p className="text-sm text-black leading-relaxed">100% dust-free green retention. Preserves chlorophyll for export powders.</p>
                 <button onClick={() => onOpenQuoteModal({ cropType: 'Moringa/Herbs' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
@@ -92,7 +92,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
 
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
                 <div className="text-3xl">🌶️</div>
-                <h3 className="text-lg font-bold text-[#123B92]">{t('cropSpices')}</h3>
+                <h3 className="text-xl font-bold text-[#123B92]">{t('cropSpices')}</h3>
                 <p className="text-sm text-black leading-relaxed">Zero rain damage or aflatoxin mold. Locks bright glossy red skin color.</p>
                 <button onClick={() => onOpenQuoteModal({ cropType: 'Spices/Chillies' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
@@ -105,7 +105,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
                 <div className="text-3xl">🐟</div>
-                <h3 className="text-lg font-bold text-[#123B92]">{t('cropFish')}</h3>
+                <h3 className="text-xl font-bold text-[#123B92]">{t('cropFish')}</h3>
                 <p className="text-sm text-black leading-relaxed">Completely closed polyhouse enclosure ensuring 100% fly-free, insect-free sanitation.</p>
                 <button onClick={() => onOpenQuoteModal({ cropType: 'Fish/Seafood' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
@@ -114,7 +114,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
 
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
                 <div className="text-3xl">🦐</div>
-                <h3 className="text-lg font-bold text-[#123B92]">{t('cropFish')}</h3>
+                <h3 className="text-xl font-bold text-[#123B92]">{t('cropFish')}</h3>
                 <p className="text-sm text-black leading-relaxed">Hygienic moisture reduction to under 12% for seafood processing plants.</p>
                 <button onClick={() => onOpenQuoteModal({ cropType: 'Fish/Seafood' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
@@ -127,7 +127,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
                 <div className="text-3xl">🏭</div>
-                <h3 className="text-lg font-bold text-[#123B92]">{t('cropOther')}</h3>
+                <h3 className="text-xl font-bold text-[#123B92]">{t('cropOther')}</h3>
                 <p className="text-sm text-black leading-relaxed">Reduces industrial sludge volume by up to 80%, slashing waste transport costs.</p>
                 <button onClick={() => onOpenQuoteModal({ clientType: 'Industrial/Sludge Processor' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
@@ -136,7 +136,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
 
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
                 <div className="text-3xl">🪵</div>
-                <h3 className="text-lg font-bold text-[#123B92]">{t('cropOther')}</h3>
+                <h3 className="text-xl font-bold text-[#123B92]">{t('cropOther')}</h3>
                 <p className="text-sm text-black leading-relaxed">Controlled humidity extraction preventing wood warping and curing natural rubber sheets.</p>
                 <button onClick={() => onOpenQuoteModal({ clientType: 'Industrial/Sludge Processor' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
@@ -204,13 +204,13 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
       <section className="w-full section-even py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#123B92]">{t('tailoredSolutions')}</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#123B92]">{t('tailoredSolutions')}</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
               <Users className="w-8 h-8 text-[#002DC2]" />
-              <h3 className="text-lg font-bold text-[#123B92]">{t('personaFpoTitle')}</h3>
+              <h3 className="text-xl font-bold text-[#123B92]">{t('personaFpoTitle')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('personaFpoDesc')}</p>
               <button onClick={() => onOpenQuoteModal({ clientType: 'FPO / Cooperative Group' })} className="text-xs font-bold text-[#002DC2] hover:underline cursor-pointer">
                 {t('personaFpoBtn')}
@@ -219,7 +219,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
 
             <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
               <Building className="w-8 h-8 text-[#123B92]" />
-              <h3 className="text-lg font-bold text-[#123B92]">{t('personaExpTitle')}</h3>
+              <h3 className="text-xl font-bold text-[#123B92]">{t('personaExpTitle')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('personaExpDesc')}</p>
               <button onClick={() => onOpenQuoteModal({ clientType: 'Food Processor & Exporter' })} className="text-xs font-bold text-[#002DC2] hover:underline cursor-pointer">
                 {t('personaExpBtn')}
@@ -228,7 +228,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
 
             <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
               <Sprout className="w-8 h-8 text-[#002DC2]" />
-              <h3 className="text-lg font-bold text-[#123B92]">{t('personaFarmerTitle')}</h3>
+              <h3 className="text-xl font-bold text-[#123B92]">{t('personaFarmerTitle')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('personaFarmerDesc')}</p>
               <button onClick={() => onOpenQuoteModal({ clientType: 'Individual Farmer' })} className="text-xs font-bold text-[#002DC2] hover:underline cursor-pointer">
                 {t('personaFarmerBtn')}

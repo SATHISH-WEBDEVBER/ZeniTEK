@@ -231,7 +231,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       <section className="w-full section-odd py-10 sm:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#123B92] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               {t('mapTitle1')}
             </h2>
             <p className="text-sm sm:text-base text-slate-600 font-medium">{t('homeMapDesc')}</p>
@@ -264,7 +264,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                   />
                 </div>
                 <div className="p-5 space-y-1.5">
-                  <h3 className="text-base font-bold text-[#123B92]">{t(crop.titleKey)}</h3>
+                  <h3 className="text-xl font-bold text-[#123B92]">{t(crop.titleKey)}</h3>
                   <p className="text-sm text-slate-600">{t(crop.descKey)}</p>
                 </div>
               </div>
@@ -326,7 +326,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
           </div>
 
           <div className="pt-10 border-t border-slate-200/80 space-y-6">
-            <h3 className="text-center text-xl sm:text-2xl font-black text-[#123B92] tracking-tight">
+            <h3 className="text-2xl text-center font-black text-[#123B92] tracking-tight">
               {t('homePartnersTitle')}
             </h3>
 
@@ -353,7 +353,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       <section className="w-full section-even py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center max-w-3xl mx-auto space-y-2">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#123B92]">{t('trustedBy')}</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#123B92]">{t('trustedBy')}</h2>
             <p className="text-sm text-slate-600">{t('homeStoriesDesc')}</p>
           </div>
 
@@ -365,7 +365,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                   <p className="text-sm text-slate-700 leading-relaxed italic">"{rev.comment}"</p>
                 </div>
                 <div className="pt-3 border-t border-slate-200">
-                  <h4 className="text-base font-extrabold text-[#123B92]">{rev.name}</h4>
+                  <h4 className="text-lg font-extrabold text-[#123B92]">{rev.name}</h4>
                   <div className="text-xs font-semibold text-[#1A822B]">{rev.role}</div>
                   <div className="text-xs text-slate-400 flex items-center mt-0.5">
                     <MapPin className="w-3 h-3 mr-0.5" /> {rev.location}
@@ -383,7 +383,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-3xl p-6 sm:p-10 border-2 border-[#123B92] shadow-xl text-black">
             <div className="text-center space-y-2 mb-8">
-              <h2 className="text-2xl sm:text-3xl font-black text-[#123B92]">{t('quickFormTitle')}</h2>
+              <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">{t('quickFormTitle')}</h2>
               <p className="text-sm text-black/70">{t('quickFormDesc')}</p>
             </div>
 

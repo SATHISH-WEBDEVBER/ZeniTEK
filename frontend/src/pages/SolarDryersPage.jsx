@@ -301,7 +301,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
 
                       {/* Product Info */}
                       <div className="p-5 flex-1 flex flex-col space-y-3">
-                        <h3 className="font-black text-[#123B92] text-base leading-snug">{product.name}</h3>
+                        <h3 className="text-xl font-black text-[#123B92] leading-snug">{product.name}</h3>
                         {product.shortDescription && (
                           <p className="text-sm text-slate-600 leading-relaxed line-clamp-2">{product.shortDescription}</p>
                         )}
@@ -411,7 +411,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                       )}
                     </div>
                     <div>
-                      <h3 className="text-lg font-black text-[#123B92] group-hover:text-[#002DC2] transition-colors leading-6 md:min-h-12">
+                      <h3 className="text-xl font-black text-[#123B92] group-hover:text-[#002DC2] transition-colors leading-6 md:min-h-12">
                         <Link to={`/solar-dryer-models/${model.id}`} className="hover:underline">
                           {model.name}
                         </Link>
@@ -532,7 +532,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                     <span className="text-xs font-extrabold text-[#1A822B]">{item.floorArea}</span>
                   </div>
 
-                  <h3 className="text-lg font-black text-[#123B92] leading-snug">
+                  <h3 className="text-xl font-black text-[#123B92] leading-snug">
                     {item.model}
                   </h3>
 
@@ -635,7 +635,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                     </span>
                   </div>
 
-                  <h4 className="text-base font-bold text-[#123B92] leading-snug lg:min-h-11">
+                  <h4 className="text-lg font-bold text-[#123B92] leading-snug lg:min-h-11">
                     {stepItem.title}
                   </h4>
 
@@ -859,7 +859,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         {/* Gallery CTA Banner */}
         <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white p-6 rounded-3xl border border-blue-800/40 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-1 text-center sm:text-left">
-            <h3 className="text-lg font-black text-white flex items-center justify-center sm:justify-start gap-2">
+            <h3 className="text-xl font-black text-white flex items-center justify-center sm:justify-start gap-2">
               <Sparkles className="w-5 h-5 text-[#23AC39]" />
               Looking for More Site Photos & Factory Trays?
             </h3>
@@ -1011,7 +1011,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
 
                   <div className="p-4 sm:p-5 space-y-3">
                     <div>
-                      <h3 className="text-base font-black text-[#123B92] group-hover:text-[#002DC2] transition-colors leading-snug">
+                      <h3 className="text-xl font-black text-[#123B92] group-hover:text-[#002DC2] transition-colors leading-snug">
                         {proj.title}
                       </h3>
                       <p className="text-sm text-slate-500 flex items-center font-medium mt-1">
@@ -1203,7 +1203,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                 <span className="text-2xs font-black uppercase bg-[#23AC39] text-white px-2 py-0.5 rounded inline-block">
                   PAGE {selectedBrochureModalPage.page}
                 </span>
-                <h3 className="text-base font-bold text-white line-clamp-1">
+                <h3 className="text-xl font-bold text-white line-clamp-1">
                   {selectedBrochureModalPage.title}
                 </h3>
               </div>

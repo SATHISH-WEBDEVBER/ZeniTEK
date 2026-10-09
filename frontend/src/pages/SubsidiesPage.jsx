@@ -248,7 +248,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           
           <div className="text-center max-w-3xl mx-auto space-y-2">
-            <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black text-[#123B92]">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">
               Available Central & State Subsidy Schemes
             </h2>
             <p className="text-sm text-slate-600 font-medium">
@@ -264,7 +264,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
                     <span className="text-xs font-black uppercase tracking-normal sm:tracking-wide text-[#1A822B] bg-[#23AC39]/10 border border-[#23AC39]/30 px-2.5 py-1 rounded-md inline-block max-w-full leading-snug text-balance">
                       {scheme.coverage}
                     </span>
-                    <h3 className="text-lg font-black text-[#123B92] mt-2">
+                    <h3 className="text-xl font-black text-[#123B92] mt-2">
                       {scheme.title}
                     </h3>
                     <div className="text-sm text-slate-500 font-semibold mt-1">
@@ -299,7 +299,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           
           <div className="text-center max-w-3xl mx-auto space-y-2">
-            <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black text-[#123B92]">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">
               How ZeniTEK Handles Your Subsidy <span className="whitespace-nowrap">End-to-End</span>
             </h2>
             <p className="text-sm text-slate-600 font-medium">
@@ -313,7 +313,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
                 <div className="text-3xl font-black text-[#002DC2] mb-2">
                   {step.step}
                 </div>
-                <h4 className="text-lg sm:text-xl font-black text-[#123B92] leading-snug mb-2">
+                <h4 className="text-lg font-black text-[#123B92] leading-snug mb-2">
                   {step.title}
                 </h4>
                 <p className="text-sm text-slate-600 font-medium leading-relaxed">
@@ -326,7 +326,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
           {/* Bottom Action Card */}
           <div className="bg-[#123B92] text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="space-y-1 text-center md:text-left">
-              <h3 className="text-xl sm:text-2xl font-black text-white">
+              <h3 className="text-2xl font-black text-white">
                 Have questions about your state subsidy or paperwork?
               </h3>
               <p className="text-sm text-white/85">

@@ -520,7 +520,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
           {/* Sidebar Header & Search */}
           <div className="mb-3.5 space-y-3 pb-3 border-b border-[#123B92]/20 shrink-0">
             <div className="flex items-center justify-between">
-              <h3 className="text-base sm:text-lg font-black text-[#123B92] flex items-center">
+              <h3 className="text-xl font-black text-[#123B92] flex items-center">
                 <MapPin className="w-5 h-5 text-[#002DC2] mr-1.5 shrink-0" /> Installed Sites Directory
               </h3>
               <span className="text-xs sm:text-sm font-mono font-black text-white bg-[#123B92] px-3 py-1 rounded-lg border border-[#123B92]">
@@ -570,9 +570,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                     }`}
                   >
                     <div className="flex justify-between items-start gap-2">
-                      <h4 className={`text-base sm:text-lg font-black transition-colors line-clamp-1 leading-snug ${
-                        isSelected ? 'text-[#002DC2]' : 'text-[#123B92] group-hover:text-[#002DC2]'
-                      }`}>
+                      <h4 className={`text-lg font-black transition-colors line-clamp-1 leading-snug ${ isSelected ? 'text-[#002DC2]' : 'text-[#123B92] group-hover:text-[#002DC2]' }`}>
                         {proj.title}
                       </h4>
                       <span className="text-xs sm:text-sm font-black text-white bg-[#23AC39] px-2.5 py-1 rounded-md border border-[#23AC39] shrink-0">
@@ -724,7 +722,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                         </div>
 
                         {/* Project Title (e.g. Kusumdhara Floral Solar Dryer) */}
-                        <h4 className="text-base sm:text-base font-black text-[#123B92] leading-snug line-clamp-2 hover:text-[#002DC2] transition-colors">
+                        <h4 className="text-lg font-black text-[#123B92] leading-snug line-clamp-2 hover:text-[#002DC2] transition-colors">
                           {p.title}
                         </h4>
 

@@ -101,7 +101,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                     <span className="text-2xs font-extrabold uppercase tracking-wider text-[#002DC2] bg-white border border-[#123B92]/20 px-2 py-0.5 rounded inline-block">
                       Main Address
                     </span>
-                    <h4 className="font-extrabold text-[#123B92] text-base mt-0.5">
+                    <h4 className="text-lg font-extrabold text-[#123B92] mt-0.5">
                       {t('regOfficeLabel')}
                     </h4>
                   </div>
@@ -121,7 +121,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                     <span className="text-2xs font-extrabold uppercase tracking-wider text-[#002DC2] bg-white border border-[#123B92]/20 px-2 py-0.5 rounded inline-block">
                       Incubation Center
                     </span>
-                    <h4 className="font-extrabold text-[#123B92] text-base mt-0.5">
+                    <h4 className="text-lg font-extrabold text-[#123B92] mt-0.5">
                       {t('opOfficeLabel')}
                     </h4>
                   </div>

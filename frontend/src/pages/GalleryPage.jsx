@@ -254,7 +254,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                         </div>
                       </div>
 
-                      <h4 className="font-extrabold text-[#123B92] text-lg leading-6 group-hover:text-[#002DC2] transition-colors line-clamp-2 min-h-12">
+                      <h4 className="text-lg font-extrabold text-[#123B92] leading-6 group-hover:text-[#002DC2] transition-colors line-clamp-2 min-h-12">
                         {item.title}
                       </h4>
 

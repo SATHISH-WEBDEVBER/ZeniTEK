@@ -71,7 +71,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
       <section className="w-full section-odd py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#123B92]">{t('videoReviewsTitle')}</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#123B92]">{t('videoReviewsTitle')}</h2>
             <p className="text-sm text-black/60">{t('videoReviewsSub')}</p>
           </div>
 
@@ -90,7 +90,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
 
                 <div className="p-5 sm:p-6 space-y-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-base font-bold text-[#123B92]">{rev.name}</h3>
+                    <h3 className="text-xl font-bold text-[#123B92]">{rev.name}</h3>
                     <span className="text-2xs font-bold text-white bg-[#23AC39] px-2 py-0.5 rounded border border-[#23AC39]">
                       ★ {rev.rating}.0
                     </span>
@@ -108,7 +108,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
       <section className="w-full section-even py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#123B92]">{t('caseStudiesTitle')}</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#123B92]">{t('caseStudiesTitle')}</h2>
           </div>
 
           <div className="bg-[#F0F4FD] p-6 sm:p-8 rounded-3xl border border-[#123B92]/20 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -143,21 +143,21 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
       {/* SECTION 5: SUPPORT GRID / COMMITMENT (ODD SECTION - CRISP WHITE) */}
       <section className="w-full section-odd py-12 sm:py-16 text-center space-y-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#123B92]">{t('commitmentTitle')}</h2>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#123B92]">{t('commitmentTitle')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm space-y-2">
               <CheckCircle2 className="w-6 h-6 text-[#002DC2] mx-auto" />
-              <h3 className="text-base font-bold text-[#123B92]">{t('comm1Title')}</h3>
+              <h3 className="text-xl font-bold text-[#123B92]">{t('comm1Title')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('comm1Desc')}</p>
             </div>
             <div className="p-6 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm space-y-2">
               <CheckCircle2 className="w-6 h-6 text-[#123B92] mx-auto" />
-              <h3 className="text-base font-bold text-[#123B92]">{t('comm2Title')}</h3>
+              <h3 className="text-xl font-bold text-[#123B92]">{t('comm2Title')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('comm2Desc')}</p>
             </div>
             <div className="p-6 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm space-y-2">
               <CheckCircle2 className="w-6 h-6 text-[#002DC2] mx-auto" />
-              <h3 className="text-base font-bold text-[#123B92]">{t('comm3Title')}</h3>
+              <h3 className="text-xl font-bold text-[#123B92]">{t('comm3Title')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('comm3Desc')}</p>
             </div>
           </div>

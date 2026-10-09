@@ -390,7 +390,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
             <span className="text-xs font-extrabold text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] px-3 py-1 rounded-full inline-block">
               {copy.highlightsEyebrow}
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-[#123B92]">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">
               {copy.highlightsTitle}
             </h2>
           </div>
@@ -420,7 +420,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
             <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#002DC2] text-white flex items-center justify-center font-bold mx-auto">
               <FileText className="w-5 h-5" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-[#123B92]">{copy.overviewTitle}</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">{copy.overviewTitle}</h2>
             <p className="text-base sm:text-lg text-slate-600">{copy.overviewSubtitle}</p>
           </div>
 
@@ -442,7 +442,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
               <span className="text-2xs sm:text-xs font-bold uppercase tracking-wide sm:tracking-widest text-[#23AC39] bg-[#123B92]/70 px-3 py-1 rounded-full border border-[#23AC39]/40 inline-block whitespace-nowrap">
                 Live State & Central Subsidy Tool
               </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-white">
+              <h2 className="text-3xl sm:text-4xl font-black text-white">
                 Calculate Your Solar Dryer Subsidy
               </h2>
               <p className="text-base sm:text-lg text-slate-200">
@@ -532,7 +532,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
       {slug === 'crop-preservation-guide' && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <h2 className="text-2xl sm:text-3xl font-black text-[#123B92]">Validated Crop Dehydration Matrix</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">Validated Crop Dehydration Matrix</h2>
             <p className="text-base sm:text-lg text-slate-600">Benchmark drying curves, operating temperatures, and quality results</p>
             <div className="pt-3 flex justify-center">
               <input
@@ -582,7 +582,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
       {slug === 'technical-spec-sheets' && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <h2 className="text-2xl sm:text-3xl font-black text-[#123B92]">Official Specification Sheets & CAD Blueprints</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">Official Specification Sheets & CAD Blueprints</h2>
             <p className="text-base sm:text-lg text-slate-600">Download complete manufacturer engineering documents in PDF format</p>
           </div>
 
@@ -594,7 +594,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
                     <span className="font-bold text-[#002DC2] bg-[#F0F4FD] px-2 py-0.5 rounded-md">PDF Spec Sheet</span>
                     <span>{b.pageCount} Pages · {b.size}</span>
                   </div>
-                  <h4 className="font-bold text-[#123B92] text-base leading-snug">{b.title}</h4>
+                  <h4 className="text-lg font-bold text-[#123B92] leading-snug">{b.title}</h4>
                   <p className="text-sm text-slate-500 leading-relaxed">{b.subtitle}</p>
                 </div>
                 <div className="flex items-center space-x-2 pt-2 border-t border-slate-100">
@@ -626,7 +626,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
             <span className="text-xs font-extrabold text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] px-3 py-1 rounded-full inline-block">
               {section.images.length} Photos
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-[#123B92]">Project Field Photos & Installations</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">Project Field Photos & Installations</h2>
             <p className="text-base sm:text-lg text-slate-600">Live operational systems photographed at customer sites</p>
           </div>
 
@@ -663,7 +663,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
             <span className="text-xs font-bold uppercase tracking-widest text-[#23AC39]">
               Empower Your Farm or Facility
             </span>
-            <h2 className="text-2xl sm:text-4xl font-black text-white leading-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight">
               {copy.ctaTitle}
             </h2>
             <p className="text-sm sm:text-base text-slate-300 leading-relaxed">

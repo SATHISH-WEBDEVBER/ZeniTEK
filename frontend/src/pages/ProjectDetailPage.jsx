@@ -27,7 +27,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
   if (!project) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center p-6 text-center space-y-4">
-        <h2 className="text-2xl font-black text-[#123B92]">Project Not Found</h2>
+        <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">Project Not Found</h2>
         <p className="text-sm text-slate-500">The requested solar dryer installation could not be found.</p>
         <Link
           to="/dryers"
@@ -151,7 +151,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
                   <span className="text-2xs font-extrabold uppercase tracking-widest text-[#1A822B] bg-[#23AC39]/10 px-2.5 py-1 rounded-md border border-[#23AC39]/30 inline-block">
                     TARGET CROP & DEHYDRATION APPLICATION
                   </span>
-                  <h2 className="text-xl sm:text-2xl font-black text-[#123B92] mt-2">
+                  <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] mt-2">
                     {project.application}
                   </h2>
                 </div>

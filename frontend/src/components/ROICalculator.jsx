@@ -286,7 +286,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
             </div>
 
             <div>
-              <h3 className="text-lg sm:text-xl font-black text-white leading-tight drop-shadow-sm">
+              <h3 className="text-xl font-black text-white leading-tight drop-shadow-sm">
                 {activeSlide.title}
               </h3>
               <p className="text-sm text-white/80 font-medium">
@@ -332,7 +332,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
             <span className="text-2xs font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3 py-1 rounded-full inline-flex items-center">
               <Sparkles className="w-3.5 h-3.5 mr-1.5 text-[#002DC2]" /> DEHYDRATION PERFORMANCE METRICS
             </span>
-            <h3 className="text-base sm:text-lg font-black text-[#123B92] leading-snug mt-1.5">
+            <h3 className="text-xl font-black text-[#123B92] leading-snug mt-1.5">
               Operational Advantages & Quality Safeguards
             </h3>
             <p className="text-sm text-slate-500 font-semibold mt-0.5">

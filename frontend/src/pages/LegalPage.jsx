@@ -26,7 +26,7 @@ export default function LegalPage({ type }) {
           <div className="max-w-3xl mx-auto space-y-4 text-base text-slate-700 leading-relaxed">
             {isPrivacy ? (
               <>
-                <h2 className="text-xl font-black text-[#123B92]">Privacy & Data Protection Notice</h2>
+                <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">Privacy & Data Protection Notice</h2>
                 <p>
                   ZeniTEK Solar Thermal Solutions respects your privacy. All contact and farm specifications submitted through our inquiry and quotation forms are used strictly for generating custom solar dryer technical proposals and subsidy estimations.
                 </p>
@@ -40,7 +40,7 @@ export default function LegalPage({ type }) {
               </>
             ) : (
               <>
-                <h2 className="text-xl font-black text-[#123B92]">Terms of Service & Equipment Guarantee</h2>
+                <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">Terms of Service & Equipment Guarantee</h2>
                 <p>
                   All solar thermal polyhouse dryers, cabinet dryers, and custom dehydration plants supplied by ZeniTEK are manufactured under ISO 9001:2015 quality standards and MNRE specifications.
                 </p>

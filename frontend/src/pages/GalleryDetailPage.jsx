@@ -58,7 +58,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
     return (
       <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
         <div className="text-center space-y-4 max-w-md bg-white p-8 rounded-3xl border border-slate-200 shadow-md">
-          <h2 className="text-2xl font-bold text-[#123B92]">Installation Not Found</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#123B92]">Installation Not Found</h2>
           <p className="text-sm text-slate-600">The requested installation photo detail could not be found.</p>
           <Link
             to="/gallery"
@@ -431,7 +431,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                           <MapPin className="w-3.5 h-3.5 mr-1 mt-px shrink-0" />
                           <span>{rel.location}, {rel.state}</span>
                         </div>
-                        <h4 className="font-extrabold text-[#123B92] text-base sm:text-base group-hover:text-[#002DC2] transition-colors line-clamp-2">
+                        <h4 className="text-lg font-extrabold text-[#123B92] group-hover:text-[#002DC2] transition-colors line-clamp-2">
                           {rel.title}
                         </h4>
                       </div>

@@ -304,7 +304,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
               Roots & Engineering DNA
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92] tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight leading-tight">
               Pioneering Renewable Energy <br />
               <span className="text-[#002DC2]">From Erode to All India</span>
             </h2>
@@ -395,7 +395,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
               Core Engineering Focus
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               What We Do
             </h2>
             <p className="text-base sm:text-lg lg:text-xl text-slate-700 font-medium">
@@ -436,7 +436,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                         <span className="text-white font-black whitespace-nowrap">{domain.metric}</span>
                         <span>{domain.metricLabel}</span>
                       </div>
-                      <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
+                      <h3 className="text-2xl font-black text-white leading-tight">
                         {domain.title}
                       </h3>
                     </div>
@@ -489,7 +489,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
               Installed Projects Portfolio
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               Landmark Installations & Test Rigs
             </h2>
 
@@ -562,7 +562,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 {/* Content with Large Legible Font */}
                 <div className="p-7 space-y-4 flex-1 flex flex-col justify-between">
                   <div className="space-y-3">
-                    <h3 className="text-lg sm:text-xl font-black text-[#123B92] leading-snug group-hover:text-[#002DC2] transition-colors">
+                    <h3 className="text-xl font-black text-[#123B92] leading-snug group-hover:text-[#002DC2] transition-colors">
                       {proj.title}
                     </h3>
 
@@ -607,7 +607,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
               Trusted Institutional Deployments
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               Academic & Industrial Partners
             </h2>
             <p className="text-base sm:text-lg lg:text-xl text-slate-700 font-medium">
@@ -779,7 +779,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
               Authentic Visual Proof
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               Real Field Photo Reel
             </h2>
             <p className="text-base sm:text-lg text-slate-700 font-medium">
@@ -822,7 +822,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
               <span className="text-xs sm:text-sm font-black text-[#23AC39] uppercase tracking-wider bg-white/10 px-4 py-1.5 rounded-full inline-block">
                 Direct EPC Consultation
               </span>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
                 Connect With ZeniTEK Engineers
               </h2>
               <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-medium">

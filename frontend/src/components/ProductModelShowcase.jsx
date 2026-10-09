@@ -153,7 +153,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
       
       {/* SECTION HEADING: CLEAN TITLE */}
       <div className="text-center px-4 mb-6 sm:mb-8">
-        <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[42px] font-black text-[#123B92] tracking-tight leading-tight">
+        <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight leading-tight">
           Choose the Perfect Solar Thermal Dryer for Your Farm
         </h2>
       </div>
@@ -251,7 +251,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
             <div className="absolute bottom-7 inset-x-5 sm:bottom-9 sm:left-9 sm:right-9 z-10 max-w-xl text-white space-y-2.5">
               
               {/* Product Title */}
-              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight drop-shadow-lg">
+              <h3 className="text-2xl font-black text-white tracking-tight drop-shadow-lg">
                 {currentProduct.name}
               </h3>
 
