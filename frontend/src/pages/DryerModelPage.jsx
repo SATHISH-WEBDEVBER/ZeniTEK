@@ -4,6 +4,7 @@ import { CheckCircle2, ShieldCheck, ArrowRight, Sun, Zap, Layers, Wind, Grid } f
 import { officialDryerModels } from '../data/zenitekBrochureData';
 import PageBackBar from '../components/PageBackBar';
 import { buildQuoteUrl } from './QuotePage';
+import { useLanguage } from '../context/LanguageContext';
 
 // Home-page showcase ids that differ from the brochure model ids
 const MODEL_ALIASES = {
@@ -24,16 +25,17 @@ export const findDryerModel = (id) => {
 export default function DryerModelPage() {
   const { modelId } = useParams();
   const model = findDryerModel(modelId);
+  const { t } = useLanguage();
   const [selectedImg, setSelectedImg] = useState(0);
 
   if (!model) {
     return (
       <section className="w-full py-20">
         <div className="max-w-xl mx-auto px-4 text-center space-y-5">
-          <h1 className="text-3xl font-black text-[#123B92]">Model not found</h1>
-          <p className="text-slate-600">We couldn't find that dryer model. It may have been renamed.</p>
+          <h1 className="text-3xl font-black text-[#123B92]">{t('sections_modelNotFound')}</h1>
+          <p className="text-slate-600">{t('sections_modelNotFoundDesc')}</p>
           <Link to="/solar-dryer-models" className="inline-flex items-center gap-2 px-6 py-3 bg-[#23AC39] text-white font-black text-sm uppercase tracking-wider rounded-xl">
-            View All Models <ArrowRight className="w-4 h-4" />
+            {t('sections_viewAllModels')} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>
@@ -44,19 +46,19 @@ export default function DryerModelPage() {
   const quoteUrl = buildQuoteUrl({ capacityNeeded: model.name });
 
   const specs = [
-    { icon: Grid, label: 'Floor & Tray Area', main: `Floor: ${model.floorArea || 'Custom'}`, sub: `Tray Area: ${model.totalTrayArea || model.trays || 'Food-grade Trays'}` },
-    { icon: Layers, label: 'Trays & Trolleys', main: model.trayCount || 'SS304 Trays', sub: model.trayTrolleys ? `Trolleys: ${model.trayTrolleys}` : null },
-    { icon: Sun, label: 'Solar Power & Battery', main: model.solarPower || 'Solar DC System' },
-    { icon: Wind, label: 'Airflow & Fans', main: `Exhaust: ${model.exhaustFans || 'Automated'}`, sub: `Circulation: ${model.circulationFans || 'Convection'}` },
-    { icon: Zap, label: 'Heater & Grid Backup', main: model.electricalHeater || 'Thermostat Heater', sub: `Grid: ${model.gridBackup || '24V DC SMPS'}` },
-    { icon: Layers, label: 'Dimensions & Structure', main: model.dimensions || 'Modular Standard', sub: model.structure || model.buildMaterial || 'GI Steel & UV Polycarbonate' }
+    { icon: Grid, label: t('sections_specFloorTray'), main: t('sections_floor', { value: model.floorArea || t('sections_defCustom') }), sub: t('sections_trayArea', { value: model.totalTrayArea || model.trays || t('sections_defFoodTrays') }) },
+    { icon: Layers, label: t('sections_specTrays'), main: model.trayCount || t('sections_defSsTrays'), sub: model.trayTrolleys ? t('sections_trolleys', { value: model.trayTrolleys }) : null },
+    { icon: Sun, label: t('sections_specSolar'), main: model.solarPower || t('sections_defSolarDc') },
+    { icon: Wind, label: t('sections_specAirflow'), main: t('sections_exhaust', { value: model.exhaustFans || t('sections_defAutomated') }), sub: t('sections_circulation', { value: model.circulationFans || t('sections_defConvection') }) },
+    { icon: Zap, label: t('sections_specHeater'), main: model.electricalHeater || t('sections_defHeater'), sub: t('sections_grid', { value: model.gridBackup || '24V DC SMPS' }) },
+    { icon: Layers, label: t('sections_specDimensions'), main: model.dimensions || t('sections_defModular'), sub: model.structure || model.buildMaterial || t('sections_defStructure') }
   ];
 
   return (
     <div className="bg-white">
       <section className="w-full py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <PageBackBar crumbs={[{ label: 'Solar Dryer Models', to: '/solar-dryer-models' }, { label: model.name }]} fallback="/solar-dryer-models" />
+          <PageBackBar crumbs={[{ label: t('section_solar-dryer-models_title'), to: '/solar-dryer-models' }, { label: model.name }]} fallback="/solar-dryer-models" />
 
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="text-xs font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3.5 py-1.5 rounded-full inline-block">
@@ -80,7 +82,7 @@ export default function DryerModelPage() {
                       key={idx}
                       type="button"
                       onClick={() => setSelectedImg(idx)}
-                      aria-label={`Show image ${idx + 1}`}
+                      aria-label={t('sections_showImage', { n: idx + 1 })}
                       className={`w-20 h-16 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${selectedImg === idx ? 'border-[#002DC2] ring-2 ring-[#23AC39]' : 'border-[#123B92]/20 opacity-70 hover:opacity-100'}`}
                     >
                       <img src={img} alt="" className="w-full h-full object-cover" />
@@ -95,16 +97,16 @@ export default function DryerModelPage() {
 
               <div className="p-4 bg-[#F0F4FD] rounded-2xl border border-[#123B92]/20 space-y-2 text-sm">
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-xs font-bold text-black/60 uppercase">Target Audience</span>
+                  <span className="text-xs font-bold text-black/60 uppercase">{t('targetAudienceLabel')}</span>
                   <span className="font-extrabold text-[#123B92] text-right">{model.targetAudience}</span>
                 </div>
                 <div className="flex items-center justify-between gap-3 border-t border-[#123B92]/10 pt-2">
-                  <span className="text-xs font-bold text-black/60 uppercase">Subsidy Eligibility</span>
+                  <span className="text-xs font-bold text-black/60 uppercase">{t('subsidyEligibilityLabel')}</span>
                   <span className="font-extrabold text-[#002DC2] text-right">{model.subsidyEligibility}</span>
                 </div>
                 {model.paybackPeriod && (
                   <div className="flex items-center justify-between gap-3 border-t border-[#123B92]/10 pt-2">
-                    <span className="text-xs font-bold text-black/60 uppercase">Est. Payback Period</span>
+                    <span className="text-xs font-bold text-black/60 uppercase">{t('sections_payback')}</span>
                     <span className="font-extrabold text-[#123B92] text-right">{model.paybackPeriod}</span>
                   </div>
                 )}
@@ -112,14 +114,14 @@ export default function DryerModelPage() {
 
               <div className="flex items-center gap-2 text-sm font-bold text-[#123B92] bg-[#F0F4FD] p-3 rounded-xl border border-[#123B92]/20">
                 <ShieldCheck className="w-4 h-4 text-[#002DC2] shrink-0" />
-                <span>MNRE Approved & 100% Weather Protection Guaranteed</span>
+                <span>{t('sections_modelGuarantee')}</span>
               </div>
 
               <Link
                 to={quoteUrl}
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md transition-all text-center"
               >
-                <span>Request Price Quote for {model.name}</span>
+                <span>{t('sections_quoteForModel', { name: model.name })}</span>
                 <ArrowRight className="w-4 h-4 shrink-0" />
               </Link>
             </div>
@@ -130,8 +132,8 @@ export default function DryerModelPage() {
       <section className="w-full py-10 sm:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">Technical Specifications</h2>
-            <p className="text-base sm:text-lg text-slate-600">From the official ZeniTEK product brochure.</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('sections_techSpecs')}</h2>
+            <p className="text-base sm:text-lg text-slate-600">{t('sections_techSpecsSub')}</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {specs.map(({ icon: Icon, label, main, sub }) => (
@@ -151,7 +153,7 @@ export default function DryerModelPage() {
         <section className="w-full py-10 sm:py-14">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div className="text-center max-w-3xl mx-auto space-y-3">
-              <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">Key Advantages & Applications</h2>
+              <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('sections_advantages')}</h2>
             </div>
             {(model.keyFeatures || model.features) && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-4xl mx-auto text-base">
@@ -177,7 +179,7 @@ export default function DryerModelPage() {
                 to={quoteUrl}
                 className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md transition-all"
               >
-                Get a Quote for This Model <ArrowRight className="w-4 h-4" />
+                {t('sections_quoteThisModel')} <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>

@@ -38,7 +38,7 @@ const createCustomIcon = () => {
 export default function GalleryDetailPage({ onOpenQuoteModal }) {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, tf } = useLanguage();
 
   const item = zenitekRealGallery.find((p) => p.id === id) || zenitekRealGallery[0];
   const [activeImage, setActiveImage] = useState(item.image);
@@ -58,14 +58,14 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
     return (
       <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
         <div className="text-center space-y-4 max-w-md bg-white p-8 rounded-3xl border border-slate-200 shadow-md">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#123B92]">Installation Not Found</h2>
-          <p className="text-base sm:text-lg text-slate-600">The requested installation photo detail could not be found.</p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#123B92]">{t('gallery_notFoundTitle')}</h2>
+          <p className="text-base sm:text-lg text-slate-600">{t('gallery_notFoundDesc')}</p>
           <Link
             to="/gallery"
             className="inline-flex items-center space-x-2 px-6 py-2.5 bg-[#002DC2] text-white rounded-xl font-bold text-xs"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Return to Gallery</span>
+            <span>{t('gallery_returnToGallery')}</span>
           </Link>
         </div>
       </div>
@@ -97,9 +97,9 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center min-w-0 space-x-2 text-xs font-semibold text-slate-500 py-1">
-              <Link to="/" className="hover:text-[#002DC2] whitespace-nowrap shrink-0">Home</Link>
+              <Link to="/" className="hover:text-[#002DC2] whitespace-nowrap shrink-0">{t('navHome')}</Link>
               <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-              <Link to="/gallery" className="hover:text-[#002DC2] whitespace-nowrap shrink-0">Authentic Gallery</Link>
+              <Link to="/gallery" className="hover:text-[#002DC2] whitespace-nowrap shrink-0">{t('gallery_breadcrumb')}</Link>
               <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
               <span className="text-[#002DC2] font-bold truncate min-w-0 max-w-xs" title={item.title}>{item.title}</span>
             </div>
@@ -110,14 +110,14 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                 className="px-3.5 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-100 flex items-center space-x-1.5 transition-all shadow-sm"
               >
                 <Share2 className="w-3.5 h-3.5 text-slate-600" />
-                <span>{copied ? 'Link Copied!' : 'Share Site'}</span>
+                <span>{copied ? t('gallery_linkCopied') : t('gallery_shareSite')}</span>
               </button>
               <Link
                 to="/gallery"
                 className="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-[#123B92] flex items-center space-x-1.5 transition-all"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
-                <span>All Installations</span>
+                <span>{t('gallery_allInstallations')}</span>
               </Link>
             </div>
           </div>
@@ -132,7 +132,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <div className="flex flex-wrap items-center justify-center gap-2">
               <span className="bg-[#123B92] text-white font-black text-xs uppercase px-3 py-1 rounded-full shadow-sm inline-block">
-                {item.categoryLabel}
+                {tf(`gallery_cat_${item.category}`, item.categoryLabel)}
               </span>
               {item.productModel && (
                 <span className="bg-[#23AC39]/10 text-[#1A822B] font-extrabold text-xs px-3 py-1 rounded-full border border-[#23AC39]/30">
@@ -171,11 +171,11 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                   />
                   <div className="absolute top-3 right-3 bg-black/60 hover:bg-black/80 backdrop-blur-md text-white p-2 rounded-xl text-xs flex items-center space-x-1.5 transition-all">
                     <Maximize2 className="w-4 h-4" />
-                    <span className="font-bold text-xs hidden sm:inline">Zoom Photo</span>
+                    <span className="font-bold text-xs hidden sm:inline">{t('gallery_zoomPhoto')}</span>
                   </div>
                   <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md text-white px-3 py-1.5 rounded-xl text-xs flex items-center space-x-2">
                     <ShieldCheck className="w-4 h-4 text-[#23AC39]" />
-                    <span className="font-bold text-xs">Authentic ZeniTEK Field Site</span>
+                    <span className="font-bold text-xs">{t('gallery_authenticSite')}</span>
                   </div>
                 </div>
 
@@ -188,7 +188,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                         activeImage === item.image ? 'border-[#002DC2] ring-2 ring-[#002DC2]/30 scale-[1.02]' : 'border-slate-200 opacity-70 hover:opacity-100'
                       }`}
                     >
-                      <img src={item.image} alt="Primary" className="w-full h-full object-cover" />
+                      <img src={item.image} alt={t('gallery_altPrimary')} className="w-full h-full object-cover" />
                     </button>
                     {item.relatedImages.map((imgSrc, idx) => (
                       <button
@@ -198,7 +198,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                           activeImage === imgSrc ? 'border-[#002DC2] ring-2 ring-[#002DC2]/30 scale-[1.02]' : 'border-slate-200 opacity-70 hover:opacity-100'
                         }`}
                       >
-                        <img src={imgSrc} alt={`Angle ${idx + 1}`} className="w-full h-full object-cover" />
+                        <img src={imgSrc} alt={t('gallery_altAngle', { n: idx + 1 })} className="w-full h-full object-cover" />
                       </button>
                     ))}
                   </div>
@@ -210,13 +210,13 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                 <div className="space-y-1">
                   <div className="text-xs font-bold text-[#002DC2] uppercase tracking-wider flex items-center">
                     <Award className="w-4 h-4 mr-1.5 text-[#002DC2]" />
-                    Commissioned Installation Details
+                    {t('gallery_commissionedDetails')}
                   </div>
                   <div className="text-base font-extrabold text-[#123B92] leading-snug">
-                    Operational in {item.location}, {item.state}
+                    {t('gallery_operationalIn', { place: `${item.location}, ${item.state}` })}
                   </div>
                   <div className="text-sm text-slate-600">
-                    MNRE enlisted model eligible for 40% – 60% agricultural capital subsidies.
+                    {t('gallery_subsidyNote')}
                   </div>
                 </div>
 
@@ -228,7 +228,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                   })}
                   className="px-5 py-2.5 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md shrink-0 cursor-pointer whitespace-nowrap"
                 >
-                  Request Sizing Quote
+                  {t('gallery_requestSizingQuote')}
                 </button>
               </div>
             </div>
@@ -246,54 +246,54 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                 {/* Specifications Grid */}
                 <div className="border-t border-slate-100 pt-5 space-y-3">
                   <h3 className="text-xs font-black text-[#123B92] uppercase tracking-wider">
-                    Engineering Specifications
+                    {t('gallery_engSpecs')}
                   </h3>
 
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                      <div className="text-2xs font-bold text-slate-400 uppercase">Model Series</div>
+                      <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specModel')}</div>
                       <div className="font-extrabold text-[#123B92] mt-0.5">{item.productModel}</div>
                     </div>
 
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                      <div className="text-2xs font-bold text-slate-400 uppercase">Batch Capacity</div>
+                      <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specCapacity')}</div>
                       <div className="font-extrabold text-[#002DC2] mt-0.5">{keepParens(item.capacity)}</div>
                     </div>
 
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                      <div className="text-2xs font-bold text-slate-400 uppercase">Footprint / Size</div>
+                      <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specFootprint')}</div>
                       <div className="font-extrabold text-[#123B92] mt-0.5">{keepParens(item.dimensions)}</div>
                     </div>
 
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                      <div className="text-2xs font-bold text-slate-400 uppercase">Primary Crops</div>
+                      <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specCrops')}</div>
                       <div className="font-extrabold text-[#1A822B] mt-0.5 break-words">{item.crop}</div>
                     </div>
 
                     {item.dryingTime && (
                       <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div className="text-2xs font-bold text-slate-400 uppercase">Drying Time</div>
+                        <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specDryingTime')}</div>
                         <div className="font-extrabold text-[#123B92] mt-0.5">{item.dryingTime}</div>
                       </div>
                     )}
 
                     {item.solarPV && (
                       <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div className="text-2xs font-bold text-slate-400 uppercase">Solar Power</div>
+                        <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specSolarPower')}</div>
                         <div className="font-extrabold text-[#123B92] mt-0.5 break-words">{keepParens(item.solarPV)}</div>
                       </div>
                     )}
 
                     {item.temperatureRange && (
                       <div className="col-span-2 p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div className="text-2xs font-bold text-slate-400 uppercase">Operating Temperature</div>
+                        <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specTemp')}</div>
                         <div className="font-extrabold text-[#123B92] mt-0.5">{item.temperatureRange}</div>
                       </div>
                     )}
 
                     {item.traySpecs && (
                       <div className="col-span-2 p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div className="text-2xs font-bold text-slate-400 uppercase">Food-Grade Tray Details</div>
+                        <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specTrays')}</div>
                         <div className="font-semibold text-slate-800 mt-0.5">{keepParens(item.traySpecs)}</div>
                       </div>
                     )}
@@ -314,7 +314,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                     className="w-full py-3.5 bg-[#002DC2] hover:bg-[#123B92] text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-lg transition-all hover:scale-[1.01] flex items-center justify-center gap-2 px-4 text-center cursor-pointer"
                   >
                     <SlidersHorizontal className="w-4 h-4 shrink-0" />
-                    <span className="text-balance">Get Pricing & Subsidy Quote for this Model</span>
+                    <span className="text-balance">{t('gallery_quoteForModel')}</span>
                   </button>
 
                   <a
@@ -324,7 +324,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                     className="w-full py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-sm transition-all flex items-center justify-center space-x-2 cursor-pointer"
                   >
                     <MessageCircle className="w-4 h-4" />
-                    <span>Chat on WhatsApp Directly</span>
+                    <span>{t('gallery_chatWhatsapp')}</span>
                   </a>
                 </div>
 
@@ -342,13 +342,13 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <span className="text-xs font-bold text-[#002DC2] uppercase tracking-widest bg-[#F0F4FD] px-3 py-1 rounded-full border border-[#002DC2]/20 inline-flex items-center">
-              <MapPin className="w-3.5 h-3.5 mr-1 text-[#002DC2]" /> Site Coordinates & Geolocation
+              <MapPin className="w-3.5 h-3.5 mr-1 text-[#002DC2]" /> {t('gallery_mapBadge')}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
-              Installation Site Map: {item.location}, {item.state}
+              {t('gallery_mapTitle', { place: `${item.location}, ${item.state}` })}
             </h2>
             <p className="text-base sm:text-lg text-slate-600">
-              Interactive field coordinate preview. Zoom and pan to inspect the geographical agricultural cluster.
+              {t('gallery_mapDesc')}
             </p>
             <div className="flex justify-center pt-1">
               <div className="inline-flex items-center space-x-2 text-xs font-bold text-slate-700 bg-white px-3 py-1.5 rounded-xl border border-slate-200">
@@ -379,7 +379,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                       <div className="font-bold text-[#123B92]">{item.title}</div>
                       <div className="text-xs text-[#002DC2] font-semibold">{item.productModel}</div>
                       <div className="text-2xs text-slate-500">{item.location}, {item.state}</div>
-                      <div className="text-2xs text-[#1A822B] font-bold">Crop: {item.crop}</div>
+                      <div className="text-2xs text-[#1A822B] font-bold">{t('gallery_popupCrop', { crop: item.crop })}</div>
                     </div>
                   </Popup>
                 </Marker>
@@ -394,14 +394,14 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
         <section className="py-8 sm:py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-                <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">Related Real Installations</h2>
-                <p className="text-base sm:text-lg text-slate-600">Explore other commissioned projects in this category</p>
+                <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('gallery_relatedTitle')}</h2>
+                <p className="text-base sm:text-lg text-slate-600">{t('gallery_relatedDesc')}</p>
                 <div className="flex justify-center pt-1">
                   <Link
                     to="/gallery"
                     className="whitespace-nowrap text-sm font-bold text-[#002DC2] hover:underline inline-flex items-center gap-1"
                   >
-                    <span>View All 30 Sites</span>
+                    <span>{t('gallery_viewAllSites', { count: zenitekRealGallery.length })}</span>
                     <ChevronRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
@@ -438,7 +438,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                     </div>
 
                     <div className="p-4 pt-0 text-xs text-[#002DC2] font-bold flex items-center justify-between border-t border-slate-100">
-                      <span>View Specifications</span>
+                      <span>{t('gallery_viewSpecs')}</span>
                       <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </Link>
@@ -455,7 +455,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
           onClick={() => setLightboxOpen(false)}
           role="dialog"
           aria-modal="true"
-          aria-label={`${item.title} full-size photo`}
+          aria-label={t('gallery_lightboxAria', { title: item.title })}
         >
           <div className="relative max-w-5xl max-h-[90vh] flex flex-col items-center">
             <img
@@ -471,7 +471,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
               onClick={() => setLightboxOpen(false)}
               className="absolute -top-10 right-0 text-white font-bold text-sm bg-white/20 hover:bg-white/40 px-3 py-1 rounded-full cursor-pointer"
             >
-              ✕ Close
+              ✕ {t('close')}
             </button>
           </div>
         </div>

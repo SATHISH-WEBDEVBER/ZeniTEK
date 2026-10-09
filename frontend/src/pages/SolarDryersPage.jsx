@@ -22,9 +22,29 @@ import {
 } from 'lucide-react';
 
 export default function SolarDryersPage({ onOpenQuoteModal }) {
-  const { t, lang } = useLanguage();
+  const { t, tf } = useLanguage();
   const navigate = useNavigate();
-  const isTamil = lang === 'ta';
+
+  // Fills a translated template whose {placeholders} must render as React nodes (e.g. bold numbers),
+  // so each language can put them wherever its word order needs.
+  const richT = (key, nodes) =>
+    t(key).split(/(\{\w+\})/).map((part, i) => {
+      const m = part.match(/^\{(\w+)\}$/);
+      return m && nodes[m[1]] !== undefined ? <React.Fragment key={i}>{nodes[m[1]]}</React.Fragment> : part;
+    });
+
+  // Brochure page categories (data labels) -> translation keys; unknown categories stay as entered
+  const brochureCategoryKeys = {
+    'Tunnel Dryer': 'dryers_bcat_tunnel',
+    'Box Type Dryer': 'dryers_bcat_box',
+    'Engineering Analysis': 'dryers_bcat_engineering',
+    'Product Solutions': 'dryers_bcat_solutions',
+    'Technology': 'dryers_bcat_technology'
+  };
+  const brochureCategoryLabel = (cat) => (brochureCategoryKeys[cat] ? t(brochureCategoryKeys[cat]) : cat);
+
+  const boxModelCount = officialDryerModels.filter(m => m.category.includes('Box Type')).length;
+  const tunnelModelCount = officialDryerModels.filter(m => m.category.includes('Tunnel')).length;
 
   // Dynamic CMS products from backend
   const [cmsProducts, setCmsProducts] = useState([]);
@@ -70,13 +90,13 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
   const [itemsPerPage, setItemsPerPage] = useState(6);
 
   const stateOptions = [
-    { label: 'All States', value: 'All', count: 25 },
-    { label: 'Tamil Nadu', value: 'Tamil Nadu', count: 11 },
-    { label: 'Karnataka', value: 'Karnataka', count: 8 },
-    { label: 'Mizoram', value: 'Mizoram', count: 2 },
-    { label: 'Assam', value: 'Assam', count: 1 },
-    { label: 'Maharashtra', value: 'Maharashtra', count: 1 },
-    { label: 'Chhattisgarh', value: 'Chhattisgarh', count: 1 }
+    { labelKey: 'dryers_allStates', value: 'All', count: 25 },
+    { labelKey: 'dryers_state_tn', value: 'Tamil Nadu', count: 11 },
+    { labelKey: 'dryers_state_ka', value: 'Karnataka', count: 8 },
+    { labelKey: 'dryers_state_mz', value: 'Mizoram', count: 2 },
+    { labelKey: 'dryers_state_as', value: 'Assam', count: 1 },
+    { labelKey: 'dryers_state_mh', value: 'Maharashtra', count: 1 },
+    { labelKey: 'dryers_state_cg', value: 'Chhattisgarh', count: 1 }
   ];
 
   const yearOptions = ['All', '2026', '2025', '2024', '2023'];

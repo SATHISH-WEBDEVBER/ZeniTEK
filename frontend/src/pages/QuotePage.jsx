@@ -48,10 +48,10 @@ export default function QuotePage() {
 
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="text-xs font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3.5 py-1.5 rounded-full inline-block">
-              Official Enquiry
+              {t('sections_quoteBadge')}
             </span>
             <h1 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
-              {t('getQuote')} & Subsidy Sizing
+              {t('sections_quoteTitle')}
             </h1>
             <p className="text-base sm:text-lg text-slate-600">
               {t('quickFormDesc')}
@@ -67,7 +67,7 @@ export default function QuotePage() {
               <ShieldCheck className="w-4 h-4 text-[#002DC2] shrink-0" /> {t('mnreBadge')}
             </div>
             <div className="flex items-center justify-center gap-2 p-3 rounded-xl border border-slate-200">
-              <MessageCircle className="w-4 h-4 text-[#23AC39] shrink-0" /> WhatsApp follow-up
+              <MessageCircle className="w-4 h-4 text-[#23AC39] shrink-0" /> {t('sections_quoteWhatsapp')}
             </div>
             <div className="flex items-center justify-center gap-2 p-3 rounded-xl border border-slate-200">
               <Clock className="w-4 h-4 text-[#002DC2] shrink-0" /> {t('subsidyHelp')}

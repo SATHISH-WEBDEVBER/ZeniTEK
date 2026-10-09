@@ -40,7 +40,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [apiItems, setApiItems] = useState([]);
   const [apiLoading, setApiLoading] = useState(true);
-  const { t } = useLanguage();
+  const { t, tf } = useLanguage();
 
   // Try fetching from API; fall back to static data
   useEffect(() => {
@@ -97,14 +97,12 @@ export default function GalleryPage({ onOpenQuoteModal }) {
     });
   }, [masterGalleryItems, activeCategory, searchQuery]);
 
-  const categories = [
-    { id: 'all', label: 'All Photographs', count: masterGalleryItems.length },
-    { id: 'tunnel_external', label: 'Polyhouse Tunnels', count: masterGalleryItems.filter(i => i.category === 'tunnel_external').length },
-    { id: 'tunnel_internal', label: 'Tunnel Interior & Trays', count: masterGalleryItems.filter(i => i.category === 'tunnel_internal').length },
-    { id: 'box_dryers', label: 'Box Type Dryers', count: masterGalleryItems.filter(i => i.category === 'box_dryers').length },
-    { id: 'trays_produce', label: 'Produce & SS304 Trays', count: masterGalleryItems.filter(i => i.category === 'trays_produce').length },
-    { id: 'engineering', label: 'Engineering & Packaging', count: masterGalleryItems.filter(i => i.category === 'engineering').length },
-  ];
+  // Filter chip labels come from the gallery translation file (gallery_filter_<id>)
+  const categories = CATEGORY_IDS.map(id => ({
+    id,
+    label: t(`gallery_filter_${id}`),
+    count: id === 'all' ? masterGalleryItems.length : masterGalleryItems.filter(i => i.category === id).length
+  }));
 
   return (
     <div className="text-black min-h-screen bg-white">
@@ -112,9 +110,9 @@ export default function GalleryPage({ onOpenQuoteModal }) {
       {/* SECTION 1: HERO (background photo, left-aligned heading) */}
       <PageHero
         images="/real-photos/zenitek_photo_43.jpeg"
-        badge={<><Camera className="w-3.5 h-3.5 text-[#002DC2]" /><span>Authentic Field & Manufacturing Gallery</span></>}
-        title={<>ZeniTEK Solar Drying Systems <br /><span className="text-[#002DC2]">Real Installation & Product Photographs</span></>}
-        subtitle="Explore authentic photographs of our commercial walk-in solar polyhouses, SS304 food-grade trolley trays, portable box dryers, and manufacturing craftsmanship across India. Click any card to view detailed specifications, multi-angle photos, and exact GPS installation coordinates."
+        badge={<><Camera className="w-3.5 h-3.5 text-[#002DC2]" /><span>{t('gallery_heroBadge')}</span></>}
+        title={<>{t('gallery_heroTitle1')} <br /><span className="text-[#002DC2]">{t('gallery_heroTitle2')}</span></>}
+        subtitle={t('gallery_heroSubtitle')}
       >
         {/* Quick Search Bar */}
         <div className="max-w-md pt-1">
@@ -123,8 +121,8 @@ export default function GalleryPage({ onOpenQuoteModal }) {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by crop, model, location, or state..."
-              aria-label="Search gallery"
+              placeholder={t('gallery_searchPlaceholder')}
+              aria-label={t('gallery_searchAria')}
               className="w-full bg-white/95 border border-[#123B92]/30 rounded-2xl px-4 py-3 text-sm text-black placeholder-black/40 focus:outline-none focus:border-[#002DC2] focus:ring-2 focus:ring-[#002DC2]/20 shadow-md"
             />
             {searchQuery && (
@@ -133,7 +131,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                 onClick={() => setSearchQuery('')}
                 className="absolute right-3.5 top-3 text-xs font-bold text-black/50 hover:text-black cursor-pointer"
               >
-                Clear
+                {t('gallery_clear')}
               </button>
             )}
           </div>
@@ -145,10 +143,10 @@ export default function GalleryPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
-              Installation & Product Photos
+              {t('gallery_gridTitle')}
             </h2>
             <p className="text-base sm:text-lg text-slate-600">
-              Browse field installations and product photos. Open any card for full details and location map.
+              {t('gallery_gridSubtitle')}
             </p>
           </div>
 
@@ -179,11 +177,11 @@ export default function GalleryPage({ onOpenQuoteModal }) {
           {apiLoading ? (
             <div className="flex flex-col items-center justify-center py-20 space-y-4">
               <Loader className="w-10 h-10 text-[#002DC2] animate-spin" />
-              <p className="text-sm text-black/50 font-medium">Loading gallery...</p>
+              <p className="text-sm text-black/50 font-medium">{t('gallery_loading')}</p>
             </div>
           ) : filteredItems.length === 0 ? (
             <div className="p-12 text-center bg-white rounded-3xl border border-[#123B92]/20 text-black/60 text-xs">
-              No photographs match your current filter. Try selecting &quot;All Photographs&quot; or clearing search.
+              {t('gallery_noResults')}
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
@@ -195,8 +193,8 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                   {/* Zoom button in corner -> opens the photo's own page */}
                   <Link
                     to={`/gallery/${item.id}`}
-                    title="View full photo"
-                    aria-label={`View full photo: ${item.title}`}
+                    title={t('gallery_viewFullPhoto')}
+                    aria-label={t('gallery_viewFullPhotoAria', { title: item.title })}
                     data-zoom-link
                     className="absolute top-3 right-3 bg-black/60 hover:bg-black/80 backdrop-blur-md text-white p-2 rounded-xl text-xs transition-all shadow-md z-10"
                   >
@@ -225,7 +223,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                       {/* Category & Model Tag Row */}
                       <div className="flex flex-wrap items-center content-start justify-between gap-1.5 border-b border-[#123B92]/10 pb-2 sm:min-h-14">
                         <span className="bg-[#123B92] text-white font-bold text-2xs uppercase px-2.5 py-0.5 rounded-md shadow-sm inline-block whitespace-nowrap">
-                          {item.categoryLabel || item.category}
+                          {tf(`gallery_cat_${item.category}`, item.categoryLabel || item.category)}
                         </span>
                         {item.productModel && (
                           <span className="bg-[#002DC2] text-white font-bold text-2xs px-2 py-0.5 rounded shadow-sm whitespace-nowrap">
@@ -271,7 +269,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                   >
                     <span className="flex items-center space-x-1.5">
                       <MapPin className="w-3.5 h-3.5 text-[#002DC2]" />
-                      <span>View Details & Interactive Map</span>
+                      <span>{t('gallery_viewDetailsMap')}</span>
                     </span>
                     <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1.5 transition-transform" />
                   </Link>
@@ -288,13 +286,13 @@ export default function GalleryPage({ onOpenQuoteModal }) {
           <div className="bg-[#123B92] text-white rounded-3xl p-6 sm:p-10 shadow-xl flex flex-col items-center gap-6 border-2 border-[#23AC39]">
             <div className="text-center max-w-3xl mx-auto space-y-3">
               <span className="inline-block max-w-full text-2xs leading-snug font-bold text-[#23AC39] bg-white/10 px-3 py-1 rounded-2xl uppercase tracking-wider border border-[#23AC39]/60">
-                Turnkey Manufacturing & Field Commissioning
+                {t('gallery_ctaBadge')}
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-                Looking for a Complete Commercial Polyhouse Dryer Installation?
+                {t('gallery_ctaTitle')}
               </h2>
               <p className="text-base sm:text-lg text-white/90">
-                ZeniTEK handles structural engineering, CNC fabrication, food-grade SS304 tray carts, and government subsidy paperwork end-to-end.
+                {t('gallery_ctaDesc')}
               </p>
             </div>
 
@@ -303,7 +301,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                 onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: 'Complete Turnkey Dryer Project' })}
                 className="py-3.5 px-6 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all hover:scale-105 cursor-pointer"
               >
-                Get Turnkey Quote
+                {t('gallery_ctaBtn')}
               </button>
             </div>
           </div>

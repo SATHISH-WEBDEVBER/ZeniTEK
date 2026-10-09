@@ -10,6 +10,19 @@ import { useLanguage } from '../context/LanguageContext';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import PageHero from '../components/PageHero';
 
+// Renders a translated string that carries light inline markup so word order can change per language:
+// <b>bold</b>, <hl>highlighted</hl> and <br> (line break). Class names are supplied by the caller.
+function renderRich(text, cls = {}) {
+  return text.split(/(<b>.*?<\/b>|<hl>.*?<\/hl>|<br>)/g).filter(Boolean).map((part, i) => {
+    if (part === '<br>') return <br key={i} className={cls.br} />;
+    const bold = part.match(/^<b>(.*)<\/b>$/);
+    if (bold) return <strong key={i} className={cls.b}>{bold[1]}</strong>;
+    const hl = part.match(/^<hl>(.*)<\/hl>$/);
+    if (hl) return <span key={i} className={cls.hl}>{hl[1]}</span>;
+    return <React.Fragment key={i}>{part}</React.Fragment>;
+  });
+}
+
 export default function AboutUsPage({ onOpenQuoteModal }) {
   const { t } = useLanguage();
   const location = useLocation();
@@ -38,6 +51,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
   const whatWeDoDomains = [
     {
       id: "thermal",
+      k: "Thermal",
       title: "Solar Thermal Systems",
       badge: "High-Temp Process Heat",
       icon: Zap,
@@ -55,6 +69,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
     },
     {
       id: "agri-solar",
+      k: "Agri",
       title: "Agri-Solar Innovations",
       badge: "Post-Harvest Crop Preservation",
       icon: Sprout,
@@ -72,6 +87,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
     },
     {
       id: "photovoltaic",
+      k: "Pv",
       title: "Photovoltaic Solutions",
       badge: "Testing & Turnkey Solar PV",
       icon: Cpu,
@@ -89,6 +105,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
     },
     {
       id: "rnd",
+      k: "Rnd",
       title: "Research & Development",
       badge: "Academic & Prototype R&D",
       icon: Microscope,
@@ -114,6 +131,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       category: "thermal",
       location: "Pachamalai Hills, Thuraiyur, Tamil Nadu",
       client: "Anna University Chennai • Funded by DST (NRDMS)",
+      clientKey: "about_p1Client",
       desc: "Commissioned to deliver 1,000 litres of boiling water daily for a remote scheduled tribal community, funded by Department of Science & Technology.",
       image: "/real-photos/zenitek_photo_18.jpeg",
       badge: "Tribal Welfare Project",
@@ -125,6 +143,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       category: "pv",
       location: "Mitsui Chemical Pvt Ltd, Ahmedabad, Gujarat",
       client: "Mitsui Chemicals Group (Global Industry)",
+      clientKey: "about_p2Client",
       desc: "Custom visual inspection test rigs, outdoor solar testing rigs, and indoor testing rigs commissioned for a specialized PV certification laboratory.",
       image: "/real-photos/zenitek_photo_25.jpeg",
       badge: "Corporate Testing Lab",
@@ -169,6 +188,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       category: "thermal",
       location: "Indo-MIM Pvt Ltd, Hoskote, Bangalore",
       client: "Indo-MIM Pvt Ltd (Precision Aerospace & MIM)",
+      clientKey: "about_p6Client",
       desc: "Restored and recommissioned high-efficiency 80 sq.m Scheffler dish concentrator providing sustainable industrial process heat.",
       image: "/real-photos/zenitek_photo_21.jpeg",
       badge: "Industrial Process Heat",
@@ -268,26 +288,25 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
         badge={
           <>
             <span className="w-2.5 h-2.5 rounded-full bg-[#23AC39] animate-pulse shrink-0" />
-            <span className="normal-case sm:uppercase">{'ZeniTEK • Renewable Energy Engineering • Erode, Tamil Nadu'}</span>
+            <span className="normal-case sm:uppercase">{t('about_heroBadge')}</span>
           </>
         }
         title={
           <>
-            Towards a <br className="hidden sm:block" />
-            <span className="text-[#002DC2]">Sustainable Future</span>
+            {renderRich(t('about_heroTitle'), { br: 'hidden sm:block', hl: 'text-[#002DC2]' })}
           </>
         }
-        subtitle="Engineering clean-energy systems for agriculture, industry, and educational institutions. Combining thermal engineering, solar automation, and applied research."
+        subtitle={t('about_heroSubtitle')}
       >
         {/* 4 compact stat cards */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 max-w-xl pt-2">
           {[
-            { value: '2021', label: 'Established', color: 'text-[#002DC2]' },
-            { value: 'Erode', label: 'Tamil Nadu', color: 'text-slate-900' },
-            { value: 'Turnkey', label: 'Design & EPC', color: 'text-[#23AC39]' },
-            { value: '100%', label: 'Clean Energy', color: 'text-[#123B92]' },
+            { id: 'year', value: '2021', label: t('about_statEstablished'), color: 'text-[#002DC2]' },
+            { id: 'place', value: 'Erode', label: 'Tamil Nadu', color: 'text-slate-900' },
+            { id: 'epc', value: t('about_statTurnkey'), label: t('about_statDesignEpc'), color: 'text-[#23AC39]' },
+            { id: 'clean', value: '100%', label: t('about_statCleanEnergy'), color: 'text-[#123B92]' },
           ].map(stat => (
-            <div key={stat.label} className="bg-white/90 backdrop-blur-sm px-3 py-3 sm:py-4 rounded-2xl border border-slate-200/90 shadow-md text-left min-w-0">
+            <div key={stat.id} className="bg-white/90 backdrop-blur-sm px-3 py-3 sm:py-4 rounded-2xl border border-slate-200/90 shadow-md text-left min-w-0">
               <div className={`text-xl sm:text-2xl leading-tight font-black tracking-tight break-words ${stat.color}`}>{stat.value}</div>
               <div className="text-2xs sm:text-xs font-black text-slate-600 uppercase tracking-wider mt-1">{stat.label}</div>
             </div>
@@ -302,11 +321,10 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
-              Roots & Engineering DNA
+              {t('about_rootsEyebrow')}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight leading-tight">
-              Pioneering Renewable Energy <br />
-              <span className="text-[#002DC2]">From Erode to All India</span>
+              {renderRich(t('about_rootsTitle'), { hl: 'text-[#002DC2]' })}
             </h2>
           </div>
 
@@ -317,10 +335,10 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
               <div className="space-y-4 text-slate-700 text-base sm:text-lg leading-relaxed font-normal">
                 <p>
-                  Originally established in <strong className="text-[#123B92] font-bold">2017</strong> under the name <strong className="text-[#123B92] font-bold">Smart Bricks Construction</strong>, our early initiatives manufactured eco-friendly building materials alongside localized solar power systems.
+                  {renderRich(t('about_rootsP1'), { b: 'text-[#123B92] font-bold' })}
                 </p>
                 <p>
-                  In <strong className="text-[#123B92] font-bold">2021</strong>, we transformed into <strong className="text-[#123B92] font-bold">ZeniTEK</strong> in Erode, shifting our sole focus to designing, manufacturing, erecting, and servicing advanced solar thermal systems and clean agricultural technologies.
+                  {renderRich(t('about_rootsP2'), { b: 'text-[#123B92] font-bold' })}
                 </p>
               </div>
 
@@ -328,10 +346,10 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
               <div className="p-6 rounded-3xl bg-[#F0F4FD] border-2 border-[#002DC2]/20 relative overflow-hidden space-y-3 shadow-sm">
                 <div className="flex items-start gap-2 text-sm sm:text-base font-black uppercase tracking-wider text-[#002DC2] leading-snug">
                   <Award className="w-5 h-5 text-[#002DC2] shrink-0 -mt-px" />
-                  <span className="text-balance">Technical Gratitude & Mentorship</span>
+                  <span className="text-balance">{t('about_mentorTitle')}</span>
                 </div>
                 <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium">
-                  We express our deepest gratitude to <strong className="text-[#123B92] font-black">Shri. S.K. Singh</strong> (Former Director of Solar Thermal Energy, NISE) and <strong className="text-[#123B92] font-black">Mr. John Mitchell</strong> (Technical Director of Pro-Target, Germany) for their invaluable guidance in developing our first commercial parabolic trough collector.
+                  {renderRich(t('about_mentorText'), { b: 'text-[#123B92] font-black' })}
                 </p>
               </div>
 
@@ -341,7 +359,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                   onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: "About Us Consultation" })}
                   className="w-full sm:w-auto max-w-full px-6 sm:px-7 py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-sm uppercase tracking-wide sm:tracking-wider rounded-2xl shadow-md hover:shadow-lg transition-all inline-flex items-center justify-center gap-2.5 text-center cursor-pointer hover:scale-[1.02]"
                 >
-                  <span className="text-balance">Connect With Our Engineering Team</span>
+                  <span className="text-balance">{t('about_connectTeam')}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -353,15 +371,15 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
               <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-2xl bg-white group">
                 <img
                   src="/real-photos/zenitek_photo_12.jpeg"
-                  alt="ZeniTEK Large Solar Installation"
+                  alt={t('about_installAlt')}
                   className="w-full h-96 sm:h-[450px] object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
 
                 {/* Floating Glassmorphic Emblem */}
                 <div className="absolute top-4 left-4 sm:top-5 sm:left-5 bg-white/95 backdrop-blur-md px-4 sm:px-5 py-3 rounded-2xl border border-white/60 shadow-xl flex items-center space-x-3.5">
-                  <img src="/emblem.png" alt="ZeniTEK Emblem" className="w-10 h-10 object-contain" />
+                  <img src="/emblem.png" alt={t('about_emblemAlt')} className="w-10 h-10 object-contain" />
                   <div>
-                    <div className="text-sm font-black text-[#123B92]">ZeniTEK R&D Hub</div>
+                    <div className="text-sm font-black text-[#123B92]">{t('about_rndHub')}</div>
                     <div className="text-xs font-bold text-slate-500">Erode, Tamil Nadu</div>
                   </div>
                 </div>
@@ -369,13 +387,13 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 {/* Floating Project Pill */}
                 <div className="absolute bottom-4 inset-x-4 sm:bottom-5 sm:inset-x-5 bg-slate-950/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-white border border-white/10 shadow-2xl">
                   <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 text-xs sm:text-sm font-bold text-[#23AC39] pb-2">
-                    <span className="whitespace-nowrap">Field Verified System</span>
+                    <span className="whitespace-nowrap">{t('about_fieldVerified')}</span>
                     <span className="bg-[#23AC39]/20 text-[#23AC39] px-3 py-1 rounded-full text-xs font-black whitespace-nowrap">
-                      Patented Aerodynamics
+                      {t('about_patented')}
                     </span>
                   </div>
                   <div className="text-base sm:text-lg font-black text-white leading-snug text-balance">
-                    Large-Scale Commercial Solar Polyhouse Facility
+                    {t('about_polyhouseFacility')}
                   </div>
                 </div>
               </div>
@@ -393,13 +411,13 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
           <div className="text-center max-w-3xl mx-auto space-y-4">
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
-              Core Engineering Focus
+              {t('about_domainsEyebrow')}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
-              What We Do
+              {t('about_domainsTitle')}
             </h2>
             <p className="text-base sm:text-lg text-slate-700 font-medium">
-              Combining thermal engineering, solar energy, automation, and applied research into clean, high-performance systems.
+              {t('about_domainsSubtitle')}
             </p>
           </div>
 
@@ -407,6 +425,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {whatWeDoDomains.map((domain) => {
               const Icon = domain.icon;
+              const title = t(`about_d${domain.k}Title`);
               return (
                 <div
                   key={domain.id}
@@ -421,23 +440,23 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                   <div className="relative h-64 sm:h-72 overflow-hidden">
                     <img
                       src={domain.image}
-                      alt={domain.title}
+                      alt={title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
 
                     <span className="absolute top-4 left-4 sm:top-5 sm:left-5 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full text-xs sm:text-sm font-black text-[#002DC2] shadow-sm whitespace-nowrap">
-                      {domain.badge}
+                      {t(`about_d${domain.k}Badge`)}
                     </span>
 
                     <div className="absolute bottom-4 inset-x-4 sm:bottom-5 sm:inset-x-5 text-white">
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-white/90 text-xs sm:text-sm font-bold mb-1.5 drop-shadow">
                         <Icon className="w-4 h-4 shrink-0 text-[#23AC39]" />
-                        <span className="text-[#23AC39] font-black whitespace-nowrap">{domain.metric}</span>
-                        <span>{domain.metricLabel}</span>
+                        <span className="text-[#23AC39] font-black whitespace-nowrap">{domain.k === 'Thermal' ? domain.metric : t(`about_d${domain.k}Metric`)}</span>
+                        <span>{t(`about_d${domain.k}MetricLabel`)}</span>
                       </div>
                       <h3 className="text-2xl font-black text-white leading-tight">
-                        {domain.title}
+                        {title}
                       </h3>
                     </div>
                   </div>
@@ -445,17 +464,17 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                   {/* Body Content with Larger Legible Text */}
                   <div className="p-7 sm:p-8 space-y-6 flex-1 flex flex-col justify-between">
                     <p className="text-base sm:text-lg text-slate-700 font-medium leading-relaxed">
-                      {domain.desc}
+                      {t(`about_d${domain.k}Desc`)}
                     </p>
 
                     {/* Bullet Specs List */}
                     <div className="space-y-3 pt-2 border-t border-slate-100">
-                      {domain.specs.map((item, idx) => (
+                      {domain.specs.map((_, idx) => (
                         <div key={idx} className="flex items-center space-x-3 text-sm sm:text-base font-bold text-[#123B92]">
                           <div className="w-5 h-5 rounded-full bg-[#002DC2]/15 text-[#002DC2] flex items-center justify-center shrink-0">
                             <Check className="w-3.5 h-3.5 stroke-[3]" />
                           </div>
-                          <span>{item}</span>
+                          <span>{t(`about_d${domain.k}Spec${idx + 1}`)}</span>
                         </div>
                       ))}
                     </div>
@@ -466,7 +485,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                         onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: domain.title })}
                         className="w-full py-3.5 bg-[#F0F4FD] hover:bg-[#002DC2] text-[#002DC2] hover:text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-2xl transition-colors flex items-center justify-center space-x-2 cursor-pointer shadow-sm"
                       >
-                        <span>Request Specifications</span>
+                        <span>{t('about_requestSpecs')}</span>
                         <ArrowRight className="w-4 h-4" />
                       </button>
                     </div>
@@ -487,10 +506,10 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
-              Installed Projects Portfolio
+              {t('about_projectsEyebrow')}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
-              Landmark Installations & Test Rigs
+              {t('about_projectsTitle')}
             </h2>
 
             {/* Filter Tabs */}
@@ -502,7 +521,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
               >
-                All Projects
+                {t('about_filterAll')}
               </button>
               <button
                 onClick={() => setProjectCategory('thermal')}
@@ -511,7 +530,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
               >
-                Solar Thermal
+                {t('about_filterThermal')}
               </button>
               <button
                 onClick={() => setProjectCategory('agri')}
@@ -520,7 +539,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
               >
-                Agri-Solar
+                {t('about_filterAgri')}
               </button>
               <button
                 onClick={() => setProjectCategory('pv')}
@@ -529,7 +548,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
               >
-                PV Test Labs
+                {t('about_filterPv')}
               </button>
             </div>
           </div>
@@ -548,11 +567,11 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 >
                   <img
                     src={proj.image}
-                    alt={proj.title}
+                    alt={t(`about_p${proj.id}Title`)}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <span className="absolute top-4 left-4 bg-slate-950/85 backdrop-blur-md text-white text-xs font-black uppercase tracking-wider px-3 py-1.5 rounded-full">
-                    {proj.badge}
+                    {t(`about_p${proj.id}Badge`)}
                   </span>
                   <div className="absolute bottom-4 right-4 bg-white/95 p-2 rounded-xl text-slate-800 shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
                     <Maximize2 className="w-5 h-5" />
@@ -563,7 +582,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 <div className="p-7 space-y-4 flex-1 flex flex-col justify-between">
                   <div className="space-y-3">
                     <h3 className="text-xl font-black text-[#123B92] leading-snug group-hover:text-[#002DC2] transition-colors">
-                      {proj.title}
+                      {t(`about_p${proj.id}Title`)}
                     </h3>
 
                     <div className="flex items-start gap-2 text-xs sm:text-sm font-bold text-slate-500 leading-snug">
@@ -572,11 +591,11 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     </div>
 
                     <div className="text-xs sm:text-sm font-bold text-[#123B92] bg-[#F0F4FD] px-3 py-1.5 rounded-xl inline-block">
-                      {proj.client}
+                      {proj.clientKey ? t(proj.clientKey) : proj.client}
                     </div>
 
                     <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-medium pt-1">
-                      {proj.desc}
+                      {t(`about_p${proj.id}Desc`)}
                     </p>
                   </div>
 
@@ -585,7 +604,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                       onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: proj.title })}
                       className="text-sm sm:text-base font-bold text-[#002DC2] hover:underline flex items-center space-x-1.5 cursor-pointer"
                     >
-                      <span>Inquire About Similar Setup</span>
+                      <span>{t('about_inquireSimilar')}</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -605,13 +624,13 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
           <div className="text-center max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
-              Trusted Institutional Deployments
+              {t('about_partnersEyebrow')}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
-              Academic & Industrial Partners
+              {t('about_partnersTitle')}
             </h2>
             <p className="text-base sm:text-lg text-slate-700 font-medium">
-              Supplying standard renewable energy systems, prototype demonstration rigs, and commercial installations across India.
+              {t('about_partnersSubtitle')}
             </p>
           </div>
 
@@ -619,7 +638,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
           <div className="space-y-5">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center space-x-2.5 text-sm sm:text-base lg:text-lg font-black uppercase tracking-wider text-[#123B92] text-center">
               <GraduationCap className="w-6 h-6 text-[#002DC2]" />
-              <span>Academic Institutions</span>
+              <span>{t('about_academicHeading')}</span>
             </div>
 
             <div className="relative w-full overflow-hidden py-3 client-marquee-container">
@@ -645,13 +664,13 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                       </div>
                       <div className="min-w-0 flex-1">
                         <span className="text-xs sm:text-sm font-bold text-[#002DC2] uppercase tracking-wider block truncate">
-                          {client.tag}
+                          {t(`about_a${idx + 1}Tag`)}
                         </span>
                         <div className="text-lg sm:text-xl font-black text-[#123B92] truncate mt-1">
                           {client.name}
                         </div>
                         <div className="text-xs sm:text-sm text-slate-600 font-medium line-clamp-2 leading-snug mt-1">
-                          {client.branch}
+                          {t(`about_a${idx + 1}Branch`)}
                         </div>
                       </div>
                     </div>
@@ -675,13 +694,13 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                       </div>
                       <div className="min-w-0 flex-1">
                         <span className="text-xs sm:text-sm font-bold text-[#002DC2] uppercase tracking-wider block truncate">
-                          {client.tag}
+                          {t(`about_a${idx + 1}Tag`)}
                         </span>
                         <div className="text-lg sm:text-xl font-black text-[#123B92] truncate mt-1">
                           {client.name}
                         </div>
                         <div className="text-xs sm:text-sm text-slate-600 font-medium line-clamp-2 leading-snug mt-1">
-                          {client.branch}
+                          {t(`about_a${idx + 1}Branch`)}
                         </div>
                       </div>
                     </div>
@@ -695,7 +714,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
           <div className="space-y-5 pt-5">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center space-x-2.5 text-sm sm:text-base lg:text-lg font-black uppercase tracking-wider text-[#123B92] text-center">
               <Factory className="w-6 h-6 text-[#23AC39]" />
-              <span>Industry Clients & Mentors</span>
+              <span>{t('about_industryHeading')}</span>
             </div>
 
             <div className="relative w-full overflow-hidden py-3 client-marquee-container">
@@ -721,13 +740,13 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                       </div>
                       <div className="min-w-0 flex-1">
                         <span className="text-xs sm:text-sm font-bold text-[#23AC39] uppercase tracking-wider bg-[#23AC39]/10 px-2.5 py-0.5 rounded-full inline-block truncate">
-                          {client.tag}
+                          {t(`about_i${idx + 1}Tag`)}
                         </span>
                         <div className="text-lg sm:text-xl font-black text-[#123B92] truncate mt-1.5">
                           {client.name}
                         </div>
                         <div className="text-xs sm:text-sm text-slate-600 font-medium line-clamp-2 leading-snug mt-1">
-                          {client.detail}
+                          {t(`about_i${idx + 1}Detail`)}
                         </div>
                       </div>
                     </div>
@@ -751,13 +770,13 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                       </div>
                       <div className="min-w-0 flex-1">
                         <span className="text-xs sm:text-sm font-bold text-[#23AC39] uppercase tracking-wider bg-[#23AC39]/10 px-2.5 py-0.5 rounded-full inline-block truncate">
-                          {client.tag}
+                          {t(`about_i${idx + 1}Tag`)}
                         </span>
                         <div className="text-lg sm:text-xl font-black text-[#123B92] truncate mt-1.5">
                           {client.name}
                         </div>
                         <div className="text-xs sm:text-sm text-slate-600 font-medium line-clamp-2 leading-snug mt-1">
-                          {client.detail}
+                          {t(`about_i${idx + 1}Detail`)}
                         </div>
                       </div>
                     </div>
@@ -777,13 +796,13 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
-              Authentic Visual Proof
+              {t('about_galleryEyebrow')}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
-              Real Field Photo Reel
+              {t('about_galleryTitle')}
             </h2>
             <p className="text-base sm:text-lg text-slate-700 font-medium">
-              Click any image to view in full-screen high resolution.
+              {t('about_gallerySubtitle')}
             </p>
           </div>
 
@@ -796,12 +815,12 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
               >
                 <img
                   src={photo.src}
-                  alt={photo.title}
+                  alt={t(`about_g${idx + 1}Title`)}
                   className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 text-white">
-                  <div className="text-sm sm:text-base font-black">{photo.title}</div>
-                  <div className="text-xs text-slate-300 font-semibold">{photo.tag}</div>
+                  <div className="text-sm sm:text-base font-black">{t(`about_g${idx + 1}Title`)}</div>
+                  <div className="text-xs text-slate-300 font-semibold">{t(`about_g${idx + 1}Tag`)}</div>
                 </div>
               </div>
             ))}
@@ -820,13 +839,13 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
             <div className="relative z-10 text-center max-w-3xl mx-auto space-y-3 mb-10">
               <span className="text-xs sm:text-sm font-black text-[#23AC39] uppercase tracking-wider bg-white/10 px-4 py-1.5 rounded-full inline-block">
-                Direct EPC Consultation
+                {t('about_ctaEyebrow')}
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-                Connect With ZeniTEK Engineers
+                {t('about_ctaTitle')}
               </h2>
               <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-medium">
-                Contact our Erode engineering office for technical sizing, university research collaboration, or subsidy assistance on solar drying systems.
+                {t('about_ctaText')}
               </p>
             </div>
 
@@ -858,7 +877,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                   onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: "About Us Consultation" })}
                   className="w-full px-6 py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-sm sm:text-base uppercase tracking-wide sm:tracking-wider rounded-2xl shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all flex items-center justify-center gap-2.5 text-center cursor-pointer"
                 >
-                  <span className="text-balance">Request Engineering Quote</span>
+                  <span className="text-balance">{t('about_ctaQuote')}</span>
                   <ArrowRight className="w-5 h-5" />
                 </button>
 
@@ -869,7 +888,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     className="px-3 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm uppercase tracking-wide whitespace-nowrap rounded-2xl border border-white/20 hover:border-white/40 transition-all flex items-center justify-center space-x-2 text-center hover:scale-[1.01] shadow-sm"
                   >
                     <Phone className="w-4 h-4 text-[#23AC39] shrink-0" />
-                    <span>Call Directly</span>
+                    <span>{t('about_callDirectly')}</span>
                   </a>
 
                   <a
@@ -903,13 +922,13 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <button
               onClick={() => setLightboxImage(null)}
               className="absolute -top-12 right-0 text-white hover:text-slate-300 p-2 cursor-pointer"
-              aria-label="Close Preview"
+              aria-label={t('about_closePreview')}
             >
               <X className="w-8 h-8" />
             </button>
             <img
               src={lightboxImage}
-              alt="Enlarged Preview"
+              alt={t('about_enlargedPreview')}
               className="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             />

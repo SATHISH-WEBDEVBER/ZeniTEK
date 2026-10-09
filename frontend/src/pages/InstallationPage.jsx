@@ -32,17 +32,17 @@ export default function InstallationPage() {
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {
-    return <section className="w-full py-24 text-center text-slate-500 font-semibold">Loading installation…</section>;
+    return <section className="w-full py-24 text-center text-slate-500 font-semibold">{t('gallery_instLoading')}</section>;
   }
 
   if (!project) {
     return (
       <section className="w-full py-20">
         <div className="max-w-xl mx-auto px-4 text-center space-y-5">
-          <h1 className="text-3xl font-black text-[#123B92]">Installation not found</h1>
-          <p className="text-slate-600">This site may have been removed from the map.</p>
+          <h1 className="text-3xl font-black text-[#123B92]">{t('gallery_instNotFound')}</h1>
+          <p className="text-slate-600">{t('gallery_instNotFoundDesc')}</p>
           <Link to="/" className="inline-flex items-center gap-2 px-6 py-3 bg-[#23AC39] text-white font-black text-sm uppercase tracking-wider rounded-xl">
-            Back to Home <ArrowRight className="w-4 h-4" />
+            {t('notFoundHome')} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>
@@ -57,11 +57,11 @@ export default function InstallationPage() {
     <div className="bg-white">
       <section className="w-full py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <PageBackBar crumbs={[{ label: 'Installations' }, { label: project.title }]} fallback="/" />
+          <PageBackBar crumbs={[{ label: t('gallery_crumbInstallations') }, { label: project.title }]} fallback="/" />
 
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="text-xs font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3.5 py-1.5 rounded-full inline-block">
-              Installation Case Study
+              {t('gallery_instBadge')}
             </span>
             <h1 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{project.title}</h1>
             <p className="text-base sm:text-lg font-semibold text-slate-600 inline-flex items-center justify-center gap-1.5">
@@ -71,7 +71,7 @@ export default function InstallationPage() {
 
           {project.videoUrl && (
             <div className="flex justify-center gap-2">
-              {[['overview', ImageIcon, 'Site Overview & Photos'], ['video', Video, 'Video Demonstration']].map(([key, Icon, label]) => (
+              {[['overview', ImageIcon, t('gallery_tabOverview')], ['video', Video, t('gallery_tabVideo')]].map(([key, Icon, label]) => (
                 <button
                   key={key}
                   type="button"
@@ -107,7 +107,7 @@ export default function InstallationPage() {
                         key={idx}
                         type="button"
                         onClick={() => setSelectedPhoto(idx)}
-                        aria-label={`Show photo ${idx + 1}`}
+                        aria-label={t('gallery_showPhoto', { n: idx + 1 })}
                         className={`w-20 h-16 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${selectedPhoto === idx ? 'border-[#002DC2] ring-2 ring-[#23AC39]' : 'border-[#123B92]/20 opacity-70 hover:opacity-100'}`}
                       >
                         <img src={img} alt="" className="w-full h-full object-cover" />
@@ -120,15 +120,15 @@ export default function InstallationPage() {
               <div className="space-y-5">
                 <div className="grid grid-cols-2 gap-3 text-sm">
                   <div className="p-4 bg-[#F0F4FD] rounded-xl border border-[#123B92]/20">
-                    <div className="text-xs font-bold text-black/60 uppercase">Dryer Type</div>
+                    <div className="text-xs font-bold text-black/60 uppercase">{t('gallery_dryerType')}</div>
                     <div className="font-extrabold text-[#123B92] mt-1">{project.dryerType}</div>
                   </div>
                   <div className="p-4 bg-[#F0F4FD] rounded-xl border border-[#123B92]/20">
-                    <div className="text-xs font-bold text-black/60 uppercase">Batch Capacity</div>
+                    <div className="text-xs font-bold text-black/60 uppercase">{t('gallery_specCapacity')}</div>
                     <div className="font-extrabold text-[#002DC2] mt-1">{project.capacity}</div>
                   </div>
                   <div className="p-4 bg-[#F0F4FD] rounded-xl border border-[#123B92]/20 col-span-2">
-                    <div className="text-xs font-bold text-black/60 uppercase">Target Produce</div>
+                    <div className="text-xs font-bold text-black/60 uppercase">{t('gallery_targetProduce')}</div>
                     <div className="font-extrabold text-[#123B92] mt-1">{project.cropDrying}</div>
                   </div>
                 </div>
@@ -139,7 +139,7 @@ export default function InstallationPage() {
 
                 <div className="flex items-center gap-2 text-sm font-bold text-[#123B92] bg-[#F0F4FD] p-3 rounded-xl border border-[#123B92]/20">
                   <ShieldCheck className="w-4 h-4 text-[#002DC2] shrink-0" />
-                  <span>MNRE Certified Installation</span>
+                  <span>{t('gallery_mnreCertified')}</span>
                 </div>
 
                 <Link
@@ -159,21 +159,21 @@ export default function InstallationPage() {
         <section className="w-full py-10 sm:py-14">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div className="text-center max-w-3xl mx-auto space-y-3">
-              <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">Drying Results at This Site</h2>
+              <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('gallery_resultsTitle')}</h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-5xl mx-auto">
               <div className="p-5 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm text-center">
-                <div className="text-xs text-black/60 font-bold uppercase">Drying Time</div>
+                <div className="text-xs text-black/60 font-bold uppercase">{t('gallery_specDryingTime')}</div>
                 <div className="text-2xl font-black text-[#002DC2] mt-1">{stats.solarDays}</div>
-                <div className="text-sm text-slate-500">vs {stats.originalDays}</div>
+                <div className="text-sm text-slate-500">{t('gallery_vs', { value: stats.originalDays })}</div>
               </div>
               <div className="p-5 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm text-center">
-                <div className="text-xs text-black/60 font-bold uppercase">Moisture</div>
+                <div className="text-xs text-black/60 font-bold uppercase">{t('gallery_moisture')}</div>
                 <div className="text-2xl font-black text-[#002DC2] mt-1">{stats.moistureStart} → {stats.moistureEnd}</div>
                 <div className="text-sm text-slate-500">{stats.qualityGrade}</div>
               </div>
               <div className="p-5 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm text-center">
-                <div className="text-xs text-black/60 font-bold uppercase">Value Addition</div>
+                <div className="text-xs text-black/60 font-bold uppercase">{t('gallery_valueAddition')}</div>
                 <div className="text-2xl font-black text-[#123B92] mt-1">{stats.priceAdd}</div>
               </div>
             </div>
