@@ -398,7 +398,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               What We Do
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-slate-700 font-medium">
+            <p className="text-base sm:text-lg text-slate-700 font-medium">
               Combining thermal engineering, solar energy, automation, and applied research into clean, high-performance systems.
             </p>
           </div>
@@ -610,7 +610,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               Academic & Industrial Partners
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-slate-700 font-medium">
+            <p className="text-base sm:text-lg text-slate-700 font-medium">
               Supplying standard renewable energy systems, prototype demonstration rigs, and commercial installations across India.
             </p>
           </div>

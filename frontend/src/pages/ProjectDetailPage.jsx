@@ -28,7 +28,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center p-6 text-center space-y-4">
         <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">Project Not Found</h2>
-        <p className="text-sm text-slate-500">The requested solar dryer installation could not be found.</p>
+        <p className="text-base sm:text-lg text-slate-500">The requested solar dryer installation could not be found.</p>
         <Link
           to="/dryers"
           className="px-6 py-2.5 bg-[#002DC2] text-white font-bold text-xs rounded-xl shadow hover:bg-[#002DC2] transition-all flex items-center space-x-2"

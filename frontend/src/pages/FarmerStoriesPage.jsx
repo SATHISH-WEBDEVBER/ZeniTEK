@@ -72,7 +72,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center space-y-2">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#123B92]">{t('videoReviewsTitle')}</h2>
-            <p className="text-sm text-black/60">{t('videoReviewsSub')}</p>
+            <p className="text-base sm:text-lg text-black/60">{t('videoReviewsSub')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">

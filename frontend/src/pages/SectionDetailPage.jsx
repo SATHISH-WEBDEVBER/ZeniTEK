@@ -666,7 +666,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
             <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight">
               {copy.ctaTitle}
             </h2>
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
               {copy.ctaBody}
             </p>
             <div className="flex flex-wrap justify-center gap-3 pt-3">

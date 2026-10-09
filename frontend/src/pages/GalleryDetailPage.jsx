@@ -59,7 +59,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
       <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
         <div className="text-center space-y-4 max-w-md bg-white p-8 rounded-3xl border border-slate-200 shadow-md">
           <h2 className="text-3xl sm:text-4xl font-bold text-[#123B92]">Installation Not Found</h2>
-          <p className="text-sm text-slate-600">The requested installation photo detail could not be found.</p>
+          <p className="text-base sm:text-lg text-slate-600">The requested installation photo detail could not be found.</p>
           <Link
             to="/gallery"
             className="inline-flex items-center space-x-2 px-6 py-2.5 bg-[#002DC2] text-white rounded-xl font-bold text-xs"

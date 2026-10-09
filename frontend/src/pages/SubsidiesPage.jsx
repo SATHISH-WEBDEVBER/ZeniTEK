@@ -251,7 +251,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">
               Available Central & State Subsidy Schemes
             </h2>
-            <p className="text-sm text-slate-600 font-medium">
+            <p className="text-base sm:text-lg text-slate-600 font-medium">
               ZeniTEK equipment complies with all MNRE and state nodal agency specifications.
             </p>
           </div>
@@ -302,7 +302,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">
               How ZeniTEK Handles Your Subsidy <span className="whitespace-nowrap">End-to-End</span>
             </h2>
-            <p className="text-sm text-slate-600 font-medium">
+            <p className="text-base sm:text-lg text-slate-600 font-medium">
               We eliminate paperwork friction so you receive maximum government benefits without delays.
             </p>
           </div>

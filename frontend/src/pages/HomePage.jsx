@@ -234,7 +234,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               {t('mapTitle1')}
             </h2>
-            <p className="text-sm sm:text-base text-slate-600 font-medium">{t('homeMapDesc')}</p>
+            <p className="text-base sm:text-lg text-slate-600 font-medium">{t('homeMapDesc')}</p>
           </div>
 
           <MapComponent onSelectProjectQuote={(project) => onOpenQuoteModal({ cropType: project.cropDrying, capacityNeeded: project.capacity, district: project.locationName })} />
@@ -354,7 +354,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center max-w-3xl mx-auto space-y-2">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#123B92]">{t('trustedBy')}</h2>
-            <p className="text-sm text-slate-600">{t('homeStoriesDesc')}</p>
+            <p className="text-base sm:text-lg text-slate-600">{t('homeStoriesDesc')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -384,7 +384,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
           <div className="bg-white rounded-3xl p-6 sm:p-10 border-2 border-[#123B92] shadow-xl text-black">
             <div className="text-center space-y-2 mb-8">
               <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">{t('quickFormTitle')}</h2>
-              <p className="text-sm text-black/70">{t('quickFormDesc')}</p>
+              <p className="text-base sm:text-lg text-black/70">{t('quickFormDesc')}</p>
             </div>
 
             <form onSubmit={handleQuickSubmit} className="space-y-4">
