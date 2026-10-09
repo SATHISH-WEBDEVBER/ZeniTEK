@@ -445,7 +445,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
 
-                    <span className="absolute top-4 left-4 sm:top-5 sm:left-5 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full text-xs sm:text-sm font-black text-[#002DC2] shadow-sm whitespace-nowrap">
+                    <span className="absolute top-4 left-4 sm:top-5 sm:left-5 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full text-xs sm:text-sm font-black text-[#002DC2] shadow-sm max-w-[calc(100%-2rem)] sm:max-w-[calc(100%-2.5rem)] truncate">
                       {t(`about_d${domain.k}Badge`)}
                     </span>
 
@@ -841,7 +841,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
               <span className="text-xs sm:text-sm font-black text-[#23AC39] uppercase tracking-wider bg-white/10 px-4 py-1.5 rounded-full inline-block">
                 {t('about_ctaEyebrow')}
               </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight break-words">
                 {t('about_ctaTitle')}
               </h2>
               <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-medium">

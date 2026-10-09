@@ -99,8 +99,8 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
             <div className="rounded-3xl overflow-hidden bg-white border border-slate-200 shadow-xl p-4 sm:p-5 space-y-4">
               
               {/* Badges Header Bar (Outside and above the image) */}
-              <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center space-x-2">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className="px-3.5 py-1.5 bg-[#123B92] text-white font-black text-xs rounded-xl shadow-sm">
                     {t('gallery_projectNo', { id: project.id })}
                   </span>

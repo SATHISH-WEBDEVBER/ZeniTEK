@@ -159,7 +159,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
       
       {/* SECTION HEADING: CLEAN TITLE */}
       <div className="text-center px-4 mb-6 sm:mb-8">
-        <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight leading-tight">
+        <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight leading-tight break-words text-balance">
           {t('modelsHeading')}
         </h2>
       </div>
