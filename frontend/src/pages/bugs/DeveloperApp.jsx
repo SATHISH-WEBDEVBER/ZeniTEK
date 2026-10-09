@@ -181,7 +181,7 @@ function DeveloperDashboard() {
 
             <div className="grid lg:grid-cols-3 gap-4">
               <section className={`${cardCls} p-5 space-y-3`}>
-                <h2 className="font-black text-[#123B92]">By tester</h2>
+                <h2 className="font-black text-[#123B92]">By reporter</h2>
                 <p className="text-xs text-slate-500">Total / completed / overdue</p>
                 {summary.byTester.length ? (
                   <ul className="divide-y divide-slate-100">

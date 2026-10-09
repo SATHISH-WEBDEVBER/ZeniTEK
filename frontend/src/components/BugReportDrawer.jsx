@@ -75,7 +75,9 @@ function ScreenshotEditor({ shot, boxes, setBoxes, highlight }) {
       onPointerMove={onMove}
       onPointerUp={onUp}
       onPointerCancel={() => setDrag(null)}
-      className={`relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100 select-none ${highlight ? 'cursor-crosshair touch-none ring-2 ring-red-400' : ''}`}
+      className={`relative mx-auto rounded-xl overflow-hidden border border-slate-200 bg-slate-100 select-none ${highlight ? 'cursor-crosshair touch-none ring-2 ring-red-400' : ''}`}
+      // Tall phone screenshots are kept to ~55% of the screen height (width follows the aspect ratio)
+      style={{ maxWidth: `min(100%, calc(55vh * ${shot.width} / ${shot.height}))` }}
       data-testid="bug-screenshot-preview"
     >
       <img src={shot.url} alt="Screenshot of the page" className="block w-full h-auto pointer-events-none" draggable={false} />
@@ -143,7 +145,10 @@ export default function BugReportDrawer({
 
   if (!open) return null;
 
-  const set = key => e => setDraft(d => ({ ...d, [key]: e.target.value }));
+  const set = key => e => {
+    setDraft(d => ({ ...d, [key]: e.target.value }));
+    if (error.startsWith('Please fill in')) setError('');
+  };
 
   const submit = async e => {
     e.preventDefault();

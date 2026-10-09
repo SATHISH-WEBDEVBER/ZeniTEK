@@ -98,12 +98,16 @@ export function collectContext() {
 
 export const environmentSummary = c => `${c.browser} on ${c.os} (${c.deviceType}), viewport ${c.viewport} @${c.pixelRatio}x`;
 
-const BLANK = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+const isWhatsAppWidget = el => el.tagName === 'ASIDE' && !!el.querySelector?.('a[href*="wa.me"]');
 
 /**
  * Screenshot of exactly what the user sees (viewport at the current scroll position).
  * Elements marked data-capture-ignore and the WhatsApp widget are left out.
  * Resolves to { blob, url, width, height }; throws if the browser cannot render it.
+ *
+ * Speed: html2canvas clones and parses the whole page. Content outside the viewport is cut down to
+ * empty boxes of the same size in the clone (so the visible layout is identical), and the shapes
+ * inside off-screen icons are skipped. This keeps a capture to a few seconds on long pages.
  */
 export async function captureViewport() {
   const { default: html2canvas } = await import('html2canvas');
@@ -114,18 +118,70 @@ export async function captureViewport() {
   // Smooth scrolling would stop the cloned page from jumping to the current scroll position
   root.style.scrollBehavior = 'auto';
 
-  // Skip work for content outside the viewport (hidden in the clone, layout unchanged)
-  const marked = [];
+  const boxes = [];   // index -> measured size of an off-screen element
+  const marked = [];  // live elements temporarily tagged with data-cap-off
+  const skipSvg = new Set();
+  const tag = (el, rect) => {
+    el.setAttribute('data-cap-off', String(boxes.length));
+    boxes.push(rect);
+    marked.push(el);
+  };
+  const outside = r => r.top > vh + 20 || r.bottom < -20;
   const mark = el => {
     for (const child of el.children) {
+      if (child.hasAttribute('data-capture-ignore')) continue;
       const r = child.getBoundingClientRect();
-      if (r.width === 0 && r.height === 0) { mark(child); continue; }
-      if (r.top > vh + 20 || r.bottom < -20) { child.setAttribute('data-cap-off', ''); marked.push(child); }
-      else mark(child);
+      if (r.width === 0 && r.height === 0) {
+        if (getComputedStyle(child).display === 'none') tag(child, null); // invisible: nothing to draw
+        else mark(child);
+        continue;
+      }
+      if (outside(r)) {
+        const display = getComputedStyle(child).display;
+        // Inline / table parts cannot simply be given a fixed box; look inside them instead
+        if (display === 'inline' || display === 'contents' || display.startsWith('table')) mark(child);
+        else tag(child, { width: r.width, height: r.height });
+        continue;
+      }
+      mark(child);
     }
   };
+
+  // A visible, in-flow element used to line the clone up with what is on screen (emptying off-screen
+  // boxes can drop collapsed margins above the viewport and shift the page by a few pixels)
+  const pickReference = () => {
+    for (const [fx, fy] of [[0.5, 0.5], [0.5, 0.3], [0.3, 0.6], [0.7, 0.4], [0.5, 0.8]]) {
+      const el = document.elementFromPoint(vw * fx, vh * fy);
+      if (!el || el === document.body || el === root || el.closest('[data-capture-ignore]')) continue;
+      let p = el;
+      let pinned = false;
+      while (p && p !== document.body) {
+        const pos = getComputedStyle(p).position;
+        if (pos === 'fixed' || pos === 'sticky') { pinned = true; break; }
+        p = p.parentElement;
+      }
+      if (!pinned) return el;
+    }
+    return null;
+  };
+  let reference = null;
+  // Tailwind's preflight makes every <img> display:block, which breaks html2canvas's font-metrics probe
+  // (a hidden nowrap div + 1px image appended to the live <body>) and draws all text too low.
+  // This rule matches only that probe and is removed again after the capture.
+  const metricsFix = document.createElement('style');
+  metricsFix.textContent = 'body > div[style*="visibility: hidden"][style*="white-space: nowrap"] > img { display: inline !important; }';
+
   try {
+    document.head.appendChild(metricsFix);
     mark(document.body);
+    reference = pickReference();
+    const referenceTop = reference ? reference.getBoundingClientRect().top : 0;
+    if (reference) reference.setAttribute('data-cap-ref', '');
+    document.querySelectorAll('svg').forEach(svg => {
+      const r = svg.getBoundingClientRect();
+      if ((r.width === 0 && r.height === 0) || outside(r)) skipSvg.add(svg);
+    });
+
     const canvas = await html2canvas(document.body, {
       useCORS: true,
       logging: false,
@@ -139,17 +195,31 @@ export async function captureViewport() {
       windowHeight: vh,
       scale: Math.min(window.devicePixelRatio || 1, 2),
       ignoreElements: el => el.hasAttribute?.('data-capture-ignore')
-        || (el.tagName === 'ASIDE' && !!el.querySelector?.('a[href*="wa.me"]')),
+        || isWhatsAppWidget(el)
+        || !!el.parentElement?.hasAttribute('data-cap-off')        // contents of an off-screen box
+        || (!!el.ownerSVGElement && skipSvg.has(el.ownerSVGElement)), // shapes of an off-screen icon
       onclone: doc => {
         doc.querySelectorAll('[data-cap-off]').forEach(el => {
+          const box = boxes[Number(el.getAttribute('data-cap-off'))];
           el.style.setProperty('visibility', 'hidden', 'important');
-          el.querySelectorAll('img').forEach(img => {
-            img.style.width = `${img.width}px`;
-            img.style.height = `${img.height}px`;
-            img.removeAttribute('srcset');
-            img.src = BLANK;
-          });
+          if (!box) return;
+          // Keep the exact size the element had, now that its contents were left out
+          el.style.setProperty('box-sizing', 'border-box', 'important');
+          el.style.setProperty('width', `${box.width}px`, 'important');
+          el.style.setProperty('height', `${box.height}px`, 'important');
+          el.style.setProperty('min-width', '0', 'important');
+          el.style.setProperty('min-height', '0', 'important');
+          el.style.setProperty('max-width', 'none', 'important');
+          el.style.setProperty('max-height', 'none', 'important');
+          el.style.setProperty('flex', 'none', 'important');
         });
+        // Scroll the clone so the reference element sits exactly where it is on screen
+        const cloneRef = doc.querySelector('[data-cap-ref]');
+        const win = doc.defaultView;
+        if (cloneRef && win) {
+          const shift = cloneRef.getBoundingClientRect().top - referenceTop;
+          if (Math.abs(shift) >= 1) win.scrollTo(win.scrollX, win.scrollY + shift);
+        }
       }
     });
     const blob = await new Promise((resolve, reject) => {
@@ -159,6 +229,8 @@ export async function captureViewport() {
   } finally {
     root.style.scrollBehavior = prevBehavior;
     marked.forEach(el => el.removeAttribute('data-cap-off'));
+    reference?.removeAttribute('data-cap-ref');
+    metricsFix.remove();
   }
 }
 
