@@ -5,7 +5,7 @@
  *   CLIENT_ADMIN_USERNAME / CLIENT_ADMIN_PASSWORD   -> role "client"   (website CMS)
  *   DEVELOPER_USERS = "user1:pass1,user2:pass2"      -> role "developer" (bug triage)
  *   TESTER_USERS    = "user1:pass1,user2:pass2"      -> role "tester"    (bug reporting)
- *   JWT_SECRET                                        -> signs session tokens
+ *   JWT_SECRET    =                                     -> signs session tokens
  *
  * A password value may be plain text or a bcrypt hash (starts with "$2").
  */
