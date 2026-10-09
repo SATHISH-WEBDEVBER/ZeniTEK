@@ -224,7 +224,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
 
               {/* TOP-RIGHT IMAGE COUNTER & AUTO-TIMER INDICATOR */}
               <div className="flex items-center space-x-2 shrink-0">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-[#23AC39] animate-pulse" />
                 <span className="text-xs font-bold text-white bg-black/60 px-3 py-1 rounded-full border border-white/30 whitespace-nowrap">
                   Model {activeIndex + 1} of {totalProducts}
                 </span>
@@ -261,7 +261,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
                   {currentProduct.capacity}
                 </span>
                 <span className="hidden sm:inline mx-2">•</span>
-                <span className="text-green-300 font-bold whitespace-nowrap">
+                <span className="text-[#23AC39] font-bold whitespace-nowrap">
                   {currentProduct.leaseInfo}
                 </span>
               </div>
@@ -285,7 +285,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
                 <button
                   type="button"
                   onClick={() => onOpenDetailModal && onOpenDetailModal(currentProduct)}
-                  className="px-7 py-3 sm:px-9 sm:py-3.5 bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs sm:text-sm rounded-xl shadow-xl transition-all active:scale-95 cursor-pointer flex items-center justify-center"
+                  className="px-7 py-3 sm:px-9 sm:py-3.5 bg-white hover:bg-slate-100 text-[#123B92] font-bold text-xs sm:text-sm rounded-xl shadow-xl transition-all active:scale-95 cursor-pointer flex items-center justify-center"
                 >
                   Learn More
                 </button>

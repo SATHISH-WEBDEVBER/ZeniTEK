@@ -26,28 +26,28 @@ export default function LegalPage({ type }) {
           <div className="max-w-3xl mx-auto space-y-4 text-base text-slate-700 leading-relaxed">
             {isPrivacy ? (
               <>
-                <h2 className="text-xl font-black text-slate-900">Privacy & Data Protection Notice</h2>
+                <h2 className="text-xl font-black text-[#123B92]">Privacy & Data Protection Notice</h2>
                 <p>
                   ZeniTEK Solar Thermal Solutions respects your privacy. All contact and farm specifications submitted through our inquiry and quotation forms are used strictly for generating custom solar dryer technical proposals and subsidy estimations.
                 </p>
                 <p>
                   We never sell, rent, or trade your contact information or harvest data with third-party advertising brokers.
                 </p>
-                <div className="p-4 bg-blue-50/60 rounded-xl border border-blue-100 text-blue-900 space-y-1">
+                <div className="p-4 bg-[#F0F4FD] rounded-xl border border-[#002DC2]/20 text-[#123B92] space-y-1">
                   <p className="font-bold">Contact Privacy Officer:</p>
                   <p>Email: <a href="mailto:zenitek2k@gmail.com" className="underline">zenitek2k@gmail.com</a> | Phone: <a href="tel:+918903852623" className="underline">+91 8903852623</a></p>
                 </div>
               </>
             ) : (
               <>
-                <h2 className="text-xl font-black text-slate-900">Terms of Service & Equipment Guarantee</h2>
+                <h2 className="text-xl font-black text-[#123B92]">Terms of Service & Equipment Guarantee</h2>
                 <p>
                   All solar thermal polyhouse dryers, cabinet dryers, and custom dehydration plants supplied by ZeniTEK are manufactured under ISO 9001:2015 quality standards and MNRE specifications.
                 </p>
                 <p>
                   Performance metrics, moisture extraction rates, and subsidy percentages are indicative guidelines based on standard sunny ambient weather conditions and regional state agriculture ministry policies.
                 </p>
-                <div className="p-4 bg-green-50/60 rounded-xl border border-green-100 text-green-900 space-y-1">
+                <div className="p-4 bg-[#23AC39]/10 rounded-xl border border-[#23AC39]/30 text-[#1A822B] space-y-1">
                   <p className="font-bold">Corporate Information:</p>
                   <p>GSTIN: 33AACFZ8530G1Z5 | ISO Certification: ZNK-9001-2026</p>
                 </div>

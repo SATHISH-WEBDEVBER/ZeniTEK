@@ -216,7 +216,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
           {/* Top Bar with 5s Timer Progress */}
           <div className="relative z-20 px-4 py-3 bg-gradient-to-b from-black/70 via-black/30 to-transparent text-white flex items-center justify-between gap-3">
             <div className="flex items-center space-x-2 min-w-0">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse shrink-0" />
+              <span className="w-2 h-2 rounded-full bg-[#23AC39] animate-pulse shrink-0" />
               <span className="text-xs font-bold uppercase tracking-wider text-white/90 whitespace-nowrap truncate">
                 Operational Installation<span className="hidden sm:inline"> • 5s Auto-Swap</span>
               </span>
@@ -280,7 +280,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
               <span className="text-2xs font-black uppercase bg-[#23AC39] text-white px-2 py-0.5 rounded shadow-sm inline-block whitespace-nowrap shrink-0">
                 {activeSlide.tag}
               </span>
-              <span className="text-2xs text-green-300 font-semibold leading-snug">
+              <span className="text-2xs text-[#23AC39] font-semibold leading-snug">
                 {activeSlide.cropFit}
               </span>
             </div>
@@ -298,7 +298,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
             <div className="flex flex-wrap items-center gap-1.5 pt-1 border-t border-white/20">
               {activeSlide.features.map((feat, i) => (
                 <span key={i} className="text-2xs text-white/90 bg-white/10 backdrop-blur-sm px-2 py-0.5 rounded flex items-center">
-                  <CheckCircle2 className="w-2.5 h-2.5 text-green-400 mr-1 shrink-0" />
+                  <CheckCircle2 className="w-2.5 h-2.5 text-[#23AC39] mr-1 shrink-0" />
                   {feat}
                 </span>
               ))}
@@ -332,7 +332,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
             <span className="text-2xs font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3 py-1 rounded-full inline-flex items-center">
               <Sparkles className="w-3.5 h-3.5 mr-1.5 text-[#002DC2]" /> DEHYDRATION PERFORMANCE METRICS
             </span>
-            <h3 className="text-base sm:text-lg font-black text-slate-900 leading-snug mt-1.5">
+            <h3 className="text-base sm:text-lg font-black text-[#123B92] leading-snug mt-1.5">
               Operational Advantages & Quality Safeguards
             </h3>
             <p className="text-sm text-slate-500 font-semibold mt-0.5">
@@ -348,7 +348,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
             {/* 1. Loading & Dry Ratio */}
             <div className="p-2.5 sm:p-3 bg-[#F0F4FD] rounded-xl border border-[#123B92]/20 shadow-sm hover:border-[#002DC2]/50 transition-colors">
               <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 rounded-lg bg-blue-100 text-[#002DC2] flex items-center justify-center shrink-0">
+                <div className="w-6 h-6 rounded-lg bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center shrink-0">
                   <Layers className="w-3.5 h-3.5" />
                 </div>
                 <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">
@@ -366,7 +366,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
             {/* 2. Drying Speed & UV Protection */}
             <div className="p-2.5 sm:p-3 bg-white rounded-xl border border-slate-200/90 shadow-sm hover:border-[#23AC39]/60 transition-colors">
               <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 rounded-lg bg-emerald-100 text-[#23AC39] flex items-center justify-center shrink-0">
+                <div className="w-6 h-6 rounded-lg bg-[#23AC39]/10 text-[#23AC39] flex items-center justify-center shrink-0">
                   <Zap className="w-3.5 h-3.5" />
                 </div>
                 <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">
@@ -384,14 +384,14 @@ export default function ROICalculator({ onSelectModelQuote }) {
             {/* 3. 100% Hygienic Enclosed Processing */}
             <div className="p-2.5 sm:p-3 bg-[#F0F4FD] rounded-xl border border-[#123B92]/20 shadow-sm hover:border-[#002DC2]/50 transition-colors">
               <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 rounded-lg bg-blue-100 text-[#002DC2] flex items-center justify-center shrink-0">
+                <div className="w-6 h-6 rounded-lg bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center shrink-0">
                   <ShieldCheck className="w-3.5 h-3.5" />
                 </div>
                 <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">
                   {activeSlide.specs.hygiene.label}
                 </div>
               </div>
-              <div className="text-sm font-black text-slate-900 mt-1 pl-8">
+              <div className="text-sm font-black text-[#123B92] mt-1 pl-8">
                 {activeSlide.specs.hygiene.value}
               </div>
               <p className="text-sm text-slate-600 font-medium pl-8 mt-0.5 line-clamp-2">
@@ -400,9 +400,9 @@ export default function ROICalculator({ onSelectModelQuote }) {
             </div>
 
             {/* 4. Locks Original Aroma, Taste, Smell & Structure */}
-            <div className="p-2.5 sm:p-3 bg-white rounded-xl border border-slate-200/90 shadow-sm hover:border-amber-400 transition-colors">
+            <div className="p-2.5 sm:p-3 bg-white rounded-xl border border-slate-200/90 shadow-sm hover:border-[#23AC39] transition-colors">
               <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+                <div className="w-6 h-6 rounded-lg bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center shrink-0">
                   <Sparkles className="w-3.5 h-3.5" />
                 </div>
                 <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">

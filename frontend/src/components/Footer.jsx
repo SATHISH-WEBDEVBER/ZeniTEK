@@ -115,7 +115,7 @@ export default function Footer({ onOpenQuoteModal }) {
               {brochures.map((b) => (
                 <div 
                   key={b.id}
-                  className="p-2.5 rounded-xl border border-slate-200/90 hover:border-[#002DC2] bg-white hover:bg-blue-50/20 transition-all flex items-center justify-between group shadow-sm"
+                  className="p-2.5 rounded-xl border border-slate-200/90 hover:border-[#002DC2] bg-white hover:bg-[#F0F4FD] transition-all flex items-center justify-between group shadow-sm"
                 >
                   <Link
                     to={`/brochures/${b.id}`}
@@ -130,7 +130,7 @@ export default function Footer({ onOpenQuoteModal }) {
                         {b.pageCount} Pages • {b.size}
                       </span>
                     </div>
-                    <span className="text-xs font-bold text-slate-900 group-hover:text-[#002DC2] transition-colors block leading-snug">
+                    <span className="text-xs font-bold text-[#123B92] group-hover:text-[#002DC2] transition-colors block leading-snug">
                       {b.title}
                     </span>
                     <span className="text-2xs text-slate-500 block leading-snug line-clamp-2 mt-0.5">
@@ -143,7 +143,7 @@ export default function Footer({ onOpenQuoteModal }) {
                       to={`/brochures/${b.id}`}
                       title="View PDF Brochure"
                       aria-label={`View ${b.title}`}
-                      className="w-7 h-7 rounded-lg bg-blue-50 text-[#002DC2] hover:bg-[#002DC2] hover:text-white flex items-center justify-center transition-colors"
+                      className="w-7 h-7 rounded-lg bg-[#F0F4FD] text-[#002DC2] hover:bg-[#002DC2] hover:text-white flex items-center justify-center transition-colors"
                     >
                       <Eye className="w-3.5 h-3.5" />
                     </Link>

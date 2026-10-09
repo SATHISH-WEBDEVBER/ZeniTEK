@@ -87,7 +87,7 @@ const getSectionCopy = (slug, title) => SECTION_COPY[slug] || {
 const renderInline = (text, keyPrefix) =>
   text.split(/(\*\*[^*]+\*\*)/g).filter(Boolean).map((part, i) => (
     /^\*\*[^*]+\*\*$/.test(part)
-      ? <strong key={`${keyPrefix}-${i}`} className="font-bold text-slate-900">{part.slice(2, -2)}</strong>
+      ? <strong key={`${keyPrefix}-${i}`} className="font-bold text-[#123B92]">{part.slice(2, -2)}</strong>
       : <React.Fragment key={`${keyPrefix}-${i}`}>{part}</React.Fragment>
   ));
 
@@ -128,7 +128,7 @@ function RichText({ text }) {
   return blocks.map((block, bIdx) => {
     if (block.type === 'heading') {
       return (
-        <h4 key={bIdx} className="text-lg font-bold text-slate-900 leading-snug pt-3">
+        <h4 key={bIdx} className="text-lg font-bold text-[#123B92] leading-snug pt-3">
           {block.text}
         </h4>
       );
@@ -267,10 +267,10 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
   if (error || !section) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center bg-white px-4 py-20 text-center">
-        <div className="w-16 h-16 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mb-4">
+        <div className="w-16 h-16 rounded-full bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center mb-4">
           <AlertCircle className="w-8 h-8" />
         </div>
-        <h1 className="text-2xl font-black text-slate-900 mb-2">Section Unavailable</h1>
+        <h1 className="text-2xl font-black text-[#123B92] mb-2">Section Unavailable</h1>
         <p className="text-slate-600 max-w-md mb-6 text-sm">
           {error || 'This section is currently in draft mode or being updated by the administrator.'}
         </p>
@@ -358,7 +358,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
               href={`https://wa.me/918098613422?text=${encodeURIComponent(`Hello ZeniTEK team, I would like to inquire about ${section.title}.`)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-3 bg-white border border-slate-300 hover:border-[#002DC2] text-slate-800 hover:text-[#002DC2] font-bold rounded-xl transition-all shadow-sm flex items-center justify-center space-x-2"
+              className="px-5 py-3 bg-white border border-slate-300 hover:border-[#002DC2] text-[#123B92] hover:text-[#002DC2] font-bold rounded-xl transition-all shadow-sm flex items-center justify-center space-x-2"
             >
               <PhoneCall className="w-4 h-4 text-[#23AC39]" />
               <span>WhatsApp Enquiry</span>
@@ -373,7 +373,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
             MNRE Approved Quality
           </span>
           <span className="inline-flex items-center text-xs font-semibold text-slate-700 bg-white/90 border border-slate-200 shadow-sm px-3 py-1 rounded-lg">
-            <Sun className="w-3.5 h-3.5 text-amber-500 mr-1.5" />
+            <Sun className="w-3.5 h-3.5 text-[#23AC39] mr-1.5" />
             100% Clean Solar Energy
           </span>
           <span className="inline-flex items-center text-xs font-semibold text-slate-700 bg-white/90 border border-slate-200 shadow-sm px-3 py-1 rounded-lg">
@@ -390,7 +390,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
             <span className="text-xs font-extrabold text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] px-3 py-1 rounded-full inline-block">
               {copy.highlightsEyebrow}
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+            <h2 className="text-2xl sm:text-3xl font-black text-[#123B92]">
               {copy.highlightsTitle}
             </h2>
           </div>
@@ -420,7 +420,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
             <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#002DC2] text-white flex items-center justify-center font-bold mx-auto">
               <FileText className="w-5 h-5" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">{copy.overviewTitle}</h2>
+            <h2 className="text-2xl sm:text-3xl font-black text-[#123B92]">{copy.overviewTitle}</h2>
             <p className="text-base sm:text-lg text-slate-600">{copy.overviewSubtitle}</p>
           </div>
 
@@ -439,7 +439,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="bg-gradient-to-br from-[#001b69] to-[#002DC2] text-white rounded-3xl p-6 sm:p-10 shadow-xl space-y-8">
             <div className="text-center max-w-3xl mx-auto space-y-3">
-              <span className="text-2xs sm:text-xs font-bold uppercase tracking-wide sm:tracking-widest text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-400/30 inline-block whitespace-nowrap">
+              <span className="text-2xs sm:text-xs font-bold uppercase tracking-wide sm:tracking-widest text-[#23AC39] bg-[#123B92]/70 px-3 py-1 rounded-full border border-[#23AC39]/40 inline-block whitespace-nowrap">
                 Live State & Central Subsidy Tool
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-white">
@@ -502,7 +502,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
               <div>
                 <div className="text-xs font-bold text-slate-300 uppercase tracking-wider">Estimated Government Assistance</div>
-                <div className="text-2xl sm:text-3xl font-black text-emerald-400 mt-1 leading-tight">
+                <div className="text-2xl sm:text-3xl font-black text-[#23AC39] mt-1 leading-tight">
                   {subsidyPercent}% Capital Subsidy Available
                 </div>
                 <p className="text-sm text-slate-300 mt-1">
@@ -532,7 +532,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
       {slug === 'crop-preservation-guide' && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">Validated Crop Dehydration Matrix</h2>
+            <h2 className="text-2xl sm:text-3xl font-black text-[#123B92]">Validated Crop Dehydration Matrix</h2>
             <p className="text-base sm:text-lg text-slate-600">Benchmark drying curves, operating temperatures, and quality results</p>
             <div className="pt-3 flex justify-center">
               <input
@@ -564,10 +564,10 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
               <tbody className="divide-y divide-slate-100 text-slate-700">
                 {filteredCrops.map((c, i) => (
                   <tr key={i} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="p-3.5 font-bold text-slate-900 min-w-[160px]">{c.crop}</td>
+                    <td className="p-3.5 font-bold text-[#123B92] min-w-[160px]">{c.crop}</td>
                     <td className="p-3.5 text-slate-600 whitespace-nowrap">{c.freshMoisture}</td>
-                    <td className="p-3.5 font-semibold text-emerald-600 whitespace-nowrap">{c.dryMoisture}</td>
-                    <td className="p-3.5 text-amber-700 font-semibold whitespace-nowrap">{c.temp}</td>
+                    <td className="p-3.5 font-semibold text-[#1A822B] whitespace-nowrap">{c.dryMoisture}</td>
+                    <td className="p-3.5 text-[#002DC2] font-semibold whitespace-nowrap">{c.temp}</td>
                     <td className="p-3.5 text-slate-600 font-medium whitespace-nowrap">{c.duration}</td>
                     <td className="p-3.5 text-slate-600 min-w-[220px]">{c.benefit}</td>
                   </tr>
@@ -582,7 +582,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
       {slug === 'technical-spec-sheets' && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">Official Specification Sheets & CAD Blueprints</h2>
+            <h2 className="text-2xl sm:text-3xl font-black text-[#123B92]">Official Specification Sheets & CAD Blueprints</h2>
             <p className="text-base sm:text-lg text-slate-600">Download complete manufacturer engineering documents in PDF format</p>
           </div>
 
@@ -594,7 +594,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
                     <span className="font-bold text-[#002DC2] bg-[#F0F4FD] px-2 py-0.5 rounded-md">PDF Spec Sheet</span>
                     <span>{b.pageCount} Pages · {b.size}</span>
                   </div>
-                  <h4 className="font-bold text-slate-900 text-base leading-snug">{b.title}</h4>
+                  <h4 className="font-bold text-[#123B92] text-base leading-snug">{b.title}</h4>
                   <p className="text-sm text-slate-500 leading-relaxed">{b.subtitle}</p>
                 </div>
                 <div className="flex items-center space-x-2 pt-2 border-t border-slate-100">
@@ -626,7 +626,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
             <span className="text-xs font-extrabold text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] px-3 py-1 rounded-full inline-block">
               {section.images.length} Photos
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">Project Field Photos & Installations</h2>
+            <h2 className="text-2xl sm:text-3xl font-black text-[#123B92]">Project Field Photos & Installations</h2>
             <p className="text-base sm:text-lg text-slate-600">Live operational systems photographed at customer sites</p>
           </div>
 
@@ -704,7 +704,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
             />
             <button
               onClick={() => setActiveImageModal(null)}
-              className="absolute -top-3 -right-3 w-8 h-8 bg-white text-slate-900 rounded-full flex items-center justify-center font-bold shadow-lg hover:bg-slate-100 cursor-pointer"
+              className="absolute -top-3 -right-3 w-8 h-8 bg-white text-[#123B92] rounded-full flex items-center justify-center font-bold shadow-lg hover:bg-slate-100 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>

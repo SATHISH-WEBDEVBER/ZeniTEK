@@ -110,7 +110,7 @@ export default function DryerModelPage() {
                 )}
               </div>
 
-              <div className="flex items-center gap-2 text-sm font-bold text-black bg-[#F0F4FD] p-3 rounded-xl border border-[#123B92]/20">
+              <div className="flex items-center gap-2 text-sm font-bold text-[#123B92] bg-[#F0F4FD] p-3 rounded-xl border border-[#123B92]/20">
                 <ShieldCheck className="w-4 h-4 text-[#002DC2] shrink-0" />
                 <span>MNRE Approved & 100% Weather Protection Guaranteed</span>
               </div>

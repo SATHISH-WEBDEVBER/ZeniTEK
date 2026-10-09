@@ -135,7 +135,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
               <div className="flex items-center justify-between p-3 rounded-xl bg-[#F0F4FD] border border-[#123B92]/20">
                 <div className="flex items-center space-x-2">
                   <ShieldCheck className="w-4 h-4 text-[#002DC2] shrink-0" />
-                  <span className="font-bold text-black text-xs">GSTIN:</span>
+                  <span className="font-bold text-[#123B92] text-xs">GSTIN:</span>
                 </div>
                 <span className="font-mono font-bold text-[#123B92] tracking-wider text-xs bg-white px-2.5 py-1 rounded border border-[#123B92]/30 shadow-sm">
                   33AACFZ8530G1Z5
@@ -149,7 +149,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 </div>
                 <div className="space-y-1 min-w-0">
                   <div className="font-bold text-black/70 text-xs uppercase tracking-wider">{t('callUs')}</div>
-                  <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-x-3 gap-y-0.5 text-black font-extrabold text-lg leading-snug">
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-x-3 gap-y-0.5 text-[#123B92] font-extrabold text-lg leading-snug">
                     <a href="tel:+918903852623" className="hover:text-[#002DC2] font-black text-[#123B92] whitespace-nowrap">+91-8903852623</a>
                     <span className="hidden sm:inline text-black/30 font-normal">|</span>
                     <a href="tel:+918098613422" className="hover:text-[#002DC2] text-[#002DC2] whitespace-nowrap">+91 80986 13422</a>
@@ -209,7 +209,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-black mb-1">{t('yourName')} *</label>
+                    <label className="block text-xs font-bold text-[#123B92] mb-1">{t('yourName')} *</label>
                     <input
                       type="text"
                       required
@@ -221,7 +221,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-black mb-1">{t('whatsappNum')} *</label>
+                    <label className="block text-xs font-bold text-[#123B92] mb-1">{t('whatsappNum')} *</label>
                     <input
                       type="tel"
                       required
@@ -234,7 +234,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-black mb-1">1. {t('userCategory')} *</label>
+                  <label className="block text-xs font-bold text-[#123B92] mb-1">1. {t('userCategory')} *</label>
                   <select
                     value={formData.clientType}
                     onChange={(e) => setFormData({ ...formData, clientType: e.target.value })}
@@ -249,7 +249,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-black mb-1">2. {t('desiredCapacity')} *</label>
+                  <label className="block text-xs font-bold text-[#123B92] mb-1">2. {t('desiredCapacity')} *</label>
                   <select
                     value={formData.capacityNeeded}
                     onChange={(e) => setFormData({ ...formData, capacityNeeded: e.target.value })}
@@ -262,7 +262,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-black mb-1">3. {t('targetCrop')} *</label>
+                  <label className="block text-xs font-bold text-[#123B92] mb-1">3. {t('targetCrop')} *</label>
                   <select
                     value={formData.cropType}
                     onChange={(e) => setFormData({ ...formData, cropType: e.target.value })}
@@ -278,7 +278,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 </div>
 
                 <div className="flex-1 flex flex-col">
-                  <label className="block text-xs font-bold text-black mb-1">{t('additionalReqs')}</label>
+                  <label className="block text-xs font-bold text-[#123B92] mb-1">{t('additionalReqs')}</label>
                   <textarea
                     rows="3"
                     placeholder="Mention location, target moisture levels, or subsidy questions..."
@@ -307,15 +307,15 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
       {/* Support Assurance Row */}
       <section className="bg-[#F0F4FD] p-6 rounded-2xl border border-[#123B92]/20 shadow-sm">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-          <div className="flex items-center justify-center gap-2 text-sm font-bold text-black">
+          <div className="flex items-center justify-center gap-2 text-sm font-bold text-[#123B92]">
             <ShieldCheck className="w-5 h-5 shrink-0 text-[#002DC2]" />
             <span className="text-balance">{t('support1')}</span>
           </div>
-          <div className="flex items-center justify-center gap-2 text-sm font-bold text-black">
+          <div className="flex items-center justify-center gap-2 text-sm font-bold text-[#123B92]">
             <CheckCircle2 className="w-5 h-5 shrink-0 text-[#002DC2]" />
             <span className="text-balance">{t('support2')}</span>
           </div>
-          <div className="flex items-center justify-center gap-2 text-sm font-bold text-black">
+          <div className="flex items-center justify-center gap-2 text-sm font-bold text-[#123B92]">
             <Building2 className="w-5 h-5 shrink-0 text-[#002DC2]" />
             <span className="text-balance">{t('support3')}</span>
           </div>
@@ -325,7 +325,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
       {/* CSR Banner */}
       <section className="bg-[#123B92] text-white p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border-2 border-[#23AC39]">
         <div className="space-y-2">
-          <span className="text-2xs font-bold text-[#8EE59D] bg-[#0A225C] px-2.5 py-0.5 rounded uppercase border border-[#23AC39]/70 inline-block">
+          <span className="text-2xs font-bold text-[#23AC39] bg-[#0A225C] px-2.5 py-0.5 rounded uppercase border border-[#23AC39]/70 inline-block">
             {t('csrBadge')}
           </span>
           <h3 className="text-2xl font-bold text-white">{t('csrTitle')}</h3>

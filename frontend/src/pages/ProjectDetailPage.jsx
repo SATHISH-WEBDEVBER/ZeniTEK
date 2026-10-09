@@ -27,11 +27,11 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
   if (!project) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center p-6 text-center space-y-4">
-        <h2 className="text-2xl font-black text-slate-900">Project Not Found</h2>
+        <h2 className="text-2xl font-black text-[#123B92]">Project Not Found</h2>
         <p className="text-sm text-slate-500">The requested solar dryer installation could not be found.</p>
         <Link
           to="/dryers"
-          className="px-6 py-2.5 bg-blue-700 text-white font-bold text-xs rounded-xl shadow hover:bg-blue-600 transition-all flex items-center space-x-2"
+          className="px-6 py-2.5 bg-[#002DC2] text-white font-bold text-xs rounded-xl shadow hover:bg-[#002DC2] transition-all flex items-center space-x-2"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to All Solar Dryers</span>
@@ -60,11 +60,11 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
         {/* Navigation & Breadcrumbs Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
           <div className="flex items-center space-x-2 text-xs">
-            <Link to="/" className="text-slate-500 hover:text-blue-700 font-semibold">Home</Link>
+            <Link to="/" className="text-slate-500 hover:text-[#002DC2] font-semibold">Home</Link>
             <span className="text-slate-400">/</span>
-            <Link to="/dryers" className="text-slate-500 hover:text-blue-700 font-semibold">Solar Dryers</Link>
+            <Link to="/dryers" className="text-slate-500 hover:text-[#002DC2] font-semibold">Solar Dryers</Link>
             <span className="text-slate-400">/</span>
-            <span className="text-blue-900 font-bold truncate max-w-[200px] sm:max-w-none">
+            <span className="text-[#123B92] font-bold truncate max-w-[200px] sm:max-w-none">
               Project {project.id}: {project.title}
             </span>
           </div>
@@ -72,7 +72,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
           <div className="flex items-center space-x-3">
             <Link
               to="/dryers"
-              className="px-4 py-2 bg-white border border-slate-300 hover:border-blue-600 text-slate-700 hover:text-blue-700 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 shadow-sm"
+              className="px-4 py-2 bg-white border border-slate-300 hover:border-blue-600 text-slate-700 hover:text-[#002DC2] rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 shadow-sm"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>{isTamil ? 'அனைத்து உலர்த்திகளுக்கும் திரும்புக' : 'Back to All Installations'}</span>
@@ -85,7 +85,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
             >
               <Share2 className="w-3.5 h-3.5" />
             </button>
-            {copied && <span className="text-xs font-bold text-green-600 animate-fade-in">Link Copied!</span>}
+            {copied && <span className="text-xs font-bold text-[#1A822B] animate-fade-in">Link Copied!</span>}
           </div>
         </div>
 
@@ -101,16 +101,16 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
               {/* Badges Header Bar (Outside and above the image) */}
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center space-x-2">
-                  <span className="px-3.5 py-1.5 bg-blue-950 text-white font-black text-xs rounded-xl shadow-sm">
+                  <span className="px-3.5 py-1.5 bg-[#123B92] text-white font-black text-xs rounded-xl shadow-sm">
                     PROJECT #{project.id}
                   </span>
-                  <span className="px-3 py-1.5 bg-emerald-700 text-white font-extrabold text-xs rounded-xl shadow-sm flex items-center space-x-1">
+                  <span className="px-3 py-1.5 bg-[#1A822B] text-white font-extrabold text-xs rounded-xl shadow-sm flex items-center space-x-1">
                     <Calendar className="w-3.5 h-3.5 mr-1" />
                     <span>COMMISSIONED {project.year}</span>
                   </span>
                 </div>
 
-                <span className="px-3 py-1.5 bg-slate-100 text-slate-800 font-bold text-xs rounded-xl border border-slate-200">
+                <span className="px-3 py-1.5 bg-slate-100 text-[#123B92] font-bold text-xs rounded-xl border border-slate-200">
                   {project.state}
                 </span>
               </div>
@@ -148,10 +148,10 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
                 <div>
-                  <span className="text-2xs font-extrabold uppercase tracking-widest text-green-700 bg-green-50 px-2.5 py-1 rounded-md border border-green-200 inline-block">
+                  <span className="text-2xs font-extrabold uppercase tracking-widest text-[#1A822B] bg-[#23AC39]/10 px-2.5 py-1 rounded-md border border-[#23AC39]/30 inline-block">
                     TARGET CROP & DEHYDRATION APPLICATION
                   </span>
-                  <h2 className="text-xl sm:text-2xl font-black text-slate-900 mt-2">
+                  <h2 className="text-xl sm:text-2xl font-black text-[#123B92] mt-2">
                     {project.application}
                   </h2>
                 </div>
@@ -177,17 +177,17 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
 
               {/* Key Highlights Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                <div className="p-3 bg-blue-50/60 rounded-xl border border-blue-100">
-                  <div className="text-2xs font-bold uppercase text-blue-700">Weather Defense</div>
-                  <div className="text-xs font-extrabold text-slate-900 mt-0.5">100% Rain & Dust Sealed</div>
+                <div className="p-3 bg-[#F0F4FD] rounded-xl border border-[#002DC2]/20">
+                  <div className="text-2xs font-bold uppercase text-[#002DC2]">Weather Defense</div>
+                  <div className="text-xs font-extrabold text-[#123B92] mt-0.5">100% Rain & Dust Sealed</div>
                 </div>
-                <div className="p-3 bg-green-50/60 rounded-xl border border-green-100">
-                  <div className="text-2xs font-bold uppercase text-green-700">Clean Tech</div>
-                  <div className="text-xs font-extrabold text-slate-900 mt-0.5">Zero Fuel / Solar Driven</div>
+                <div className="p-3 bg-[#23AC39]/10 rounded-xl border border-[#23AC39]/30">
+                  <div className="text-2xs font-bold uppercase text-[#1A822B]">Clean Tech</div>
+                  <div className="text-xs font-extrabold text-[#123B92] mt-0.5">Zero Fuel / Solar Driven</div>
                 </div>
-                <div className="p-3 bg-amber-50/60 rounded-xl border border-amber-100">
-                  <div className="text-2xs font-bold uppercase text-amber-700">Value Gain</div>
-                  <div className="text-xs font-extrabold text-slate-900 mt-0.5">+25% to 40% Grade Premium</div>
+                <div className="p-3 bg-[#F0F4FD] rounded-xl border border-[#002DC2]/20">
+                  <div className="text-2xs font-bold uppercase text-[#002DC2]">Value Gain</div>
+                  <div className="text-xs font-extrabold text-[#123B92] mt-0.5">+25% to 40% Grade Premium</div>
                 </div>
               </div>
             </div>
@@ -201,14 +201,14 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-lg space-y-6">
               
               <div>
-                <span className="text-2xs font-extrabold uppercase tracking-widest text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200 inline-block">
+                <span className="text-2xs font-extrabold uppercase tracking-widest text-[#002DC2] bg-[#F0F4FD] px-2.5 py-1 rounded-md border border-[#002DC2]/20 inline-block">
                   INSTALLATION SPECIFICATIONS
                 </span>
-                <h1 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2">
+                <h1 className="text-2xl sm:text-3xl font-black text-[#123B92] mt-2">
                   {project.title}
                 </h1>
                 <div className="flex items-center text-xs font-semibold text-slate-500 mt-1">
-                  <MapPin className="w-4 h-4 text-rose-500 mr-1 shrink-0" />
+                  <MapPin className="w-4 h-4 text-[#002DC2] mr-1 shrink-0" />
                   <span>{project.locality}</span>
                 </div>
               </div>
@@ -218,24 +218,24 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
                 
                 <div className="p-3.5 flex items-center justify-between bg-slate-50/70">
                   <span className="font-bold text-slate-500">Project Index ID</span>
-                  <span className="font-mono font-black text-blue-900 text-sm">#{project.id}</span>
+                  <span className="font-mono font-black text-[#123B92] text-sm">#{project.id}</span>
                 </div>
 
                 <div className="p-3.5 flex items-center justify-between">
                   <span className="font-bold text-slate-500">Dryer / Model Code</span>
-                  <span className="font-mono font-bold text-xs text-blue-800 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-200">
+                  <span className="font-mono font-bold text-xs text-[#123B92] bg-[#F0F4FD] px-2.5 py-1 rounded-lg border border-[#002DC2]/20">
                     {project.dryerCode}
                   </span>
                 </div>
 
                 <div className="p-3.5 flex items-center justify-between bg-slate-50/70">
                   <span className="font-bold text-slate-500">Year Commissioned</span>
-                  <span className="font-extrabold text-emerald-700">{project.year}</span>
+                  <span className="font-extrabold text-[#1A822B]">{project.year}</span>
                 </div>
 
                 <div className="p-3.5 flex items-center justify-between">
                   <span className="font-bold text-slate-500">Sector / Category</span>
-                  <span className="font-bold text-slate-800">{project.category}</span>
+                  <span className="font-bold text-[#123B92]">{project.category}</span>
                 </div>
 
                 <div className="p-3.5 flex items-center justify-between bg-slate-50/70">
@@ -245,7 +245,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
 
                 <div className="p-3.5 flex items-center justify-between">
                   <span className="font-bold text-slate-500">State / Region</span>
-                  <span className="font-bold text-slate-900">{project.state}, India</span>
+                  <span className="font-bold text-[#123B92]">{project.state}, India</span>
                 </div>
 
               </div>
@@ -253,15 +253,15 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
               {/* Quality & Subsidy Badges */}
               <div className="space-y-2 pt-1 text-xs">
                 <div className="flex items-center text-slate-700 font-semibold">
-                  <CheckCircle2 className="w-4 h-4 text-green-600 mr-2 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#1A822B] mr-2 shrink-0" />
                   <span>MNRE Approved Polyhouse Design</span>
                 </div>
                 <div className="flex items-center text-slate-700 font-semibold">
-                  <CheckCircle2 className="w-4 h-4 text-green-600 mr-2 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#1A822B] mr-2 shrink-0" />
                   <span>Eligible for 40% – 60% Govt Subsidy (NABARD / Agri)</span>
                 </div>
                 <div className="flex items-center text-slate-700 font-semibold">
-                  <CheckCircle2 className="w-4 h-4 text-green-600 mr-2 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#1A822B] mr-2 shrink-0" />
                   <span>Turnkey On-Farm Erection & Operator Training</span>
                 </div>
               </div>
@@ -269,13 +269,13 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
               {/* Primary Call to Action Box */}
               <div className="p-5 bg-gradient-to-br from-blue-900 via-blue-800 to-green-800 text-white rounded-2xl space-y-4 shadow-md">
                 <div className="space-y-1">
-                  <div className="text-xs font-bold uppercase tracking-wider text-green-300">
+                  <div className="text-xs font-bold uppercase tracking-wider text-[#23AC39]">
                     GET A QUOTE FOR THIS SETUP
                   </div>
                   <div className="text-sm font-extrabold">
                     Want an installation like {project.title}?
                   </div>
-                  <p className="text-sm text-blue-100">
+                  <p className="text-sm text-white/85">
                     Receive customized capacity sizing, subsidy eligibility check, and factory-direct pricing on WhatsApp.
                   </p>
                 </div>
@@ -286,7 +286,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
                     cropType: project.application,
                     district: project.locality
                   })}
-                  className="w-full py-3.5 bg-green-500 hover:bg-green-400 text-slate-950 font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 hover:scale-[1.02]"
+                  className="w-full py-3.5 bg-[#23AC39] hover:bg-[#23AC39] text-[#123B92] font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 hover:scale-[1.02]"
                 >
                   <span>Request Subsidy & Price Quote</span>
                   <ArrowRight className="w-4 h-4" />
@@ -296,7 +296,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
                   href="tel:+918098613422"
                   className="w-full py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-2 border border-white/20"
                 >
-                  <PhoneCall className="w-3.5 h-3.5 text-green-300" />
+                  <PhoneCall className="w-3.5 h-3.5 text-[#23AC39]" />
                   <span>Call: +91 80986 13422</span>
                 </a>
               </div>
@@ -307,7 +307,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
             <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex items-center justify-between text-xs">
               <button
                 onClick={() => navigate(`/dryers/${prevProject.id}`)}
-                className="flex items-center space-x-1.5 font-bold text-slate-700 hover:text-blue-700 transition-colors"
+                className="flex items-center space-x-1.5 font-bold text-slate-700 hover:text-[#002DC2] transition-colors"
               >
                 <ChevronLeft className="w-4 h-4" />
                 <span className="hidden sm:inline">Previous:</span>
@@ -318,7 +318,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
 
               <button
                 onClick={() => navigate(`/dryers/${nextProject.id}`)}
-                className="flex items-center space-x-1.5 font-bold text-slate-700 hover:text-blue-700 transition-colors"
+                className="flex items-center space-x-1.5 font-bold text-slate-700 hover:text-[#002DC2] transition-colors"
               >
                 <span>#{nextProject.id} {nextProject.title}</span>
                 <span className="hidden sm:inline">:Next</span>

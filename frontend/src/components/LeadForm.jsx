@@ -134,40 +134,40 @@ export default function LeadForm({ prefill }) {
       <form onSubmit={handleSubmit} className="p-5 sm:p-8 space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold text-black mb-1">
+            <label className="block text-xs font-bold text-[#123B92] mb-1">
               {t('yourName')} <span className="text-[#002DC2]">*</span>
             </label>
             <input type="text" name="name" required placeholder="e.g. Ramesh Kumar" value={formData.name} onChange={handleChange} className={inputClass} />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-black mb-1">
+            <label className="block text-xs font-bold text-[#123B92] mb-1">
               {t('whatsappNum')} <span className="text-[#002DC2]">*</span>
             </label>
             <input type="tel" name="phone" required placeholder="+91 98765 43210" value={formData.phone} onChange={handleChange} className={inputClass} />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-black mb-1">State *</label>
+            <label className="block text-xs font-bold text-[#123B92] mb-1">State *</label>
             <input type="text" name="state" required placeholder="e.g. Tamil Nadu" value={formData.state} onChange={handleChange} className={inputClass} />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-black mb-1">
+            <label className="block text-xs font-bold text-[#123B92] mb-1">
               {t('districtCity')} <span className="text-[#002DC2]">*</span>
             </label>
             <input type="text" name="district" required placeholder="e.g. Pollachi / Coimbatore" value={formData.district} onChange={handleChange} className={inputClass} />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-black mb-1">{t('userCategory')} *</label>
+            <label className="block text-xs font-bold text-[#123B92] mb-1">{t('userCategory')} *</label>
             <select name="clientType" value={formData.clientType} onChange={handleChange} className={`${inputClass} cursor-pointer`}>
               {CLIENT_TYPES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
             </select>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-black mb-1">{t('targetCrop')} *</label>
+            <label className="block text-xs font-bold text-[#123B92] mb-1">{t('targetCrop')} *</label>
             <select name="cropType" value={formData.cropType} onChange={handleChange} className={`${inputClass} cursor-pointer`}>
               {CROPS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
             </select>
@@ -175,14 +175,14 @@ export default function LeadForm({ prefill }) {
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-black mb-1">{t('desiredCapacity')} *</label>
+          <label className="block text-xs font-bold text-[#123B92] mb-1">{t('desiredCapacity')} *</label>
           <select name="capacityNeeded" value={formData.capacityNeeded} onChange={handleChange} className={`${inputClass} cursor-pointer`}>
             {CAPACITIES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-black mb-1">{t('additionalReqs')}</label>
+          <label className="block text-xs font-bold text-[#123B92] mb-1">{t('additionalReqs')}</label>
           <textarea
             name="message"
             rows="4"

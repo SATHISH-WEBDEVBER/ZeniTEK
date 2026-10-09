@@ -45,7 +45,7 @@ export default function BrochurePage() {
             <a href={brochure.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-3 bg-white border border-[#123B92]/25 hover:border-[#002DC2] text-[#123B92] rounded-xl text-sm font-bold">
               <ExternalLink className="w-4 h-4" /> Open Original PDF
             </a>
-            <a href={shareUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-bold">
+            <a href={shareUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-3 bg-[#23AC39] hover:bg-[#1A822B] text-white rounded-xl text-sm font-bold">
               <Share2 className="w-4 h-4" /> Share on WhatsApp
             </a>
           </div>

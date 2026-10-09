@@ -304,7 +304,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
               Roots & Engineering DNA
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92] tracking-tight leading-tight">
               Pioneering Renewable Energy <br />
               <span className="text-[#002DC2]">From Erode to All India</span>
             </h2>
@@ -317,10 +317,10 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
               <div className="space-y-4 text-slate-700 text-base sm:text-lg leading-relaxed font-normal">
                 <p>
-                  Originally established in <strong className="text-slate-950 font-bold">2017</strong> under the name <strong className="text-slate-950 font-bold">Smart Bricks Construction</strong>, our early initiatives manufactured eco-friendly building materials alongside localized solar power systems.
+                  Originally established in <strong className="text-[#123B92] font-bold">2017</strong> under the name <strong className="text-[#123B92] font-bold">Smart Bricks Construction</strong>, our early initiatives manufactured eco-friendly building materials alongside localized solar power systems.
                 </p>
                 <p>
-                  In <strong className="text-slate-950 font-bold">2021</strong>, we transformed into <strong className="text-slate-950 font-bold">ZeniTEK</strong> in Erode, shifting our sole focus to designing, manufacturing, erecting, and servicing advanced solar thermal systems and clean agricultural technologies.
+                  In <strong className="text-[#123B92] font-bold">2021</strong>, we transformed into <strong className="text-[#123B92] font-bold">ZeniTEK</strong> in Erode, shifting our sole focus to designing, manufacturing, erecting, and servicing advanced solar thermal systems and clean agricultural technologies.
                 </p>
               </div>
 
@@ -331,7 +331,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                   <span className="text-balance">Technical Gratitude & Mentorship</span>
                 </div>
                 <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium">
-                  We express our deepest gratitude to <strong className="text-slate-950 font-black">Shri. S.K. Singh</strong> (Former Director of Solar Thermal Energy, NISE) and <strong className="text-slate-950 font-black">Mr. John Mitchell</strong> (Technical Director of Pro-Target, Germany) for their invaluable guidance in developing our first commercial parabolic trough collector.
+                  We express our deepest gratitude to <strong className="text-[#123B92] font-black">Shri. S.K. Singh</strong> (Former Director of Solar Thermal Energy, NISE) and <strong className="text-[#123B92] font-black">Mr. John Mitchell</strong> (Technical Director of Pro-Target, Germany) for their invaluable guidance in developing our first commercial parabolic trough collector.
                 </p>
               </div>
 
@@ -361,16 +361,16 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 <div className="absolute top-4 left-4 sm:top-5 sm:left-5 bg-white/95 backdrop-blur-md px-4 sm:px-5 py-3 rounded-2xl border border-white/60 shadow-xl flex items-center space-x-3.5">
                   <img src="/emblem.png" alt="ZeniTEK Emblem" className="w-10 h-10 object-contain" />
                   <div>
-                    <div className="text-sm font-black text-slate-900">ZeniTEK R&D Hub</div>
+                    <div className="text-sm font-black text-[#123B92]">ZeniTEK R&D Hub</div>
                     <div className="text-xs font-bold text-slate-500">Erode, Tamil Nadu</div>
                   </div>
                 </div>
 
                 {/* Floating Project Pill */}
                 <div className="absolute bottom-4 inset-x-4 sm:bottom-5 sm:inset-x-5 bg-slate-950/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-white border border-white/10 shadow-2xl">
-                  <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 text-xs sm:text-sm font-bold text-emerald-400 pb-2">
+                  <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 text-xs sm:text-sm font-bold text-[#23AC39] pb-2">
                     <span className="whitespace-nowrap">Field Verified System</span>
-                    <span className="bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full text-xs font-black whitespace-nowrap">
+                    <span className="bg-[#23AC39]/20 text-[#23AC39] px-3 py-1 rounded-full text-xs font-black whitespace-nowrap">
                       Patented Aerodynamics
                     </span>
                   </div>
@@ -395,7 +395,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
               Core Engineering Focus
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92] tracking-tight">
               What We Do
             </h2>
             <p className="text-base sm:text-lg lg:text-xl text-slate-700 font-medium">
@@ -431,7 +431,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     </span>
 
                     <div className="absolute bottom-4 inset-x-4 sm:bottom-5 sm:inset-x-5 text-white">
-                      <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-emerald-300 text-xs sm:text-sm font-bold mb-1.5">
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[#23AC39] text-xs sm:text-sm font-bold mb-1.5">
                         <Icon className="w-4 h-4 shrink-0" />
                         <span className="text-white font-black whitespace-nowrap">{domain.metric}</span>
                         <span>{domain.metricLabel}</span>
@@ -451,7 +451,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     {/* Bullet Specs List */}
                     <div className="space-y-3 pt-2 border-t border-slate-100">
                       {domain.specs.map((item, idx) => (
-                        <div key={idx} className="flex items-center space-x-3 text-sm sm:text-base font-bold text-slate-900">
+                        <div key={idx} className="flex items-center space-x-3 text-sm sm:text-base font-bold text-[#123B92]">
                           <div className="w-5 h-5 rounded-full bg-[#002DC2]/15 text-[#002DC2] flex items-center justify-center shrink-0">
                             <Check className="w-3.5 h-3.5 stroke-[3]" />
                           </div>
@@ -489,7 +489,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
               Installed Projects Portfolio
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92] tracking-tight">
               Landmark Installations & Test Rigs
             </h2>
 
@@ -562,7 +562,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 {/* Content with Large Legible Font */}
                 <div className="p-7 space-y-4 flex-1 flex flex-col justify-between">
                   <div className="space-y-3">
-                    <h3 className="text-lg sm:text-xl font-black text-slate-900 leading-snug group-hover:text-[#002DC2] transition-colors">
+                    <h3 className="text-lg sm:text-xl font-black text-[#123B92] leading-snug group-hover:text-[#002DC2] transition-colors">
                       {proj.title}
                     </h3>
 
@@ -571,7 +571,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                       <span>{proj.location}</span>
                     </div>
 
-                    <div className="text-xs sm:text-sm font-bold text-blue-800 bg-blue-50 px-3 py-1.5 rounded-xl inline-block">
+                    <div className="text-xs sm:text-sm font-bold text-[#123B92] bg-[#F0F4FD] px-3 py-1.5 rounded-xl inline-block">
                       {proj.client}
                     </div>
 
@@ -607,7 +607,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
               Trusted Institutional Deployments
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92] tracking-tight">
               Academic & Industrial Partners
             </h2>
             <p className="text-base sm:text-lg lg:text-xl text-slate-700 font-medium">
@@ -617,7 +617,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
           {/* Academic Partners Continuous Marquee Rail */}
           <div className="space-y-5">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center space-x-2.5 text-sm sm:text-base lg:text-lg font-black uppercase tracking-wider text-slate-800 text-center">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center space-x-2.5 text-sm sm:text-base lg:text-lg font-black uppercase tracking-wider text-[#123B92] text-center">
               <GraduationCap className="w-6 h-6 text-[#002DC2]" />
               <span>Academic Institutions</span>
             </div>
@@ -647,7 +647,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                         <span className="text-xs sm:text-sm font-bold text-[#002DC2] uppercase tracking-wider block truncate">
                           {client.tag}
                         </span>
-                        <div className="text-lg sm:text-xl font-black text-slate-900 truncate mt-1">
+                        <div className="text-lg sm:text-xl font-black text-[#123B92] truncate mt-1">
                           {client.name}
                         </div>
                         <div className="text-xs sm:text-sm text-slate-600 font-medium line-clamp-2 leading-snug mt-1">
@@ -677,7 +677,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                         <span className="text-xs sm:text-sm font-bold text-[#002DC2] uppercase tracking-wider block truncate">
                           {client.tag}
                         </span>
-                        <div className="text-lg sm:text-xl font-black text-slate-900 truncate mt-1">
+                        <div className="text-lg sm:text-xl font-black text-[#123B92] truncate mt-1">
                           {client.name}
                         </div>
                         <div className="text-xs sm:text-sm text-slate-600 font-medium line-clamp-2 leading-snug mt-1">
@@ -693,7 +693,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
           {/* Industry Clients Continuous Marquee Rail */}
           <div className="space-y-5 pt-5">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center space-x-2.5 text-sm sm:text-base lg:text-lg font-black uppercase tracking-wider text-slate-800 text-center">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center space-x-2.5 text-sm sm:text-base lg:text-lg font-black uppercase tracking-wider text-[#123B92] text-center">
               <Factory className="w-6 h-6 text-[#23AC39]" />
               <span>Industry Clients & Mentors</span>
             </div>
@@ -720,10 +720,10 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <span className="text-xs sm:text-sm font-bold text-[#23AC39] uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block truncate">
+                        <span className="text-xs sm:text-sm font-bold text-[#23AC39] uppercase tracking-wider bg-[#23AC39]/10 px-2.5 py-0.5 rounded-full inline-block truncate">
                           {client.tag}
                         </span>
-                        <div className="text-lg sm:text-xl font-black text-slate-900 truncate mt-1.5">
+                        <div className="text-lg sm:text-xl font-black text-[#123B92] truncate mt-1.5">
                           {client.name}
                         </div>
                         <div className="text-xs sm:text-sm text-slate-600 font-medium line-clamp-2 leading-snug mt-1">
@@ -750,10 +750,10 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <span className="text-xs sm:text-sm font-bold text-[#23AC39] uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block truncate">
+                        <span className="text-xs sm:text-sm font-bold text-[#23AC39] uppercase tracking-wider bg-[#23AC39]/10 px-2.5 py-0.5 rounded-full inline-block truncate">
                           {client.tag}
                         </span>
-                        <div className="text-lg sm:text-xl font-black text-slate-900 truncate mt-1.5">
+                        <div className="text-lg sm:text-xl font-black text-[#123B92] truncate mt-1.5">
                           {client.name}
                         </div>
                         <div className="text-xs sm:text-sm text-slate-600 font-medium line-clamp-2 leading-snug mt-1">
@@ -779,7 +779,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
               Authentic Visual Proof
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92] tracking-tight">
               Real Field Photo Reel
             </h2>
             <p className="text-base sm:text-lg text-slate-700 font-medium">
@@ -819,7 +819,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-blue-500/20 rounded-full blur-2xl pointer-events-none" />
 
             <div className="relative z-10 text-center max-w-3xl mx-auto space-y-3 mb-10">
-              <span className="text-xs sm:text-sm font-black text-emerald-400 uppercase tracking-wider bg-white/10 px-4 py-1.5 rounded-full inline-block">
+              <span className="text-xs sm:text-sm font-black text-[#23AC39] uppercase tracking-wider bg-white/10 px-4 py-1.5 rounded-full inline-block">
                 Direct EPC Consultation
               </span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
@@ -836,18 +836,18 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 {/* Registered Address & GST Info */}
                 <div className="flex flex-col sm:flex-row sm:flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm sm:text-base text-slate-200 font-semibold">
                   <div className="flex items-center space-x-2.5">
-                    <MapPin className="w-5 h-5 text-emerald-400 shrink-0" />
+                    <MapPin className="w-5 h-5 text-[#23AC39] shrink-0" />
                     <span className="whitespace-nowrap">Erode, Tamil Nadu — 638 112</span>
                   </div>
                   <a
                     href="tel:+918903852623"
-                    className="flex items-center space-x-2.5 hover:text-emerald-300 transition-colors"
+                    className="flex items-center space-x-2.5 hover:text-[#23AC39] transition-colors"
                   >
-                    <Phone className="w-5 h-5 text-emerald-400 shrink-0" />
+                    <Phone className="w-5 h-5 text-[#23AC39] shrink-0" />
                     <span>+91-8903852623</span>
                   </a>
                   <div className="flex items-center space-x-2.5">
-                    <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-[#23AC39] shrink-0" />
                     <span>GST: 33AACFZ8530G1Z5</span>
                   </div>
                 </div>
@@ -868,7 +868,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     href="tel:+918903852623"
                     className="px-3 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm uppercase tracking-wide whitespace-nowrap rounded-2xl border border-white/20 hover:border-white/40 transition-all flex items-center justify-center space-x-2 text-center hover:scale-[1.01] shadow-sm"
                   >
-                    <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <Phone className="w-4 h-4 text-[#23AC39] shrink-0" />
                     <span>Call Directly</span>
                   </a>
 
@@ -876,7 +876,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     href="https://wa.me/918903852623?text=Hello%20ZeniTEK%20Team,%20I%20would%20like%20to%20consult%20regarding%20solar%20thermal%20and%20drying%20solutions."
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-3.5 bg-[#25D366] hover:bg-[#20ba59] text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wide whitespace-nowrap rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2 text-center hover:scale-[1.01]"
+                    className="px-3 py-3.5 bg-[#25D366] hover:bg-[#20ba59] text-[#123B92] font-black text-xs sm:text-sm uppercase tracking-wide whitespace-nowrap rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2 text-center hover:scale-[1.01]"
                   >
                     <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
                       <path d="M12.031 2C6.495 2 2 6.494 2 12.03c0 1.769.46 3.498 1.334 5.018L2 22l5.122-1.342a10.016 10.016 0 004.909 1.272h.004c5.535 0 10.03-4.494 10.03-10.03A10.03 10.03 0 0012.031 2zm0 18.366h-.003a8.318 8.318 0 01-4.238-1.163l-.304-.18-3.148.825.84-3.068-.198-.315A8.32 8.32 0 013.7 12.03c0-4.595 3.738-8.332 8.334-8.332a8.3 8.3 0 015.892 2.44 8.3 8.3 0 012.44 5.892c0 4.596-3.738 8.336-8.335 8.336zm4.568-6.242c-.25-.125-1.48-.73-1.71-.813-.23-.083-.398-.125-.565.125-.168.25-.65.813-.797.98-.146.166-.293.187-.543.062a6.93 6.93 0 01-2.02-1.246 7.64 7.64 0 01-1.398-1.74c-.146-.25-.016-.385.109-.51.112-.112.25-.292.375-.438.125-.146.167-.25.25-.417.084-.167.042-.313-.02-.438-.063-.125-.564-1.36-.773-1.862-.204-.49-.41-.423-.564-.431-.146-.008-.313-.01-.48-.01-.167 0-.438.063-.667.313-.23.25-.875.855-.875 2.085s.896 2.418 1.021 2.585c.125.167 1.76 2.688 4.264 3.77.596.257 1.061.411 1.424.526.598.19 1.143.163 1.573.099.48-.072 1.48-.605 1.688-1.189.209-.584.209-1.084.146-1.189-.062-.104-.23-.166-.48-.291z" />

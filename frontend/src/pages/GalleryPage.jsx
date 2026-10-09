@@ -163,7 +163,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 cursor-pointer ${
                   activeCategory === cat.id
                     ? 'bg-[#002DC2] text-white shadow-md ring-2 ring-[#23AC39]'
-                    : 'bg-white text-black hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/20'
+                    : 'bg-white text-[#123B92] hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/20'
                 }`}
               >
                 <span>{cat.label}</span>
@@ -287,7 +287,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-[#123B92] text-white rounded-3xl p-6 sm:p-10 shadow-xl flex flex-col items-center gap-6 border-2 border-[#23AC39]">
             <div className="text-center max-w-3xl mx-auto space-y-3">
-              <span className="inline-block max-w-full text-2xs leading-snug font-bold text-[#9BF0A8] bg-white/10 px-3 py-1 rounded-2xl uppercase tracking-wider border border-[#9BF0A8]/60">
+              <span className="inline-block max-w-full text-2xs leading-snug font-bold text-[#23AC39] bg-white/10 px-3 py-1 rounded-2xl uppercase tracking-wider border border-[#23AC39]/60">
                 Turnkey Manufacturing & Field Commissioning
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">

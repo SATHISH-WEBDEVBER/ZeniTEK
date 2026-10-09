@@ -10,7 +10,7 @@ export const brochures = [
     pageCount: 10,
     pages: Array.from({ length: 10 }, (_, i) => `/brochures/pages/solar-dryer/page-${i + 1}.jpg`),
     badge: 'Commercial',
-    badgeColor: 'bg-blue-50 text-[#002DC2] border-blue-200'
+    badgeColor: 'bg-[#F0F4FD] text-[#123B92] border-[#123B92]/30'
   },
   {
     id: 'household-box',
@@ -22,7 +22,7 @@ export const brochures = [
     pageCount: 3,
     pages: Array.from({ length: 3 }, (_, i) => `/brochures/pages/household-box/page-${i + 1}.jpg`),
     badge: 'Domestic',
-    badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200'
+    badgeColor: 'bg-[#23AC39]/10 text-[#1A822B] border-[#23AC39]/30'
   },
   {
     id: 'entrepreneur-box',
@@ -34,6 +34,6 @@ export const brochures = [
     pageCount: 4,
     pages: Array.from({ length: 4 }, (_, i) => `/brochures/pages/entrepreneur-box/page-${i + 1}.jpg`),
     badge: 'Business',
-    badgeColor: 'bg-amber-50 text-amber-700 border-amber-200'
+    badgeColor: 'bg-[#002DC2]/10 text-[#002DC2] border-[#002DC2]/30'
   }
 ];

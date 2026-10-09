@@ -13,7 +13,7 @@ function WrapSelect({ value, onChange, options, ariaLabel }) {
   const current = options.find(([v]) => v === value);
   return (
     <div className="relative w-full bg-[#F0F4FD] border border-[#123B92]/30 rounded-xl focus-within:border-[#002DC2] focus-within:ring-2 focus-within:ring-[#002DC2]/20">
-      <div aria-hidden="true" className="pl-3.5 pr-9 py-2.5 text-sm font-bold text-slate-900 leading-snug">
+      <div aria-hidden="true" className="pl-3.5 pr-9 py-2.5 text-sm font-bold text-[#123B92] leading-snug">
         {(current ? current[1] : value).replace(/\(([^)]{1,16})\)/g, (m) => m.replace(/ /g, ' '))}
       </div>
       <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#123B92] pointer-events-none" />
@@ -214,10 +214,10 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
             {/* Calculated Result Box */}
             <div className="bg-gradient-to-br from-[#123B92] via-[#0D2E73] to-[#0A225C] text-white p-5 rounded-2xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 shadow-lg">
               <div>
-                <div className="text-xs text-blue-200 uppercase font-bold tracking-wider">
+                <div className="text-xs text-white/85 uppercase font-bold tracking-wider">
                   Estimated Subsidy Coverage
                 </div>
-                <div className="text-2xl sm:text-3xl font-black text-green-300 leading-tight text-balance">
+                <div className="text-2xl sm:text-3xl font-black text-[#23AC39] leading-tight text-balance">
                   {subsidyPercent}% Government Assistance
                 </div>
                 <div className="text-sm text-white/80 mt-1">
@@ -261,7 +261,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
               <div key={i} className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-md hover:shadow-xl transition-all space-y-4">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <span className="text-xs font-black uppercase tracking-normal sm:tracking-wide text-green-800 bg-green-50 border border-green-300 px-2.5 py-1 rounded-md inline-block max-w-full leading-snug text-balance">
+                    <span className="text-xs font-black uppercase tracking-normal sm:tracking-wide text-[#1A822B] bg-[#23AC39]/10 border border-[#23AC39]/30 px-2.5 py-1 rounded-md inline-block max-w-full leading-snug text-balance">
                       {scheme.coverage}
                     </span>
                     <h3 className="text-lg font-black text-[#123B92] mt-2">
@@ -329,7 +329,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
               <h3 className="text-xl sm:text-2xl font-black text-white">
                 Have questions about your state subsidy or paperwork?
               </h3>
-              <p className="text-sm text-blue-200">
+              <p className="text-sm text-white/85">
                 Speak directly with ZeniTEK's Government Scheme Documentation Specialist today.
               </p>
             </div>

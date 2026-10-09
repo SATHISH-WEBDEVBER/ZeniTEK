@@ -53,19 +53,19 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
           <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
             <button
               onClick={() => setActiveTab('agri')}
-              className={`inline-flex items-center gap-2 max-w-full px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold text-left transition-all cursor-pointer ${activeTab === 'agri' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#23AC39]' : 'bg-white text-black hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
+              className={`inline-flex items-center gap-2 max-w-full px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold text-left transition-all cursor-pointer ${activeTab === 'agri' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#23AC39]' : 'bg-white text-[#123B92] hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
             >
               {renderTabLabel(t('tabAgri'))}
             </button>
             <button
               onClick={() => setActiveTab('marine')}
-              className={`inline-flex items-center gap-2 max-w-full px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold text-left transition-all cursor-pointer ${activeTab === 'marine' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#23AC39]' : 'bg-white text-black hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
+              className={`inline-flex items-center gap-2 max-w-full px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold text-left transition-all cursor-pointer ${activeTab === 'marine' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#23AC39]' : 'bg-white text-[#123B92] hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
             >
               {renderTabLabel(t('tabMarine'))}
             </button>
             <button
               onClick={() => setActiveTab('industrial')}
-              className={`inline-flex items-center gap-2 max-w-full px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold text-left transition-all cursor-pointer ${activeTab === 'industrial' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#23AC39]' : 'bg-white text-black hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
+              className={`inline-flex items-center gap-2 max-w-full px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold text-left transition-all cursor-pointer ${activeTab === 'industrial' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#23AC39]' : 'bg-white text-[#123B92] hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
             >
               {renderTabLabel(t('tabIndustrial'))}
             </button>

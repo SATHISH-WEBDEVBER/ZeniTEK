@@ -58,7 +58,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
     return (
       <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
         <div className="text-center space-y-4 max-w-md bg-white p-8 rounded-3xl border border-slate-200 shadow-md">
-          <h2 className="text-2xl font-bold text-slate-900">Installation Not Found</h2>
+          <h2 className="text-2xl font-bold text-[#123B92]">Installation Not Found</h2>
           <p className="text-sm text-slate-600">The requested installation photo detail could not be found.</p>
           <Link
             to="/gallery"
@@ -97,9 +97,9 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center min-w-0 space-x-2 text-xs font-semibold text-slate-500 py-1">
-              <Link to="/" className="hover:text-blue-700 whitespace-nowrap shrink-0">Home</Link>
+              <Link to="/" className="hover:text-[#002DC2] whitespace-nowrap shrink-0">Home</Link>
               <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-              <Link to="/gallery" className="hover:text-blue-700 whitespace-nowrap shrink-0">Authentic Gallery</Link>
+              <Link to="/gallery" className="hover:text-[#002DC2] whitespace-nowrap shrink-0">Authentic Gallery</Link>
               <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
               <span className="text-[#002DC2] font-bold truncate min-w-0 max-w-xs" title={item.title}>{item.title}</span>
             </div>
@@ -114,7 +114,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
               </button>
               <Link
                 to="/gallery"
-                className="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-800 flex items-center space-x-1.5 transition-all"
+                className="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-[#123B92] flex items-center space-x-1.5 transition-all"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>All Installations</span>
@@ -135,7 +135,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                 {item.categoryLabel}
               </span>
               {item.productModel && (
-                <span className="bg-green-100 text-green-800 font-extrabold text-xs px-3 py-1 rounded-full border border-green-200">
+                <span className="bg-[#23AC39]/10 text-[#1A822B] font-extrabold text-xs px-3 py-1 rounded-full border border-[#23AC39]/30">
                   {item.productModel}
                 </span>
               )}
@@ -245,49 +245,49 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
 
                 {/* Specifications Grid */}
                 <div className="border-t border-slate-100 pt-5 space-y-3">
-                  <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">
+                  <h3 className="text-xs font-black text-[#123B92] uppercase tracking-wider">
                     Engineering Specifications
                   </h3>
 
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
                       <div className="text-2xs font-bold text-slate-400 uppercase">Model Series</div>
-                      <div className="font-extrabold text-slate-900 mt-0.5">{item.productModel}</div>
+                      <div className="font-extrabold text-[#123B92] mt-0.5">{item.productModel}</div>
                     </div>
 
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
                       <div className="text-2xs font-bold text-slate-400 uppercase">Batch Capacity</div>
-                      <div className="font-extrabold text-blue-700 mt-0.5">{keepParens(item.capacity)}</div>
+                      <div className="font-extrabold text-[#002DC2] mt-0.5">{keepParens(item.capacity)}</div>
                     </div>
 
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
                       <div className="text-2xs font-bold text-slate-400 uppercase">Footprint / Size</div>
-                      <div className="font-extrabold text-slate-900 mt-0.5">{keepParens(item.dimensions)}</div>
+                      <div className="font-extrabold text-[#123B92] mt-0.5">{keepParens(item.dimensions)}</div>
                     </div>
 
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
                       <div className="text-2xs font-bold text-slate-400 uppercase">Primary Crops</div>
-                      <div className="font-extrabold text-green-700 mt-0.5 break-words">{item.crop}</div>
+                      <div className="font-extrabold text-[#1A822B] mt-0.5 break-words">{item.crop}</div>
                     </div>
 
                     {item.dryingTime && (
                       <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
                         <div className="text-2xs font-bold text-slate-400 uppercase">Drying Time</div>
-                        <div className="font-extrabold text-slate-900 mt-0.5">{item.dryingTime}</div>
+                        <div className="font-extrabold text-[#123B92] mt-0.5">{item.dryingTime}</div>
                       </div>
                     )}
 
                     {item.solarPV && (
                       <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
                         <div className="text-2xs font-bold text-slate-400 uppercase">Solar Power</div>
-                        <div className="font-extrabold text-slate-900 mt-0.5 break-words">{keepParens(item.solarPV)}</div>
+                        <div className="font-extrabold text-[#123B92] mt-0.5 break-words">{keepParens(item.solarPV)}</div>
                       </div>
                     )}
 
                     {item.temperatureRange && (
                       <div className="col-span-2 p-3 bg-slate-50 rounded-2xl border border-slate-200">
                         <div className="text-2xs font-bold text-slate-400 uppercase">Operating Temperature</div>
-                        <div className="font-extrabold text-slate-900 mt-0.5">{item.temperatureRange}</div>
+                        <div className="font-extrabold text-[#123B92] mt-0.5">{item.temperatureRange}</div>
                       </div>
                     )}
 
@@ -341,8 +341,8 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
       <section className="py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <span className="text-xs font-bold text-blue-700 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full border border-blue-200 inline-flex items-center">
-              <MapPin className="w-3.5 h-3.5 mr-1 text-blue-600" /> Site Coordinates & Geolocation
+            <span className="text-xs font-bold text-[#002DC2] uppercase tracking-widest bg-[#F0F4FD] px-3 py-1 rounded-full border border-[#002DC2]/20 inline-flex items-center">
+              <MapPin className="w-3.5 h-3.5 mr-1 text-[#002DC2]" /> Site Coordinates & Geolocation
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               Installation Site Map: {item.location}, {item.state}
@@ -353,7 +353,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
             <div className="flex justify-center pt-1">
               <div className="inline-flex items-center space-x-2 text-xs font-bold text-slate-700 bg-white px-3 py-1.5 rounded-xl border border-slate-200">
                 <span>GPS:</span>
-                <span className="font-mono text-blue-700">{item.lat.toFixed(4)}, {item.lng.toFixed(4)}</span>
+                <span className="font-mono text-[#002DC2]">{item.lat.toFixed(4)}, {item.lng.toFixed(4)}</span>
               </div>
             </div>
           </div>
@@ -376,10 +376,10 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                 <Marker position={[item.lat, item.lng]} icon={createCustomIcon()}>
                   <Popup>
                     <div className="p-1 space-y-1 text-xs">
-                      <div className="font-bold text-slate-900">{item.title}</div>
-                      <div className="text-xs text-blue-700 font-semibold">{item.productModel}</div>
+                      <div className="font-bold text-[#123B92]">{item.title}</div>
+                      <div className="text-xs text-[#002DC2] font-semibold">{item.productModel}</div>
                       <div className="text-2xs text-slate-500">{item.location}, {item.state}</div>
-                      <div className="text-2xs text-green-700 font-bold">Crop: {item.crop}</div>
+                      <div className="text-2xs text-[#1A822B] font-bold">Crop: {item.crop}</div>
                     </div>
                   </Popup>
                 </Marker>
@@ -431,7 +431,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                           <MapPin className="w-3.5 h-3.5 mr-1 mt-px shrink-0" />
                           <span>{rel.location}, {rel.state}</span>
                         </div>
-                        <h4 className="font-extrabold text-slate-900 text-base sm:text-base group-hover:text-[#002DC2] transition-colors line-clamp-2">
+                        <h4 className="font-extrabold text-[#123B92] text-base sm:text-base group-hover:text-[#002DC2] transition-colors line-clamp-2">
                           {rel.title}
                         </h4>
                       </div>

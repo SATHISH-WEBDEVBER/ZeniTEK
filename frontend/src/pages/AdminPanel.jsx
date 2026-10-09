@@ -1027,7 +1027,7 @@ export default function AdminPanel() {
         <div className="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl space-y-6">
           <div className="text-center space-y-2">
             <img src="/logo.png" alt="ZeniTEK" className="h-12 mx-auto object-contain" />
-            <h1 className="text-xl font-black text-slate-900">Admin Panel</h1>
+            <h1 className="text-xl font-black text-[#123B92]">Admin Panel</h1>
             <p className="text-sm text-slate-500">ZeniTEK CMS — Products & Gallery Management</p>
           </div>
 
@@ -1107,7 +1107,7 @@ export default function AdminPanel() {
             {/* Products header */}
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-lg font-black text-slate-900">Products</h2>
+                <h2 className="text-lg font-black text-[#123B92]">Products</h2>
                 <p className="text-sm text-slate-500 mt-0.5">{products.length} total · {products.filter(p => p.published).length} published</p>
               </div>
               <div className="flex items-center space-x-2">
@@ -1153,7 +1153,7 @@ export default function AdminPanel() {
                       {/* Info */}
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
-                          <h3 className="font-bold text-slate-900 text-base truncate">{product.name}</h3>
+                          <h3 className="font-bold text-[#123B92] text-base truncate">{product.name}</h3>
                           <span className={`text-2xs font-bold px-2 py-0.5 rounded-full ${
                             product.published ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'
                           }`}>
@@ -1205,7 +1205,7 @@ export default function AdminPanel() {
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <h2 className="text-lg font-black text-slate-900">Product Sections & Solutions (7 Categories)</h2>
+                <h2 className="text-lg font-black text-[#123B92]">Product Sections & Solutions (7 Categories)</h2>
                 <p className="text-sm text-slate-500 mt-0.5">
                   {sections.length} total · {sections.filter(s => s.published).length} published (live on navbar & pages)
                 </p>
@@ -1272,7 +1272,7 @@ export default function AdminPanel() {
                     {/* Info */}
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="font-bold text-slate-900 text-base truncate">{sec.title}</h3>
+                        <h3 className="font-bold text-[#123B92] text-base truncate">{sec.title}</h3>
                         <span className={`text-2xs font-bold px-2 py-0.5 rounded-full ${
                           sec.published ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'
                         }`}>
@@ -1349,7 +1349,7 @@ export default function AdminPanel() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-lg font-black text-slate-900">Gallery</h2>
+                <h2 className="text-lg font-black text-[#123B92]">Gallery</h2>
                 <p className="text-sm text-slate-500 mt-0.5">{galleryItems.length} total · {galleryItems.filter(i => i.published).length} published</p>
               </div>
               <div className="flex items-center space-x-2">
@@ -1392,7 +1392,7 @@ export default function AdminPanel() {
                       </div>
                     </div>
                     <div className="p-3 space-y-2">
-                      <h3 className="font-bold text-slate-900 text-base leading-snug line-clamp-2">{item.title}</h3>
+                      <h3 className="font-bold text-[#123B92] text-base leading-snug line-clamp-2">{item.title}</h3>
                       <div className="flex items-center justify-between">
                         <span className="text-2xs text-slate-500 bg-slate-50 px-2 py-0.5 rounded-lg font-medium">{item.category}</span>
                         <div className="flex items-center space-x-1">
@@ -1429,7 +1429,7 @@ export default function AdminPanel() {
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start justify-center p-4 overflow-y-auto">
           <div className="bg-white rounded-3xl w-full max-w-2xl my-6 shadow-2xl">
             <div className="flex items-center justify-between p-6 border-b border-slate-100">
-              <h2 className="text-base font-black text-slate-900">
+              <h2 className="text-base font-black text-[#123B92]">
                 {productModal === 'new' ? 'Add New Product' : `Edit: ${productModal.name}`}
               </h2>
               <button onClick={() => setProductModal(null)} className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">
@@ -1453,7 +1453,7 @@ export default function AdminPanel() {
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start justify-center p-4 overflow-y-auto">
           <div className="bg-white rounded-3xl w-full max-w-2xl my-6 shadow-2xl">
             <div className="flex items-center justify-between p-6 border-b border-slate-100">
-              <h2 className="text-base font-black text-slate-900">
+              <h2 className="text-base font-black text-[#123B92]">
                 {galleryModal === 'new' ? 'Upload Gallery Photo' : `Edit: ${galleryModal.title}`}
               </h2>
               <button onClick={() => setGalleryModal(null)} className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">
@@ -1477,7 +1477,7 @@ export default function AdminPanel() {
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start justify-center p-4 overflow-y-auto">
           <div className="bg-white rounded-3xl w-full max-w-2xl my-6 shadow-2xl">
             <div className="flex items-center justify-between p-6 border-b border-slate-100">
-              <h2 className="text-base font-black text-slate-900">
+              <h2 className="text-base font-black text-[#123B92]">
                 {sectionModal === 'new' ? 'Add New Solution Category' : `Edit Category: ${sectionModal.title}`}
               </h2>
               <button onClick={() => setSectionModal(null)} className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">

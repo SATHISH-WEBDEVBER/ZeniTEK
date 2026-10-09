@@ -76,7 +76,7 @@ export default function App() {
       <ScrollToTop />
       <SectionDividers />
 
-      <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-blue-600 selection:text-white">
+      <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-[#002DC2] selection:text-white">
         
         {/* Navigation Header with Opening Reveal Animation */}
         <Navbar onOpenQuoteModal={() => handleOpenQuoteModal()} animStage={animStage} />

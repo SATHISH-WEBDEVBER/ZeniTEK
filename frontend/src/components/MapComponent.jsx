@@ -472,7 +472,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
               className={`text-sm sm:text-base px-4 py-2 rounded-xl font-bold transition-all shrink-0 flex items-center space-x-2 cursor-pointer ${
                 selectedState === st.name 
                   ? 'bg-[#002DC2] text-white shadow-sm ring-2 ring-[#23AC39]' 
-                  : 'bg-white text-slate-800 hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/20'
+                  : 'bg-white text-[#123B92] hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/20'
               }`}
             >
               <span>{st.name}</span>
@@ -724,7 +724,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                         </div>
 
                         {/* Project Title (e.g. Kusumdhara Floral Solar Dryer) */}
-                        <h4 className="text-base sm:text-base font-black text-slate-900 leading-snug line-clamp-2 hover:text-[#002DC2] transition-colors">
+                        <h4 className="text-base sm:text-base font-black text-[#123B92] leading-snug line-clamp-2 hover:text-[#002DC2] transition-colors">
                           {p.title}
                         </h4>
 

@@ -26,7 +26,7 @@ export default function WhatsAppWidget() {
         aria-label="Chat directly with ZeniTEK on WhatsApp"
       >
         {/* Calm Online Presence Indicator Badge */}
-        <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-emerald-300 rounded-full border-2 border-white shadow-sm" />
+        <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-[#23AC39] rounded-full border-2 border-white shadow-sm" />
 
         {/* WhatsApp Official Vector Icon */}
         <svg

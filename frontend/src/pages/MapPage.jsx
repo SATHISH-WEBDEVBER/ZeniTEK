@@ -11,12 +11,12 @@ export default function MapPage({ onOpenQuoteModal }) {
       
       {/* Header */}
       <div className="text-center space-y-3">
-        <span className="text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 border border-green-200 px-3 py-1 rounded-full inline-block">
+        <span className="text-xs font-bold text-[#1A822B] uppercase tracking-widest bg-[#23AC39]/10 border border-[#23AC39]/30 px-3 py-1 rounded-full inline-block">
           {t('mapShowcaseBadge')}
         </span>
-        <h1 className="text-4xl sm:text-5xl font-black text-blue-950">
+        <h1 className="text-4xl sm:text-5xl font-black text-[#123B92]">
           {t('mapTitle1')} <br />
-          <span className="text-green-700">
+          <span className="text-[#1A822B]">
             {t('mapTitle2')}
           </span>
         </h1>
@@ -31,9 +31,9 @@ export default function MapPage({ onOpenQuoteModal }) {
       {/* Footer Banner */}
       <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center space-x-3">
-          <MapPin className="w-6 h-6 text-blue-700 shrink-0" />
+          <MapPin className="w-6 h-6 text-[#002DC2] shrink-0" />
           <div>
-            <div className="text-sm font-bold text-slate-900">{t('visitTitle')}</div>
+            <div className="text-sm font-bold text-[#123B92]">{t('visitTitle')}</div>
             <div className="text-xs text-slate-500">{t('visitDesc')}</div>
           </div>
         </div>
