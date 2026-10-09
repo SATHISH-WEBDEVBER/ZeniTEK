@@ -117,6 +117,12 @@ export const teslaDryerProducts = [
 
 export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailModal }) {
   const { t } = useLanguage();
+  // Category / subsidy lines are translated by product id (src/i18n/common.js); the capacity
+  // line reuses the numbers from the data, e.g. "Capacity: 150 – 500 kg / batch" -> {range} = "150 – 500".
+  const category = (p) => t(`common_showcase_${p.id}_category`);
+  const capacity = (p) => t('common_showcase_capacity', {
+    range: p.capacity.replace(/^Capacity:\s*/, '').replace(/\s*kg \/ batch$/, '')
+  });
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
@@ -154,7 +160,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
       {/* SECTION HEADING: CLEAN TITLE */}
       <div className="text-center px-4 mb-6 sm:mb-8">
         <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight leading-tight">
-          Choose the Perfect Solar Thermal Dryer for Your Farm
+          {t('modelsHeading')}
         </h2>
       </div>
 
@@ -177,7 +183,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
 
             {/* Top Tag */}
             <div className="absolute top-5 left-5 text-xs font-bold text-white drop-shadow">
-              {prevProduct.category}
+              {category(prevProduct)}
             </div>
 
             {/* Bottom Title Preview */}
@@ -193,7 +199,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
                 e.stopPropagation();
                 handlePrev();
               }}
-              aria-label="Previous Product"
+              aria-label={t('common_prevProduct')}
               className="absolute right-4 lg:right-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 lg:w-12 lg:h-12 rounded-xl bg-white hover:bg-slate-100 text-slate-900 shadow-2xl flex items-center justify-center transition-all active:scale-90 cursor-pointer"
             >
               <ChevronLeft className="w-6 h-6" />
@@ -219,14 +225,14 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
             {/* Mobile: category stacks above the counter pill; sm+: side by side */}
             <div className="absolute top-5 inset-x-5 sm:top-7 sm:inset-x-8 z-10 flex flex-col items-start gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4 pointer-events-none">
               <span className="text-white text-xs sm:text-sm font-bold tracking-wide leading-snug drop-shadow-md sm:max-w-[60%]">
-                {currentProduct.category}
+                {category(currentProduct)}
               </span>
 
               {/* TOP-RIGHT IMAGE COUNTER & AUTO-TIMER INDICATOR */}
               <div className="flex items-center space-x-2 shrink-0">
                 <span className="w-2 h-2 rounded-full bg-[#23AC39] animate-pulse" />
                 <span className="text-xs font-bold text-white bg-black/60 px-3 py-1 rounded-full border border-white/30 whitespace-nowrap">
-                  Model {activeIndex + 1} of {totalProducts}
+                  {t('common_showcase_counter', { n: activeIndex + 1, total: totalProducts })}
                 </span>
               </div>
             </div>
@@ -234,14 +240,14 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
             {/* MOBILE ONLY: IN-CARD LEFT & RIGHT ARROWS */}
             <button
               onClick={handlePrev}
-              aria-label="Previous Product"
+              aria-label={t('common_prevProduct')}
               className="md:hidden absolute left-3 top-[40%] -translate-y-1/2 z-20 w-10 h-10 rounded-xl bg-white text-slate-900 shadow-xl flex items-center justify-center cursor-pointer"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={handleNext}
-              aria-label="Next Product"
+              aria-label={t('common_nextProduct')}
               className="md:hidden absolute right-3 top-[40%] -translate-y-1/2 z-20 w-10 h-10 rounded-xl bg-white text-slate-900 shadow-xl flex items-center justify-center cursor-pointer"
             >
               <ChevronRight className="w-5 h-5" />
@@ -258,11 +264,11 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
               {/* Subheading / Capacity */}
               <div className="text-xs sm:text-sm lg:text-base text-white font-medium pb-2 drop-shadow-md flex flex-col items-start gap-1.5 sm:block">
                 <span className="underline underline-offset-4 font-bold">
-                  {currentProduct.capacity}
+                  {capacity(currentProduct)}
                 </span>
                 <span className="hidden sm:inline mx-2">•</span>
                 <span className="text-[#23AC39] font-bold whitespace-nowrap">
-                  {currentProduct.leaseInfo}
+                  {t(`common_showcase_${currentProduct.id}_lease`)}
                 </span>
               </div>
 
@@ -278,7 +284,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
                   })}
                   className="px-7 py-3 sm:px-9 sm:py-3.5 bg-[#002DC2] hover:bg-[#123B92] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xl transition-all active:scale-95 cursor-pointer flex items-center justify-center"
                 >
-                  Get Quote
+                  {t('common_showcase_getQuote')}
                 </button>
 
                 {/* Secondary Button: Learn More */}
@@ -287,7 +293,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
                   onClick={() => onOpenDetailModal && onOpenDetailModal(currentProduct)}
                   className="px-7 py-3 sm:px-9 sm:py-3.5 bg-white hover:bg-slate-100 text-[#123B92] font-bold text-xs sm:text-sm rounded-xl shadow-xl transition-all active:scale-95 cursor-pointer flex items-center justify-center"
                 >
-                  Learn More
+                  {t('common_showcase_learnMore')}
                 </button>
 
               </div>
@@ -321,7 +327,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
 
             {/* Top Tag */}
             <div className="absolute top-5 left-5 text-xs font-bold text-white drop-shadow">
-              {nextProduct.category}
+              {category(nextProduct)}
             </div>
 
             {/* Bottom Title Preview */}
@@ -337,7 +343,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
                 e.stopPropagation();
                 handleNext();
               }}
-              aria-label="Next Product"
+              aria-label={t('common_nextProduct')}
               className="absolute left-4 lg:left-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 lg:w-12 lg:h-12 rounded-xl bg-white hover:bg-slate-100 text-slate-900 shadow-2xl flex items-center justify-center transition-all active:scale-90 cursor-pointer"
             >
               <ChevronRight className="w-6 h-6" />
@@ -355,7 +361,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
                 setActiveIndex(idx);
                 setActiveImageIndex(0);
               }}
-              aria-label={`Go to ${p.name}`}
+              aria-label={t('common_goTo', { name: p.name })}
               className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                 activeIndex === idx
                   ? 'w-8 bg-slate-900 shadow-sm'

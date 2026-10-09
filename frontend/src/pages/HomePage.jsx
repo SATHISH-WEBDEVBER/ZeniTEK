@@ -44,7 +44,7 @@ const inputClass = 'w-full bg-[#F0F4FD] border border-[#123B92]/30 text-black ro
 const labelClass = 'block text-xs font-bold text-[#123B92] mb-1';
 
 export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
-  const { t } = useLanguage();
+  const { t, tf } = useLanguage();
 
   const [quickForm, setQuickForm] = useState({
     name: '',
@@ -100,7 +100,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
         <button
           onClick={handlePrevSlide}
-          aria-label="Previous Slide"
+          aria-label={t('common_home_prevSlide')}
           className="absolute left-2 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/90 hover:bg-white text-slate-800 hover:text-[#123B92] border border-slate-200/90 shadow-xl hidden sm:flex items-center justify-center transition-all active:scale-90 cursor-pointer"
         >
           <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -108,7 +108,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
         <button
           onClick={handleNextSlide}
-          aria-label="Next Slide"
+          aria-label={t('common_home_nextSlide')}
           className="absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/90 hover:bg-white text-slate-800 hover:text-[#123B92] border border-slate-200/90 shadow-xl hidden sm:flex items-center justify-center transition-all active:scale-90 cursor-pointer"
         >
           <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -170,7 +170,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
             <button
               key={slide.image}
               onClick={() => setCurrentHeroSlide(idx)}
-              aria-label={`Go to slide ${idx + 1}`}
+              aria-label={t('common_home_goToSlide', { n: idx + 1 })}
               className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
                 currentHeroSlide === idx ? 'w-8 bg-slate-900 shadow-md ring-2 ring-white' : 'w-2.5 bg-white/90 ring-1 ring-slate-500 hover:bg-white'
               }`}
@@ -362,11 +362,11 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
               <div key={rev._id} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between gap-4">
                 <div className="space-y-3">
                   <div className="text-[#23AC39]">{'★'.repeat(rev.rating || 5)}</div>
-                  <p className="text-sm text-slate-700 leading-relaxed italic">"{rev.comment}"</p>
+                  <p className="text-sm text-slate-700 leading-relaxed italic">"{tf(`common_review_${rev._id}_comment`, rev.comment)}"</p>
                 </div>
                 <div className="pt-3 border-t border-slate-200">
                   <h4 className="text-lg font-extrabold text-[#123B92]">{rev.name}</h4>
-                  <div className="text-xs font-semibold text-[#1A822B]">{rev.role}</div>
+                  <div className="text-xs font-semibold text-[#1A822B]">{tf(`common_review_${rev._id}_role`, rev.role)}</div>
                   <div className="text-xs text-slate-400 flex items-center mt-0.5">
                     <MapPin className="w-3 h-3 mr-0.5" /> {rev.location}
                   </div>
@@ -433,7 +433,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                     <option value="Portable DIY Solar Dryer (10-50 kg)">{t('modelPortable')} (10-50 kg)</option>
                     <option value="Commercial Polyhouse Tunnel Dryer (100-500 kg)">{t('modelPolyhouse')} (100-500 kg)</option>
                     <option value="Multi-Tunnel Industrial Hybrid Dryer (1 Ton+)">{t('modelIndustrial')} (1 Ton+)</option>
-                    <option value="Custom Dryer Sizing Consult">Custom Dryer Sizing Consult</option>
+                    <option value="Custom Dryer Sizing Consult">{t('common_home_customSizing')}</option>
                   </select>
                 </div>
 

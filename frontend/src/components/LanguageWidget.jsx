@@ -1,59 +1,107 @@
-import React, { useState } from 'react';
-import { Globe, Check, ChevronUp } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Globe, Check, ChevronDown } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
-export default function LanguageWidget() {
-  const { lang, setLang } = useLanguage();
+export const LANGUAGES = [
+  { code: 'en', label: 'English', native: 'English' },
+  { code: 'ta', label: 'Tamil', native: 'தமிழ்' },
+  { code: 'hi', label: 'Hindi', native: 'हिंदी' },
+  { code: 'ml', label: 'Malayalam', native: 'മലയാളം' },
+  { code: 'te', label: 'Telugu', native: 'తెలుగు' },
+  { code: 'kn', label: 'Kannada', native: 'ಕನ್ನಡ' }
+];
+
+// Language switcher.
+//  variant="dropdown": compact globe button for the desktop navbar (closes on outside click / Esc)
+//  variant="list":     full-width button grid for the mobile menu
+export default function LanguageWidget({ variant = 'dropdown', onSelect }) {
+  const { lang, setLang, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
+  const rootRef = useRef(null);
+  const current = LANGUAGES.find(l => l.code === lang) || LANGUAGES[0];
 
-  const languages = [
-    { code: 'en', label: 'English', native: 'English' },
-    { code: 'ta', label: 'Tamil', native: 'தமிழ்' },
-    { code: 'hi', label: 'Hindi', native: 'हिंदी' },
-    { code: 'ml', label: 'Malayalam', native: 'മലയാളം' },
-    { code: 'te', label: 'Telugu', native: 'తెలుగు' },
-    { code: 'kn', label: 'Kannada', native: 'ಕನ್ನಡ' }
-  ];
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const onDown = (e) => { if (rootRef.current && !rootRef.current.contains(e.target)) setIsOpen(false); };
+    const onKey = (e) => { if (e.key === 'Escape') setIsOpen(false); };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [isOpen]);
 
-  const currentLang = languages.find(l => l.code === lang) || languages[0];
+  const choose = (code) => {
+    setLang(code);
+    setIsOpen(false);
+    if (onSelect) onSelect(code);
+  };
 
-  return (
-    <div className="fixed bottom-4 right-4 z-50">
-      {/* Dropdown Popup */}
-      {isOpen && (
-        <div className="mb-2 w-56 bg-white rounded-2xl border-2 border-[#123B92] shadow-2xl p-2 animate-fade-in space-y-1">
-          <div className="text-xs font-bold text-[#123B92] uppercase tracking-wider px-3 py-1.5 border-b border-[#123B92]/20 flex items-center justify-between">
-            <span>Select Language</span>
-            <Globe className="w-3.5 h-3.5 text-[#002DC2]" />
-          </div>
-          {languages.map((l) => (
+  if (variant === 'list') {
+    return (
+      <div className="space-y-2">
+        <div className="text-xs font-bold text-[#123B92] uppercase tracking-wider flex items-center gap-1.5">
+          <Globe className="w-4 h-4 text-[#002DC2]" /> {t('navbar_language')}
+        </div>
+        <div className="grid grid-cols-3 gap-2">
+          {LANGUAGES.map(l => (
             <button
               key={l.code}
-              onClick={() => {
-                setLang(l.code);
-                setIsOpen(false);
-              }}
-              className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between font-medium transition-colors cursor-pointer ${lang === l.code ? 'bg-[#F0F4FD] text-[#002DC2] font-bold' : 'text-black hover:bg-[#F0F4FD]'}`}
+              type="button"
+              lang={l.code}
+              onClick={() => choose(l.code)}
+              aria-pressed={lang === l.code}
+              className={`px-2 py-2 rounded-xl text-sm font-bold border transition-colors cursor-pointer ${lang === l.code ? 'bg-[#002DC2] text-white border-[#002DC2]' : 'bg-white text-[#123B92] border-[#123B92]/20 hover:border-[#002DC2]'}`}
             >
-              <div className="flex items-center space-x-2">
-                <span className="font-semibold text-black">{l.native}</span>
-                <span className="text-2xs text-black/60 font-normal">({l.label})</span>
-              </div>
-              {lang === l.code && <Check className="w-4 h-4 text-[#002DC2]" />}
+              {l.native}
             </button>
           ))}
         </div>
-      )}
+      </div>
+    );
+  }
 
-      {/* Floating Button */}
+  return (
+    <div ref={rootRef} className="relative shrink-0">
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 bg-[#123B92] hover:bg-[#002DC2] text-white px-4 py-2.5 rounded-full shadow-lg hover:shadow-xl border-2 border-[#23AC39] hover:scale-105 transition-all text-xs font-bold cursor-pointer"
+        type="button"
+        onClick={() => setIsOpen(o => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        aria-label={`${t('navbar_language')}: ${current.label}`}
+        className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-[#123B92]/20 text-[#123B92] hover:border-[#002DC2] hover:bg-[#F0F4FD] text-sm font-bold transition-colors cursor-pointer"
       >
-        <Globe className="w-4 h-4 text-[#23AC39] animate-spin-slow" />
-        <span>{currentLang.native}</span>
-        <ChevronUp className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <Globe className="w-4 h-4 text-[#002DC2]" />
+        <span lang={current.code}>{current.native}</span>
+        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
+
+      {isOpen && (
+        <ul
+          role="listbox"
+          aria-label={t('navbar_language')}
+          className="absolute right-0 mt-2 w-56 bg-white rounded-2xl border border-[#123B92]/20 shadow-2xl p-2 z-[60] space-y-1"
+        >
+          {LANGUAGES.map(l => (
+            <li key={l.code}>
+              <button
+                type="button"
+                role="option"
+                aria-selected={lang === l.code}
+                onClick={() => choose(l.code)}
+                className={`w-full text-left px-3 py-2 rounded-xl text-sm flex items-center justify-between transition-colors cursor-pointer ${lang === l.code ? 'bg-[#F0F4FD] text-[#002DC2] font-bold' : 'text-[#123B92] hover:bg-[#F0F4FD]'}`}
+              >
+                <span className="flex items-baseline gap-2">
+                  <span lang={l.code} className="font-semibold">{l.native}</span>
+                  <span className="text-xs text-slate-500 font-normal">{l.label}</span>
+                </span>
+                {lang === l.code && <Check className="w-4 h-4 text-[#002DC2]" />}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

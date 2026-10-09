@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import pageTranslations, { LANGS } from '../i18n';
 
 const LanguageContext = createContext();
 
@@ -1798,15 +1799,53 @@ export const translations = {
   }
 };
 
-export const LanguageProvider = ({ children }) => {
-  const [lang, setLang] = useState('en');
+const STORAGE_KEY = 'zenitek-lang';
 
-  const t = (key) => {
-    return translations[lang]?.[key] || translations['en']?.[key] || key;
+// The visitor's saved choice; storage can be unavailable (private mode, blocked site data)
+const readSavedLang = () => {
+  try {
+    const saved = window.localStorage.getItem(STORAGE_KEY);
+    return LANGS.includes(saved) ? saved : 'en';
+  } catch {
+    return 'en';
+  }
+};
+
+export const LanguageProvider = ({ children }) => {
+  const [lang, setLangState] = useState(readSavedLang);
+
+  const setLang = useCallback((next) => {
+    if (!LANGS.includes(next)) return;
+    setLangState(next);
+    try { window.localStorage.setItem(STORAGE_KEY, next); } catch { /* not persisted */ }
+  }, []);
+
+  // Keeps <html lang> in sync so browsers, screen readers and fonts use the right language
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
+  // t('key') or t('key', { count: 3 }) — values fill {count}-style placeholders.
+  // Looks in the selected language, then English, then returns the key itself.
+  const t = (key, vars) => {
+    let text = translations[lang]?.[key] ?? pageTranslations[lang]?.[key]
+      ?? translations.en?.[key] ?? pageTranslations.en?.[key] ?? key;
+    if (vars) {
+      Object.entries(vars).forEach(([name, value]) => {
+        text = text.split(`{${name}}`).join(String(value));
+      });
+    }
+    return text;
+  };
+
+  // Like t(), but returns `fallback` when no translation exists (e.g. admin-added content)
+  const tf = (key, fallback, vars) => {
+    const text = t(key, vars);
+    return text === key ? fallback : text;
   };
 
   return (
-    <LanguageContext.Provider value={{ lang, setLang, t }}>
+    <LanguageContext.Provider value={{ lang, setLang, t, tf }}>
       {children}
     </LanguageContext.Provider>
   );

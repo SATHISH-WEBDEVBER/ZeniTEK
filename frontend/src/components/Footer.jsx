@@ -20,7 +20,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { brochures } from '../data/brochuresData';
 
 export default function Footer({ onOpenQuoteModal }) {
-  const { t } = useLanguage();
+  const { t, tf } = useLanguage();
   // Ensure "Tamil Nadu - 000 000" never breaks across lines
   const formatAddress = (text) => {
     if (!text || typeof text !== 'string') return text;
@@ -56,7 +56,7 @@ export default function Footer({ onOpenQuoteModal }) {
               />
             </div>
             <p className="text-sm leading-relaxed text-black max-w-sm font-medium">
-              ZeniTEK manufactures high-efficiency solar thermal collectors and commercial polyhouse dryers, delivering sustainable clean energy solutions to eliminate post-harvest crop loss for farmers, FPOs, and industries.
+              {t('footerAbout')}
             </p>
             <div className="flex flex-wrap items-center gap-2 pt-1">
               <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-2xs font-bold bg-[#F0F4FD] text-[#123B92] border border-[#002DC2] shadow-sm">
@@ -70,36 +70,36 @@ export default function Footer({ onOpenQuoteModal }) {
 
           {/* Col 2: Dryer Models (2 cols on desktop) */}
           <div className="lg:col-span-2">
-            <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4">Dryer Models</h4>
+            <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4">{t('footerDryerModels')}</h4>
             <ul className="space-y-2.5 text-xs font-medium">
               <li>
                 <Link to="/solar-dryer-models/soldry-1210-150" className="hover:text-[#002DC2] text-black transition-colors block">
                   <span className="font-bold text-[#123B92] block">SOLDRY 1210</span>
-                  <span className="text-2xs text-slate-500 block">Polyhouse Tunnel <span className="whitespace-nowrap">(100-300 kg)</span></span>
+                  <span className="text-2xs text-slate-500 block">{t('common_footer_m1210')} <span className="whitespace-nowrap">(100-300 kg)</span></span>
                 </Link>
               </li>
               <li>
                 <Link to="/solar-dryer-models/soldry-1709-200" className="hover:text-[#002DC2] text-black transition-colors block">
                   <span className="font-bold text-[#123B92] block">SOLDRY 1709</span>
-                  <span className="text-2xs text-slate-500 block">Commercial Tunnel <span className="whitespace-nowrap">(500 kg-1 Ton)</span></span>
+                  <span className="text-2xs text-slate-500 block">{t('common_footer_m1709')} <span className="whitespace-nowrap">(500 kg-1 Ton)</span></span>
                 </Link>
               </li>
               <li>
                 <Link to="/solar-dryer-models/soldry-1210-300" className="hover:text-[#002DC2] text-black transition-colors block">
                   <span className="font-bold text-[#123B92] block">SOLDRY 300</span>
-                  <span className="text-2xs text-slate-500 block">Industrial Multi-Unit Rig</span>
+                  <span className="text-2xs text-slate-500 block">{t('common_footer_m300')}</span>
                 </Link>
               </li>
               <li>
                 <Link to="/solar-dryer-models/sundry-50" className="hover:text-[#002DC2] text-black transition-colors block">
                   <span className="font-bold text-[#123B92] block">SUNDRY 50</span>
-                  <span className="text-2xs text-slate-500 block">Stainless Box Dryer <span className="whitespace-nowrap">(50 kg)</span></span>
+                  <span className="text-2xs text-slate-500 block">{t('common_footer_m50')} <span className="whitespace-nowrap">(50 kg)</span></span>
                 </Link>
               </li>
               <li>
                 <Link to="/solar-dryer-models/sundry-12" className="hover:text-[#002DC2] text-black transition-colors block">
                   <span className="font-bold text-[#123B92] block">SUNDRY 12 &amp; 6</span>
-                  <span className="text-2xs text-slate-500 block">Portable Micro Dryer Units</span>
+                  <span className="text-2xs text-slate-500 block">{t('common_footer_m12')}</span>
                 </Link>
               </li>
             </ul>
@@ -109,10 +109,13 @@ export default function Footer({ onOpenQuoteModal }) {
           <div className="lg:col-span-3">
             <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4 flex items-center gap-1.5">
               <FileText className="w-3.5 h-3.5 text-[#002DC2]" />
-              <span>Product Brochures (PDF)</span>
+              <span>{t('common_footer_brochures')}</span>
             </h4>
             <div className="space-y-2.5">
-              {brochures.map((b) => (
+              {brochures.map((b) => {
+                // Brochure text is data; translated by id when a translation exists
+                const title = tf(`common_brochure_${b.id}_title`, b.title);
+                return (
                 <div 
                   key={b.id}
                   className="p-2.5 rounded-xl border border-slate-200/90 hover:border-[#002DC2] bg-white hover:bg-[#F0F4FD] transition-all flex items-center justify-between group shadow-sm"
@@ -120,29 +123,29 @@ export default function Footer({ onOpenQuoteModal }) {
                   <Link
                     to={`/brochures/${b.id}`}
                     className="text-left flex-1 min-w-0 pr-2 focus:outline-none"
-                    title={`Open and View ${b.title}`}
+                    title={t('common_footer_openView', { title })}
                   >
                     <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 mb-0.5">
                       <span className={`text-2xs font-bold px-1.5 py-0.5 rounded border whitespace-nowrap ${b.badgeColor}`}>
-                        {b.badge}
+                        {tf(`common_brochure_${b.id}_badge`, b.badge)}
                       </span>
                       <span className="text-2xs text-slate-500 font-medium whitespace-nowrap">
-                        {b.pageCount} Pages • {b.size}
+                        {t('common_footer_pages', { count: b.pageCount })} • {b.size}
                       </span>
                     </div>
                     <span className="text-xs font-bold text-[#123B92] group-hover:text-[#002DC2] transition-colors block leading-snug">
-                      {b.title}
+                      {title}
                     </span>
                     <span className="text-2xs text-slate-500 block leading-snug line-clamp-2 mt-0.5">
-                      {b.subtitle}
+                      {tf(`common_brochure_${b.id}_subtitle`, b.subtitle)}
                     </span>
                   </Link>
 
                   <div className="flex items-center gap-1 shrink-0">
                     <Link
                       to={`/brochures/${b.id}`}
-                      title="View PDF Brochure"
-                      aria-label={`View ${b.title}`}
+                      title={t('common_footer_viewPdf')}
+                      aria-label={t('common_footer_viewTitle', { title })}
                       className="w-7 h-7 rounded-lg bg-[#F0F4FD] text-[#002DC2] hover:bg-[#002DC2] hover:text-white flex items-center justify-center transition-colors"
                     >
                       <Eye className="w-3.5 h-3.5" />
@@ -150,14 +153,15 @@ export default function Footer({ onOpenQuoteModal }) {
                     <a
                       href={b.url}
                       download={b.downloadName}
-                      title="Direct Download PDF"
+                      title={t('common_footer_download')}
                       className="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 hover:bg-[#002DC2] hover:text-white flex items-center justify-center transition-colors"
                     >
                       <Download className="w-3.5 h-3.5" />
                     </a>
                   </div>
                 </div>
-              ))}
+                );
+              })}
 
               <div className="pt-1">
                 <Link 
@@ -165,7 +169,7 @@ export default function Footer({ onOpenQuoteModal }) {
                   className="inline-flex items-center text-xs font-bold text-[#123B92] hover:text-[#002DC2] hover:underline transition-colors"
                 >
                   <ArrowRight className="w-3 h-3 mr-1 text-[#002DC2]" />
-                  <span>State Agriculture Subsidy Guide</span>
+                  <span>{t('common_footer_subsidyGuide')}</span>
                 </Link>
               </div>
             </div>
@@ -241,7 +245,7 @@ export default function Footer({ onOpenQuoteModal }) {
             </Link>
             <span className="text-slate-300">•</span>
             <span className="text-slate-600 font-medium">
-              Designed by{' '}
+              {t('common_footer_designedBy')}{' '}
               <a
                 href="https://knowledgetointelligence.com"
                 target="_blank"

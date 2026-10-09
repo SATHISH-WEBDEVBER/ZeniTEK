@@ -7,12 +7,23 @@ import PageHero from '../components/PageHero';
 export default function ApplicationsPage({ onOpenQuoteModal }) {
   const [activeTab, setActiveTab] = useState('agri');
   const [searchTerm, setSearchTerm] = useState('');
-  const { t } = useLanguage();
+  const { t, tf } = useLanguage();
 
-  const filteredMatrix = cropMatrixData.filter(item =>
-    item.crop.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.benefit.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Matrix rows are data; crop/benefit text is translated by row index, "2.5 Days" via a template
+  const rowText = (idx, field, english) => tf(`common_matrix_${idx}_${field}`, english);
+  const formatDays = (value) => {
+    const m = /^([\d.]+)\s*(Days?)$/.exec(value || '');
+    if (!m) return value;
+    return t(m[2] === 'Day' ? 'common_day' : 'common_days', { n: m[1] });
+  };
+
+  const query = searchTerm.toLowerCase();
+  const filteredMatrix = cropMatrixData
+    .map((item, idx) => ({ ...item, idx }))
+    .filter(item =>
+      [item.crop, item.benefit, rowText(item.idx, 'crop', item.crop), rowText(item.idx, 'benefit', item.benefit)]
+        .some(text => text.toLowerCase().includes(query))
+    );
 
   // Tab labels start with an emoji; render it larger so it stays legible next to the xs text.
   const renderTabLabel = (label) => {
@@ -75,7 +86,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
                 <div className="text-3xl">🥥</div>
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropCopra')}</h3>
-                <p className="text-sm text-black leading-relaxed">Moisture drop from 52% to &lt;6% in 2.5 days. Produces Grade-1 White Copra for oil extraction.</p>
+                <p className="text-sm text-black leading-relaxed">{t('common_apps_copraDesc')}</p>
                 <button onClick={() => onOpenQuoteModal({ cropType: 'Copra/Coconut' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
                 </button>
@@ -84,7 +95,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
                 <div className="text-3xl">🌿</div>
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropMoringa')}</h3>
-                <p className="text-sm text-black leading-relaxed">100% dust-free green retention. Preserves chlorophyll for export powders.</p>
+                <p className="text-sm text-black leading-relaxed">{t('common_apps_moringaDesc')}</p>
                 <button onClick={() => onOpenQuoteModal({ cropType: 'Moringa/Herbs' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
                 </button>
@@ -93,7 +104,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
                 <div className="text-3xl">🌶️</div>
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropSpices')}</h3>
-                <p className="text-sm text-black leading-relaxed">Zero rain damage or aflatoxin mold. Locks bright glossy red skin color.</p>
+                <p className="text-sm text-black leading-relaxed">{t('common_apps_spicesDesc')}</p>
                 <button onClick={() => onOpenQuoteModal({ cropType: 'Spices/Chillies' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
                 </button>
@@ -106,7 +117,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
                 <div className="text-3xl">🐟</div>
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropFish')}</h3>
-                <p className="text-sm text-black leading-relaxed">Completely closed polyhouse enclosure ensuring 100% fly-free, insect-free sanitation.</p>
+                <p className="text-sm text-black leading-relaxed">{t('common_apps_fishDesc')}</p>
                 <button onClick={() => onOpenQuoteModal({ cropType: 'Fish/Seafood' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
                 </button>
@@ -115,7 +126,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
                 <div className="text-3xl">🦐</div>
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropFish')}</h3>
-                <p className="text-sm text-black leading-relaxed">Hygienic moisture reduction to under 12% for seafood processing plants.</p>
+                <p className="text-sm text-black leading-relaxed">{t('common_apps_shrimpDesc')}</p>
                 <button onClick={() => onOpenQuoteModal({ cropType: 'Fish/Seafood' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
                 </button>
@@ -128,7 +139,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
                 <div className="text-3xl">🏭</div>
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropOther')}</h3>
-                <p className="text-sm text-black leading-relaxed">Reduces industrial sludge volume by up to 80%, slashing waste transport costs.</p>
+                <p className="text-sm text-black leading-relaxed">{t('common_apps_sludgeDesc')}</p>
                 <button onClick={() => onOpenQuoteModal({ clientType: 'Industrial/Sludge Processor' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
                 </button>
@@ -137,7 +148,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
                 <div className="text-3xl">🪵</div>
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropOther')}</h3>
-                <p className="text-sm text-black leading-relaxed">Controlled humidity extraction preventing wood warping and curing natural rubber sheets.</p>
+                <p className="text-sm text-black leading-relaxed">{t('common_apps_timberDesc')}</p>
                 <button onClick={() => onOpenQuoteModal({ clientType: 'Industrial/Sludge Processor' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
                 </button>
@@ -169,7 +180,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
           </div>
 
           <p className="sm:hidden text-sm font-semibold text-slate-500 mb-2">
-            → Swipe the table sideways to see all columns
+            → {t('common_apps_swipeHint')}
           </p>
           <div className="bg-white rounded-3xl overflow-x-auto border border-[#123B92]/20 shadow-md">
             <table className="w-full min-w-[1000px] text-left border-collapse">
@@ -184,14 +195,14 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#123B92]/10 text-xs text-black font-medium">
-                {filteredMatrix.map((item, idx) => (
-                  <tr key={idx} className="hover:bg-[#F0F4FD] transition-colors">
-                    <td className="p-4 font-bold text-[#123B92] min-w-[140px] whitespace-nowrap">{item.crop}</td>
+                {filteredMatrix.map((item) => (
+                  <tr key={item.idx} className="hover:bg-[#F0F4FD] transition-colors">
+                    <td className="p-4 font-bold text-[#123B92] min-w-[140px] whitespace-nowrap">{rowText(item.idx, 'crop', item.crop)}</td>
                     <td className="p-4 text-black">{item.freshMoisture}</td>
                     <td className="p-4 text-[#002DC2] font-bold">{item.targetMoisture}</td>
-                    <td className="p-4 font-bold text-[#002DC2]">{item.solarDays}</td>
-                    <td className="p-4 text-black/60">{item.openSunDays}</td>
-                    <td className="p-4 text-black">{item.benefit}</td>
+                    <td className="p-4 font-bold text-[#002DC2]">{formatDays(item.solarDays)}</td>
+                    <td className="p-4 text-black/60">{formatDays(item.openSunDays)}</td>
+                    <td className="p-4 text-black">{rowText(item.idx, 'benefit', item.benefit)}</td>
                   </tr>
                 ))}
               </tbody>

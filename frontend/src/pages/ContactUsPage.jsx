@@ -86,7 +86,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
             <div className="flex items-center justify-between pb-3">
               <h3 className="text-xl font-bold text-[#123B92]">{t('factoryLocation')}</h3>
               <span className="text-2xs font-bold bg-[#F0F4FD] text-[#123B92] border border-[#123B92]/30 px-2 py-0.5 rounded-md">
-                Verified Hub
+                {t('common_contact_verified')}
               </span>
             </div>
             
@@ -99,7 +99,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                   </div>
                   <div>
                     <span className="text-2xs font-extrabold uppercase tracking-wider text-[#002DC2] bg-white border border-[#123B92]/20 px-2 py-0.5 rounded inline-block">
-                      Main Address
+                      {t('common_contact_mainAddress')}
                     </span>
                     <h4 className="text-lg font-extrabold text-[#123B92] mt-0.5">
                       {t('regOfficeLabel')}
@@ -119,7 +119,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                   </div>
                   <div>
                     <span className="text-2xs font-extrabold uppercase tracking-wider text-[#002DC2] bg-white border border-[#123B92]/20 px-2 py-0.5 rounded inline-block">
-                      Incubation Center
+                      {t('common_contact_incubation')}
                     </span>
                     <h4 className="text-lg font-extrabold text-[#123B92] mt-0.5">
                       {t('opOfficeLabel')}
@@ -154,7 +154,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                     <span className="hidden sm:inline text-black/30 font-normal">|</span>
                     <a href="tel:+918098613422" className="hover:text-[#002DC2] text-[#002DC2] whitespace-nowrap">+91 80986 13422</a>
                   </div>
-                  <p className="text-[#123B92] font-semibold text-sm">Balakrishnan (Sales & Engineering)</p>
+                  <p className="text-[#123B92] font-semibold text-sm">Balakrishnan ({t('common_contact_salesRole')})</p>
                   <p className="text-black/60 text-sm">{t('workingHours')}</p>
                 </div>
               </div>
@@ -199,9 +199,9 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
             {submitted ? (
               <div className="p-6 rounded-2xl bg-[#F0F4FD] border-2 border-[#23AC39] text-center space-y-3">
                 <CheckCircle2 className="w-10 h-10 text-[#002DC2] mx-auto" />
-                <h4 className="text-lg font-bold text-[#123B92]">Thank You for Reaching Out!</h4>
+                <h4 className="text-lg font-bold text-[#123B92]">{t('common_contact_thanksTitle')}</h4>
                 <p className="text-sm text-black/70">
-                  Your enquiry has been logged. Our thermal engineers will connect with you on WhatsApp / Phone within 2 hours.
+                  {t('common_contact_thanksDesc')}
                 </p>
               </div>
             ) : (
@@ -213,7 +213,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Subramaniam"
+                      placeholder={t('common_contact_namePh')}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3 sm:px-3.5 py-2.5 text-sm text-black min-w-0"
@@ -240,11 +240,11 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                     onChange={(e) => setFormData({ ...formData, clientType: e.target.value })}
                     className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl pl-2.5 pr-1.5 sm:px-3.5 py-2.5 text-sm text-black min-w-0 cursor-pointer"
                   >
-                    <option value="Individual Farmer">Individual Farmer</option>
-                    <option value="FPO / Cooperative Group">FPO / Cooperative Group</option>
-                    <option value="Food Processor & Exporter">Food Processor & Exporter</option>
-                    <option value="Industrial/Sludge Processor">Industrial / Sludge Processor</option>
-                    <option value="NGO / CSR Partner">NGO / CSR Partner</option>
+                    <option value="Individual Farmer">{t('common_client_farmer')}</option>
+                    <option value="FPO / Cooperative Group">{t('common_client_fpo')}</option>
+                    <option value="Food Processor & Exporter">{t('common_client_processor')}</option>
+                    <option value="Industrial/Sludge Processor">{t('common_client_industrial')}</option>
+                    <option value="NGO / CSR Partner">{t('common_client_ngo')}</option>
                   </select>
                 </div>
 
@@ -255,9 +255,9 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                     onChange={(e) => setFormData({ ...formData, capacityNeeded: e.target.value })}
                     className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl pl-2.5 pr-1.5 sm:px-3.5 py-2.5 text-sm text-black min-w-0 cursor-pointer"
                   >
-                    <option value="Under 50 kg (Portable)">Under 50 kg (Portable DIY)</option>
-                    <option value="100 to 500 kg (Commercial)">100 to 500 kg (Commercial Polyhouse)</option>
-                    <option value="1 Ton+ (Industrial)">1 Ton+ (Industrial Multi-Tunnel)</option>
+                    <option value="Under 50 kg (Portable)">{t('common_cap_portable')}</option>
+                    <option value="100 to 500 kg (Commercial)">{t('common_cap_commercial')}</option>
+                    <option value="1 Ton+ (Industrial)">{t('common_cap_industrial')}</option>
                   </select>
                 </div>
 
@@ -281,7 +281,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                   <label className="block text-xs font-bold text-[#123B92] mb-1">{t('additionalReqs')}</label>
                   <textarea
                     rows="3"
-                    placeholder="Mention location, target moisture levels, or subsidy questions..."
+                    placeholder={t('common_contact_messagePh')}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="w-full flex-1 bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3 sm:px-3.5 py-2.5 text-sm text-black min-w-0"

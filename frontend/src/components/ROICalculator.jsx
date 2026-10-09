@@ -13,6 +13,9 @@ import { useLanguage } from '../context/LanguageContext';
 
 export default function ROICalculator({ onSelectModelQuote }) {
   const { t } = useLanguage();
+  // Display text for the active slide comes from src/i18n/common.js (common_roi_<slideId>_<field>);
+  // the English data below is still what gets sent with a quote request.
+  const st = (slide, field) => t(`common_roi_${slide.id}_${field}`);
 
   // Curated Showcase Slides with Synchronized Technical & Quality Metrics
   const productSlides = [
@@ -218,7 +221,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
             <div className="flex items-center space-x-2 min-w-0">
               <span className="w-2 h-2 rounded-full bg-[#23AC39] animate-pulse shrink-0" />
               <span className="text-xs font-bold uppercase tracking-wider text-white/90 whitespace-nowrap truncate">
-                Operational Installation<span className="hidden sm:inline"> • 5s Auto-Swap</span>
+                {t('common_roi_liveTag')}<span className="hidden sm:inline"> • {t('common_roi_autoSwap')}</span>
               </span>
             </div>
             <div className="shrink-0 whitespace-nowrap text-xs font-bold bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/30 text-white">
@@ -248,7 +251,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
               >
                 <img
                   src={slide.image}
-                  alt={slide.title}
+                  alt={st(slide, 'title')}
                   className="w-full h-full object-cover object-center"
                 />
                 {/* Gradient overlay for text legibility */}
@@ -260,7 +263,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
           {/* Navigation Arrows */}
           <button
             onClick={handlePrevSlide}
-            aria-label="Previous Product"
+            aria-label={t('common_prevProduct')}
             className="absolute left-2.5 top-24 sm:top-1/2 sm:-translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/85 hover:bg-white text-slate-800 shadow-md flex items-center justify-center transition-all active:scale-90 cursor-pointer"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -268,7 +271,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
 
           <button
             onClick={handleNextSlide}
-            aria-label="Next Product"
+            aria-label={t('common_nextProduct')}
             className="absolute right-2.5 top-24 sm:top-1/2 sm:-translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/85 hover:bg-white text-slate-800 shadow-md flex items-center justify-center transition-all active:scale-90 cursor-pointer"
           >
             <ChevronRight className="w-4 h-4" />
@@ -278,19 +281,19 @@ export default function ROICalculator({ onSelectModelQuote }) {
           <div className="relative z-20 p-4 sm:p-5 text-white space-y-2 mt-auto">
             <div className="flex flex-col items-start gap-1 sm:flex-row sm:items-center sm:gap-2">
               <span className="text-2xs font-black uppercase bg-[#23AC39] text-white px-2 py-0.5 rounded shadow-sm inline-block whitespace-nowrap shrink-0">
-                {activeSlide.tag}
+                {st(activeSlide, 'tag')}
               </span>
               <span className="text-2xs text-[#23AC39] font-semibold leading-snug">
-                {activeSlide.cropFit}
+                {st(activeSlide, 'crop')}
               </span>
             </div>
 
             <div>
               <h3 className="text-xl font-black text-white leading-tight drop-shadow-sm">
-                {activeSlide.title}
+                {st(activeSlide, 'title')}
               </h3>
               <p className="text-sm text-white/80 font-medium">
-                {activeSlide.subtitle}
+                {st(activeSlide, 'subtitle')}
               </p>
             </div>
 
@@ -299,7 +302,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
               {activeSlide.features.map((feat, i) => (
                 <span key={i} className="text-2xs text-white/90 bg-white/10 backdrop-blur-sm px-2 py-0.5 rounded flex items-center">
                   <CheckCircle2 className="w-2.5 h-2.5 text-[#23AC39] mr-1 shrink-0" />
-                  {feat}
+                  {st(activeSlide, `f${i + 1}`)}
                 </span>
               ))}
             </div>
@@ -310,7 +313,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
                 <button
                   key={slide.id}
                   onClick={() => setCurrentProductSlide(idx)}
-                  aria-label={`Go to product slide ${idx + 1}`}
+                  aria-label={t('common_roi_goToSlide', { n: idx + 1 })}
                   aria-current={currentProductSlide === idx ? 'true' : undefined}
                   className={`h-1.5 rounded-full transition-colors cursor-pointer ${
                     currentProductSlide === idx
@@ -330,13 +333,13 @@ export default function ROICalculator({ onSelectModelQuote }) {
           {/* Header */}
           <div className="pb-2.5 border-b border-slate-100">
             <span className="text-2xs font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3 py-1 rounded-full inline-flex items-center">
-              <Sparkles className="w-3.5 h-3.5 mr-1.5 text-[#002DC2]" /> DEHYDRATION PERFORMANCE METRICS
+              <Sparkles className="w-3.5 h-3.5 mr-1.5 text-[#002DC2]" /> {t('common_roi_metricsBadge')}
             </span>
             <h3 className="text-xl font-black text-[#123B92] leading-snug mt-1.5">
-              Operational Advantages & Quality Safeguards
+              {t('common_roi_metricsTitle')}
             </h3>
             <p className="text-sm text-slate-500 font-semibold mt-0.5">
-              Engineering specifications for {activeSlide.title}
+              {t('common_roi_specsFor', { model: st(activeSlide, 'title') })}
             </p>
           </div>
 
@@ -352,14 +355,14 @@ export default function ROICalculator({ onSelectModelQuote }) {
                   <Layers className="w-3.5 h-3.5" />
                 </div>
                 <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">
-                  {activeSlide.specs.loadingRatio.label}
+                  {t('common_roi_lblLoading')}
                 </div>
               </div>
               <div className="text-sm font-black text-[#123B92] mt-1 pl-8">
-                {activeSlide.specs.loadingRatio.value}
+                {st(activeSlide, 'loadingValue')}
               </div>
               <p className="text-sm text-slate-600 font-medium pl-8 mt-0.5 line-clamp-2">
-                {activeSlide.specs.loadingRatio.desc}
+                {st(activeSlide, 'loadingDesc')}
               </p>
             </div>
 
@@ -370,14 +373,14 @@ export default function ROICalculator({ onSelectModelQuote }) {
                   <Zap className="w-3.5 h-3.5" />
                 </div>
                 <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">
-                  {activeSlide.specs.dryingSpeed.label}
+                  {t('common_roi_lblSpeed')}
                 </div>
               </div>
               <div className="text-sm font-black text-[#23AC39] mt-1 pl-8">
-                {activeSlide.specs.dryingSpeed.value}
+                {st(activeSlide, 'speedValue')}
               </div>
               <p className="text-sm text-slate-600 font-medium pl-8 mt-0.5 line-clamp-2">
-                {activeSlide.specs.dryingSpeed.desc}
+                {st(activeSlide, 'speedDesc')}
               </p>
             </div>
 
@@ -388,14 +391,14 @@ export default function ROICalculator({ onSelectModelQuote }) {
                   <ShieldCheck className="w-3.5 h-3.5" />
                 </div>
                 <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">
-                  {activeSlide.specs.hygiene.label}
+                  {t('common_roi_lblHygiene')}
                 </div>
               </div>
               <div className="text-sm font-black text-[#123B92] mt-1 pl-8">
-                {activeSlide.specs.hygiene.value}
+                {st(activeSlide, 'hygieneValue')}
               </div>
               <p className="text-sm text-slate-600 font-medium pl-8 mt-0.5 line-clamp-2">
-                {activeSlide.specs.hygiene.desc}
+                {st(activeSlide, 'hygieneDesc')}
               </p>
             </div>
 
@@ -406,14 +409,14 @@ export default function ROICalculator({ onSelectModelQuote }) {
                   <Sparkles className="w-3.5 h-3.5" />
                 </div>
                 <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">
-                  {activeSlide.specs.retention.label}
+                  {t('common_roi_lblRetention')}
                 </div>
               </div>
               <div className="text-sm font-black text-[#002DC2] mt-1 pl-8">
-                {activeSlide.specs.retention.value}
+                {st(activeSlide, 'retentionValue')}
               </div>
               <p className="text-sm text-slate-600 font-medium pl-8 mt-0.5 line-clamp-2">
-                {activeSlide.specs.retention.desc}
+                {st(activeSlide, 'retentionDesc')}
               </p>
             </div>
           </div>
@@ -424,7 +427,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
               onClick={handleQuoteClick}
               className="w-full py-2.5 px-3 sm:px-4 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-normal sm:tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer active:scale-[0.98]"
             >
-              <span>Get Sizing & Pricing for This Model</span>
+              <span>{t('common_roi_cta')}</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>

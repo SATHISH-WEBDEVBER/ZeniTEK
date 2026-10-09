@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function WhatsAppWidget() {
+  const { t } = useLanguage();
   const [isHovered, setIsHovered] = useState(false);
 
   // ZeniTEK Official WhatsApp Sales & Support number
@@ -12,7 +14,7 @@ export default function WhatsAppWidget() {
 
   return (
     <aside 
-      aria-label="Direct WhatsApp Contact"
+      aria-label={t('common_wa_region')}
       className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 flex items-center group"
     >
       <a
@@ -22,8 +24,8 @@ export default function WhatsAppWidget() {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className="relative flex items-center justify-center bg-[#25D366] hover:bg-[#20bd5a] text-white w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-full shadow-lg shadow-black/15 hover:shadow-xl hover:shadow-[#25D366]/40 hover:-translate-y-0.5 active:scale-95 transition-all duration-300 border-2 border-white cursor-pointer"
-        title="Chat with ZeniTEK on WhatsApp (+91 80986 13422)"
-        aria-label="Chat directly with ZeniTEK on WhatsApp"
+        title={`${t('common_wa_title')} (+91 80986 13422)`}
+        aria-label={t('common_wa_title')}
       >
         {/* Calm Online Presence Indicator Badge */}
         <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-[#23AC39] rounded-full border-2 border-white shadow-sm" />
@@ -43,7 +45,7 @@ export default function WhatsAppWidget() {
             isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-1'
           }`}
         >
-          Chat with us on WhatsApp
+          {t('common_wa_tooltip')}
           <span className="w-2 h-2 bg-slate-900/90 rotate-45 absolute -right-1 top-1/2 -translate-y-1/2" />
         </span>
       </a>

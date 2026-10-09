@@ -2,27 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { Send, ShieldCheck, CheckCircle, Loader2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
+// [submitted value, English label used for prefill matching, translation key for the shown label]
 const CLIENT_TYPES = [
-  ['Individual Farmer', 'Individual Farmer'],
-  ['FPO / Cooperative Group', 'FPO / Farmer Cooperative'],
-  ['Food Processor & Exporter', 'Food Processor & Exporter'],
-  ['Industrial/Sludge Processor', 'Industrial / Sludge Processor'],
-  ['NGO / CSR Partner', 'NGO / CSR Partner'],
+  ['Individual Farmer', 'Individual Farmer', 'common_client_farmer'],
+  ['FPO / Cooperative Group', 'FPO / Farmer Cooperative', 'common_client_fpo'],
+  ['Food Processor & Exporter', 'Food Processor & Exporter', 'common_client_processor'],
+  ['Industrial/Sludge Processor', 'Industrial / Sludge Processor', 'common_client_industrial'],
+  ['NGO / CSR Partner', 'NGO / CSR Partner', 'common_client_ngo'],
 ];
 
 const CROPS = [
-  ['Copra/Coconut', 'Copra / Coconut'],
-  ['Moringa/Herbs', 'Moringa / Herbs / Tea'],
-  ['Spices/Chillies', 'Spices / Chillies / Pepper'],
-  ['Fruits/Veggies', 'Fruits / Vegetables'],
-  ['Fish/Seafood', 'Fish / Marine Seafood'],
-  ['Other', 'Other Agricultural / Industrial'],
+  ['Copra/Coconut', 'Copra / Coconut', 'common_form_cropCopra'],
+  ['Moringa/Herbs', 'Moringa / Herbs / Tea', 'common_form_cropMoringa'],
+  ['Spices/Chillies', 'Spices / Chillies / Pepper', 'common_form_cropSpices'],
+  ['Fruits/Veggies', 'Fruits / Vegetables', 'common_form_cropFruits'],
+  ['Fish/Seafood', 'Fish / Marine Seafood', 'common_form_cropFish'],
+  ['Other', 'Other Agricultural / Industrial', 'common_form_cropOther'],
 ];
 
 const CAPACITIES = [
-  ['Under 50 kg (Portable)', 'Under 50 kg (Portable DIY)'],
-  ['100 to 500 kg (Commercial)', '100 to 500 kg (Commercial Polyhouse)'],
-  ['1 Ton+ (Industrial)', '1 Ton+ (Industrial Multi-Tunnel)'],
+  ['Under 50 kg (Portable)', 'Under 50 kg (Portable DIY)', 'common_cap_portable'],
+  ['100 to 500 kg (Commercial)', '100 to 500 kg (Commercial Polyhouse)', 'common_cap_commercial'],
+  ['1 Ton+ (Industrial)', '1 Ton+ (Industrial Multi-Tunnel)', 'common_cap_industrial'],
 ];
 
 const DEFAULTS = {
@@ -107,7 +108,7 @@ export default function LeadForm({ prefill }) {
       const data = await response.json();
 
       if (data.success) {
-        setSuccessMsg(data.message || 'Quote requested successfully!');
+        setSuccessMsg(t('common_form_success'));
         if (data.whatsappUrl) setTimeout(() => window.open(data.whatsappUrl, '_blank'), 800);
       } else {
         openWhatsAppFallback();
@@ -126,7 +127,7 @@ export default function LeadForm({ prefill }) {
           <CheckCircle className="w-6 h-6 text-[#002DC2] shrink-0" />
           <div>
             <p className="font-bold text-[#123B92]">{successMsg}</p>
-            <p className="text-sm text-black/70">Opening WhatsApp for an engineer response...</p>
+            <p className="text-sm text-black/70">{t('common_form_openingWa')}</p>
           </div>
         </div>
       )}
@@ -137,7 +138,7 @@ export default function LeadForm({ prefill }) {
             <label className="block text-xs font-bold text-[#123B92] mb-1">
               {t('yourName')} <span className="text-[#002DC2]">*</span>
             </label>
-            <input type="text" name="name" required placeholder="e.g. Ramesh Kumar" value={formData.name} onChange={handleChange} className={inputClass} />
+            <input type="text" name="name" required placeholder={t('common_form_namePh')} value={formData.name} onChange={handleChange} className={inputClass} />
           </div>
 
           <div>
@@ -148,28 +149,28 @@ export default function LeadForm({ prefill }) {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#123B92] mb-1">State *</label>
-            <input type="text" name="state" required placeholder="e.g. Tamil Nadu" value={formData.state} onChange={handleChange} className={inputClass} />
+            <label className="block text-xs font-bold text-[#123B92] mb-1">{t('common_form_state')} *</label>
+            <input type="text" name="state" required placeholder={t('common_form_statePh')} value={formData.state} onChange={handleChange} className={inputClass} />
           </div>
 
           <div>
             <label className="block text-xs font-bold text-[#123B92] mb-1">
               {t('districtCity')} <span className="text-[#002DC2]">*</span>
             </label>
-            <input type="text" name="district" required placeholder="e.g. Pollachi / Coimbatore" value={formData.district} onChange={handleChange} className={inputClass} />
+            <input type="text" name="district" required placeholder={t('common_form_districtPh')} value={formData.district} onChange={handleChange} className={inputClass} />
           </div>
 
           <div>
             <label className="block text-xs font-bold text-[#123B92] mb-1">{t('userCategory')} *</label>
             <select name="clientType" value={formData.clientType} onChange={handleChange} className={`${inputClass} cursor-pointer`}>
-              {CLIENT_TYPES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+              {CLIENT_TYPES.map(([v, , k]) => <option key={v} value={v}>{t(k)}</option>)}
             </select>
           </div>
 
           <div>
             <label className="block text-xs font-bold text-[#123B92] mb-1">{t('targetCrop')} *</label>
             <select name="cropType" value={formData.cropType} onChange={handleChange} className={`${inputClass} cursor-pointer`}>
-              {CROPS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+              {CROPS.map(([v, , k]) => <option key={v} value={v}>{t(k)}</option>)}
             </select>
           </div>
         </div>
@@ -177,7 +178,7 @@ export default function LeadForm({ prefill }) {
         <div>
           <label className="block text-xs font-bold text-[#123B92] mb-1">{t('desiredCapacity')} *</label>
           <select name="capacityNeeded" value={formData.capacityNeeded} onChange={handleChange} className={`${inputClass} cursor-pointer`}>
-            {CAPACITIES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+            {CAPACITIES.map(([v, , k]) => <option key={v} value={v}>{t(k)}</option>)}
           </select>
         </div>
 
@@ -186,7 +187,7 @@ export default function LeadForm({ prefill }) {
           <textarea
             name="message"
             rows="4"
-            placeholder="e.g. Please share subsidy documents and estimated installation time."
+            placeholder={t('common_form_messagePh')}
             value={formData.message}
             onChange={handleChange}
             className={inputClass}
@@ -195,7 +196,7 @@ export default function LeadForm({ prefill }) {
 
         <div className="pt-4 border-t border-[#123B92]/20 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="text-xs text-black/60 flex items-center">
-            <ShieldCheck className="w-4 h-4 text-[#002DC2] mr-1" /> 100% Confidential
+            <ShieldCheck className="w-4 h-4 text-[#002DC2] mr-1" /> {t('common_form_confidential')}
           </div>
           <button
             type="submit"
@@ -205,7 +206,7 @@ export default function LeadForm({ prefill }) {
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Processing...</span>
+                <span>{t('common_form_processing')}</span>
               </>
             ) : (
               <>

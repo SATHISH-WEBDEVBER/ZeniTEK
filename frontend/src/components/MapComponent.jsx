@@ -150,6 +150,7 @@ function MapController({
 // Custom Floating Map Controls UI (Google Maps Style Selector, Zoom In, Zoom Out, Fit All)
 function MapOverlayControls({ onFitAll, mapMode, setMapMode }) {
   const map = useMap();
+  const { t } = useLanguage();
 
   return (
     <>
@@ -177,7 +178,7 @@ function MapOverlayControls({ onFitAll, mapMode, setMapMode }) {
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
               }`}
             >
-              Map
+              {t('common_map_modeMap')}
             </button>
             <button
               type="button"
@@ -188,7 +189,7 @@ function MapOverlayControls({ onFitAll, mapMode, setMapMode }) {
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
               }`}
             >
-              Satellite
+              {t('common_map_modeSatellite')}
             </button>
             <button
               type="button"
@@ -199,7 +200,7 @@ function MapOverlayControls({ onFitAll, mapMode, setMapMode }) {
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
               }`}
             >
-              Terrain
+              {t('common_map_modeTerrain')}
             </button>
           </div>
 
@@ -207,7 +208,7 @@ function MapOverlayControls({ onFitAll, mapMode, setMapMode }) {
           <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-slate-200 p-1 flex flex-col gap-1">
             <button
               type="button"
-              title="Zoom In"
+              title={t('common_map_zoomIn')}
               onClick={() => map.zoomIn()}
               className="w-8 h-8 rounded-lg bg-white hover:bg-[#F0F4FD] text-[#123B92] hover:text-[#002DC2] flex items-center justify-center transition-all border border-slate-200 active:scale-95 cursor-pointer"
             >
@@ -215,7 +216,7 @@ function MapOverlayControls({ onFitAll, mapMode, setMapMode }) {
             </button>
             <button
               type="button"
-              title="Zoom Out"
+              title={t('common_map_zoomOut')}
               onClick={() => map.zoomOut()}
               className="w-8 h-8 rounded-lg bg-white hover:bg-[#F0F4FD] text-[#123B92] hover:text-[#002DC2] flex items-center justify-center transition-all border border-slate-200 active:scale-95 cursor-pointer"
             >
@@ -223,7 +224,7 @@ function MapOverlayControls({ onFitAll, mapMode, setMapMode }) {
             </button>
             <button
               type="button"
-              title="Fit Entire India in View"
+              title={t('common_map_fitAll')}
               onClick={onFitAll}
               className="w-8 h-8 rounded-lg bg-white hover:bg-[#F0F4FD] text-[#123B92] hover:text-[#002DC2] flex items-center justify-center transition-all border border-slate-200 active:scale-95 cursor-pointer"
             >
@@ -237,7 +238,7 @@ function MapOverlayControls({ onFitAll, mapMode, setMapMode }) {
 }
 
 export default function MapComponent({ onSelectProjectQuote }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [projects, setProjects] = useState(activeLocationsData);
   const [selectedState, setSelectedState] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -304,7 +305,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
       `<div class="text-center font-sans py-0.5">
          <div class="font-black text-xs text-white">${stName}</div>
          <div class="text-xs font-bold ${count > 0 ? 'text-[#38BDF8]' : 'text-slate-300'}">
-           ${count > 0 ? `${count} Active Installation${count > 1 ? 's' : ''}` : 'Official India Territory'}
+           ${count > 0 ? (count > 1 ? t('common_map_activeMany', { count }) : t('common_map_activeOne')) : t('common_map_territory')}
          </div>
        </div>`,
       { sticky: true, className: 'zenitek-state-tooltip', direction: 'auto' }
@@ -318,7 +319,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
         }
       }
     });
-  }, [getStateCount, setSelectedState]);
+  }, [getStateCount, setSelectedState, lang]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleMarkerMouseOver = (markerInstance) => {
     if (hoverTimerRef.current) {
@@ -475,7 +476,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                   : 'bg-white text-[#123B92] hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/20'
               }`}
             >
-              <span>{st.name}</span>
+              <span>{st.name === 'All' ? t('common_map_all') : st.name}</span>
               <span className={`text-xs sm:text-sm px-2.5 py-0.5 rounded-full font-black ${
                 selectedState === st.name ? 'bg-[#123B92] text-white' : 'bg-[#F0F4FD] text-[#123B92]'
               }`}>
@@ -521,10 +522,10 @@ export default function MapComponent({ onSelectProjectQuote }) {
           <div className="mb-3.5 space-y-3 pb-3 border-b border-[#123B92]/20 shrink-0">
             <div className="flex items-center justify-between">
               <h3 className="text-xl font-black text-[#123B92] flex items-center">
-                <MapPin className="w-5 h-5 text-[#002DC2] mr-1.5 shrink-0" /> Installed Sites Directory
+                <MapPin className="w-5 h-5 text-[#002DC2] mr-1.5 shrink-0" /> {t('common_map_directory')}
               </h3>
               <span className="text-xs sm:text-sm font-mono font-black text-white bg-[#123B92] px-3 py-1 rounded-lg border border-[#123B92]">
-                {filteredProjects.length} Sites
+                {t('common_map_sites', { count: filteredProjects.length })}
               </span>
             </div>
 
@@ -535,7 +536,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search crop, district, or capacity..."
+                placeholder={t('common_map_searchPh')}
                 className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#123B92]/30 rounded-xl text-sm sm:text-base text-black placeholder-black/40 focus:outline-none focus:ring-2 focus:ring-[#002DC2] focus:border-transparent transition-all"
               />
               {searchQuery && (
@@ -544,7 +545,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                   onClick={() => setSearchQuery('')}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-xs sm:text-sm font-bold text-black/60 hover:text-black cursor-pointer"
                 >
-                  Clear
+                  {t('common_map_clear')}
                 </button>
               )}
             </div>
@@ -554,7 +555,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
           <div className="flex-1 overflow-y-auto space-y-3 pr-1">
             {filteredProjects.length === 0 ? (
               <div className="p-6 text-center text-black/60 text-sm sm:text-base font-medium">
-                No solar dryer installations match your search.
+                {t('common_map_empty')}
               </div>
             ) : (
               filteredProjects.map(proj => {
@@ -590,7 +591,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                       <span className={`font-black flex items-center text-xs sm:text-sm shrink-0 ml-2 ${
                         isSelected ? 'text-[#002DC2]' : 'text-slate-600 group-hover:text-[#002DC2]'
                       }`}>
-                        Focus Map <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                        {t('common_map_focus')} <ArrowRight className="w-3.5 h-3.5 ml-1" />
                       </span>
                     </div>
                   </div>
@@ -654,7 +655,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
 
             {/* Dedicated Official India States Vector Boundary Layer */}
             <GeoJSON
-              key={`${selectedState}-${mapMode}`}
+              key={`${selectedState}-${mapMode}-${lang}`}
               data={indiaGeoJson}
               style={getStateStyle}
               onEachFeature={onEachStateFeature}
@@ -745,7 +746,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                           className="w-full text-xs sm:text-sm font-black text-white bg-[#23AC39] hover:bg-[#002DC2] py-2.5 px-3 rounded-lg shadow-sm text-center flex items-center justify-center space-x-1.5 transition-colors cursor-pointer active:scale-[0.98]"
                         >
                           <Info className="w-4 h-4" />
-                          <span>View More Details</span>
+                          <span>{t('common_map_viewDetails')}</span>
                         </button>
                       </div>
                     </div>
@@ -774,7 +775,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
           <div className="absolute bottom-3 left-3 z-[500] pointer-events-none select-none bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-[#123B92]/25 shadow-md flex items-center space-x-2">
             <span className="w-2.5 h-2.5 rounded-full bg-[#23AC39] animate-pulse" />
             <span className="text-xs sm:text-xs font-black text-[#123B92] tracking-wide">
-              <span className="hidden sm:inline">Official Survey of India Boundaries • </span>35 Active Field Sites
+              <span className="hidden sm:inline">{t('common_map_surveyBadge')} • </span>{t('common_map_activeSites', { count: 35 })}
             </span>
           </div>
         </div>

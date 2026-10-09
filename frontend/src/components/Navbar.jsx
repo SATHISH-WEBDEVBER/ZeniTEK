@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
   Menu, X, ArrowRight, ChevronDown, Sun, Zap, Sprout, Cpu, 
@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
+import LanguageWidget from './LanguageWidget';
 import { fetchPublicSections } from '../utils/api';
 import { defaultSectionsData } from '../data/defaultSectionsData';
 
@@ -23,7 +24,32 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const galleryRef = useRef(null);
   const timeoutRef = useRef(null);
   const location = useLocation();
-  const { t } = useLanguage();
+  const { t, tf, lang } = useLanguage();
+
+  // The full desktop menu is shown only when it actually fits on one row for the current
+  // language and width (Tamil/Malayalam labels are much longer); otherwise the menu button is used.
+  const rowRef = useRef(null);
+  const [collapsed, setCollapsed] = useState(false);
+  const [viewportWidth, setViewportWidth] = useState(() => window.innerWidth);
+  useEffect(() => {
+    const onResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+  // Re-measure once web fonts finish loading: fallback fonts are wider and would force the menu button
+  const [fontTick, setFontTick] = useState(0);
+  useEffect(() => {
+    if (!document.fonts) return undefined;
+    const bump = () => setFontTick(n => n + 1);
+    document.fonts.ready.then(bump);
+    document.fonts.addEventListener('loadingdone', bump);
+    return () => document.fonts.removeEventListener('loadingdone', bump);
+  }, []);
+  useLayoutEffect(() => { setCollapsed(false); }, [lang, viewportWidth, fontTick]);
+  useLayoutEffect(() => {
+    const row = rowRef.current;
+    if (!collapsed && row && row.scrollWidth > row.clientWidth + 1) setCollapsed(true);
+  }, [collapsed, lang, viewportWidth, fontTick]);
   // Freeze the page behind the open mobile menu; Esc closes it
   useScrollLock(mobileMenuOpen);
   useEscapeKey(mobileMenuOpen, () => setMobileMenuOpen(false));
@@ -95,12 +121,16 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const galleryDropdownItems = [
     {
       name: "Brochure",
+      nameKey: "navbar_brochure",
+      descKey: "navbar_brochureDesc",
       path: "/gallery?cat=brochure",
       icon: FileText,
       desc: "Official Technical PDF Pages"
     },
     {
       name: "Images",
+      nameKey: "navbar_images",
+      descKey: "navbar_imagesDesc",
       path: "/gallery?cat=all",
       icon: ImageIcon,
       desc: "Authentic Real Field Photos"
@@ -131,7 +161,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
       
       {/* MAIN NAVBAR CONTAINER */}
       <div className="w-full px-5 sm:px-8 md:px-[60px]">
-        <div className="flex items-center justify-between h-14 sm:h-16 lg:h-[68px] w-full">
+        <div ref={rowRef} className="flex items-center justify-between h-14 sm:h-16 lg:h-[68px] w-full">
           
           {/* Logo - Stage 1 Animation */}
           <Link
@@ -151,7 +181,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
 
           {/* Desktop Nav Items - Stage 2 Animation */}
           <nav
-            className={`hidden lg:flex items-center space-x-1 xl:space-x-2 2xl:space-x-3 transition-all duration-700 ease-out transform ${
+            className={`${collapsed ? 'hidden' : 'hidden lg:flex'} items-center space-x-1 xl:space-x-2 2xl:space-x-3 transition-all duration-700 ease-out transform ${
               animStage >= 2
                 ? 'opacity-100 translate-y-0 scale-100'
                 : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'
@@ -188,7 +218,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                     : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
                 }`}
               >
-                <span>Products</span>
+                <span>{t('navbar_products')}</span>
                 <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${productsDropdownOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
               </button>
 
@@ -226,7 +256,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                           {item.thumbnail?.url ? (
                             <img
                               src={item.thumbnail.url}
-                              alt={item.title}
+                              alt={tf(`section_${item.slug}_title`, item.title)}
                               className="w-full h-full object-cover"
                             />
                           ) : (
@@ -237,12 +267,12 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="text-sm xl:text-sm font-bold text-[#123B92] group-hover:text-[#002DC2] transition-colors leading-snug flex items-center justify-between">
-                            <span className="truncate">{item.title}</span>
+                            <span className="truncate">{tf(`section_${item.slug}_title`, item.title)}</span>
                             <ArrowRight className="w-3.5 h-3.5 text-[#002DC2] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all shrink-0 ml-1" />
                           </div>
                           {item.subtitle && (
                             <div className="text-xs text-slate-500 font-medium truncate mt-0.5 leading-tight">
-                              {item.subtitle}
+                              {tf(`section_${item.slug}_subtitle`, item.subtitle)}
                             </div>
                           )}
                         </div>
@@ -252,8 +282,8 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                     {/* 8th Slot: Fast Quote Assistant */}
                     <div className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-emerald-50 to-green-50 border border-[#23AC39]/30">
                       <div className="min-w-0 pr-2">
-                        <div className="text-xs font-black text-[#1A822B]">Custom Engineering DPR</div>
-                        <div className="text-xs text-[#1A822B] font-medium truncate">Government subsidy assistance & quote</div>
+                        <div className="text-xs font-black text-[#1A822B]">{t('navbar_customDpr')}</div>
+                        <div className="text-xs text-[#1A822B] font-medium truncate">{t('navbar_customDprDesc')}</div>
                       </div>
                       <button
                         type="button"
@@ -291,7 +321,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                     : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
                 }`}
               >
-                <span>Gallery</span>
+                <span>{t('navGallery')}</span>
                 <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${galleryDropdownOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
               </button>
 
@@ -306,7 +336,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                     const ItemIcon = item.icon;
                     return (
                       <Link
-                        key={item.name}
+                        key={t(item.nameKey)}
                         to={item.path}
                         onClick={() => setGalleryDropdownOpen(false)}
                         className="flex items-start space-x-3 p-2.5 rounded-xl hover:bg-[#F0F4FD] transition-colors group"
@@ -316,10 +346,10 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                         </div>
                         <div>
                           <div className="text-sm font-bold text-[#123B92] group-hover:text-[#002DC2] transition-colors">
-                            {item.name}
+                            {t(item.nameKey)}
                           </div>
                           <div className="text-xs text-slate-500 font-medium leading-tight">
-                            {item.desc}
+                            {t(item.descKey)}
                           </div>
                         </div>
                       </Link>
@@ -338,7 +368,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
               }`}
             >
-              <span>Subsidies</span>
+              <span>{t('navbar_subsidies')}</span>
             </Link>
 
             {/* 5. R&D (RESEARCH & DEVELOPMENT SHORT FORM) */}
@@ -350,7 +380,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                   : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
               }`}
             >
-              <span>R&D</span>
+              <span>{t('navbar_rnd')}</span>
             </Link>
 
             {/* 6. ABOUT US */}
@@ -387,6 +417,11 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                 : 'opacity-0 scale-90 translate-x-6 pointer-events-none'
             }`}
           >
+            {/* Language switcher (desktop; mobile has it inside the menu) */}
+            <div className={collapsed ? 'hidden' : 'hidden lg:block'}>
+              <LanguageWidget />
+            </div>
+
             {/* Quote CTA Button */}
             <button
               onClick={onOpenQuoteModal}
@@ -399,8 +434,8 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {/* Mobile Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl text-[#123B92] hover:bg-[#F0F4FD] border border-[#123B92]/20 shrink-0 transition-colors cursor-pointer"
-              aria-label="Toggle Menu"
+              className={`${collapsed ? '' : 'lg:hidden'} p-2 rounded-xl text-[#123B92] hover:bg-[#F0F4FD] border border-[#123B92]/20 shrink-0 transition-colors cursor-pointer`}
+              aria-label={t('navbar_toggleMenu')}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -422,7 +457,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
 
       {/* MOBILE MENU ACCORDION DRAWER */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-slate-200 p-4 space-y-1 shadow-2xl max-h-[85vh] overflow-y-auto animate-fade-in w-full">
+        <div className={`${collapsed ? '' : 'lg:hidden'} bg-white border-t border-slate-200 p-4 space-y-1 shadow-2xl max-h-[85vh] overflow-y-auto animate-fade-in w-full`}>
           
           {/* Mobile: 1. Home */}
           <Link
@@ -444,7 +479,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
               className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-base font-bold text-[#123B92] hover:bg-slate-50 transition-colors"
             >
-              <span>Products ({sections.length} Categories)</span>
+              <span>{t('navbar_productsCount', { count: sections.length })}</span>
               <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${mobileProductsOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
             </button>
 
@@ -461,7 +496,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                       {item.thumbnail?.url ? (
                         <img
                           src={item.thumbnail.url}
-                          alt={item.title}
+                          alt={tf(`section_${item.slug}_title`, item.title)}
                           className="w-full h-full object-cover"
                         />
                       ) : (
@@ -472,11 +507,11 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="text-xs font-bold text-[#123B92] leading-tight truncate">
-                        {item.title}
+                        {tf(`section_${item.slug}_title`, item.title)}
                       </div>
                       {item.subtitle && (
                         <div className="text-2xs text-slate-500 font-medium truncate mt-0.5">
-                          {item.subtitle}
+                          {tf(`section_${item.slug}_subtitle`, item.subtitle)}
                         </div>
                       )}
                     </div>
@@ -493,7 +528,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               onClick={() => setMobileGalleryOpen(!mobileGalleryOpen)}
               className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-base font-bold text-[#123B92] hover:bg-slate-50 transition-colors"
             >
-              <span>Gallery</span>
+              <span>{t('navGallery')}</span>
               <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${mobileGalleryOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
             </button>
 
@@ -501,12 +536,12 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               <div className="pl-4 pr-2 py-1 space-y-1 bg-slate-50 rounded-xl mb-1">
                 {galleryDropdownItems.map((item) => (
                   <Link
-                    key={item.name}
+                    key={t(item.nameKey)}
                     to={item.path}
                     onClick={() => setMobileMenuOpen(false)}
                     className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#002DC2] hover:bg-white"
                   >
-                    {item.name}
+                    {t(item.nameKey)}
                   </Link>
                 ))}
               </div>
@@ -536,7 +571,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                 : 'text-slate-800 hover:bg-slate-50'
             }`}
           >
-            <span>R&D</span>
+            <span>{t('navbar_rnd')}</span>
             <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
               Research & Dev
             </span>
@@ -568,6 +603,11 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {t('navContact')}
           </Link>
           
+          {/* Mobile: Language */}
+          <div className="pt-3 border-t border-[#123B92]/10">
+            <LanguageWidget variant="list" onSelect={() => setMobileMenuOpen(false)} />
+          </div>
+
           {/* Mobile CTA */}
           <div className="pt-3">
             <button
