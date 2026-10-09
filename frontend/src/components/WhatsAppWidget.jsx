@@ -21,7 +21,7 @@ export default function WhatsAppWidget() {
         rel="noopener noreferrer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="relative flex items-center justify-center bg-[#25D366] hover:bg-[#20bd5a] text-white w-13 h-13 sm:w-14 sm:h-14 rounded-full shadow-lg shadow-black/15 hover:shadow-xl hover:shadow-[#25D366]/40 hover:-translate-y-0.5 active:scale-95 transition-all duration-300 border-2 border-white cursor-pointer"
+        className="relative flex items-center justify-center bg-[#25D366] hover:bg-[#20bd5a] text-white w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-full shadow-lg shadow-black/15 hover:shadow-xl hover:shadow-[#25D366]/40 hover:-translate-y-0.5 active:scale-95 transition-all duration-300 border-2 border-white cursor-pointer"
         title="Chat with ZeniTEK on WhatsApp (+91 80986 13422)"
         aria-label="Chat directly with ZeniTEK on WhatsApp"
       >

@@ -919,7 +919,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-[#F0F4FD]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          <div className="bg-[#123B92] text-white rounded-3xl p-8 sm:p-14 lg:p-18 shadow-2xl relative overflow-hidden">
+          <div className="bg-[#123B92] text-white rounded-3xl p-8 sm:p-14 lg:p-[72px] shadow-2xl relative overflow-hidden">
 
             <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-blue-500/20 rounded-full blur-2xl pointer-events-none" />
 
@@ -959,7 +959,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
               <div className="lg:col-span-4 flex flex-col gap-3 justify-center">
                 <button
                   onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: "About Us Consultation" })}
-                  className="w-full px-6 py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-sm sm:text-base uppercase tracking-wide sm:tracking-wider rounded-2xl shadow-lg hover:shadow-xl hover:scale-101 transition-all flex items-center justify-center gap-2.5 text-center cursor-pointer"
+                  className="w-full px-6 py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-sm sm:text-base uppercase tracking-wide sm:tracking-wider rounded-2xl shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all flex items-center justify-center gap-2.5 text-center cursor-pointer"
                 >
                   <span className="text-balance">Request Engineering Quote</span>
                   <ArrowRight className="w-5 h-5" />
@@ -969,7 +969,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
                   <a
                     href="tel:+918903852623"
-                    className="px-3 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm uppercase tracking-wide whitespace-nowrap rounded-2xl border border-white/20 hover:border-white/40 transition-all flex items-center justify-center space-x-2 text-center hover:scale-101 shadow-sm"
+                    className="px-3 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm uppercase tracking-wide whitespace-nowrap rounded-2xl border border-white/20 hover:border-white/40 transition-all flex items-center justify-center space-x-2 text-center hover:scale-[1.01] shadow-sm"
                   >
                     <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
                     <span>Call Directly</span>
@@ -979,7 +979,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     href="https://wa.me/918903852623?text=Hello%20ZeniTEK%20Team,%20I%20would%20like%20to%20consult%20regarding%20solar%20thermal%20and%20drying%20solutions."
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-3.5 bg-[#25D366] hover:bg-[#20ba59] text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wide whitespace-nowrap rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2 text-center hover:scale-101"
+                    className="px-3 py-3.5 bg-[#25D366] hover:bg-[#20ba59] text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wide whitespace-nowrap rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2 text-center hover:scale-[1.01]"
                   >
                     <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
                       <path d="M12.031 2C6.495 2 2 6.494 2 12.03c0 1.769.46 3.498 1.334 5.018L2 22l5.122-1.342a10.016 10.016 0 004.909 1.272h.004c5.535 0 10.03-4.494 10.03-10.03A10.03 10.03 0 0012.031 2zm0 18.366h-.003a8.318 8.318 0 01-4.238-1.163l-.304-.18-3.148.825.84-3.068-.198-.315A8.32 8.32 0 013.7 12.03c0-4.595 3.738-8.332 8.334-8.332a8.3 8.3 0 015.892 2.44 8.3 8.3 0 012.44 5.892c0 4.596-3.738 8.336-8.335 8.336zm4.568-6.242c-.25-.125-1.48-.73-1.71-.813-.23-.083-.398-.125-.565.125-.168.25-.65.813-.797.98-.146.166-.293.187-.543.062a6.93 6.93 0 01-2.02-1.246 7.64 7.64 0 01-1.398-1.74c-.146-.25-.016-.385.109-.51.112-.112.25-.292.375-.438.125-.146.167-.25.25-.417.084-.167.042-.313-.02-.438-.063-.125-.564-1.36-.773-1.862-.204-.49-.41-.423-.564-.431-.146-.008-.313-.01-.48-.01-.167 0-.438.063-.667.313-.23.25-.875.855-.875 2.085s.896 2.418 1.021 2.585c.125.167 1.76 2.688 4.264 3.77.596.257 1.061.411 1.424.526.598.19 1.143.163 1.573.099.48-.072 1.48-.605 1.688-1.189.209-.584.209-1.084.146-1.189-.062-.104-.23-.166-.48-.291z" />

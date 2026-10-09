@@ -141,7 +141,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             <img
               src="/logo.png"
               alt="ZeniTEK - Towards Sustainable Future"
-              className="h-9 xs:h-10 sm:h-11 md:h-12 lg:h-13 xl:h-14 w-auto object-contain py-0.5"
+              className="h-9 xs:h-10 sm:h-11 md:h-12 lg:h-[52px] xl:h-14 w-auto object-contain py-0.5"
             />
           </Link>
 

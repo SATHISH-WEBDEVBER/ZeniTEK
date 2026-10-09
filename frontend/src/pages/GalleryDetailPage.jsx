@@ -306,7 +306,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                       cropType: item.crop,
                       district: `${item.location}, ${item.state}`
                     })}
-                    className="w-full py-3.5 bg-[#002DC2] hover:bg-[#123B92] text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-lg transition-all hover:scale-101 flex items-center justify-center gap-2 px-4 text-center cursor-pointer"
+                    className="w-full py-3.5 bg-[#002DC2] hover:bg-[#123B92] text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-lg transition-all hover:scale-[1.01] flex items-center justify-center gap-2 px-4 text-center cursor-pointer"
                   >
                     <SlidersHorizontal className="w-4 h-4 shrink-0" />
                     <span className="text-balance">Get Pricing & Subsidy Quote for this Model</span>

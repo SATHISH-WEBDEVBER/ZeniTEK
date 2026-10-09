@@ -250,7 +250,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
 
 
       {/* SECTION 3: KEY SUBSIDY SCHEMES */}
-      <section id="subsidy-schemes" className="w-full section-odd py-14 sm:py-18">
+      <section id="subsidy-schemes" className="w-full section-odd py-14 sm:py-[72px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           
           <div className="text-center max-w-3xl mx-auto space-y-2">
@@ -301,7 +301,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
 
 
       {/* SECTION 4: 5-STEP ASSISTANCE PROCESS */}
-      <section className="w-full section-even py-14 sm:py-18">
+      <section className="w-full section-even py-14 sm:py-[72px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           
           <div className="text-center max-w-3xl mx-auto space-y-2">
