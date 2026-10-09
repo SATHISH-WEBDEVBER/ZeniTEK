@@ -161,7 +161,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
               <div className="bg-white p-3 sm:p-4 rounded-3xl border border-slate-200 shadow-md">
                 {/* Main High-Res Image View */}
                 <div 
-                  className="relative aspect-4/3 sm:aspect-16/10 rounded-2xl overflow-hidden bg-slate-950 cursor-pointer group"
+                  className="relative aspect-[4/3] sm:aspect-[16/10] rounded-2xl overflow-hidden bg-slate-950 cursor-pointer group"
                   onClick={() => setLightboxOpen(true)}
                 >
                   <img
