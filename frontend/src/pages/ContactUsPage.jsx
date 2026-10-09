@@ -3,6 +3,7 @@ import {
   MapPin, Phone, Mail, MessageCircle, ShieldCheck, ArrowRight, CheckCircle2, Building2, Send, Loader2, Receipt, Landmark, Droplets, Wrench
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { API_BASE } from '../utils/api';
 import PageHero from '../components/PageHero';
 
 // Keep "Tamil Nadu - 638 112" style postcodes on one line
@@ -33,7 +34,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/leads', {
+      const res = await fetch(`${API_BASE}/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

@@ -1,5 +1,6 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
+import mongoose from 'mongoose';
 import Lead from '../models/Lead.js';
 import { requireAdmin } from '../middleware/auth.js';
 import nodemailer from 'nodemailer';
@@ -34,7 +35,7 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ success: false, errors: errors.array() });
+      return res.status(400).json({ success: false, message: errors.array().map(e => e.msg).join('; '), errors: errors.array() });
     }
 
     try {
@@ -113,10 +114,22 @@ router.post(
   }
 );
 
-// GET /api/leads - Fetch all leads
+const escapeRegex = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const isMemId = id => typeof id === 'string' && id.startsWith('mem_');
+
+// GET /api/leads?search=&sort=newest|oldest&limit= - Fetch leads (client admin)
 router.get('/', requireAdmin, async (req, res) => {
+  const sortDir = req.query.sort === 'oldest' ? 1 : -1;
+  const limit = Math.min(Math.max(parseInt(req.query.limit, 10) || 1000, 1), 5000);
+  const term = typeof req.query.search === 'string' ? req.query.search.trim().slice(0, 100) : '';
   try {
-    const leads = await Lead.find().sort({ submittedAt: -1 });
+    const query = {};
+    if (term) {
+      const rx = new RegExp(escapeRegex(term), 'i');
+      query.$or = ['name', 'phone', 'state', 'district', 'clientType', 'cropType', 'capacityNeeded', 'message']
+        .map(field => ({ [field]: rx }));
+    }
+    const leads = await Lead.find(query).sort({ submittedAt: sortDir }).limit(limit).select('-__v').lean();
     return res.json({ success: true, count: leads.length, leads });
   } catch (error) {
     return res.json({ success: true, count: inMemoryLeads.length, leads: inMemoryLeads, fallback: true });
@@ -128,12 +141,8 @@ router.get('/:id', requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     let lead = null;
-    try {
-      lead = await Lead.findById(id);
-    } catch (dbErr) {
-      lead = inMemoryLeads.find(l => l._id === id);
-    }
-
+    if (isMemId(id)) lead = inMemoryLeads.find(l => l._id === id) || null;
+    else if (mongoose.isValidObjectId(id)) lead = await Lead.findById(id).select('-__v').lean();
     if (!lead) {
       return res.status(404).json({ success: false, message: 'Lead not found' });
     }
@@ -147,11 +156,15 @@ router.get('/:id', requireAdmin, async (req, res) => {
 router.delete('/:id', requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
-    try {
-      await Lead.findByIdAndDelete(id);
-    } catch (dbErr) {
+    let deleted = null;
+    if (isMemId(id)) {
       const idx = inMemoryLeads.findIndex(l => l._id === id);
-      if (idx !== -1) inMemoryLeads.splice(idx, 1);
+      if (idx !== -1) deleted = inMemoryLeads.splice(idx, 1)[0];
+    } else if (mongoose.isValidObjectId(id)) {
+      deleted = await Lead.findByIdAndDelete(id);
+    }
+    if (!deleted) {
+      return res.status(404).json({ success: false, message: 'Lead not found' });
     }
     return res.json({ success: true, message: 'Lead deleted successfully' });
   } catch (error) {

@@ -298,3 +298,57 @@ export async function adminSeedSections() {
   });
 }
 
+
+// ─── Client Admin dashboard: overview, enquiries (leads), reviews ────────────
+
+/** Admin: dashboard counts + 5 latest enquiries */
+export async function adminFetchOverview() {
+  return apiFetch('/admin/overview', { headers: adminHeaders() });
+}
+
+/** Admin: enquiries (leads). params: { search, sort: 'newest' | 'oldest' } */
+export async function adminFetchLeads(params = {}) {
+  const qs = new URLSearchParams(Object.entries(params).filter(([, v]) => v)).toString();
+  return apiFetch(`/leads${qs ? `?${qs}` : ''}`, { headers: adminHeaders() });
+}
+
+/** Admin: one enquiry */
+export async function adminFetchLead(id) {
+  return apiFetch(`/leads/${encodeURIComponent(id)}`, { headers: adminHeaders() });
+}
+
+/** Admin: delete an enquiry */
+export async function adminDeleteLead(id) {
+  return apiFetch(`/leads/${encodeURIComponent(id)}`, { method: 'DELETE', headers: adminHeaders() });
+}
+
+/** Admin: all reviews (approved + pending) */
+export async function adminFetchReviews() {
+  return apiFetch('/reviews/all', { headers: adminHeaders() });
+}
+
+/** Admin: approve (or hide again with approved=false) a review */
+export async function adminApproveReview(id, approved = true) {
+  return apiFetch(`/reviews/${encodeURIComponent(id)}/approve`, {
+    method: 'PUT',
+    headers: adminHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify({ approved })
+  });
+}
+
+/** Admin: delete a review */
+export async function adminDeleteReview(id) {
+  return apiFetch(`/reviews/${encodeURIComponent(id)}`, { method: 'DELETE', headers: adminHeaders() });
+}
+
+/** Admin (read-only): bug list, one bug, bug summary */
+export async function adminFetchBugs(params = {}) {
+  const qs = new URLSearchParams(Object.entries(params).filter(([, v]) => v)).toString();
+  return apiFetch(`/bugs${qs ? `?${qs}` : ''}`, { headers: adminHeaders() });
+}
+export async function adminFetchBug(id) {
+  return apiFetch(`/bugs/${encodeURIComponent(id)}`, { headers: adminHeaders() });
+}
+export async function adminFetchBugSummary() {
+  return apiFetch('/bugs/reports/summary', { headers: adminHeaders() });
+}

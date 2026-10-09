@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Send, ShieldCheck, CheckCircle, Loader2, Lock } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { API_BASE } from '../utils/api';
 
 // [submitted value, English label used for prefill matching, translation key for the shown label]
 const CLIENT_TYPES = [
@@ -100,7 +101,7 @@ export default function LeadForm({ prefill }) {
     setSuccessMsg(null);
 
     try {
-      const response = await fetch('/api/leads', {
+      const response = await fetch(`${API_BASE}/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

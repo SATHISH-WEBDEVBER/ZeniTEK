@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { activeLocationsData } from '../data/mapLocationsData';
 import { useLanguage } from '../context/LanguageContext';
+import { API_BASE } from '../utils/api';
 import { Link } from 'react-router-dom';
 
 // Official India Geographic Bounding Box (Southwest to Northeast)
@@ -400,7 +401,7 @@ export default function MapComponent({ onSelectProjectQuote }) { // eslint-disab
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const res = await fetch('/api/projects');
+        const res = await fetch(`${API_BASE}/projects`);
         const data = await res.json();
         if (data.success && Array.isArray(data.projects) && data.projects.length >= 35) {
           setProjects(data.projects);

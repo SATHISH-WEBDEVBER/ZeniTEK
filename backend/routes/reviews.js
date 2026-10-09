@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import Review from '../models/Review.js';
 import { requireAdmin } from '../middleware/auth.js';
 import { initialReviews } from './seed.js';
@@ -94,25 +95,31 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT /api/reviews/:id/approve - Approve review
+const isMemId = id => typeof id === 'string' && id.startsWith('rev_');
+
+// PUT /api/reviews/:id/approve - Approve review (body { approved: false } hides it again)
 router.put('/:id/approve', requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
+    const approved = req.body?.approved === undefined ? true : req.body.approved;
+    if (typeof approved !== 'boolean') {
+      return res.status(400).json({ success: false, message: 'approved must be true or false' });
+    }
     let updated = null;
-    try {
-      updated = await Review.findByIdAndUpdate(id, { approved: true }, { new: true });
-    } catch (dbErr) {
+    if (isMemId(id)) {
       const idx = memoryReviews.findIndex(r => r._id === id);
       if (idx !== -1) {
-        memoryReviews[idx].approved = true;
+        memoryReviews[idx].approved = approved;
         updated = memoryReviews[idx];
       }
+    } else if (mongoose.isValidObjectId(id)) {
+      updated = await Review.findByIdAndUpdate(id, { approved }, { new: true });
     }
 
     if (!updated) {
       return res.status(404).json({ success: false, message: 'Review not found' });
     }
-    return res.json({ success: true, message: 'Review approved successfully', review: updated });
+    return res.json({ success: true, message: approved ? 'Review approved successfully' : 'Review hidden from the website', review: updated });
   } catch (error) {
     return res.status(500).json({ success: false, message: 'Error approving review' });
   }
@@ -122,10 +129,15 @@ router.put('/:id/approve', requireAdmin, async (req, res) => {
 router.delete('/:id', requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
-    try {
-      await Review.findByIdAndDelete(id);
-    } catch (dbErr) {
+    let deleted = null;
+    if (isMemId(id)) {
+      deleted = memoryReviews.find(r => r._id === id) || null;
       memoryReviews = memoryReviews.filter(r => r._id !== id);
+    } else if (mongoose.isValidObjectId(id)) {
+      deleted = await Review.findByIdAndDelete(id);
+    }
+    if (!deleted) {
+      return res.status(404).json({ success: false, message: 'Review not found' });
     }
     return res.json({ success: true, message: 'Review deleted successfully' });
   } catch (error) {

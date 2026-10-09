@@ -84,7 +84,7 @@ router.post(
   productValidation,
   async (req, res) => {
     const errs = handleValidation(req, res);
-    if (errs) return res.status(400).json({ success: false, errors: errs });
+    if (errs) return res.status(400).json({ success: false, message: errs.map(e => e.msg).join('; '), errors: errs });
 
     try {
       const {

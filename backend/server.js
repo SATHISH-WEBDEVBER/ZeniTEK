@@ -13,6 +13,7 @@ import galleryRouter, { publicGalleryRouter } from './routes/gallery.js';
 import sectionsRouter, { publicSectionsRouter } from './routes/sections.js';
 import authRouter from './routes/auth.js';
 import bugsRouter, { syncOverdueFlags } from './routes/bugs.js';
+import adminRouter from './routes/admin.js';
 import { validateAuthConfig } from './middleware/auth.js';
 
 import path from 'path';
@@ -69,6 +70,9 @@ app.use('/api/auth', authRouter);
 // ─── Bug Tracker (tester + developer) ────────────────────────────────────────
 app.use('/api/bugs', bugsRouter);
 
+// ─── Client Admin dashboard ─────────────────────────────────────────────────
+app.use('/api/admin', adminRouter);
+
 // ─── Admin CMS Routes (protected) ───────────────────────────────────────────
 app.use('/api/products', productsRouter);
 app.use('/api/gallery', galleryRouter);
@@ -79,37 +83,45 @@ app.use('/api/public/products', publicProductsRouter);
 app.use('/api/public/gallery', publicGalleryRouter);
 app.use('/api/public/sections', publicSectionsRouter);
 
-// API Index Endpoint
+// API Index Endpoint (full reference: backend/API.md)
 app.get('/api', (req, res) => {
   return res.json({
     success: true,
     service: 'ZeniTEK Solar Thermal API Server',
-    version: '2.0.0',
+    version: '2.1.0',
+    docs: 'backend/API.md',
     endpoints: [
-      { path: '/api/health', methods: ['GET'], description: 'Server and Database Health Status' },
-      { path: '/api/auth/login', methods: ['POST'], description: 'Login (role: client | developer | tester)' },
-      { path: '/api/bugs', methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], description: 'Bug Tracker (tester / developer)' },
-      { path: '/api/bugs/reports/summary', methods: ['GET'], description: 'Bug report summary (developer)' },
-      { path: '/api/bugs/reports/excel', methods: ['GET'], description: 'Bug report Excel download (developer)' },
-      { path: '/api/products', methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], description: 'Products CMS (Admin)' },
-      { path: '/api/gallery', methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], description: 'Gallery CMS (Admin)' },
-      { path: '/api/public/products', methods: ['GET'], description: 'Public Products API (published only)' },
-      { path: '/api/public/gallery', methods: ['GET'], description: 'Public Gallery API (published only)' },
-      { path: '/api/projects', methods: ['GET', 'POST', 'PUT', 'DELETE'], description: 'Solar Thermal Installation Projects (Map)' },
-      { path: '/api/reviews', methods: ['GET', 'POST', 'PUT', 'DELETE'], description: 'Client Testimonials & Case Reviews' },
-      { path: '/api/leads', methods: ['GET', 'POST', 'DELETE'], description: 'Quote & Subsidy Enquiry Leads' },
-      { path: '/api/seed', methods: ['GET', 'POST'], description: 'Database Seeding Endpoint' }
+      { path: '/api/health', methods: ['GET'], role: 'public', description: 'Server and database health' },
+      { path: '/api/auth/login', methods: ['POST'], role: 'public', description: 'Login (role: client | developer | tester)' },
+      { path: '/api/auth/me', methods: ['GET'], role: 'any signed-in', description: 'Current session user' },
+      { path: '/api/admin/overview', methods: ['GET'], role: 'client', description: 'Client Admin dashboard counts + recent enquiries' },
+      { path: '/api/bugs', methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], role: 'tester / developer / client (read-only)', description: 'Bug Tracker' },
+      { path: '/api/bugs/reports/summary', methods: ['GET'], role: 'developer, client', description: 'Bug report summary' },
+      { path: '/api/bugs/reports/excel', methods: ['GET'], role: 'developer', description: 'Bug report Excel download' },
+      { path: '/api/leads', methods: ['GET', 'POST', 'DELETE'], role: 'public POST, client', description: 'Quote & subsidy enquiry leads' },
+      { path: '/api/reviews', methods: ['GET', 'POST', 'PUT', 'DELETE'], role: 'public GET/POST, client', description: 'Client testimonials' },
+      { path: '/api/products', methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], role: 'client', description: 'Products CMS' },
+      { path: '/api/sections', methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], role: 'client', description: 'Product sections CMS' },
+      { path: '/api/gallery', methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], role: 'client', description: 'Gallery CMS' },
+      { path: '/api/public/products', methods: ['GET'], role: 'public', description: 'Published products' },
+      { path: '/api/public/sections', methods: ['GET'], role: 'public', description: 'Published sections' },
+      { path: '/api/public/gallery', methods: ['GET'], role: 'public', description: 'Published gallery items' },
+      { path: '/api/projects', methods: ['GET', 'POST', 'PUT', 'DELETE'], role: 'public GET, client', description: 'Installation projects (map)' },
+      { path: '/api/seed', methods: ['GET', 'POST'], role: 'client', description: 'Database seeding' }
     ],
     mongoStatus: mongoose.connection.readyState === 1 ? 'Connected' : 'Standby / Fallback Mode'
   });
 });
 
-// Health Check Endpoint
+// Health Check Endpoint (public)
 app.get('/api/health', (req, res) => {
+  const db = mongoose.connection.readyState === 1;
   return res.json({
-    status: 'OK',
+    success: true,
+    status: 'ok',
+    db,
     service: 'ZeniTEK Solar Thermal API',
-    mongoStatus: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected/Standby',
+    uptimeSeconds: Math.round(process.uptime()),
     timestamp: new Date()
   });
 });

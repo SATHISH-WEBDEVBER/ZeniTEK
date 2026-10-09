@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Menu, X, ArrowRight, ChevronDown, Sun, FileText, Image as ImageIcon, LayoutGrid
 } from 'lucide-react';
@@ -26,6 +26,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   // Dynamic published sections for the 7 major categories
   const [sections, setSections] = useState(defaultSectionsData);
 
+  const navigate = useNavigate();
   const productsRef = useRef(null);
   const galleryRef = useRef(null);
   const timeoutRef = useRef(null);
@@ -121,6 +122,19 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
+
+  // Products / Gallery: hovering shows the dropdown; clicking opens the section's own page.
+  // Touch screens have no hover, so there a tap opens/closes the dropdown instead.
+  const canHover = () => typeof window !== 'undefined' && window.matchMedia?.('(hover: hover) and (pointer: fine)').matches;
+  const openMenuOrPage = (path, isOpen, setOpen, closeOther) => {
+    closeOther(false);
+    if (canHover()) {
+      setOpen(false);
+      navigate(path);
+    } else {
+      setOpen(!isOpen);
+    }
+  };
 
   const handleProductsEnter = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -246,10 +260,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             >
               <button
                 type="button"
-                onClick={() => {
-                  setGalleryDropdownOpen(false);
-                  setProductsDropdownOpen(!productsDropdownOpen);
-                }}
+                onClick={() => openMenuOrPage('/products', productsDropdownOpen, setProductsDropdownOpen, setGalleryDropdownOpen)}
                 className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap flex items-center space-x-1.5 cursor-pointer ${
                   isProductsActive || productsDropdownOpen
                     ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'
@@ -353,10 +364,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             >
               <button
                 type="button"
-                onClick={() => {
-                  setProductsDropdownOpen(false);
-                  setGalleryDropdownOpen(!galleryDropdownOpen);
-                }}
+                onClick={() => openMenuOrPage('/gallery', galleryDropdownOpen, setGalleryDropdownOpen, setProductsDropdownOpen)}
                 className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap flex items-center space-x-1.5 cursor-pointer ${
                   isGalleryActive || galleryDropdownOpen
                     ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'

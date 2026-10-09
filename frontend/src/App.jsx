@@ -16,10 +16,12 @@ import GalleryPage from './pages/GalleryPage';
 import GalleryDetailPage from './pages/GalleryDetailPage';
 import ContactUsPage from './pages/ContactUsPage';
 import SubsidiesPage from './pages/SubsidiesPage';
-import AdminPanel from './pages/AdminPanel';
-import AdminLoginChooser from './pages/bugs/AdminLoginChooser';
-import DeveloperApp from './pages/bugs/DeveloperApp';
-import TesterApp from './pages/bugs/TesterApp';
+// Admin dashboards load on demand, so public visitors never download them
+const ClientAdminApp = React.lazy(() => import('./pages/admin/ClientAdminApp'));
+const AdminLoginChooser = React.lazy(() => import('./pages/bugs/AdminLoginChooser'));
+const DeveloperApp = React.lazy(() => import('./pages/bugs/DeveloperApp'));
+const TesterApp = React.lazy(() => import('./pages/bugs/TesterApp'));
+import BugReportButton from './components/BugReportButton';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import SectionDetailPage from './pages/SectionDetailPage';
@@ -48,7 +50,32 @@ function ScrollToTop() {
   return null;
 }
 
+// Every /admin route is a dashboard: no public navbar, footer, WhatsApp widget or reveal animation
+const isAdminPath = pathname => /^\/admin(\/|$)/.test(pathname);
+
+function AdminRoutes() {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen bg-slate-50" aria-busy="true" />}>
+    <Routes>
+      <Route path="/admin/login" element={<AdminLoginChooser />} />
+      <Route path="/admin/developer/*" element={<DeveloperApp />} />
+      <Route path="/admin/tester/*" element={<TesterApp />} />
+      <Route path="/admin/*" element={<ClientAdminApp />} />
+    </Routes>
+    </React.Suspense>
+  );
+}
+
 export default function App() {
+  const { pathname } = useLocation();
+  return (
+    <LanguageProvider>
+      {isAdminPath(pathname) ? <AdminRoutes /> : <PublicSite />}
+    </LanguageProvider>
+  );
+}
+
+function PublicSite() {
   // Opening animation stages:
   // 0 = Initial: Empty navbar bar visible, full website hidden, logo & navitems hidden
   // 1 = Logo opens with animation
@@ -86,7 +113,6 @@ export default function App() {
   };
 
   return (
-    <LanguageProvider>
       <PageTitleProvider>
       {/* Scroll to Top on route change */}
       <ScrollToTop />
@@ -143,10 +169,6 @@ export default function App() {
               <Route path="/privacy" element={<LegalPage type="privacy" />} />
               <Route path="/terms" element={<LegalPage type="terms" />} />
               <Route path="/sitemap" element={<SitemapPage />} />
-              <Route path="/admin" element={<AdminPanel />} />
-              <Route path="/admin/login" element={<AdminLoginChooser />} />
-              <Route path="/admin/developer/*" element={<DeveloperApp />} />
-              <Route path="/admin/tester/*" element={<TesterApp />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>
@@ -158,9 +180,11 @@ export default function App() {
         {/* Global Floating Bottom-Right WhatsApp Quick Contact */}
         {animStage >= 3 && <WhatsAppWidget />}
 
+        {/* Tester-only floating "Report a bug" button (hidden for normal visitors) */}
+        {animStage >= 3 && <BugReportButton />}
+
       </div>
       </PageTitleProvider>
-    </LanguageProvider>
   );
 }
 

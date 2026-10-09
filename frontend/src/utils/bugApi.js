@@ -4,7 +4,7 @@
  * session can be open side by side in different tabs.
  */
 import { useCallback, useEffect, useState } from 'react';
-import { API_BASE } from './api';
+import { API_BASE, CLIENT_UNAUTHORIZED_EVENT } from './api';
 
 const sessionKey = role => `zenitek_session_${role}`;
 const UNAUTHORIZED_EVENT = 'zenitek:bug-unauthorized';
@@ -16,6 +16,26 @@ export const assetUrl = url => (url && /^https?:\/\//.test(url) ? url : `${API_O
 export function readSession(role) {
   try { return JSON.parse(sessionStorage.getItem(sessionKey(role)) || 'null'); } catch { return null; }
 }
+
+/** Seconds-since-epoch expiry from a JWT (no signature check: the server still verifies every call) */
+export function tokenExpiry(token) {
+  try {
+    const part = String(token).split('.')[1];
+    const json = atob(part.replace(/-/g, '+').replace(/_/g, '/').padEnd(Math.ceil(part.length / 4) * 4, '='));
+    const { exp } = JSON.parse(json);
+    return typeof exp === 'number' ? exp : null;
+  } catch { return null; }
+}
+
+/** The stored session for a role, or null when missing or its token has expired */
+export function readValidSession(role) {
+  const session = readSession(role);
+  if (!session?.token) return null;
+  const exp = tokenExpiry(session.token);
+  if (!exp || exp * 1000 <= Date.now()) return null;
+  return session;
+}
+
 function writeSession(role, session) {
   try {
     if (session) sessionStorage.setItem(sessionKey(role), JSON.stringify(session));
@@ -25,7 +45,11 @@ function writeSession(role, session) {
 
 /** React hook: { session, login, logout, expired } for one role */
 export function useRoleSession(role) {
-  const [session, setSession] = useState(() => readSession(role));
+  const [session, setSession] = useState(() => {
+    const stored = readSession(role);
+    if (stored && !readValidSession(role)) { writeSession(role, null); return null; } // token already expired
+    return stored;
+  });
   const [expired, setExpired] = useState(false);
 
   useEffect(() => {
@@ -35,8 +59,14 @@ export function useRoleSession(role) {
       setSession(null);
       setExpired(true);
     };
+    // The client admin's CMS calls (utils/api.js) report a 401 through their own event
+    const onClientUnauthorized = () => onUnauthorized({ detail: 'client' });
     window.addEventListener(UNAUTHORIZED_EVENT, onUnauthorized);
-    return () => window.removeEventListener(UNAUTHORIZED_EVENT, onUnauthorized);
+    if (role === 'client') window.addEventListener(CLIENT_UNAUTHORIZED_EVENT, onClientUnauthorized);
+    return () => {
+      window.removeEventListener(UNAUTHORIZED_EVENT, onUnauthorized);
+      window.removeEventListener(CLIENT_UNAUTHORIZED_EVENT, onClientUnauthorized);
+    };
   }, [role]);
 
   const login = useCallback(async (username, password) => {

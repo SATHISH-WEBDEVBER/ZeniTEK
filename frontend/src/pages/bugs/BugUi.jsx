@@ -2,9 +2,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  LogIn, LogOut, Loader, AlertCircle, User, Lock, Clock, CheckCircle2, AlertTriangle,
-  ImageIcon, ExternalLink, ArrowLeft
+  Loader, AlertCircle, Clock, CheckCircle2, AlertTriangle, ImageIcon, ExternalLink, ArrowLeft
 } from 'lucide-react';
+import { AdminLoginCard } from '../../components/admin/AdminLayout';
 import { PAGES } from '../../data/siteMap';
 import { useLanguage } from '../../context/LanguageContext';
 import { assetUrl } from '../../utils/bugApi';
@@ -212,84 +212,11 @@ export function BackLink({ to, children }) {
   );
 }
 
-/** Sign-in card for one role */
+/** Sign-in screen for one role (shared admin login card) */
 export function RoleLogin({ title, subtitle, Icon, session }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-
-  const submit = async e => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-    try {
-      await session.login(username.trim(), password);
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
-
   return (
-    <div className="min-h-[70vh] bg-slate-50 flex items-center justify-center px-4 py-12">
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-6 sm:p-8 w-full max-w-sm space-y-6">
-        <div className="text-center space-y-2">
-          <div className="w-12 h-12 mx-auto rounded-2xl bg-[#002DC2]/10 text-[#002DC2] flex items-center justify-center">
-            <Icon className="w-6 h-6" />
-          </div>
-          <h1 className="text-xl font-black text-[#123B92]">{title}</h1>
-          <p className="text-sm text-slate-500">{subtitle}</p>
-        </div>
-        {session.expired && <ErrorNote>Your session has expired. Please sign in again.</ErrorNote>}
-        <form onSubmit={submit} className="space-y-4">
-          <div>
-            <label htmlFor="bug-login-user" className="block text-xs font-bold text-slate-700 mb-1">Username</label>
-            <div className="relative">
-              <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-              <input id="bug-login-user" className={`${inputCls} pl-10`} autoComplete="username" value={username} onChange={e => setUsername(e.target.value)} required />
-            </div>
-          </div>
-          <div>
-            <label htmlFor="bug-login-pass" className="block text-xs font-bold text-slate-700 mb-1">Password</label>
-            <div className="relative">
-              <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-              <input id="bug-login-pass" type="password" className={`${inputCls} pl-10`} autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} required />
-            </div>
-          </div>
-          <ErrorNote>{error}</ErrorNote>
-          <button type="submit" disabled={loading} className={`${btnPrimary} w-full py-3`}>
-            {loading ? <Loader className="w-4 h-4 animate-spin" /> : <LogIn className="w-4 h-4" />}
-            {loading ? 'Signing in…' : 'Sign In'}
-          </button>
-        </form>
-        <p className="text-center text-xs text-slate-500">
-          Wrong portal? <Link to="/admin/login" className="font-bold text-[#002DC2] hover:underline">Choose another sign-in</Link>
-        </p>
-      </div>
-    </div>
-  );
-}
-
-/** Top bar for a dashboard: title, signed-in user, sign out */
-export function DashboardBar({ title, Icon, username, onLogout, homeTo }) {
-  return (
-    <div className="bg-white border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3">
-        <Link to={homeTo} className="flex items-center gap-2.5 min-w-0">
-          <span className="w-9 h-9 rounded-xl bg-[#002DC2] text-white flex items-center justify-center shrink-0">
-            <Icon className="w-5 h-5" />
-          </span>
-          <span className="min-w-0">
-            <span className="block text-sm sm:text-base font-black text-[#123B92] truncate">{title}</span>
-            <span className="block text-xs text-slate-500 truncate">Signed in as <b className="text-slate-700">{username}</b></span>
-          </span>
-        </Link>
-        <button type="button" onClick={onLogout} className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-red-600 px-3 py-2 rounded-xl hover:bg-red-50 transition-colors cursor-pointer shrink-0">
-          <LogOut className="w-4 h-4" /> <span>Sign out</span>
-        </button>
-      </div>
-    </div>
+    <AdminLoginCard roleTitle={title} subtitle={subtitle} Icon={Icon} onLogin={session.login}
+      notice={session.expired ? 'Your session has expired. Please sign in again.' : ''} />
   );
 }
 
@@ -303,5 +230,108 @@ export function usePageOptions() {
         label: `${tf(PAGES[path].key, path)} (${path})`
       })),
     [tf]
+  );
+}
+
+/** Bug list: table on desktop, cards on mobile. linkFor(bug) -> detail URL */
+export function BugList({ bugs, now, linkFor }) {
+  return (
+    <>
+      <div className={`${cardCls} hidden lg:block overflow-hidden`}>
+        <table className="w-full text-sm">
+          <thead className="bg-slate-50 text-left text-[11px] uppercase tracking-wide text-slate-500">
+            <tr>
+              <th className="px-4 py-3 font-bold">Bug</th>
+              <th className="px-3 py-3 font-bold">Tester</th>
+              <th className="px-3 py-3 font-bold">Submitted</th>
+              <th className="px-3 py-3 font-bold">Deadline</th>
+              <th className="px-3 py-3 font-bold">Priority</th>
+              <th className="px-3 py-3 font-bold">Status</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {bugs.map(b => {
+              const overdue = isOverdueAt(b, now);
+              return (
+                <tr key={b._id} className={overdue ? 'bg-red-50/70 hover:bg-red-50' : 'hover:bg-slate-50'}>
+                  <td className={`px-4 py-3 max-w-[340px] ${overdue ? 'border-l-4 border-red-500' : ''}`}>
+                    <Link to={linkFor(b)} className="block group">
+                      <span className="text-xs font-bold text-slate-400">{bugCode(b)}</span>
+                      <span className="block font-bold text-slate-900 group-hover:text-[#002DC2] break-words">{b.title}</span>
+                      <span className="flex items-center gap-1 text-xs text-slate-500 min-w-0">
+                        <span className="truncate">{b.affectedPage}</span>
+                        {b.screenshots?.length > 0 && <span className="inline-flex items-center gap-0.5 ml-2 shrink-0"><ImageIcon className="w-4 h-4" />{b.screenshots.length}</span>}
+                      </span>
+                    </Link>
+                  </td>
+                  <td className="px-3 py-3 text-slate-700">{b.reportedBy}<span className="block"><SeverityBadge severity={b.severity} /></span></td>
+                  <td className="px-3 py-3 text-slate-600 whitespace-nowrap">{formatDateTime(b.submittedAt)}</td>
+                  <td className="px-3 py-3 whitespace-nowrap"><span className="block text-slate-600">{formatDateTime(b.deadline)}</span><DeadlineText bug={b} now={now} /></td>
+                  <td className="px-3 py-3"><PriorityBadge priority={b.priority} /></td>
+                  <td className="px-3 py-3"><div className="flex flex-col items-start gap-1"><StatusBadge status={b.status} />{overdue && <OverdueBadge />}</div></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <ul className="lg:hidden space-y-3">
+        {bugs.map(b => {
+          const overdue = isOverdueAt(b, now);
+          return (
+            <li key={b._id}>
+              <Link to={linkFor(b)} className={`${cardCls} block p-4 space-y-2 ${overdue ? 'border-l-4 border-l-red-500 bg-red-50/40' : ''}`}>
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <span className="text-xs font-bold text-slate-400">{bugCode(b)}</span>
+                    <p className="font-bold text-slate-900 break-words">{b.title}</p>
+                  </div>
+                  {b.screenshots?.length > 0 && <img src={assetUrl(b.screenshots[0].url)} alt="" className="w-14 h-12 rounded-lg object-cover border border-slate-200 shrink-0" loading="lazy" />}
+                </div>
+                <BugBadges bug={b} now={now} />
+                <div className="text-xs text-slate-500 space-y-0.5 min-w-0">
+                  <p className="truncate">{b.reportedBy} · {b.affectedPage}</p>
+                  <p>Submitted {formatDateTime(b.submittedAt)}</p>
+                </div>
+                <DeadlineText bug={b} now={now} />
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </>
+  );
+}
+
+const BAR_TONES = {
+  navy: 'bg-[#123B92]', blue: 'bg-[#002DC2]', green: 'bg-[#23AC39]', amber: 'bg-amber-500', red: 'bg-red-500', slate: 'bg-slate-400', orange: 'bg-orange-500'
+};
+
+/** Labelled horizontal bars: rows = [{ label, value, tone, onClick? }] */
+export function BreakdownBars({ rows }) {
+  const max = Math.max(1, ...rows.map(r => r.value || 0));
+  return (
+    <ul className="space-y-2.5">
+      {rows.map(r => {
+        const content = (
+          <>
+            <span className="flex items-center justify-between gap-2 text-sm">
+              <span className="font-semibold text-slate-700 truncate">{r.label}</span>
+              <span className="font-bold text-slate-900 tabular-nums">{r.value}</span>
+            </span>
+            <span className="mt-1 block h-2 rounded-full bg-slate-100 overflow-hidden">
+              <span className={`block h-full rounded-full ${BAR_TONES[r.tone] || BAR_TONES.navy}`} style={{ width: `${((r.value || 0) / max) * 100}%` }} />
+            </span>
+          </>
+        );
+        return (
+          <li key={r.label}>
+            {r.onClick
+              ? <button type="button" onClick={r.onClick} className="block w-full text-left cursor-pointer hover:opacity-80">{content}</button>
+              : content}
+          </li>
+        );
+      })}
+    </ul>
   );
 }

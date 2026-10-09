@@ -1,5 +1,5 @@
 /**
- * Bug tracking API  (all routes require a signed-in tester or developer)
+ * Bug tracking API  (all routes require a signed-in tester, developer or client admin)
  *
  * Tester (own bugs only):
  *   GET    /api/bugs                    list my bugs
@@ -17,6 +17,12 @@
  *   GET    /api/bugs/reports/summary    live report counts
  *   GET    /api/bugs/reports/excel      .xlsx download (developer ONLY)
  *
+ * Client Admin (read-only progress view, all bugs):
+ *   GET    /api/bugs                    list/filter all bugs (same filters as developer)
+ *   GET    /api/bugs/:id                any bug
+ *   GET    /api/bugs/reports/summary    live report counts
+ *   Every write endpoint and the Excel report reject the client role (403).
+ *
  * Developers cannot delete a tester's report: reports are the testers' record of work and
  * deleting them would hide bugs from the tracking reports. Developers close bugs by completing them.
  */
@@ -31,9 +37,10 @@ import {
 } from '../config/bugUploads.js';
 
 const router = express.Router();
-router.use(requireAuth, requireRole('tester', 'developer'));
+router.use(requireAuth, requireRole('tester', 'developer', 'client'));
 
-const isDeveloper = req => req.user.role === 'developer';
+// Developers and the client admin see every bug; testers only see their own reports
+const seesAllBugs = req => req.user.role === 'developer' || req.user.role === 'client';
 const fail = (res, status, message) => res.status(status).json({ success: false, message });
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -109,7 +116,7 @@ async function findBugFor(req, res) {
   if (!mongoose.isValidObjectId(id)) { fail(res, 404, 'Bug not found'); return null; }
   const bug = await Bug.findById(id);
   // Testers only ever see their own reports; others look like "not found"
-  if (!bug || (!isDeveloper(req) && bug.reportedBy !== req.user.username)) {
+  if (!bug || (!seesAllBugs(req) && bug.reportedBy !== req.user.username)) {
     fail(res, 404, 'Bug not found');
     return null;
   }
@@ -188,7 +195,7 @@ async function buildSummary(now = new Date()) {
   };
 }
 
-router.get('/reports/summary', requireRole('developer'), async (req, res, next) => {
+router.get('/reports/summary', requireRole('developer', 'client'), async (req, res, next) => {
   try {
     await syncOverdueFlags();
     return res.json({ success: true, summary: await buildSummary() });
@@ -328,7 +335,7 @@ router.get('/', async (req, res, next) => {
   try {
     const now = new Date();
     const query = {};
-    if (!isDeveloper(req)) {
+    if (!seesAllBugs(req)) {
       query.reportedBy = req.user.username;
     } else if (req.query.tester) {
       query.reportedBy = String(req.query.tester);

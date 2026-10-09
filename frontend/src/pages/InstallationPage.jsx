@@ -5,6 +5,7 @@ import { activeLocationsData } from '../data/mapLocationsData';
 import { usePageTitle } from '../components/SiteHeader';
 import { buildQuoteUrl } from './QuotePage';
 import { useLanguage } from '../context/LanguageContext';
+import { API_BASE } from '../utils/api';
 
 // Detail page for one map installation site: /installations/:id
 // Looks the site up in the bundled map data first, then asks the API (GET /api/projects/:id).
@@ -23,7 +24,7 @@ export default function InstallationPage() {
     if (local) { setProject(local); setLoading(false); return; }
     let cancelled = false;
     setLoading(true);
-    fetch(`/api/projects/${encodeURIComponent(id)}`)
+    fetch(`${API_BASE}/projects/${encodeURIComponent(id)}`)
       .then(r => (r.ok ? r.json() : null))
       .then(data => { if (!cancelled) setProject(data?.project || data?.data || null); })
       .catch(() => { if (!cancelled) setProject(null); })

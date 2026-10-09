@@ -71,7 +71,7 @@ router.post(
   galleryValidation,
   async (req, res) => {
     const errs = handleValidation(req);
-    if (errs) return res.status(400).json({ success: false, errors: errs });
+    if (errs) return res.status(400).json({ success: false, message: errs.map(e => e.msg).join('; '), errors: errs });
 
     if (!req.file) {
       return res.status(400).json({ success: false, message: 'Gallery image is required' });

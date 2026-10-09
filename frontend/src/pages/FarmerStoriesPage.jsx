@@ -5,6 +5,7 @@ import {
 import IconTile from '../components/IconTile';
 import { sampleReviews } from '../data/sampleData';
 import { useLanguage } from '../context/LanguageContext';
+import { API_BASE } from '../utils/api';
 
 export default function FarmerStoriesPage({ onOpenQuoteModal }) {
   const { t } = useLanguage();
@@ -13,7 +14,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
   useEffect(() => {
     async function fetchReviews() {
       try {
-        const res = await fetch('/api/reviews');
+        const res = await fetch(`${API_BASE}/reviews`);
         const data = await res.json();
         if (data.success && data.reviews.length > 0) {
           setReviews(data.reviews);
