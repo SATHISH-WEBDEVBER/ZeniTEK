@@ -7,6 +7,8 @@ import {
   Layers, Maximize2, Check
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
+import PageHero from '../components/PageHero';
 
 export default function AboutUsPage({ onOpenQuoteModal }) {
   const { t } = useLanguage();
@@ -17,6 +19,9 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
   // Lightbox modal state for full-screen photo viewing
   const [lightboxImage, setLightboxImage] = useState(null);
+  // Freeze the page behind the photo viewer; Esc closes it
+  useScrollLock(!!lightboxImage);
+  useEscapeKey(!!lightboxImage, () => setLightboxImage(null));
 
   useEffect(() => {
     if (location.hash === '#rnd') {
@@ -257,166 +262,58 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
   return (
     <div className="text-slate-900 min-h-screen bg-slate-50 font-sans selection:bg-[#002DC2] selection:text-white">
 
-      {/* 1. CINEMATIC HERO SECTION WITH BOLD LEGIBLE TYPOGRAPHY */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-white via-blue-50/40 to-slate-50 pt-14 pb-20 lg:pt-20 lg:pb-28">
-
-        {/* Ambient background glow */}
-        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12">
-
-          {/* Top Headline & Quick Metrics */}
-          <div className="text-center max-w-4xl mx-auto space-y-6">
-
-            <div className="inline-flex items-center gap-2.5 max-w-full px-4 sm:px-5 py-2 rounded-2xl sm:rounded-full bg-white border border-[#002DC2]/25 shadow-sm">
-              <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#23AC39] animate-pulse shrink-0" />
-              <span className="text-2xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider text-[#002DC2] text-balance leading-snug">
-                {'ZeniTEK • Renewable Energy Engineering • Erode, Tamil Nadu'}
-              </span>
+      {/* 1. HERO — full-bleed photo with left-aligned heading (matches Home hero) */}
+      <PageHero
+        images="/real-photos/zenitek_photo_42.jpeg"
+        badge={
+          <>
+            <span className="w-2.5 h-2.5 rounded-full bg-[#23AC39] animate-pulse shrink-0" />
+            <span className="normal-case sm:uppercase">{'ZeniTEK • Renewable Energy Engineering • Erode, Tamil Nadu'}</span>
+          </>
+        }
+        title={
+          <>
+            Towards a <br className="hidden sm:block" />
+            <span className="text-[#002DC2]">Sustainable Future</span>
+          </>
+        }
+        subtitle="Engineering clean-energy systems for agriculture, industry, and educational institutions. Combining thermal engineering, solar automation, and applied research."
+      >
+        {/* 4 compact stat cards */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 max-w-xl pt-2">
+          {[
+            { value: '2021', label: 'Established', color: 'text-[#002DC2]' },
+            { value: 'Erode', label: 'Tamil Nadu', color: 'text-slate-900' },
+            { value: 'Turnkey', label: 'Design & EPC', color: 'text-[#23AC39]' },
+            { value: '100%', label: 'Clean Energy', color: 'text-[#123B92]' },
+          ].map(stat => (
+            <div key={stat.label} className="bg-white/90 backdrop-blur-sm px-3 py-3 sm:py-4 rounded-2xl border border-slate-200/90 shadow-md text-left min-w-0">
+              <div className={`text-xl sm:text-2xl leading-tight font-black tracking-tight break-words ${stat.color}`}>{stat.value}</div>
+              <div className="text-2xs sm:text-xs font-black text-slate-600 uppercase tracking-wider mt-1">{stat.label}</div>
             </div>
-
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-slate-950 tracking-tight leading-[1.1]">
-              Towards a <br className="hidden sm:block" />
-              <span className="bg-gradient-to-r from-[#002DC2] via-[#123B92] to-[#23AC39] bg-clip-text text-transparent">
-                Sustainable Future
-              </span>
-            </h1>
-
-            <p className="text-lg sm:text-xl lg:text-2xl text-slate-700 font-medium leading-relaxed max-w-3xl mx-auto">
-              Engineering clean-energy systems for agriculture, industry, and educational institutions.
-              Combining thermal engineering, solar automation, and applied research.
-            </p>
-
-            {/* 4 Large Bold Stat Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto pt-4">
-              <div className="bg-white px-3 py-5 sm:p-5 lg:p-6 rounded-3xl border border-slate-200/90 shadow-sm text-center hover:border-[#002DC2]/40 transition-all hover:shadow-lg min-w-0">
-                <div className="text-3xl lg:text-4xl leading-tight font-black tracking-tight text-[#002DC2] break-words">2021</div>
-                <div className="text-xs sm:text-sm font-black text-slate-600 uppercase tracking-wider mt-1.5">Established</div>
-              </div>
-              <div className="bg-white px-3 py-5 sm:p-5 lg:p-6 rounded-3xl border border-slate-200/90 shadow-sm text-center hover:border-[#002DC2]/40 transition-all hover:shadow-lg min-w-0">
-                <div className="text-3xl lg:text-4xl leading-tight font-black tracking-tight text-slate-900 break-words">Erode</div>
-                <div className="text-xs sm:text-sm font-black text-slate-600 uppercase tracking-wider mt-1.5">Tamil Nadu</div>
-              </div>
-              <div className="bg-white px-3 py-5 sm:p-5 lg:p-6 rounded-3xl border border-slate-200/90 shadow-sm text-center hover:border-[#002DC2]/40 transition-all hover:shadow-lg min-w-0">
-                <div className="text-3xl lg:text-4xl leading-tight font-black tracking-tight text-[#23AC39] break-words">Turnkey</div>
-                <div className="text-xs sm:text-sm font-black text-slate-600 uppercase tracking-wider mt-1.5">Design & EPC</div>
-              </div>
-              <div className="bg-white px-3 py-5 sm:p-5 lg:p-6 rounded-3xl border border-slate-200/90 shadow-sm text-center hover:border-[#002DC2]/40 transition-all hover:shadow-lg min-w-0">
-                <div className="text-3xl lg:text-4xl leading-tight font-black tracking-tight text-[#123B92] break-words">100%</div>
-                <div className="text-xs sm:text-sm font-black text-slate-600 uppercase tracking-wider mt-1.5">Clean Energy</div>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Hero Visual Collage (4 Large Interactive Real Photos) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-4">
-
-            {/* Card 1: Solar Parabolic Trough */}
-            <div
-              onClick={() => setLightboxImage('/real-photos/zenitek_photo_18.jpeg')}
-              className="relative h-72 sm:h-80 rounded-3xl overflow-hidden shadow-lg border border-slate-200 group cursor-pointer"
-            >
-              <img
-                src="/real-photos/zenitek_photo_18.jpeg"
-                alt="Parabolic Trough Collector"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
-              <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-black text-blue-700 uppercase">
-                Solar Thermal
-              </div>
-              <div className="absolute bottom-4 left-4 right-4 text-white">
-                <div className="text-base sm:text-lg font-black leading-snug">Parabolic Trough Collector</div>
-                <div className="text-xs sm:text-sm text-slate-200 font-semibold mt-0.5">Pachamalai Hills 37.5 Sq.m</div>
-              </div>
-            </div>
-
-            {/* Card 2: Commercial Polyhouse Tunnel */}
-            <div
-              onClick={() => setLightboxImage('/real-photos/zenitek_photo_04.jpeg')}
-              className="relative h-72 sm:h-80 rounded-3xl overflow-hidden shadow-lg border border-slate-200 group cursor-pointer"
-            >
-              <img
-                src="/real-photos/zenitek_photo_04.jpeg"
-                alt="Commercial Polyhouse Tunnel Dryer"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
-              <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-black text-emerald-700 uppercase">
-                Agri-Solar
-              </div>
-              <div className="absolute bottom-4 left-4 right-4 text-white">
-                <div className="text-base sm:text-lg font-black leading-snug">SOLDRY 1210 Polyhouse</div>
-                <div className="text-xs sm:text-sm text-slate-200 font-semibold mt-0.5">Automated Fan Circulation</div>
-              </div>
-            </div>
-
-            {/* Card 3: Active Crop Dehydration Hub */}
-            <div
-              onClick={() => setLightboxImage('/real-photos/zenitek_photo_23.jpeg')}
-              className="relative h-72 sm:h-80 rounded-3xl overflow-hidden shadow-lg border border-slate-200 group cursor-pointer"
-            >
-              <img
-                src="/real-photos/zenitek_photo_23.jpeg"
-                alt="Internal Dehydration Chamber"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
-              <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-black text-rose-700 uppercase">
-                Food Grade
-              </div>
-              <div className="absolute bottom-4 left-4 right-4 text-white">
-                <div className="text-base sm:text-lg font-black leading-snug">SS304 Food Drying Trays</div>
-                <div className="text-xs sm:text-sm text-slate-200 font-semibold mt-0.5">Zero Dust & Rain Protection</div>
-              </div>
-            </div>
-
-            {/* Card 4: Precision SUNDRY Box Dryer */}
-            <div
-              onClick={() => setLightboxImage('/real-photos/zenitek_photo_27.jpeg')}
-              className="relative h-72 sm:h-80 rounded-3xl overflow-hidden shadow-lg border border-slate-200 group cursor-pointer"
-            >
-              <img
-                src="/real-photos/zenitek_photo_27.jpeg"
-                alt="SUNDRY 50 Stainless Box Dryer"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
-              <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-black text-amber-700 uppercase">
-                Farm Box Dryer
-              </div>
-              <div className="absolute bottom-4 left-4 right-4 text-white">
-                <div className="text-base sm:text-lg font-black leading-snug">SUNDRY 50 Commercial Unit</div>
-                <div className="text-xs sm:text-sm text-slate-200 font-semibold mt-0.5">Dual Fan & Solar DC System</div>
-              </div>
-            </div>
-
-          </div>
-
+          ))}
         </div>
-      </section>
+      </PageHero>
 
 
       {/* 2. OUR ROOTS, EVOLUTION & GLOBAL MENTORS (DOCUMENT 2) */}
       <section className="py-16 sm:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+            <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
+              Roots & Engineering DNA
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
+              Pioneering Renewable Energy <br />
+              <span className="text-[#002DC2]">From Erode to All India</span>
+            </h2>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
             {/* Left 6 cols: Roots & Story */}
             <div className="lg:col-span-6 space-y-6">
-
-              <div className="space-y-3">
-                <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
-                  Roots & Engineering DNA
-                </span>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-                  Pioneering Renewable Energy <br />
-                  <span className="text-[#002DC2]">From Erode to All India</span>
-                </h2>
-              </div>
 
               <div className="space-y-4 text-slate-700 text-base sm:text-lg leading-relaxed font-normal">
                 <p>
@@ -491,7 +388,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
 
       {/* 3. "WHAT WE DO" — 4 CORE DOMAINS (IMAGE-CENTRIC VISUAL CARDS) */}
-      <section className="py-16 sm:py-24 bg-slate-100/70">
+      <section className="py-16 sm:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
 
           <div className="text-center max-w-3xl mx-auto space-y-4">
@@ -588,18 +485,16 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       <section className="py-16 sm:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
 
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
-            <div>
-              <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
-                Installed Projects Portfolio
-              </span>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight mt-1">
-                Landmark Installations & Test Rigs
-              </h2>
-            </div>
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+            <span className="text-sm sm:text-base font-black text-[#002DC2] uppercase tracking-wider">
+              Installed Projects Portfolio
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight">
+              Landmark Installations & Test Rigs
+            </h2>
 
             {/* Filter Tabs */}
-            <div className="flex flex-wrap items-center gap-2.5">
+            <div className="flex flex-wrap items-center justify-center gap-2.5 pt-3">
               <button
                 onClick={() => setProjectCategory('all')}
                 className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black transition-all cursor-pointer ${projectCategory === 'all'
@@ -705,7 +600,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
 
       {/* 5. PRESTIGIOUS CLIENTS & INSTITUTIONAL PARTNERS (DOCUMENT 2) */}
-      <section className="py-16 sm:py-24 bg-slate-50 overflow-hidden">
+      <section className="py-16 sm:py-24 bg-white overflow-hidden">
         <div className="space-y-12">
 
           <div className="text-center max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
@@ -916,28 +811,30 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       </section>
 
       {/* 7. REGISTERED DETAILS & CONSULTATION CTA */}
-      <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-[#F0F4FD]">
+      <section className="py-16 sm:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           <div className="bg-[#123B92] text-white rounded-3xl p-8 sm:p-14 lg:p-[72px] shadow-2xl relative overflow-hidden">
 
             <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-blue-500/20 rounded-full blur-2xl pointer-events-none" />
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <div className="relative z-10 text-center max-w-3xl mx-auto space-y-3 mb-10">
+              <span className="text-xs sm:text-sm font-black text-emerald-400 uppercase tracking-wider bg-white/10 px-4 py-1.5 rounded-full inline-block">
+                Direct EPC Consultation
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
+                Connect With ZeniTEK Engineers
+              </h2>
+              <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-medium">
+                Contact our Erode engineering office for technical sizing, university research collaboration, or subsidy assistance on solar drying systems.
+              </p>
+            </div>
 
-              <div className="lg:col-span-8 space-y-5 text-left">
-                <span className="text-xs sm:text-sm font-black text-emerald-400 uppercase tracking-wider bg-white/10 px-4 py-1.5 rounded-full inline-block">
-                  Direct EPC Consultation
-                </span>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
-                  Connect With ZeniTEK Engineers
-                </h2>
-                <p className="text-base sm:text-lg text-slate-200 leading-relaxed max-w-2xl font-medium">
-                  Contact our Erode engineering office for technical sizing, university research collaboration, or subsidy assistance on solar drying systems.
-                </p>
+            <div className="relative z-10 space-y-8">
 
+              <div>
                 {/* Registered Address & GST Info */}
-                <div className="pt-3 flex flex-col sm:flex-row sm:flex-wrap gap-x-8 gap-y-3 text-sm sm:text-base text-slate-200 font-semibold">
+                <div className="flex flex-col sm:flex-row sm:flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm sm:text-base text-slate-200 font-semibold">
                   <div className="flex items-center space-x-2.5">
                     <MapPin className="w-5 h-5 text-emerald-400 shrink-0" />
                     <span className="whitespace-nowrap">Erode, Tamil Nadu — 638 112</span>
@@ -956,7 +853,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 </div>
               </div>
 
-              <div className="lg:col-span-4 flex flex-col gap-3 justify-center">
+              <div className="max-w-3xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-3">
                 <button
                   onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: "About Us Consultation" })}
                   className="w-full px-6 py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-sm sm:text-base uppercase tracking-wide sm:tracking-wider rounded-2xl shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all flex items-center justify-center gap-2.5 text-center cursor-pointer"
@@ -966,7 +863,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                 </button>
 
                 {/* Direct Call & WhatsApp Action Buttons */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <a
                     href="tel:+918903852623"
                     className="px-3 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm uppercase tracking-wide whitespace-nowrap rounded-2xl border border-white/20 hover:border-white/40 transition-all flex items-center justify-center space-x-2 text-center hover:scale-[1.01] shadow-sm"

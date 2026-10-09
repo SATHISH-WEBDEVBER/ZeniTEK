@@ -7,19 +7,36 @@ import {
   Layers, Sparkles, CheckCircle2, SlidersHorizontal, Info, Tag, ExternalLink, Loader
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import PageHero from '../components/PageHero';
+
+const CATEGORY_IDS = ['all', 'tunnel_external', 'tunnel_internal', 'box_dryers', 'trays_produce', 'engineering'];
+// Navbar / legacy aliases -> closest gallery filter. There is no dedicated brochure category,
+// so brochure & spec-sheet links open the engineering & fabrication photos.
+const CATEGORY_ALIASES = { brochure: 'engineering', brochures: 'engineering', specs: 'engineering' };
+
+const resolveCategory = (cat) => {
+  if (!cat) return 'all';
+  const id = CATEGORY_ALIASES[cat] || cat;
+  return CATEGORY_IDS.includes(id) ? id : 'all';
+};
 
 export default function GalleryPage({ onOpenQuoteModal }) {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const catParam = searchParams.get('cat');
-  const [activeCategory, setActiveCategory] = useState(catParam || 'all');
+  const [activeCategory, setActiveCategory] = useState(() => resolveCategory(catParam));
 
+  // Follow navbar links (/gallery?cat=...) while already on the page
   useEffect(() => {
-    if (catParam) {
-      setActiveCategory(catParam);
-    }
+    setActiveCategory(resolveCategory(catParam));
   }, [catParam]);
 
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const changeCategory = (id) => {
+    setActiveCategory(id);
+    const next = new URLSearchParams(searchParams);
+    if (id === 'all') next.delete('cat'); else next.set('cat', id);
+    setSearchParams(next, { replace: true });
+  };
+
   const [searchQuery, setSearchQuery] = useState('');
   const [apiItems, setApiItems] = useState([]);
   const [apiLoading, setApiLoading] = useState(true);
@@ -92,52 +109,57 @@ export default function GalleryPage({ onOpenQuoteModal }) {
   return (
     <div className="text-black min-h-screen bg-white">
       
-      {/* SECTION 1: HERO BANNER (ODD: WHITE) */}
-      <section className="w-full section-odd py-10 sm:py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div className="inline-flex items-center space-x-1.5 px-3.5 py-1 rounded-full bg-[#F0F4FD] border border-[#123B92]/30 text-[#123B92] text-xs font-bold uppercase tracking-widest shadow-sm">
-            <Camera className="w-3.5 h-3.5 text-[#002DC2]" />
-            <span>Authentic Field & Manufacturing Gallery</span>
+      {/* SECTION 1: HERO (background photo, left-aligned heading) */}
+      <PageHero
+        images="/real-photos/zenitek_photo_43.jpeg"
+        badge={<><Camera className="w-3.5 h-3.5 text-[#002DC2]" /><span>Authentic Field & Manufacturing Gallery</span></>}
+        title={<>ZeniTEK Solar Drying Systems <br /><span className="text-[#002DC2]">Real Installation & Product Photographs</span></>}
+        subtitle="Explore authentic photographs of our commercial walk-in solar polyhouses, SS304 food-grade trolley trays, portable box dryers, and manufacturing craftsmanship across India. Click any card to view detailed specifications, multi-angle photos, and exact GPS installation coordinates."
+      >
+        {/* Quick Search Bar */}
+        <div className="max-w-md pt-1">
+          <div className="relative">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by crop, model, location, or state..."
+              aria-label="Search gallery"
+              className="w-full bg-white/95 border border-[#123B92]/30 rounded-2xl px-4 py-3 text-sm text-black placeholder-black/40 focus:outline-none focus:border-[#002DC2] focus:ring-2 focus:ring-[#002DC2]/20 shadow-md"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3.5 top-3 text-xs font-bold text-black/50 hover:text-black cursor-pointer"
+              >
+                Clear
+              </button>
+            )}
           </div>
+        </div>
+      </PageHero>
 
-          <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92] tracking-tight leading-tight">
-            ZeniTEK Solar Drying Systems <br />
-            <span className="text-[#002DC2]">
-              Real Installation & Product Photographs
-            </span>
-          </h1>
-
-          <p className="text-sm text-black max-w-2xl mx-auto font-medium leading-relaxed">
-            Explore authentic photographs of our commercial walk-in solar polyhouses, SS304 food-grade trolley trays, portable box dryers, and manufacturing craftsmanship across India. Click any card to view detailed specifications, multi-angle photos, and exact GPS installation coordinates.
-          </p>
-
-          {/* Quick Search Bar */}
-          <div className="max-w-md mx-auto pt-2">
-            <div className="relative">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by crop, model, location, or state..."
-                className="w-full bg-[#F0F4FD] border border-[#123B92]/30 rounded-2xl px-4 py-2.5 text-xs text-black placeholder-black/40 focus:outline-none focus:border-[#002DC2] focus:ring-2 focus:ring-[#002DC2]/20 shadow-sm"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-3.5 top-2.5 text-xs font-bold text-black/50 hover:text-black cursor-pointer"
-                >
-                  Clear
-                </button>
-              )}
-            </div>
+      {/* SECTION 2: GALLERY GRID (EVEN: LIGHT TINT, FULLY RESPONSIVE CARDS) */}
+      <section className="w-full section-even py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
+              Installation & Product Photos
+            </h2>
+            <p className="text-base sm:text-lg text-slate-600">
+              Browse field installations and product photos. Open any card for full details and location map.
+            </p>
           </div>
 
           {/* Filter Chips */}
-          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 pt-2">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-10">
             {categories.map((cat) => (
               <button
                 key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
+                type="button"
+                onClick={() => changeCategory(cat.id)}
+                aria-pressed={activeCategory === cat.id}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 cursor-pointer ${
                   activeCategory === cat.id
                     ? 'bg-[#002DC2] text-white shadow-md ring-2 ring-[#23AC39]'
@@ -145,7 +167,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                 }`}
               >
                 <span>{cat.label}</span>
-                <span className={`text-2xs px-1.5 py-0.2 rounded-full font-bold ${
+                <span className={`text-2xs px-1.5 py-0.5 rounded-full font-bold ${
                   activeCategory === cat.id ? 'bg-[#123B92] text-white' : 'bg-[#F0F4FD] text-[#123B92]'
                 }`}>
                   {cat.count}
@@ -153,12 +175,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
               </button>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* SECTION 2: GALLERY GRID (EVEN: LIGHT TINT, FULLY RESPONSIVE CARDS) */}
-      <section className="w-full section-even py-12 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {apiLoading ? (
             <div className="flex flex-col items-center justify-center py-20 space-y-4">
               <Loader className="w-10 h-10 text-[#002DC2] animate-spin" />
@@ -173,8 +190,19 @@ export default function GalleryPage({ onOpenQuoteModal }) {
               {filteredItems.map((item) => (
                 <div
                   key={item.id}
-                  className="group bg-white rounded-3xl overflow-hidden border border-[#123B92]/20 shadow-sm hover:shadow-xl hover:border-[#002DC2] transition-all duration-300 flex flex-col justify-between"
+                  className="group relative bg-white rounded-3xl overflow-hidden border border-[#123B92]/20 shadow-sm hover:shadow-xl hover:border-[#002DC2] transition-all duration-300 flex flex-col justify-between"
                 >
+                  {/* Zoom button in corner -> opens the photo's own page */}
+                  <Link
+                    to={`/gallery/${item.id}`}
+                    title="View full photo"
+                    aria-label={`View full photo: ${item.title}`}
+                    data-zoom-link
+                    className="absolute top-3 right-3 bg-black/60 hover:bg-black/80 backdrop-blur-md text-white p-2 rounded-xl text-xs transition-all shadow-md z-10"
+                  >
+                    <ZoomIn className="w-4 h-4" />
+                  </Link>
+
                   <Link to={`/gallery/${item.id}`} className="block flex-1">
                     {/* Clean, Visible Unobstructed Photo Container */}
                     <div className="relative h-56 sm:h-64 overflow-hidden bg-slate-950 border-b border-[#123B92]/20">
@@ -184,20 +212,6 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                       />
-                      
-                      {/* Zoom Button in Corner */}
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setSelectedPhoto(item);
-                        }}
-                        title="Quick View Photo"
-                        className="absolute top-3 right-3 bg-black/60 hover:bg-black/80 backdrop-blur-md text-white p-2 rounded-xl text-xs transition-all shadow-md cursor-pointer z-10"
-                      >
-                        <ZoomIn className="w-4 h-4" />
-                      </button>
 
                       {/* Map Coordinate Badge */}
                       <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md text-white px-2.5 py-1 rounded-lg text-2xs font-mono flex items-center space-x-1">
@@ -271,20 +285,20 @@ export default function GalleryPage({ onOpenQuoteModal }) {
       {/* SECTION 3: SUBSIDY ASSISTANCE CTA BANNER (ODD: WHITE) */}
       <section className="w-full section-odd py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#123B92] text-white rounded-3xl p-6 sm:p-10 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border-2 border-[#23AC39]">
-            <div className="space-y-2 text-center md:text-left">
+          <div className="bg-[#123B92] text-white rounded-3xl p-6 sm:p-10 shadow-xl flex flex-col items-center gap-6 border-2 border-[#23AC39]">
+            <div className="text-center max-w-3xl mx-auto space-y-3">
               <span className="inline-block max-w-full text-2xs leading-snug font-bold text-[#9BF0A8] bg-white/10 px-3 py-1 rounded-2xl uppercase tracking-wider border border-[#9BF0A8]/60">
                 Turnkey Manufacturing & Field Commissioning
               </span>
-              <h3 className="text-xl sm:text-2xl font-black text-white">
+              <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
                 Looking for a Complete Commercial Polyhouse Dryer Installation?
-              </h3>
-              <p className="text-sm text-white/90 max-w-xl">
+              </h2>
+              <p className="text-base sm:text-lg text-white/90">
                 ZeniTEK handles structural engineering, CNC fabrication, food-grade SS304 tray carts, and government subsidy paperwork end-to-end.
               </p>
             </div>
 
-            <div className="flex items-center space-x-3 shrink-0">
+            <div className="flex items-center justify-center">
               <button
                 onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: 'Complete Turnkey Dryer Project' })}
                 className="py-3.5 px-6 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all hover:scale-105 cursor-pointer"
@@ -295,71 +309,6 @@ export default function GalleryPage({ onOpenQuoteModal }) {
           </div>
         </div>
       </section>
-
-      {/* LIGHTBOX QUICK ZOOM MODAL */}
-      {selectedPhoto && (
-        <div 
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-2.5 sm:p-4 lg:p-6 bg-black/85 backdrop-blur-md animate-fade-in"
-          onClick={() => setSelectedPhoto(null)}
-        >
-          <div 
-            className="relative max-w-4xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[92vh]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal Header */}
-            <div className="p-4 bg-[#123B92] text-white flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <span className="bg-[#23AC39] text-white text-2xs font-bold px-2 py-0.5 rounded">
-                  {selectedPhoto.productModel}
-                </span>
-                <span className="text-xs font-bold truncate max-w-xs sm:max-w-md">
-                  {selectedPhoto.title}
-                </span>
-              </div>
-              <button 
-                onClick={() => setSelectedPhoto(null)}
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Photo View */}
-            <div className="relative flex-1 bg-black flex items-center justify-center overflow-hidden min-h-[300px]">
-              <img 
-                src={selectedPhoto.image} 
-                alt={selectedPhoto.title}
-                className="max-h-[60vh] max-w-full object-contain"
-              />
-            </div>
-
-            {/* Footer with Link to Full Detail Page */}
-            <div className="p-4 bg-white border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <div className="text-xs text-slate-700">
-                <span className="font-bold text-slate-900">{selectedPhoto.location}, {selectedPhoto.state}</span>
-                {selectedPhoto.capacity && <span> • Capacity: {selectedPhoto.capacity}</span>}
-              </div>
-
-              <div className="flex items-center space-x-3 w-full sm:w-auto">
-                <Link
-                  to={`/gallery/${selectedPhoto.id}`}
-                  onClick={() => setSelectedPhoto(null)}
-                  className="flex-1 sm:flex-none px-5 py-2.5 bg-[#002DC2] hover:bg-[#123B92] text-white font-bold text-xs rounded-xl flex items-center justify-center space-x-1.5 transition-all"
-                >
-                  <MapPin className="w-3.5 h-3.5" />
-                  <span>Open Full Page & Map</span>
-                </Link>
-                <button
-                  onClick={() => setSelectedPhoto(null)}
-                  className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
     </div>
   );

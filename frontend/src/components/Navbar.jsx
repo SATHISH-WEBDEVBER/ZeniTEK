@@ -5,6 +5,7 @@ import {
   Sparkles, FileText, Image as ImageIcon, Landmark, Info, PhoneCall 
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import { fetchPublicSections } from '../utils/api';
 import { defaultSectionsData } from '../data/defaultSectionsData';
 
@@ -23,6 +24,9 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const timeoutRef = useRef(null);
   const location = useLocation();
   const { t } = useLanguage();
+  // Freeze the page behind the open mobile menu; Esc closes it
+  useScrollLock(mobileMenuOpen);
+  useEscapeKey(mobileMenuOpen, () => setMobileMenuOpen(false));
 
   // Fetch published sections dynamically from API
   useEffect(() => {

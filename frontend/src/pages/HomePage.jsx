@@ -81,7 +81,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
     <div className="bg-slate-50 text-slate-900 w-full max-w-full overflow-x-hidden">
 
       {/* SECTION 1: HERO CAROUSEL */}
-      <section className="relative pt-12 pb-16 lg:pt-20 lg:pb-24 section-odd w-full overflow-hidden min-h-[600px] lg:min-h-[680px] flex items-center select-none">
+      <section className="no-divider relative pt-12 pb-16 lg:pt-20 lg:pb-24 section-odd w-full overflow-hidden min-h-[600px] lg:min-h-[680px] flex items-center select-none">
 
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           {heroSlides.map((slide, idx) => (
@@ -94,7 +94,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
               <img src={slide.image} alt={slide.alt} className="w-full h-full object-cover object-center select-none" />
             </div>
           ))}
-          {/* Left fade keeps the headline readable over real photos */}
+          {/* Left fade keeps the heading readable while the photo shows on the right */}
           <div className="absolute inset-0 z-[15] bg-gradient-to-r from-white/95 via-white/75 to-transparent sm:from-white/85 sm:via-white/50 lg:via-white/40 pointer-events-none" />
         </div>
 
@@ -115,7 +115,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
         </button>
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-20">
-          <div className="max-w-xl lg:max-w-3xl space-y-6">
+          <div className="max-w-xl lg:max-w-3xl text-left flex flex-col items-start space-y-6">
 
             <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-2xl sm:rounded-full bg-white/95 border border-[#123B92]/30 text-[#123B92] text-xs font-bold shadow-md max-w-full">
               <Sun className="w-4 h-4 text-[#002DC2] shrink-0" />
@@ -131,7 +131,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
               {t('heroSubtitle')}
             </p>
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3 pt-2 w-full sm:w-auto">
               <a
                 href="#roi-calculator"
                 className="px-6 py-3.5 sm:px-8 sm:py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 active:scale-95"
@@ -148,7 +148,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
               </Link>
             </div>
 
-            <div className="bg-white/90 backdrop-blur-md border border-slate-200/90 shadow-xl rounded-2xl p-4 sm:p-5 max-w-lg grid grid-cols-3 gap-3 sm:gap-4 divide-x divide-slate-200">
+            <div className="bg-white/90 backdrop-blur-md border border-slate-200/90 shadow-xl rounded-2xl p-4 sm:p-5 w-full max-w-lg grid grid-cols-3 gap-3 sm:gap-4 divide-x divide-slate-200">
               <div className="pr-2">
                 <div className="text-xl sm:text-2xl lg:text-3xl font-black text-[#123B92] tracking-tight whitespace-nowrap">1,200+</div>
                 <div className="text-xs sm:text-xs text-slate-700 font-bold mt-1 leading-snug">{t('dryersInstalled')}</div>
@@ -181,8 +181,11 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
 
       {/* SECTION 2: TRUST STRIP */}
-      <section className="w-full section-even py-6 sm:py-8">
+      <section className="w-full section-even py-10 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-8">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('homeTrustTitle')}</h2>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
             {[
               { Icon: ShieldCheck, key: 'mnreBadge' },
@@ -200,8 +203,12 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
 
       {/* SECTION 3: ROI CALCULATOR */}
-      <section className="w-full section-odd py-8 sm:py-10" id="roi-calculator">
+      <section className="w-full section-odd py-12 sm:py-16" id="roi-calculator">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('roiTitle')}</h2>
+            <p className="text-base sm:text-lg text-slate-600">{t('roiSubtitle')}</p>
+          </div>
           <ROICalculator onSelectModelQuote={(modelKey, kg, crop, fullModel) => onOpenQuoteModal({
             capacityNeeded: modelKey,
             cropType: crop,
@@ -238,9 +245,9 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       {/* SECTION 6: WHAT CAN YOU DRY */}
       <section className="w-full section-even py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-3">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-950">{t('whatCanYouDry')}</h2>
-            <Link to="/applications" className="text-sm font-bold text-blue-700 hover:underline flex items-center">
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('whatCanYouDry')}</h2>
+            <Link to="/applications" className="text-sm font-bold text-blue-700 hover:underline inline-flex items-center justify-center">
               {t('viewAllCrops')} <ArrowRight className="w-4 h-4 ml-1" />
             </Link>
           </div>
@@ -271,16 +278,17 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       <section className="w-full section-odd py-14 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+            <span className="text-xs font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3.5 py-1.5 rounded-full inline-block">
+              {t('homeAboutBadge')}
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
+              {t('homeAboutTitle1')} <span className="text-[#002DC2]">{t('homeAboutTitle2')}</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center !mt-0">
             <div className="space-y-6">
-              <span className="text-xs font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3.5 py-1.5 rounded-full inline-block">
-                {t('homeAboutBadge')}
-              </span>
-
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-                {t('homeAboutTitle1')} <span className="text-[#002DC2]">{t('homeAboutTitle2')}</span>
-              </h2>
-
               <p className="text-base sm:text-lg text-slate-700 leading-relaxed">{t('homeAboutDesc')}</p>
 
               <div className="flex flex-wrap gap-2.5">

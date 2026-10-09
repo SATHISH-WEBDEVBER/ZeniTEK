@@ -5,6 +5,7 @@ import {
   Download, Calculator, Clock, Users, Check, ChevronDown
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import PageHero from '../components/PageHero';
 
 // Native <select> can't wrap its value, so long option labels got truncated on
 // mobile. Show the selected label in a wrapping box and overlay a transparent select.
@@ -107,60 +108,53 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
   return (
     <div className="text-slate-900 min-h-screen bg-white">
       
-      {/* SECTION 1: HERO HEADER */}
-      <section className="w-full section-odd py-12 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 max-w-full px-3.5 py-1.5 rounded-2xl sm:rounded-full bg-[#F0F4FD] border border-[#123B92]/30 text-[#123B92] text-xs font-bold uppercase tracking-wide sm:tracking-wider shadow-sm">
-            <Landmark className="w-4 h-4 text-[#002DC2] shrink-0" />
-            <span className="text-balance">Govt of India & State Department Schemes</span>
-          </div>
-
-          <h1 className="text-[1.75rem] xs:text-3xl sm:text-5xl font-black text-[#123B92] tracking-tight leading-tight">
-            Government Subsidies for <br />
-            <span className="text-[#002DC2]">ZeniTEK Solar Dryers{' '}<span className="whitespace-nowrap">(40% – 60%)</span></span>
-          </h1>
-
-          <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
-            ZeniTEK is an <strong>MNRE Enlisted & ISO 9001:2015 Certified</strong> manufacturer. Our solar drying systems are eligible for central and state capital subsidies across Tamil Nadu, Karnataka, Kerala, Maharashtra, and all Indian states.
-          </p>
-
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-            <button
-              onClick={() => onOpenQuoteModal({ capacityNeeded: "Subsidy Assistance", message: "I want subsidy assistance for ZeniTEK Solar Dryer." })}
-              className="px-6 py-3.5 bg-[#23AC39] hover:bg-[#1f9632] text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer hover:shadow-xl active:scale-95"
-            >
-              <span>Check My Subsidy Eligibility</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            <a
-              href="#subsidy-schemes"
-              className="px-6 py-3.5 bg-white hover:bg-slate-50 border-2 border-[#123B92] text-[#123B92] font-black text-xs uppercase tracking-wider rounded-xl shadow-sm transition-all flex items-center gap-2 whitespace-nowrap"
-            >
-              <span>View Schemes & Guidelines</span>
-            </a>
-          </div>
-        </div>
-      </section>
+      {/* SECTION 1: HERO HEADER (background photo, left-aligned heading) */}
+      <PageHero
+        images="/real-photos/zenitek_photo_33.jpeg"
+        badge={<><Landmark className="w-4 h-4 text-[#002DC2] shrink-0" /><span className="text-balance">Govt of India & State Department Schemes</span></>}
+        title={<>Government Subsidies for <br /><span className="text-[#002DC2]">ZeniTEK Solar Dryers{' '}<span className="whitespace-nowrap">(40% – 60%)</span></span></>}
+        subtitle={<>ZeniTEK is an <strong>MNRE Enlisted & ISO 9001:2015 Certified</strong> manufacturer. Our solar drying systems are eligible for central and state capital subsidies across Tamil Nadu, Karnataka, Kerala, Maharashtra, and all Indian states.</>}
+        actions={<>
+          <button
+            type="button"
+            onClick={() => onOpenQuoteModal({ capacityNeeded: "Subsidy Assistance", message: "I want subsidy assistance for ZeniTEK Solar Dryer." })}
+            className="px-6 py-3.5 bg-[#23AC39] hover:bg-[#1f9632] text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer hover:shadow-xl active:scale-95"
+          >
+            <span>Check My Subsidy Eligibility</span>
+            <ArrowRight className="w-4 h-4 shrink-0" />
+          </button>
+          <a
+            href="#subsidy-schemes"
+            onClick={(e) => {
+              const el = document.getElementById('subsidy-schemes');
+              if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            }}
+            className="px-6 py-3.5 bg-white hover:bg-slate-50 border-2 border-[#123B92] text-[#123B92] font-black text-xs uppercase tracking-wider rounded-xl shadow-sm transition-all flex items-center justify-center gap-2"
+          >
+            <span>View Schemes & Guidelines</span>
+          </a>
+        </>}
+      />
 
 
       {/* SECTION 2: FAST ELIGIBILITY ESTIMATOR */}
       <section className="w-full section-even py-10 sm:py-14">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-xl space-y-6">
-            
-            <div className="flex items-start gap-3 pb-4">
-              <div className="w-10 h-10 rounded-xl bg-[#F0F4FD] border border-[#123B92]/20 flex items-center justify-center text-[#123B92] shrink-0">
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+            <div className="flex justify-center">
+              <div className="w-10 h-10 rounded-xl bg-[#F0F4FD] border border-[#123B92]/20 flex items-center justify-center text-[#123B92]">
                 <Calculator className="w-5 h-5" />
               </div>
-              <div>
-                <h3 className="text-lg sm:text-xl font-black text-[#123B92]">
-                  Instant State Subsidy Estimator
-                </h3>
-                <p className="text-sm text-slate-500 font-medium">
-                  Select your state and beneficiary profile to calculate eligible subsidy assistance.
-                </p>
-              </div>
             </div>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
+              Instant State Subsidy Estimator
+            </h2>
+            <p className="text-base sm:text-lg text-slate-600">
+              Select your state and beneficiary profile to calculate eligible subsidy assistance.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-xl space-y-6">
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div className="lg:col-span-2">

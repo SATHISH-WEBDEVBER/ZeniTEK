@@ -3,11 +3,23 @@ import { useParams, Link } from 'react-router-dom';
 import { fetchPublicSection } from '../utils/api';
 import { defaultSectionsData } from '../data/defaultSectionsData';
 import { useLanguage } from '../context/LanguageContext';
+import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
+import PageHero from '../components/PageHero';
 import {
   Sun, Zap, ShieldCheck, ArrowRight, CheckCircle2, FileText,
   Download, HelpCircle, PhoneCall, Sparkles, Building, Layers,
   Calculator, Sprout, Cpu, ChevronRight, ChevronDown, Eye, X, AlertCircle, Loader
 } from 'lucide-react';
+
+// Hero background photo per slug (overrides the DB thumbnail, some of which are unsuitable as a backdrop)
+const HERO_BACKGROUNDS = {
+  'solar-thermal-system': '/real-photos/zenitek_photo_19.jpeg',
+  'agri-solar-innovation': '/real-photos/zenitek_photo_34.jpeg',
+  'photovoltaic-solutions': '/real-photos/zenitek_photo_38.jpeg',
+  'government-subsidies': '/real-photos/zenitek_photo_02.jpeg',
+  'crop-preservation-guide': '/real-photos/zenitek_photo_23.jpeg',
+  'technical-spec-sheets': '/real-photos/zenitek_photo_10.jpeg',
+};
 
 // Per-slug copy for the generic section headers and the bottom CTA
 const SECTION_COPY = {
@@ -193,6 +205,9 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeImageModal, setActiveImageModal] = useState(null);
+  // Freeze the page behind the photo viewer; Esc closes it
+  useScrollLock(!!activeImageModal);
+  useEscapeKey(!!activeImageModal, () => setActiveImageModal(null));
 
   // Government Subsidies interactive calculator state
   const [calcState, setCalcState] = useState('Tamil Nadu');
@@ -305,114 +320,67 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
   return (
     <div className="min-h-screen bg-white text-slate-900 pb-20">
       
-      {/* ─── BREADCRUMBS & HERO SECTION ─── */}
-      <section className="bg-gradient-to-b from-[#F0F4FD] via-white to-white pt-8 pb-12 sm:pb-16 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          {/* Breadcrumbs */}
-          <nav className="flex items-center space-x-2 text-xs font-semibold text-slate-500 mb-6">
+      {/* ─── BREADCRUMBS & HERO SECTION — full-bleed photo, left-aligned heading (matches Home hero) ─── */}
+      <PageHero
+        images={HERO_BACKGROUNDS[slug] || section.thumbnail?.url}
+        top={
+          <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold text-slate-600">
             <Link to="/" className="hover:text-[#002DC2] transition-colors">Home</Link>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            <span className="text-slate-400">Products</span>
+            <span className="text-slate-500">Products</span>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
             <span className="text-[#002DC2] font-bold">{section.title}</span>
           </nav>
+        }
+        badge={
+          <>
+            <Sparkles className="w-3.5 h-3.5 text-[#002DC2] shrink-0" />
+            <span>ZeniTEK Solution Category</span>
+          </>
+        }
+        title={section.title}
+        subtitle={section.subtitle}
+        actions={
+          <>
+            <button
+              type="button"
+              onClick={() => {
+                if (onOpenQuoteModal) onOpenQuoteModal({ capacityNeeded: section.title });
+              }}
+              className="px-6 py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold rounded-xl shadow-lg shadow-[#23AC39]/25 hover:shadow-xl transition-all flex items-center justify-center space-x-2 cursor-pointer active:scale-95"
+            >
+              <span>Get Free Quote & Subsidy DPR</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            
-            {/* Left Content Column */}
-            <div className="lg:col-span-7 space-y-5">
-              
-              <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-[#002DC2]/10 border border-[#002DC2]/20 text-[#002DC2] text-xs font-black uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-[#002DC2]" />
-                <span>ZeniTEK Solution Category</span>
-              </div>
-
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-[1.15]">
-                {section.title}
-              </h1>
-
-              {section.subtitle && (
-                <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
-                  {section.subtitle}
-                </p>
-              )}
-
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (onOpenQuoteModal) onOpenQuoteModal({ capacityNeeded: section.title });
-                  }}
-                  className="px-6 py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold rounded-xl shadow-lg shadow-[#23AC39]/25 hover:shadow-xl transition-all flex items-center space-x-2 cursor-pointer active:scale-95"
-                >
-                  <span>Get Free Quote & Subsidy DPR</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-
-                <a
-                  href={`https://wa.me/918098613422?text=${encodeURIComponent(`Hello ZeniTEK team, I would like to inquire about ${section.title}.`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-5 py-3 bg-white border border-slate-300 hover:border-[#002DC2] text-slate-800 hover:text-[#002DC2] font-bold rounded-xl transition-all shadow-sm flex items-center space-x-2"
-                >
-                  <PhoneCall className="w-4 h-4 text-[#23AC39]" />
-                  <span>WhatsApp Enquiry</span>
-                </a>
-              </div>
-
-              {/* Highlights Micro Badges */}
-              <div className="pt-2 flex flex-wrap gap-2">
-                <span className="inline-flex items-center text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-1 rounded-lg">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#23AC39] mr-1.5" />
-                  MNRE Approved Quality
-                </span>
-                <span className="inline-flex items-center text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-1 rounded-lg">
-                  <Sun className="w-3.5 h-3.5 text-amber-500 mr-1.5" />
-                  100% Clean Solar Energy
-                </span>
-                <span className="inline-flex items-center text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-1 rounded-lg">
-                  <Zap className="w-3.5 h-3.5 text-[#002DC2] mr-1.5" />
-                  Zero Electricity Bills
-                </span>
-              </div>
-
-            </div>
-
-            {/* Right Featured Image / Thumbnail */}
-            <div className="lg:col-span-5">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-200/80 bg-slate-100 group aspect-[4/3]">
-                {section.thumbnail?.url ? (
-                  <img
-                    src={section.thumbnail.url}
-                    alt={section.thumbnail.alt || section.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-                    <Sun className="w-16 h-16 text-slate-400" />
-                  </div>
-                )}
-                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
-                <div className="absolute bottom-4 left-4 right-4 flex">
-                  <div className="max-w-full bg-slate-900/75 backdrop-blur-sm text-white rounded-xl px-3.5 py-2 shadow-lg ring-1 ring-white/10">
-                    <div className="flex items-center gap-1.5 text-2xs sm:text-xs font-black tracking-wide sm:tracking-wider uppercase text-white">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#4ade80] shrink-0" />
-                      <span>Verified Commercial Installation</span>
-                    </div>
-                    <div className="text-sm font-bold text-white leading-snug mt-0.5">
-                      {section.title}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
+            <a
+              href={`https://wa.me/918098613422?text=${encodeURIComponent(`Hello ZeniTEK team, I would like to inquire about ${section.title}.`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-3 bg-white border border-slate-300 hover:border-[#002DC2] text-slate-800 hover:text-[#002DC2] font-bold rounded-xl transition-all shadow-sm flex items-center justify-center space-x-2"
+            >
+              <PhoneCall className="w-4 h-4 text-[#23AC39]" />
+              <span>WhatsApp Enquiry</span>
+            </a>
+          </>
+        }
+      >
+        {/* Highlights Micro Badges */}
+        <div className="flex flex-wrap gap-2">
+          <span className="inline-flex items-center text-xs font-semibold text-slate-700 bg-white/90 border border-slate-200 shadow-sm px-3 py-1 rounded-lg">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#23AC39] mr-1.5" />
+            MNRE Approved Quality
+          </span>
+          <span className="inline-flex items-center text-xs font-semibold text-slate-700 bg-white/90 border border-slate-200 shadow-sm px-3 py-1 rounded-lg">
+            <Sun className="w-3.5 h-3.5 text-amber-500 mr-1.5" />
+            100% Clean Solar Energy
+          </span>
+          <span className="inline-flex items-center text-xs font-semibold text-slate-700 bg-white/90 border border-slate-200 shadow-sm px-3 py-1 rounded-lg">
+            <Zap className="w-3.5 h-3.5 text-[#002DC2] mr-1.5" />
+            Zero Electricity Bills
+          </span>
         </div>
-      </section>
+      </PageHero>
 
       {/* ─── KEY HIGHLIGHTS / SOLUTION FEATURES ─── */}
       {section.highlights && section.highlights.length > 0 && (
@@ -446,18 +414,16 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
 
       {/* ─── RICH BODY CONTENT ─── */}
       {section.content && (
-        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="bg-slate-50/70 rounded-3xl border border-slate-200/90 p-6 sm:p-10 shadow-sm space-y-6">
-            <div className="flex items-center gap-3 sm:gap-4 border-b border-slate-200 pb-5">
-              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#002DC2] text-white flex items-center justify-center font-bold shrink-0">
-                <FileText className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">{copy.overviewTitle}</h3>
-                <p className="text-sm text-slate-500 mt-1">{copy.overviewSubtitle}</p>
-              </div>
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#002DC2] text-white flex items-center justify-center font-bold mx-auto">
+              <FileText className="w-5 h-5" />
             </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">{copy.overviewTitle}</h2>
+            <p className="text-base sm:text-lg text-slate-600">{copy.overviewSubtitle}</p>
+          </div>
 
+          <div className="bg-slate-50/70 rounded-3xl border border-slate-200/90 p-6 sm:p-10 shadow-sm space-y-6">
             <div className="prose prose-slate max-w-none text-sm sm:text-base leading-relaxed text-slate-700 space-y-4">
               <RichText text={section.content} />
             </div>
@@ -471,14 +437,14 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
       {slug === 'government-subsidies' && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="bg-gradient-to-br from-[#001b69] to-[#002DC2] text-white rounded-3xl p-6 sm:p-10 shadow-xl space-y-8">
-            <div className="max-w-2xl space-y-2">
+            <div className="text-center max-w-3xl mx-auto space-y-3">
               <span className="text-2xs sm:text-xs font-bold uppercase tracking-wide sm:tracking-widest text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-400/30 inline-block whitespace-nowrap">
                 Live State & Central Subsidy Tool
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-white">
                 Calculate Your Solar Dryer Subsidy
               </h2>
-              <p className="text-sm text-slate-200">
+              <p className="text-base sm:text-lg text-slate-200">
                 Check estimated subsidy benefits under MIDH, SHM, and MNRE schemes for your state.
               </p>
             </div>
@@ -564,18 +530,18 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
       {/* 2. If slug is "crop-preservation-guide": Show Crop Guide Benchmark Table */}
       {slug === 'crop-preservation-guide' && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div>
-              <h3 className="text-xl font-black text-slate-900">Validated Crop Dehydration Matrix</h3>
-              <p className="text-sm text-slate-500">Benchmark drying curves, operating temperatures, and quality results</p>
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">Validated Crop Dehydration Matrix</h2>
+            <p className="text-base sm:text-lg text-slate-600">Benchmark drying curves, operating temperatures, and quality results</p>
+            <div className="pt-3 flex justify-center">
+              <input
+                type="text"
+                value={cropSearch}
+                onChange={(e) => setCropSearch(e.target.value)}
+                placeholder="Search crop or spice..."
+                className="w-full sm:w-72 border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#002DC2]"
+              />
             </div>
-            <input
-              type="text"
-              value={cropSearch}
-              onChange={(e) => setCropSearch(e.target.value)}
-              placeholder="Search crop or spice..."
-              className="w-full sm:w-64 border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#002DC2]"
-            />
           </div>
 
           <p className="sm:hidden text-sm font-semibold text-slate-500 flex items-center">
@@ -614,9 +580,9 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
       {/* 3. If slug is "technical-spec-sheets": Show Downloadable Brochure Cards */}
       {slug === 'technical-spec-sheets' && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-          <div className="space-y-1">
-            <h3 className="text-xl font-black text-slate-900">Official Specification Sheets & CAD Blueprints</h3>
-            <p className="text-sm text-slate-500">Download complete manufacturer engineering documents in PDF format</p>
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">Official Specification Sheets & CAD Blueprints</h2>
+            <p className="text-base sm:text-lg text-slate-600">Download complete manufacturer engineering documents in PDF format</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -659,12 +625,12 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
       {/* ─── ADDITIONAL IMAGES GALLERY ─── */}
       {section.images && section.images.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-xl font-black text-slate-900">Project Field Photos & Installations</h3>
-              <p className="text-sm text-slate-500">Live operational systems photographed at customer sites</p>
-            </div>
-            <span className="text-xs font-bold text-slate-400">{section.images.length} Photos</span>
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+            <span className="text-xs font-extrabold text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] px-3 py-1 rounded-full inline-block">
+              {section.images.length} Photos
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">Project Field Photos & Installations</h2>
+            <p className="text-base sm:text-lg text-slate-600">Live operational systems photographed at customer sites</p>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">

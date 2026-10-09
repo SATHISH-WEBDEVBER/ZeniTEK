@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MapPin, Phone, Mail, MessageCircle, ShieldCheck, ArrowRight, CheckCircle2, Building2, Send, Loader2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import PageHero from '../components/PageHero';
 
 // Keep "Tamil Nadu - 638 112" style postcodes on one line
 const keepPostcode = (s = '') =>
@@ -54,25 +55,29 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
   };
 
   return (
-    <div className="space-y-16 pb-16 pt-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white text-black">
-      
-      {/* Hero Header */}
-      <div className="text-center space-y-4">
-        <span className="text-xs font-bold text-[#123B92] uppercase tracking-widest bg-[#F0F4FD] border border-[#123B92]/30 px-3 py-1 rounded-full inline-block">
-          {t('contactBadge')}
-        </span>
-        <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92]">
-          {t('contactTitle1')} <br />
-          <span className="text-[#002DC2]">
-            {t('contactTitle2')}
-          </span>
-        </h1>
-        <p className="text-sm text-black max-w-2xl mx-auto font-medium">
-          {t('contactSubtitle')}
-        </p>
-      </div>
+    <div className="bg-white text-black">
+
+      {/* Hero Header — full-bleed photo with left-aligned heading (matches Home hero) */}
+      <PageHero
+        images="/real-photos/zenitek_photo_04.jpeg"
+        badge={t('contactBadge')}
+        title={
+          <>
+            {t('contactTitle1')} <br />
+            <span className="text-[#002DC2]">{t('contactTitle2')}</span>
+          </>
+        }
+        subtitle={t('contactSubtitle')}
+      />
+
+    <div className="space-y-16 pb-16 pt-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
       {/* Two-Column Workspace */}
+      <section className="divider-full pb-16">
+      <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+        <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('contactWorkspaceTitle')}</h2>
+        <p className="text-base sm:text-lg text-slate-600">{t('contactWorkspaceDesc')}</p>
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start lg:items-stretch">
         
         {/* Left Column */}
@@ -297,6 +302,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
         </div>
 
       </div>
+      </section>
 
       {/* Support Assurance Row */}
       <section className="bg-[#F0F4FD] p-6 rounded-2xl border border-[#123B92]/20 shadow-sm">
@@ -336,6 +342,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
         </button>
       </section>
 
+    </div>
     </div>
   );
 }

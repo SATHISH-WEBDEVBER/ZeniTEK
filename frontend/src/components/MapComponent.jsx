@@ -20,7 +20,7 @@ import { sampleProjects } from '../data/sampleData';
 import { activeLocationsData } from '../data/mapLocationsData';
 import indiaGeoJson from '../data/india_states.json';
 import { useLanguage } from '../context/LanguageContext';
-import ProjectDetailModal from './ProjectDetailModal';
+import { useNavigate } from 'react-router-dom';
 
 // Official India Geographic Bounding Box (Southwest to Northeast)
 const INDIA_BOUNDS = [
@@ -243,7 +243,9 @@ export default function MapComponent({ onSelectProjectQuote }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [mobileTab, setMobileTab] = useState('map');
   const [selectedProject, setSelectedProject] = useState(null);
-  const [selectedDetailProject, setSelectedDetailProject] = useState(null);
+  const navigate = useNavigate();
+  // Clicking a site opens its own page (/installations/:id) instead of a popup
+  const openInstallation = (p) => navigate(`/installations/${encodeURIComponent(p._id || p.title)}`);
   const [triggerFitAll, setTriggerFitAll] = useState(false);
   const [mapMode, setMapMode] = useState('streets'); // 'streets' | 'satellite' | 'terrain'
 
@@ -682,7 +684,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                       handleMarkerMouseOut(e.target);
                     },
                     click: () => {
-                      setSelectedDetailProject(p);
+                      openInstallation(p);
                     }
                   }}
                 >
@@ -702,7 +704,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                       {/* Compact Thumbnail Image */}
                       {p.imageUrl && (
                         <div 
-                          onClick={() => setSelectedDetailProject(p)}
+                          onClick={() => openInstallation(p)}
                           className="relative rounded-lg overflow-hidden h-28 bg-slate-900 border border-slate-200 cursor-pointer group shrink-0"
                         >
                           <img
@@ -715,7 +717,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                       )}
                       
                       {/* Details: Model Name, Title, Place */}
-                      <div onClick={() => setSelectedDetailProject(p)} className="cursor-pointer space-y-1.5 min-w-0">
+                      <div onClick={() => openInstallation(p)} className="cursor-pointer space-y-1.5 min-w-0">
                         {/* Model Name */}
                         <div className="text-xs sm:text-sm font-black uppercase text-[#002DC2] tracking-wider truncate">
                           {p.dryerType}
@@ -740,7 +742,7 @@ export default function MapComponent({ onSelectProjectQuote }) {
                           onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            setSelectedDetailProject(p);
+                            openInstallation(p);
                           }}
                           className="w-full text-xs sm:text-sm font-black text-white bg-[#23AC39] hover:bg-[#002DC2] py-2.5 px-3 rounded-lg shadow-sm text-center flex items-center justify-center space-x-1.5 transition-colors cursor-pointer active:scale-[0.98]"
                         >
@@ -781,15 +783,6 @@ export default function MapComponent({ onSelectProjectQuote }) {
 
       </div>
 
-      {/* Project Detail Modal */}
-      <ProjectDetailModal
-        isOpen={!!selectedDetailProject}
-        onClose={() => setSelectedDetailProject(null)}
-        project={selectedDetailProject}
-        onEnquire={(proj) => {
-          if (onSelectProjectQuote) onSelectProjectQuote(proj);
-        }}
-      />
 
     </div>
   );

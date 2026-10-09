@@ -295,7 +295,11 @@ export const translations = {
     homeMessagePh: "Target moisture, location or any questions",
     notFoundTitle: "Page not found",
     notFoundDesc: "The page you're looking for doesn't exist or has moved.",
-    notFoundHome: "Back to Home"
+    notFoundHome: "Back to Home",
+    homeTrustTitle: "Certified & Government Approved",
+    appsGridTitle: "Crops & Products We Dry",
+    contactWorkspaceTitle: "Reach Our Team",
+    contactWorkspaceDesc: "Visit our offices or send us your requirements below."
   },
 
   ta: {
@@ -590,7 +594,11 @@ export const translations = {
     homeMessagePh: "இலக்கு ஈரப்பதம், இடம் அல்லது கேள்விகள்",
     notFoundTitle: "பக்கம் கிடைக்கவில்லை",
     notFoundDesc: "நீங்கள் தேடும் பக்கம் இல்லை அல்லது இடம் மாற்றப்பட்டுள்ளது.",
-    notFoundHome: "முகப்புக்குத் திரும்பு"
+    notFoundHome: "முகப்புக்குத் திரும்பு",
+    homeTrustTitle: "சான்றளிக்கப்பட்டது & அரசு அங்கீகாரம் பெற்றது",
+    appsGridTitle: "நாங்கள் உலர்த்தும் பயிர்கள் & பொருட்கள்",
+    contactWorkspaceTitle: "எங்கள் குழுவைத் தொடர்பு கொள்ளுங்கள்",
+    contactWorkspaceDesc: "எங்கள் அலுவலகங்களுக்கு வாருங்கள் அல்லது உங்கள் தேவைகளை கீழே அனுப்புங்கள்."
   },
 
   hi: {
@@ -885,7 +893,11 @@ export const translations = {
     homeMessagePh: "लक्षित नमी, स्थान या कोई प्रश्न",
     notFoundTitle: "पेज नहीं मिला",
     notFoundDesc: "आप जो पेज ढूंढ रहे हैं वह मौजूद नहीं है या हटा दिया गया है।",
-    notFoundHome: "होम पर वापस जाएँ"
+    notFoundHome: "होम पर वापस जाएँ",
+    homeTrustTitle: "प्रमाणित और सरकार द्वारा अनुमोदित",
+    appsGridTitle: "हम किन फसलों और उत्पादों को सुखाते हैं",
+    contactWorkspaceTitle: "हमारी टीम से संपर्क करें",
+    contactWorkspaceDesc: "हमारे कार्यालय आएँ या नीचे अपनी आवश्यकताएँ भेजें।"
   },
 
   ml: {
@@ -1180,7 +1192,11 @@ export const translations = {
     homeMessagePh: "ലക്ഷ്യ ഈർപ്പം, സ്ഥലം അല്ലെങ്കിൽ ചോദ്യങ്ങൾ",
     notFoundTitle: "പേജ് കണ്ടെത്തിയില്ല",
     notFoundDesc: "നിങ്ങൾ തിരയുന്ന പേജ് നിലവിലില്ല അല്ലെങ്കിൽ മാറ്റിയിരിക്കുന്നു.",
-    notFoundHome: "ഹോമിലേക്ക് മടങ്ങുക"
+    notFoundHome: "ഹോമിലേക്ക് മടങ്ങുക",
+    homeTrustTitle: "സർട്ടിഫൈഡ് & സർക്കാർ അംഗീകൃതം",
+    appsGridTitle: "ഞങ്ങൾ ഉണക്കുന്ന വിളകളും ഉൽപ്പന്നങ്ങളും",
+    contactWorkspaceTitle: "ഞങ്ങളുടെ ടീമിനെ ബന്ധപ്പെടുക",
+    contactWorkspaceDesc: "ഞങ്ങളുടെ ഓഫീസുകൾ സന്ദർശിക്കുക അല്ലെങ്കിൽ നിങ്ങളുടെ ആവശ്യങ്ങൾ താഴെ അയയ്ക്കുക."
   },
 
   te: {
@@ -1475,7 +1491,11 @@ export const translations = {
     homeMessagePh: "లక్ష్య తేమ, ప్రదేశం లేదా ప్రశ్నలు",
     notFoundTitle: "పేజీ కనుగొనబడలేదు",
     notFoundDesc: "మీరు వెతుకుతున్న పేజీ లేదు లేదా తరలించబడింది.",
-    notFoundHome: "హోమ్‌కు తిరిగి వెళ్ళండి"
+    notFoundHome: "హోమ్‌కు తిరిగి వెళ్ళండి",
+    homeTrustTitle: "ధృవీకరించబడింది & ప్రభుత్వ ఆమోదం పొందింది",
+    appsGridTitle: "మేము ఎండబెట్టే పంటలు & ఉత్పత్తులు",
+    contactWorkspaceTitle: "మా బృందాన్ని సంప్రదించండి",
+    contactWorkspaceDesc: "మా కార్యాలయాలను సందర్శించండి లేదా మీ అవసరాలను క్రింద పంపండి."
   },
 
   kn: {
@@ -1770,7 +1790,11 @@ export const translations = {
     homeMessagePh: "ಗುರಿ ತೇವಾಂಶ, ಸ್ಥಳ ಅಥವಾ ಪ್ರಶ್ನೆಗಳು",
     notFoundTitle: "ಪುಟ ಕಂಡುಬಂದಿಲ್ಲ",
     notFoundDesc: "ನೀವು ಹುಡುಕುತ್ತಿರುವ ಪುಟ ಅಸ್ತಿತ್ವದಲ್ಲಿಲ್ಲ ಅಥವಾ ಸ್ಥಳಾಂತರಗೊಂಡಿದೆ.",
-    notFoundHome: "ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ"
+    notFoundHome: "ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ",
+    homeTrustTitle: "ಪ್ರಮಾಣೀಕೃತ ಮತ್ತು ಸರ್ಕಾರದಿಂದ ಅನುಮೋದಿತ",
+    appsGridTitle: "ನಾವು ಒಣಗಿಸುವ ಬೆಳೆಗಳು ಮತ್ತು ಉತ್ಪನ್ನಗಳು",
+    contactWorkspaceTitle: "ನಮ್ಮ ತಂಡವನ್ನು ಸಂಪರ್ಕಿಸಿ",
+    contactWorkspaceDesc: "ನಮ್ಮ ಕಚೇರಿಗಳಿಗೆ ಭೇಟಿ ನೀಡಿ ಅಥವಾ ನಿಮ್ಮ ಅಗತ್ಯಗಳನ್ನು ಕೆಳಗೆ ಕಳುಹಿಸಿ."
   }
 };
 

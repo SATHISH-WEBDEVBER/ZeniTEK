@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { cropMatrixData } from '../data/sampleData';
 import { Layers, ArrowRight, ShieldCheck, Search, Users, Building, Sprout } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import PageHero from '../components/PageHero';
 
 export default function ApplicationsPage({ onOpenQuoteModal }) {
   const [activeTab, setActiveTab] = useState('agri');
@@ -28,24 +29,28 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
   return (
     <div className="text-black min-h-screen bg-white">
       
-      {/* SECTION 1: HERO HEADER & SEGMENT FILTER (ODD: WHITE) */}
-      <section className="w-full section-odd py-12 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <span className="text-xs font-bold text-[#123B92] uppercase tracking-widest bg-[#F0F4FD] border border-[#123B92]/30 px-3 py-1 rounded-full inline-block">
-            {t('appMatrixBadge')}
-          </span>
-          <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92]">
+      {/* SECTION 1: HERO HEADER — full-bleed photo with left-aligned heading (matches Home hero) */}
+      <PageHero
+        images="/real-photos/zenitek_photo_35.jpeg"
+        badge={t('appMatrixBadge')}
+        title={
+          <>
             {t('appMatrixTitle1')} <br />
-            <span className="text-[#002DC2]">
-              {t('appMatrixTitle2')}
-            </span>
-          </h1>
-          <p className="text-sm text-black max-w-2xl mx-auto font-medium leading-relaxed">
-            {t('appMatrixSubtitle')}
-          </p>
+            <span className="text-[#002DC2]">{t('appMatrixTitle2')}</span>
+          </>
+        }
+        subtitle={t('appMatrixSubtitle')}
+      />
+
+      {/* SECTION 2: SEGMENT FILTER + CARD GRID ACTIVE VIEWS (EVEN: SOFT LIGHT TINT) */}
+      <section className="w-full section-even py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('appsGridTitle')}</h2>
+          </div>
 
           {/* Segment Filter Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
             <button
               onClick={() => setActiveTab('agri')}
               className={`inline-flex items-center gap-2 max-w-full px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold text-left transition-all cursor-pointer ${activeTab === 'agri' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#23AC39]' : 'bg-white text-black hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
@@ -65,12 +70,6 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
               {renderTabLabel(t('tabIndustrial'))}
             </button>
           </div>
-        </div>
-      </section>
-
-      {/* SECTION 2: CARD GRID ACTIVE VIEWS (EVEN: SOFT LIGHT TINT) */}
-      <section className="w-full section-even py-12 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {activeTab === 'agri' && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
@@ -151,12 +150,12 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
       {/* SECTION 3: PARAMETER MATRIX TABLE (ODD: WHITE) */}
       <section className="w-full section-odd py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-              <h2 className="text-2xl font-extrabold text-[#123B92]">{t('matrixCropTitle')}</h2>
-              <p className="text-sm text-black/60">{t('matrixCropSubtitle')}</p>
-            </div>
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('matrixCropTitle')}</h2>
+            <p className="text-base sm:text-lg text-slate-600">{t('matrixCropSubtitle')}</p>
+          </div>
 
+          <div className="flex justify-center">
             <div className="relative w-full sm:w-64">
               <Search className="w-4 h-4 text-black/40 absolute left-3 top-3" />
               <input

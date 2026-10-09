@@ -3,9 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import LeadModal from './components/LeadModal';
-import DryerDetailModal from './components/DryerDetailModal';
 import WhatsAppWidget from './components/WhatsAppWidget';
+import SectionDividers from './components/SectionDividers';
 
 import HomePage from './pages/HomePage';
 import AboutUsPage from './pages/AboutUsPage';
@@ -17,9 +16,14 @@ import GalleryDetailPage from './pages/GalleryDetailPage';
 import ContactUsPage from './pages/ContactUsPage';
 import SubsidiesPage from './pages/SubsidiesPage';
 import AdminPanel from './pages/AdminPanel';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import SectionDetailPage from './pages/SectionDetailPage';
+import QuotePage, { buildQuoteUrl } from './pages/QuotePage';
+import DryerModelPage from './pages/DryerModelPage';
+import InstallationPage from './pages/InstallationPage';
+import BrochurePage from './pages/BrochurePage';
+import LegalPage from './pages/LegalPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -37,10 +41,7 @@ export default function App() {
   // 3 = Full website smoothly reveals
   const [animStage, setAnimStage] = useState(0);
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalInitialData, setModalInitialData] = useState({});
-  const [detailModalOpen, setDetailModalOpen] = useState(false);
-  const [selectedDryerModel, setSelectedDryerModel] = useState(null);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     // Stage 1: Logo opens with animation (at 400ms)
@@ -57,20 +58,23 @@ export default function App() {
     };
   }, []);
 
+  // Every quote button across the site opens the /quote page (prefilled via the URL)
+  // instead of a popup, so it has its own address and the browser Back button works.
   const handleOpenQuoteModal = (initialData = {}) => {
-    setModalInitialData(initialData);
-    setModalOpen(true);
+    navigate(buildQuoteUrl(initialData || {}));
   };
 
+  // "Learn more" on a dryer model opens that model's own page
   const handleOpenDetailModal = (model) => {
-    setSelectedDryerModel(model);
-    setDetailModalOpen(true);
+    if (model?.id) navigate(`/solar-dryer-models/${model.id}`);
+    else navigate('/solar-dryer-models');
   };
 
   return (
     <LanguageProvider>
       {/* Scroll to Top on route change */}
       <ScrollToTop />
+      <SectionDividers />
 
       <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-blue-600 selection:text-white">
         
@@ -108,6 +112,12 @@ export default function App() {
               <Route path="/gallery/:id" element={<GalleryDetailPage onOpenQuoteModal={handleOpenQuoteModal} />} />
               <Route path="/subsidies" element={<SubsidiesPage onOpenQuoteModal={handleOpenQuoteModal} />} />
               <Route path="/contact" element={<ContactUsPage onOpenQuoteModal={handleOpenQuoteModal} />} />
+              <Route path="/solar-dryer-models/:modelId" element={<DryerModelPage />} />
+              <Route path="/installations/:id" element={<InstallationPage />} />
+              <Route path="/quote" element={<QuotePage />} />
+              <Route path="/brochures/:brochureId" element={<BrochurePage />} />
+              <Route path="/privacy" element={<LegalPage type="privacy" />} />
+              <Route path="/terms" element={<LegalPage type="terms" />} />
               <Route path="/admin" element={<AdminPanel />} />
             </Routes>
           </main>
@@ -118,21 +128,6 @@ export default function App() {
 
         {/* Global Floating Bottom-Right WhatsApp Quick Contact */}
         {animStage >= 3 && <WhatsAppWidget />}
-
-        {/* Global Product Detail Modal */}
-        <DryerDetailModal
-          isOpen={detailModalOpen}
-          onClose={() => setDetailModalOpen(false)}
-          model={selectedDryerModel}
-          onOpenQuoteModal={handleOpenQuoteModal}
-        />
-
-        {/* Global Lead Quote Modal */}
-        <LeadModal
-          isOpen={modalOpen}
-          onClose={() => setModalOpen(false)}
-          initialData={modalInitialData}
-        />
 
       </div>
     </LanguageProvider>

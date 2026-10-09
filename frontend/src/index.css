@@ -101,8 +101,7 @@
 }
 
 .section-even {
-  background-color: #F0F4FD !important;
-  /* Soft, elegant architectural light tint derived from #123B92 */
+  background-color: #FFFFFF !important;
   border-top: none !important;
   border-bottom: none !important;
   position: relative;
@@ -111,6 +110,69 @@
 
 .section-break-line {
   display: none !important;
+}
+
+/* Section end divider: a hairline aligned with the content width that draws out from the
+   centre when the section's end scrolls into view (SectionDividers.jsx adds .divider-in),
+   then a short green highlight glides across it once.
+   Applies to top-level page sections; card-style sections (rounded) and .no-divider are skipped. */
+main section:not(section section):not([class*="rounded"]):not(.no-divider) {
+  position: relative;
+}
+
+main section:not(section section):not([class*="rounded"]):not(.no-divider)::after {
+  content: "";
+  position: absolute;
+  left: 80px;
+  right: 80px;
+  bottom: 0;
+  height: 2px;
+  border-radius: 9999px;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent, rgba(35, 172, 57, 0.95), transparent) no-repeat,
+    linear-gradient(90deg, transparent, rgba(18, 59, 146, 0.16) 18%, rgba(35, 172, 57, 0.45) 50%, rgba(18, 59, 146, 0.16) 82%, transparent);
+  background-size: 18% 100%, 100% 100%;
+  background-position: -30% 0, 0 0;
+  transform: scaleX(0);
+  transform-origin: center;
+  opacity: 0;
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease;
+}
+
+main section.divider-in:not(section section):not([class*="rounded"]):not(.no-divider)::after {
+  transform: scaleX(1);
+  opacity: 1;
+  animation: dividerGlint 1.6s ease-in-out 0.9s 1 forwards;
+}
+
+@keyframes dividerGlint {
+  from { background-position: -30% 0, 0 0; }
+  to { background-position: 130% 0, 0 0; }
+}
+
+@media (max-width: 768px) {
+  main section:not(section section):not([class*="rounded"]):not(.no-divider)::after {
+    left: 20px;
+    right: 20px;
+  }
+}
+
+/* Sections that already sit inside a padded container span the line edge to edge */
+main section.divider-full:not(section section):not([class*="rounded"]):not(.no-divider)::after {
+  left: 0;
+  right: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main section:not(section section):not([class*="rounded"]):not(.no-divider)::after {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
+  main section.divider-in:not(section section):not([class*="rounded"]):not(.no-divider)::after {
+    animation: none;
+  }
 }
 
 /* Light Theme Clean Glass & Cards */

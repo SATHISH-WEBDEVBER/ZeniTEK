@@ -14,6 +14,7 @@ import {
   X, Upload, CheckCircle, AlertCircle, Loader, ChevronDown, ChevronUp,
   RefreshCw, Tag, Star, Layers, ExternalLink
 } from 'lucide-react';
+import useScrollLock from '../hooks/useScrollLock';
 
 /* ─── Toast notification ──────────────────────────────────────────────────── */
 function Toast({ message, type = 'success', onClose }) {
@@ -849,6 +850,8 @@ export default function AdminPanel() {
   const [sections, setSections] = useState([]);
   const [sectionsLoading, setSectionsLoading] = useState(false);
   const [sectionModal, setSectionModal] = useState(null); // null | 'new' | section_object
+  // Freeze the page behind any open admin dialog
+  useScrollLock(productModal !== null || galleryModal !== null || sectionModal !== null || !!confirm);
 
   const showToast = useCallback((message, type = 'success') => {
     setToast({ message, type });
