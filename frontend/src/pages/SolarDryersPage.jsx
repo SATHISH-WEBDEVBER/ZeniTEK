@@ -163,7 +163,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
             </span>
           </div>
         }
-        title={<>High-Performance Solar Dryers <br /><span className="text-green-700">Engineered for Agriculture & Food Processing</span></>}
+        title={<>High-Performance Solar Dryers <span className="text-green-700">Engineered for Agriculture & Food Processing</span></>}
         subtitle={<>Efficient drying powered by the sun with smart automatic control. Reduces drying time by <strong className="text-slate-900">40%</strong> while 100% preserving natural color, vitamins, and aroma. Certified for FSSAI, export quality, and eligible for 40% – 60% government subsidies.</>}
         actions={<>
           <button

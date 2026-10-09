@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { fetchPublicSection } from '../utils/api';
 import { defaultSectionsData } from '../data/defaultSectionsData';
 import { useLanguage } from '../context/LanguageContext';
+import { brochures } from '../data/brochuresData';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import PageHero from '../components/PageHero';
 import {
@@ -586,30 +587,26 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[
-              { title: "SOLDRY Commercial Polyhouse Specification", pages: "10 Pages", size: "7.1 MB", desc: "Detailed structural drawings, air velocity metrics, and tray layout", file: "/brochures/zenitek-commercial-brochure.pdf" },
-              { title: "SUNDRY 50 Stainless Steel Spec Sheet", pages: "3 Pages", size: "1.0 MB", desc: "Electrical ratings, blower airflow, and food contact SS304 certificates", file: "/brochures/zenitek-sundry-spec.pdf" },
-              { title: "Solar Thermal Collector Efficiency Report", pages: "4 Pages", size: "1.2 MB", desc: "Solar irradiance conversion test benchmarks and temperature curves", file: "/brochures/zenitek-thermal-efficiency.pdf" }
-            ].map((b, idx) => (
+            {brochures.map((b, idx) => (
               <div key={idx} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-xs text-slate-500">
                     <span className="font-bold text-[#002DC2] bg-[#F0F4FD] px-2 py-0.5 rounded-md">PDF Spec Sheet</span>
-                    <span>{b.pages} · {b.size}</span>
+                    <span>{b.pageCount} Pages · {b.size}</span>
                   </div>
                   <h4 className="font-bold text-slate-900 text-base leading-snug">{b.title}</h4>
-                  <p className="text-sm text-slate-500 leading-relaxed">{b.desc}</p>
+                  <p className="text-sm text-slate-500 leading-relaxed">{b.subtitle}</p>
                 </div>
                 <div className="flex items-center space-x-2 pt-2 border-t border-slate-100">
                   <Link
-                    to="/gallery?cat=brochure"
+                    to={`/brochures/${b.id}`}
                     className="flex-1 py-2 text-center text-xs font-bold text-[#002DC2] bg-[#F0F4FD] hover:bg-[#002DC2] hover:text-white rounded-xl transition-colors"
                   >
-                    View in Gallery
+                    View Brochure
                   </Link>
                   <a
-                    href={b.file}
-                    download
+                    href={b.url}
+                    download={b.downloadName}
                     className="p-2 text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors"
                     title="Download PDF"
                   >
