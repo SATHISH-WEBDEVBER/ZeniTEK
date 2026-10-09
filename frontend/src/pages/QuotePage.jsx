@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ShieldCheck, MessageCircle, Clock } from 'lucide-react';
+import { ShieldCheck, MessageCircle, Clock, BadgeCheck, Landmark } from 'lucide-react';
 import LeadForm from '../components/LeadForm';
-import PageBackBar from '../components/PageBackBar';
 import { useLanguage } from '../context/LanguageContext';
 
 // Prefill keys accepted in the URL, e.g. /quote?crop=Spices/Chillies&capacity=SOLDRY%201210
@@ -44,8 +43,6 @@ export default function QuotePage() {
     <div className="bg-white">
       <section className="w-full py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <PageBackBar crumbs={[{ label: t('getQuote') }]} fallback="/" />
-
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="text-xs font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3.5 py-1.5 rounded-full inline-block">
               {t('sections_quoteBadge')}
@@ -64,13 +61,13 @@ export default function QuotePage() {
 
           <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm font-semibold text-slate-700">
             <div className="flex items-center justify-center gap-2 p-3 rounded-xl border border-slate-200">
-              <ShieldCheck className="w-4 h-4 text-[#002DC2] shrink-0" /> {t('mnreBadge')}
+              <BadgeCheck className="w-5 h-5 text-[#002DC2] shrink-0" /> {t('mnreBadge')}
             </div>
             <div className="flex items-center justify-center gap-2 p-3 rounded-xl border border-slate-200">
-              <MessageCircle className="w-4 h-4 text-[#23AC39] shrink-0" /> {t('sections_quoteWhatsapp')}
+              <MessageCircle className="w-5 h-5 text-[#23AC39] shrink-0" /> {t('sections_quoteWhatsapp')}
             </div>
             <div className="flex items-center justify-center gap-2 p-3 rounded-xl border border-slate-200">
-              <Clock className="w-4 h-4 text-[#002DC2] shrink-0" /> {t('subsidyHelp')}
+              <Landmark className="w-5 h-5 text-[#002DC2] shrink-0" /> {t('subsidyHelp')}
             </div>
           </div>
         </div>

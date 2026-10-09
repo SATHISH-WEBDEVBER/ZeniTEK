@@ -72,9 +72,9 @@ export default function LanguageWidget({ variant = 'dropdown', onSelect }) {
         aria-label={`${t('navbar_language')}: ${current.label}`}
         className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-[#123B92]/20 text-[#123B92] hover:border-[#002DC2] hover:bg-[#F0F4FD] text-sm font-bold transition-colors cursor-pointer"
       >
-        <Globe className="w-4 h-4 text-[#002DC2]" />
+        <Globe className="w-5 h-5 text-[#002DC2]" />
         <span lang={current.code}>{current.native}</span>
-        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (

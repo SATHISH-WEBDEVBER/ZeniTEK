@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { projectGalleryData } from '../data/projectGalleryData';
 import { useLanguage } from '../context/LanguageContext';
+import { usePageTitle } from '../components/SiteHeader';
 import {
   ArrowLeft, ArrowRight, MapPin, Calendar, ShieldCheck,
   CheckCircle2, Sparkles, PhoneCall, ChevronLeft, ChevronRight,
@@ -15,6 +16,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
 
   // Find project by ID
   const project = projectGalleryData.find(p => p.id === id);
+  usePageTitle(project?.title);
   const [activePhoto, setActivePhoto] = useState('main'); // 'main' | 'interior'
   const [copied, setCopied] = useState(false);
 
@@ -29,7 +31,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
         <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">{t('gallery_projNotFoundTitle')}</h2>
         <p className="text-base sm:text-lg text-slate-500">{t('gallery_projNotFoundDesc')}</p>
         <Link
-          to="/dryers"
+          to="/installations"
           className="px-6 py-2.5 bg-[#002DC2] text-white font-bold text-xs rounded-xl shadow hover:bg-[#002DC2] transition-all flex items-center space-x-2"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -56,34 +58,16 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
     <div className="min-h-screen bg-slate-50 text-slate-900 pb-20 pt-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
-        {/* Navigation & Breadcrumbs Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
-          <div className="flex items-center space-x-2 text-xs">
-            <Link to="/" className="text-slate-500 hover:text-[#002DC2] font-semibold">{t('navHome')}</Link>
-            <span className="text-slate-400">/</span>
-            <Link to="/dryers" className="text-slate-500 hover:text-[#002DC2] font-semibold">{t('navDryers')}</Link>
-            <span className="text-slate-400">/</span>
-            <span className="text-[#123B92] font-bold truncate max-w-[200px] sm:max-w-none">
-              {t('gallery_projectCrumb', { id: project.id, title: project.title })}
-            </span>
-          </div>
-
+        {/* Share bar (breadcrumb + Back live in the global page header) */}
+        <div className="flex items-center justify-end gap-3">
           <div className="flex items-center space-x-3">
-            <Link
-              to="/dryers"
-              className="px-4 py-2 bg-white border border-slate-300 hover:border-blue-600 text-slate-700 hover:text-[#002DC2] rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 shadow-sm"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>{t('gallery_backAllInstallations')}</span>
-            </Link>
-
             <button
               onClick={handleShare}
               className="p-2 bg-white border border-slate-300 hover:border-slate-400 text-slate-600 rounded-xl text-xs font-bold transition-all shadow-sm"
               title={t('gallery_shareLink')}
               aria-label={t('gallery_shareLink')}
             >
-              <Share2 className="w-3.5 h-3.5" />
+              <Share2 className="w-4 h-4" />
             </button>
             {copied && <span className="text-xs font-bold text-[#1A822B] animate-fade-in">{t('gallery_linkCopied')}</span>}
           </div>
@@ -105,7 +89,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
                     {t('gallery_projectNo', { id: project.id })}
                   </span>
                   <span className="px-3 py-1.5 bg-[#1A822B] text-white font-extrabold text-xs rounded-xl shadow-sm flex items-center space-x-1">
-                    <Calendar className="w-3.5 h-3.5 mr-1" />
+                    <Calendar className="w-4 h-4 mr-1" />
                     <span>{t('gallery_commissionedYear', { year: project.year })}</span>
                   </span>
                 </div>
@@ -257,11 +241,11 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
                   <span>{t('gallery_projBadge1')}</span>
                 </div>
                 <div className="flex items-center text-slate-700 font-semibold">
-                  <CheckCircle2 className="w-4 h-4 text-[#1A822B] mr-2 shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-[#1A822B] mr-2 shrink-0" />
                   <span>{t('gallery_projBadge2')}</span>
                 </div>
                 <div className="flex items-center text-slate-700 font-semibold">
-                  <CheckCircle2 className="w-4 h-4 text-[#1A822B] mr-2 shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-[#1A822B] mr-2 shrink-0" />
                   <span>{t('gallery_projBadge3')}</span>
                 </div>
               </div>
@@ -296,7 +280,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
                   href="tel:+918098613422"
                   className="w-full py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-2 border border-white/20"
                 >
-                  <PhoneCall className="w-3.5 h-3.5 text-[#23AC39]" />
+                  <PhoneCall className="w-4 h-4 text-[#23AC39]" />
                   <span>{t('gallery_callNumber', { phone: '+91 80986 13422' })}</span>
                 </a>
               </div>
@@ -306,7 +290,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
             {/* Pagination between projects */}
             <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex items-center justify-between text-xs">
               <button
-                onClick={() => navigate(`/dryers/${prevProject.id}`)}
+                onClick={() => navigate(`/projects/${prevProject.id}`)}
                 className="flex items-center space-x-1.5 font-bold text-slate-700 hover:text-[#002DC2] transition-colors"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -317,12 +301,12 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
               <span className="text-slate-300">|</span>
 
               <button
-                onClick={() => navigate(`/dryers/${nextProject.id}`)}
+                onClick={() => navigate(`/projects/${nextProject.id}`)}
                 className="flex items-center space-x-1.5 font-bold text-slate-700 hover:text-[#002DC2] transition-colors"
               >
                 <span>#{nextProject.id} {nextProject.title}</span>
                 <span className="hidden sm:inline">{t('gallery_next')}</span>
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-5 h-5" />
               </button>
             </div>
 

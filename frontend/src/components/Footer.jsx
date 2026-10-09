@@ -1,22 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  Sun, 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Download, 
-  ShieldCheck, 
-  ExternalLink, 
-  ArrowRight, 
-  Building2, 
-  X,
-  FileText,
-  Lock,
-  Eye,
-  Share2
+import {
+  Sun, Phone, Mail, MapPin, Download, ShieldCheck, ExternalLink, ArrowRight, Building2, X, FileText, Lock, Eye, Share2, BadgeCheck
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { PAGES } from '../data/siteMap';
+
+const QUICK_LINKS = ['/products', '/solar-dryer-models', '/applications', '/subsidies', '/gallery', '/installations', '/stories', '/about', '/contact'];
 import { brochures } from '../data/brochuresData';
 
 export default function Footer({ onOpenQuoteModal }) {
@@ -60,7 +50,7 @@ export default function Footer({ onOpenQuoteModal }) {
             </p>
             <div className="flex flex-wrap items-center gap-2 pt-1">
               <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-2xs font-bold bg-[#F0F4FD] text-[#123B92] border border-[#002DC2] shadow-sm">
-                <ShieldCheck className="w-3.5 h-3.5 mr-1 text-[#002DC2] shrink-0" /> {t('mnreBadge')}
+                <BadgeCheck className="w-4 h-4 mr-1 text-[#002DC2] shrink-0" /> {t('mnreBadge')}
               </span>
               <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-2xs font-bold bg-[#F0F4FD] text-[#123B92] border border-[#002DC2] shadow-sm">
                 {t('isoBadge')}
@@ -108,7 +98,7 @@ export default function Footer({ onOpenQuoteModal }) {
           {/* Col 3: Product Brochures & Downloads (3 cols on desktop) */}
           <div className="lg:col-span-3">
             <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4 flex items-center gap-1.5">
-              <FileText className="w-3.5 h-3.5 text-[#002DC2]" />
+              <FileText className="w-4 h-4 text-[#002DC2]" />
               <span>{t('common_footer_brochures')}</span>
             </h4>
             <div className="space-y-2.5">
@@ -148,7 +138,7 @@ export default function Footer({ onOpenQuoteModal }) {
                       aria-label={t('common_footer_viewTitle', { title })}
                       className="w-7 h-7 rounded-lg bg-[#F0F4FD] text-[#002DC2] hover:bg-[#002DC2] hover:text-white flex items-center justify-center transition-colors"
                     >
-                      <Eye className="w-3.5 h-3.5" />
+                      <Eye className="w-4 h-4" />
                     </Link>
                     <a
                       href={b.url}
@@ -156,7 +146,7 @@ export default function Footer({ onOpenQuoteModal }) {
                       title={t('common_footer_download')}
                       className="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 hover:bg-[#002DC2] hover:text-white flex items-center justify-center transition-colors"
                     >
-                      <Download className="w-3.5 h-3.5" />
+                      <Download className="w-4 h-4" />
                     </a>
                   </div>
                 </div>
@@ -168,7 +158,7 @@ export default function Footer({ onOpenQuoteModal }) {
                   to="/subsidies"
                   className="inline-flex items-center text-xs font-bold text-[#123B92] hover:text-[#002DC2] hover:underline transition-colors"
                 >
-                  <ArrowRight className="w-3 h-3 mr-1 text-[#002DC2]" />
+                  <ArrowRight className="w-4 h-4 mr-1 text-[#002DC2]" />
                   <span>{t('common_footer_subsidyGuide')}</span>
                 </Link>
               </div>
@@ -189,7 +179,7 @@ export default function Footer({ onOpenQuoteModal }) {
               </div>
 
               <div className="flex items-start space-x-2.5">
-                <MapPin className="w-4 h-4 text-[#002DC2] shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-[#002DC2] shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-[#123B92] text-xs block">{t('opOfficeLabel')}:</span>
                   <p className="text-black leading-relaxed text-sm mt-0.5">{formatAddress(t('opOfficeAddress'))}</p>
@@ -198,7 +188,7 @@ export default function Footer({ onOpenQuoteModal }) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                 <div className="flex items-center space-x-2">
-                  <Phone className="w-3.5 h-3.5 text-[#002DC2] shrink-0" />
+                  <Phone className="w-4 h-4 text-[#002DC2] shrink-0" />
                   <div className="text-xs">
                     <a href="tel:+918903852623" className="hover:text-[#002DC2] font-bold text-[#123B92] block">+91-8903852623</a>
                     <a href="tel:+918098613422" className="hover:text-[#002DC2] font-bold text-[#123B92] block">+91 80986 13422</a>
@@ -206,7 +196,7 @@ export default function Footer({ onOpenQuoteModal }) {
                 </div>
 
                 <div className="flex items-center space-x-2">
-                  <Mail className="w-3.5 h-3.5 text-[#002DC2] shrink-0" />
+                  <Mail className="w-4 h-4 text-[#002DC2] shrink-0" />
                   <div className="text-xs">
                     <a href="mailto:zenitek2k@gmail.com" className="hover:text-[#002DC2] font-bold text-[#123B92] block">zenitek2k@gmail.com</a>
                   </div>
@@ -220,7 +210,7 @@ export default function Footer({ onOpenQuoteModal }) {
                   className="w-full py-2.5 px-4 bg-[#23AC39] hover:bg-[#002DC2] text-white rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center space-x-1.5 transition-all shadow cursor-pointer active:scale-[0.98]"
                 >
                   <span>{t('getQuote')}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
 
@@ -228,6 +218,15 @@ export default function Footer({ onOpenQuoteModal }) {
           </div>
 
         </div>
+
+        {/* Quick links to every main page */}
+        <nav aria-label={t('site_sitemap')} className="pt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm font-semibold">
+          {QUICK_LINKS.map(path => (
+            <Link key={path} to={path} className="text-[#123B92] hover:text-[#002DC2] transition-colors">
+              {tf(PAGES[path].key, PAGES[path].key)}
+            </Link>
+          ))}
+        </nav>
 
         {/* Clean, Single-Line Bottom Bar */}
         <div className="pt-6 pb-2 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-black">
@@ -242,6 +241,10 @@ export default function Footer({ onOpenQuoteModal }) {
             <span className="text-slate-300">•</span>
             <Link to="/terms" className="text-black hover:text-[#002DC2] font-medium transition-colors">
               {t('footerTerms')}
+            </Link>
+            <span className="text-slate-300">•</span>
+            <Link to="/sitemap" className="text-black hover:text-[#002DC2] font-medium transition-colors">
+              {t('site_sitemap')}
             </Link>
             <span className="text-slate-300">•</span>
             <span className="text-slate-600 font-medium">

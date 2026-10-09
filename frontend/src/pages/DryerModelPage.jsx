@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { CheckCircle2, ShieldCheck, ArrowRight, Sun, Zap, Layers, Wind, Grid } from 'lucide-react';
+import { CheckCircle2, ShieldCheck, ArrowRight, Sun, Zap, Layers, Wind, Grid, Check, Ruler } from 'lucide-react';
 import { officialDryerModels } from '../data/zenitekBrochureData';
-import PageBackBar from '../components/PageBackBar';
+import { usePageTitle } from '../components/SiteHeader';
 import { buildQuoteUrl } from './QuotePage';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -26,6 +26,7 @@ export default function DryerModelPage() {
   const { modelId } = useParams();
   const model = findDryerModel(modelId);
   const { t } = useLanguage();
+  usePageTitle(model?.name);
   const [selectedImg, setSelectedImg] = useState(0);
 
   if (!model) {
@@ -35,7 +36,7 @@ export default function DryerModelPage() {
           <h1 className="text-3xl font-black text-[#123B92]">{t('sections_modelNotFound')}</h1>
           <p className="text-slate-600">{t('sections_modelNotFoundDesc')}</p>
           <Link to="/solar-dryer-models" className="inline-flex items-center gap-2 px-6 py-3 bg-[#23AC39] text-white font-black text-sm uppercase tracking-wider rounded-xl">
-            {t('sections_viewAllModels')} <ArrowRight className="w-4 h-4" />
+            {t('sections_viewAllModels')} <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </section>
@@ -51,15 +52,13 @@ export default function DryerModelPage() {
     { icon: Sun, label: t('sections_specSolar'), main: model.solarPower || t('sections_defSolarDc') },
     { icon: Wind, label: t('sections_specAirflow'), main: t('sections_exhaust', { value: model.exhaustFans || t('sections_defAutomated') }), sub: t('sections_circulation', { value: model.circulationFans || t('sections_defConvection') }) },
     { icon: Zap, label: t('sections_specHeater'), main: model.electricalHeater || t('sections_defHeater'), sub: t('sections_grid', { value: model.gridBackup || '24V DC SMPS' }) },
-    { icon: Layers, label: t('sections_specDimensions'), main: model.dimensions || t('sections_defModular'), sub: model.structure || model.buildMaterial || t('sections_defStructure') }
+    { icon: Ruler, label: t('sections_specDimensions'), main: model.dimensions || t('sections_defModular'), sub: model.structure || model.buildMaterial || t('sections_defStructure') }
   ];
 
   return (
     <div className="bg-white">
       <section className="w-full py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <PageBackBar crumbs={[{ label: t('section_solar-dryer-models_title'), to: '/solar-dryer-models' }, { label: model.name }]} fallback="/solar-dryer-models" />
-
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="text-xs font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3.5 py-1.5 rounded-full inline-block">
               {model.badge}
@@ -73,7 +72,7 @@ export default function DryerModelPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <div className="space-y-3">
               <div className="rounded-2xl overflow-hidden border border-[#123B92]/20 shadow-md bg-[#F0F4FD] aspect-[4/3]">
-                <img src={images[selectedImg] || model.imageUrl} alt={model.name} className="w-full h-full object-contain bg-white" />
+                <img src={images[selectedImg] || model.imageUrl} alt={(selectedImg === 0 && model.imageAlt) || model.name} className="w-full h-full object-cover" />
               </div>
               {images.length > 1 && (
                 <div className="flex flex-wrap gap-2">
@@ -113,7 +112,7 @@ export default function DryerModelPage() {
               </div>
 
               <div className="flex items-center gap-2 text-sm font-bold text-[#123B92] bg-[#F0F4FD] p-3 rounded-xl border border-[#123B92]/20">
-                <ShieldCheck className="w-4 h-4 text-[#002DC2] shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-[#002DC2] shrink-0" />
                 <span>{t('sections_modelGuarantee')}</span>
               </div>
 
@@ -122,7 +121,7 @@ export default function DryerModelPage() {
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md transition-all text-center"
               >
                 <span>{t('sections_quoteForModel', { name: model.name })}</span>
-                <ArrowRight className="w-4 h-4 shrink-0" />
+                <ArrowRight className="w-5 h-5 shrink-0" />
               </Link>
             </div>
           </div>
@@ -168,8 +167,8 @@ export default function DryerModelPage() {
             {model.compatibleCrops && (
               <div className="flex flex-wrap justify-center gap-2">
                 {model.compatibleCrops.map((crop, idx) => (
-                  <span key={idx} className="px-3 py-1.5 bg-white text-[#002DC2] border border-[#123B92]/30 font-bold text-sm rounded-full">
-                    ✓ {crop}
+                  <span key={idx} className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white text-[#002DC2] border border-[#123B92]/30 font-bold text-sm rounded-full">
+                    <Check className="w-4 h-4" /> {crop}
                   </span>
                 ))}
               </div>
@@ -179,7 +178,7 @@ export default function DryerModelPage() {
                 to={quoteUrl}
                 className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md transition-all"
               >
-                {t('sections_quoteThisModel')} <ArrowRight className="w-4 h-4" />
+                {t('sections_quoteThisModel')} <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
           </div>

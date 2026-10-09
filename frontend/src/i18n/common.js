@@ -136,6 +136,13 @@ export default {
     common_map_viewDetails: "View More Details",
     common_map_surveyBadge: "Official Survey of India Boundaries",
     common_map_activeSites: "{count} Active Field Sites",
+    common_map_crop: "Crop",
+    common_map_capacity: "Capacity",
+    common_map_year: "Installed",
+    common_map_layers: "Map layers",
+    common_map_scrollHint: "Click the map, then scroll to zoom",
+    common_map_hoverHint: "Hover a pin for details",
+    common_map_tapHint: "Tap a pin for details",
 
     // Enquiry forms (LeadForm, Contact page)
     common_form_state: "State",
@@ -371,6 +378,13 @@ export default {
     common_map_viewDetails: "கூடுதல் விவரங்கள் காண்க",
     common_map_surveyBadge: "இந்திய நில அளவைத் துறை எல்லைகள்",
     common_map_activeSites: "{count} இயங்கும் தளங்கள்",
+    common_map_crop: "பயிர்",
+    common_map_capacity: "கொள்ளளவு",
+    common_map_year: "நிறுவிய ஆண்டு",
+    common_map_layers: "வரைபட அடுக்குகள்",
+    common_map_scrollHint: "வரைபடத்தைக் கிளிக் செய்து, ஸ்க்ரோல் செய்து பெரிதாக்கவும்",
+    common_map_hoverHint: "விவரங்களுக்கு குறியின் மேல் நகர்த்தவும்",
+    common_map_tapHint: "விவரங்களுக்கு குறியைத் தொடவும்",
 
     // Enquiry forms (LeadForm, Contact page)
     common_form_state: "மாநிலம்",
@@ -606,6 +620,13 @@ export default {
     common_map_viewDetails: "अधिक विवरण देखें",
     common_map_surveyBadge: "भारतीय सर्वेक्षण की आधिकारिक सीमाएं",
     common_map_activeSites: "{count} सक्रिय फील्ड साइटें",
+    common_map_crop: "फसल",
+    common_map_capacity: "क्षमता",
+    common_map_year: "स्थापना वर्ष",
+    common_map_layers: "मानचित्र परतें",
+    common_map_scrollHint: "मानचित्र पर क्लिक करें, फिर ज़ूम के लिए स्क्रॉल करें",
+    common_map_hoverHint: "विवरण के लिए पिन पर माउस ले जाएं",
+    common_map_tapHint: "विवरण के लिए पिन पर टैप करें",
 
     // Enquiry forms (LeadForm, Contact page)
     common_form_state: "राज्य",
@@ -841,6 +862,13 @@ export default {
     common_map_viewDetails: "കൂടുതൽ വിവരങ്ങൾ കാണുക",
     common_map_surveyBadge: "സർവേ ഓഫ് ഇന്ത്യ ഔദ്യോഗിക അതിർത്തികൾ",
     common_map_activeSites: "{count} പ്രവർത്തന സ്ഥലങ്ങൾ",
+    common_map_crop: "വിള",
+    common_map_capacity: "ശേഷി",
+    common_map_year: "സ്ഥാപിച്ച വർഷം",
+    common_map_layers: "മാപ്പ് ലെയറുകൾ",
+    common_map_scrollHint: "മാപ്പിൽ ക്ലിക്ക് ചെയ്ത് സ്ക്രോൾ ചെയ്ത് വലുതാക്കുക",
+    common_map_hoverHint: "വിവരങ്ങൾക്ക് പിന്നിന് മുകളിൽ മൗസ് വയ്ക്കുക",
+    common_map_tapHint: "വിവരങ്ങൾക്ക് പിന്നിൽ ടാപ്പ് ചെയ്യുക",
 
     // Enquiry forms (LeadForm, Contact page)
     common_form_state: "സംസ്ഥാനം",
@@ -1076,6 +1104,13 @@ export default {
     common_map_viewDetails: "మరిన్ని వివరాలు చూడండి",
     common_map_surveyBadge: "అధికారిక సర్వే ఆఫ్ ఇండియా సరిహద్దులు",
     common_map_activeSites: "{count} పనిచేస్తున్న ప్రదేశాలు",
+    common_map_crop: "పంట",
+    common_map_capacity: "సామర్థ్యం",
+    common_map_year: "స్థాపించిన సంవత్సరం",
+    common_map_layers: "మ్యాప్ లేయర్లు",
+    common_map_scrollHint: "మ్యాప్‌పై క్లిక్ చేసి, జూమ్ చేయడానికి స్క్రోల్ చేయండి",
+    common_map_hoverHint: "వివరాల కోసం పిన్‌పై మౌస్ ఉంచండి",
+    common_map_tapHint: "వివరాల కోసం పిన్‌ను తాకండి",
 
     // Enquiry forms (LeadForm, Contact page)
     common_form_state: "రాష్ట్రం",
@@ -1311,6 +1346,13 @@ export default {
     common_map_viewDetails: "ಹೆಚ್ಚಿನ ವಿವರ ನೋಡಿ",
     common_map_surveyBadge: "ಸರ್ವೆ ಆಫ್ ಇಂಡಿಯಾ ಅಧಿಕೃತ ಗಡಿಗಳು",
     common_map_activeSites: "{count} ಸಕ್ರಿಯ ತಾಣಗಳು",
+    common_map_crop: "ಬೆಳೆ",
+    common_map_capacity: "ಸಾಮರ್ಥ್ಯ",
+    common_map_year: "ಸ್ಥಾಪಿಸಿದ ವರ್ಷ",
+    common_map_layers: "ನಕ್ಷೆ ಪದರಗಳು",
+    common_map_scrollHint: "ನಕ್ಷೆಯನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ, ನಂತರ ಜೂಮ್ ಮಾಡಲು ಸ್ಕ್ರಾಲ್ ಮಾಡಿ",
+    common_map_hoverHint: "ವಿವರಗಳಿಗಾಗಿ ಪಿನ್ ಮೇಲೆ ಮೌಸ್ ಇರಿಸಿ",
+    common_map_tapHint: "ವಿವರಗಳಿಗಾಗಿ ಪಿನ್ ಅನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ",
 
     // Enquiry forms (LeadForm, Contact page)
     common_form_state: "ರಾಜ್ಯ",

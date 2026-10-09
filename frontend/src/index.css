@@ -56,6 +56,19 @@
     text-wrap: pretty;
   }
 
+  /* One icon family (lucide), one stroke weight. Sizes follow a 16/20/24/32/48px scale
+     (w-4 chips, w-5 inline, w-6 tiles & controls, w-8 feature cards, w-12 status states);
+     the larger sizes use a lighter stroke so they keep the same visual weight. */
+  svg.lucide {
+    stroke-width: 2;
+    flex-shrink: 0;
+  }
+
+  svg.lucide.w-8,
+  svg.lucide.w-12 {
+    stroke-width: 1.75;
+  }
+
   input,
   select,
   textarea {
@@ -513,24 +526,104 @@ main section.divider-full:not(section section):not([class*="rounded"]):not(.no-d
   animation-play-state: paused !important;
 }
 
-/* India Vector Map & State Tooltip */
-.zenitek-state-tooltip {
-  background: rgba(15, 23, 42, 0.92) !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  border-radius: 8px !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
-  padding: 4px 8px !important;
-  font-family: inherit !important;
+/* Installation map (MapComponent) */
+.zenitek-site-map {
+  background: #0f1e3d !important; /* dark canvas while satellite tiles stream in */
+  -webkit-tap-highlight-color: transparent;
 }
 
-.zenitek-state-tooltip::before {
-  border-top-color: rgba(15, 23, 42, 0.92) !important;
+.zenitek-site-map .leaflet-tile {
+  will-change: opacity;
 }
 
-.india-vector-map-viewport,
-.india-google-map-viewport {
-  background: #aad3df !important; /* Authentic Google Maps sea/canvas base color */
+.zenitek-site-map:focus,
+.zenitek-site-map .leaflet-marker-icon:focus {
+  outline: none;
+}
+
+.zenitek-site-map .leaflet-marker-icon:focus-visible .zenitek-pin-body {
+  box-shadow: 0 0 0 3px #23AC39, 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Hover ring + lift on pins (desktop), open-card state on pins (all devices) */
+.zenitek-pin-body::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 3px solid #23AC39;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .zenitek-map-pin-root:hover .zenitek-pin-body::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (hover: none) {
+  .zenitek-map-pin-root:hover {
+    transform: none;
+  }
+}
+
+.leaflet-marker-icon.is-open .zenitek-map-pin-root {
+  transform: translateY(-4px) scale(1.15);
+}
+
+.leaflet-marker-icon.is-open .zenitek-pin-body::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Hover tooltip arrow + fade */
+.zenitek-site-map .leaflet-tooltip.custom-leaflet-tooltip {
+  transition: opacity 0.15s ease;
+}
+
+.zenitek-site-map .leaflet-tooltip-top.custom-leaflet-tooltip::before {
+  border-top-color: #ffffff !important;
+}
+
+/* Details card (click / tap): larger close button for touch */
+.zenitek-site-map .custom-leaflet-popup a.leaflet-popup-close-button {
+  width: 36px;
+  height: 36px;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 22px/1 system-ui, sans-serif;
+  color: #ffffff;
+  background: rgba(18, 59, 146, 0.85);
+  border-radius: 9999px;
+  z-index: 2;
+}
+
+.zenitek-site-map .custom-leaflet-popup a.leaflet-popup-close-button:hover {
+  background: #002DC2;
+  color: #ffffff;
+}
+
+.zenitek-site-map .custom-leaflet-popup a.zenitek-popup-cta,
+.zenitek-site-map .custom-leaflet-popup a.zenitek-popup-cta:hover {
+  color: #ffffff;
+}
+
+/* Compact attribution so it never crowds the controls on phones */
+.zenitek-site-map .leaflet-control-attribution {
+  font-size: 10px;
+  line-height: 1.4;
+  max-width: calc(100vw - 48px);
+  padding: 1px 6px;
+  border-top-left-radius: 6px;
+  background: rgba(255, 255, 255, 0.85) !important;
+  white-space: normal;
 }
 
 /* Calm Cross-fade & Subtle Translation Animation for Synchronized Product Showcase */

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Send, ShieldCheck, CheckCircle, Loader2 } from 'lucide-react';
+import { Send, ShieldCheck, CheckCircle, Loader2, Lock } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 // [submitted value, English label used for prefill matching, translation key for the shown label]
@@ -196,7 +196,7 @@ export default function LeadForm({ prefill }) {
 
         <div className="pt-4 border-t border-[#123B92]/20 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="text-xs text-black/60 flex items-center">
-            <ShieldCheck className="w-4 h-4 text-[#002DC2] mr-1" /> {t('common_form_confidential')}
+            <Lock className="w-4 h-4 text-[#002DC2] mr-1" /> {t('common_form_confidential')}
           </div>
           <button
             type="submit"
@@ -205,13 +205,13 @@ export default function LeadForm({ prefill }) {
           >
             {loading ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="w-5 h-5 animate-spin" />
                 <span>{t('common_form_processing')}</span>
               </>
             ) : (
               <>
                 <span>{t('chatWhatsapp')}</span>
-                <Send className="w-4 h-4" />
+                <Send className="w-5 h-5" />
               </>
             )}
           </button>

@@ -1,14 +1,20 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  Menu, X, ArrowRight, ChevronDown, Sun, Zap, Sprout, Cpu, 
-  Sparkles, FileText, Image as ImageIcon, Landmark, Info, PhoneCall 
+import {
+  Menu, X, ArrowRight, ChevronDown, Sun, FileText, Image as ImageIcon, LayoutGrid
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import LanguageWidget from './LanguageWidget';
 import { fetchPublicSections } from '../utils/api';
 import { defaultSectionsData } from '../data/defaultSectionsData';
+import { SOLUTION_ICONS } from '../data/siteMap';
+
+// Fallback icon per solution page, shown when a section has no thumbnail photo
+const SectionIcon = ({ slug, className }) => {
+  const Icon = SOLUTION_ICONS[slug] || Sun;
+  return <Icon className={className} />;
+};
 
 export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -138,6 +144,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   ];
 
   const productRoutes = [
+    '/products',
     '/solar-dryer-models',
     '/solar-thermal-system',
     '/agri-solar-innovation',
@@ -232,15 +239,19 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                   <div className="flex items-center justify-between pb-2 border-b border-slate-100 px-2">
                     <div>
                       <span className="text-xs font-black uppercase tracking-wider text-[#002DC2]">
-                        Solutions & Engineering Categories
+                        {t('site_productsBadge')}
                       </span>
                       <p className="text-sm text-slate-500 font-medium">
-                        Explore our complete solar thermal dehydration portfolio
+                        {t('navbar_productsCount', { count: sections.length })}
                       </p>
                     </div>
-                    <span className="text-xs font-bold text-slate-400 bg-slate-100 px-2.5 py-0.5 rounded-full">
-                      {sections.length} Categories
-                    </span>
+                    <Link
+                      to="/products"
+                      onClick={() => setProductsDropdownOpen(false)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#002DC2]/25 text-sm font-bold text-[#002DC2] hover:bg-[#F0F4FD] transition-colors shrink-0"
+                    >
+                      <LayoutGrid className="w-4 h-4" /> {t('site_viewAllProducts')}
+                    </Link>
                   </div>
 
                   {/* 2-Column Structured Grid of the 7 Solution Categories */}
@@ -261,14 +272,14 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center bg-slate-100 text-slate-400">
-                              <Sun className="w-5 h-5" />
+                              <SectionIcon slug={item.slug} className="w-5 h-5" />
                             </div>
                           )}
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="text-sm xl:text-sm font-bold text-[#123B92] group-hover:text-[#002DC2] transition-colors leading-snug flex items-center justify-between">
                             <span className="truncate">{tf(`section_${item.slug}_title`, item.title)}</span>
-                            <ArrowRight className="w-3.5 h-3.5 text-[#002DC2] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all shrink-0 ml-1" />
+                            <ArrowRight className="w-4 h-4 text-[#002DC2] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all shrink-0 ml-1" />
                           </div>
                           {item.subtitle && (
                             <div className="text-xs text-slate-500 font-medium truncate mt-0.5 leading-tight">
@@ -293,7 +304,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                         }}
                         className="px-3 py-1.5 bg-[#23AC39] hover:bg-[#1f9632] text-white text-xs font-extrabold rounded-lg shadow-sm cursor-pointer shrink-0 transition-transform active:scale-95"
                       >
-                        Enquire →
+                        {t('getQuote')}
                       </button>
                     </div>
                   </div>
@@ -342,7 +353,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                         className="flex items-start space-x-3 p-2.5 rounded-xl hover:bg-[#F0F4FD] transition-colors group"
                       >
                         <div className="w-8 h-8 rounded-lg bg-[#F0F4FD] group-hover:bg-[#002DC2] text-[#002DC2] group-hover:text-white flex items-center justify-center shrink-0 transition-colors mt-0.5">
-                          <ItemIcon className="w-4 h-4" />
+                          <ItemIcon className="w-5 h-5" />
                         </div>
                         <div>
                           <div className="text-sm font-bold text-[#123B92] group-hover:text-[#002DC2] transition-colors">
@@ -428,7 +439,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               className="px-3.5 py-1.5 sm:px-4 sm:py-2 lg:px-[18px] lg:py-2 text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white bg-[#23AC39] hover:bg-[#1f9632] rounded-xl shadow-md shadow-[#23AC39]/20 transition-all flex items-center shrink-0 cursor-pointer hover:shadow-lg active:scale-95"
             >
               <span>{t('getQuote')}</span>
-              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-1.5 shrink-0" />
+              <ArrowRight className="w-4 h-4 ml-1.5 shrink-0" />
             </button>
 
             {/* Mobile Hamburger Toggle */}
@@ -485,6 +496,13 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
 
             {mobileProductsOpen && (
               <div className="pl-2 pr-2 py-2 space-y-1.5 bg-slate-50/80 rounded-xl mb-1 border border-slate-100">
+                <Link
+                  to="/products"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 p-2.5 rounded-lg bg-[#F0F4FD] border border-[#002DC2]/20 text-sm font-bold text-[#002DC2]"
+                >
+                  <LayoutGrid className="w-5 h-5" /> {t('site_viewAllProducts')}
+                </Link>
                 {sections.map((item) => (
                   <Link
                     key={item.slug}
@@ -501,7 +519,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-slate-400">
-                          <Sun className="w-4 h-4" />
+                          <SectionIcon slug={item.slug} className="w-5 h-5" />
                         </div>
                       )}
                     </div>

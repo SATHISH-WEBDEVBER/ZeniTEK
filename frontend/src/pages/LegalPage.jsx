@@ -1,6 +1,5 @@
 import React from 'react';
 import { Lock, FileText } from 'lucide-react';
-import PageBackBar from '../components/PageBackBar';
 import { useLanguage } from '../context/LanguageContext';
 
 // Privacy Policy (/privacy) and Terms of Service (/terms)
@@ -14,10 +13,8 @@ export default function LegalPage({ type }) {
     <div className="bg-white">
       <section className="w-full py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <PageBackBar crumbs={[{ label: title }]} fallback="/" />
-
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center mx-auto">
+            <div className="w-12 h-12 rounded-xl bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center mx-auto">
               <Icon className="w-6 h-6" />
             </div>
             <h1 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{title}</h1>

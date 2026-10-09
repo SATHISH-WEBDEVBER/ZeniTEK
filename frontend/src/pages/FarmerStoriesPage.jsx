@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Play, TrendingUp, ShieldCheck, Award, ArrowRight, CheckCircle2 } from 'lucide-react';
+import {
+  Play, TrendingUp, ShieldCheck, Award, ArrowRight, CheckCircle2, Star, Landmark, Wrench, Handshake
+} from 'lucide-react';
+import IconTile from '../components/IconTile';
 import { sampleReviews } from '../data/sampleData';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -91,8 +94,8 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
                 <div className="p-5 sm:p-6 space-y-3">
                   <div className="flex items-center justify-between">
                     <h3 className="text-xl font-bold text-[#123B92]">{rev.name}</h3>
-                    <span className="text-2xs font-bold text-white bg-[#23AC39] px-2 py-0.5 rounded border border-[#23AC39]">
-                      ★ {rev.rating}.0
+                    <span className="inline-flex items-center gap-1 text-2xs font-bold text-white bg-[#23AC39] px-2 py-0.5 rounded border border-[#23AC39]">
+                      <Star className="w-4 h-4 fill-current" /> {rev.rating}.0
                     </span>
                   </div>
                   <div className="text-xs font-bold text-[#002DC2]">{rev.role} • {rev.location}</div>
@@ -146,17 +149,17 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#123B92]">{t('commitmentTitle')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm space-y-2">
-              <CheckCircle2 className="w-6 h-6 text-[#002DC2] mx-auto" />
+              <IconTile icon={Landmark} />
               <h3 className="text-xl font-bold text-[#123B92]">{t('comm1Title')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('comm1Desc')}</p>
             </div>
             <div className="p-6 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm space-y-2">
-              <CheckCircle2 className="w-6 h-6 text-[#123B92] mx-auto" />
+              <IconTile icon={Wrench} tone="navy" />
               <h3 className="text-xl font-bold text-[#123B92]">{t('comm2Title')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('comm2Desc')}</p>
             </div>
             <div className="p-6 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm space-y-2">
-              <CheckCircle2 className="w-6 h-6 text-[#002DC2] mx-auto" />
+              <IconTile icon={Handshake} tone="green" />
               <h3 className="text-xl font-bold text-[#123B92]">{t('comm3Title')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('comm3Desc')}</p>
             </div>

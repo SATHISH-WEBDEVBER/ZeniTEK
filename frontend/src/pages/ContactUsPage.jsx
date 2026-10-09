@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { MapPin, Phone, Mail, MessageCircle, ShieldCheck, ArrowRight, CheckCircle2, Building2, Send, Loader2 } from 'lucide-react';
+import {
+  MapPin, Phone, Mail, MessageCircle, ShieldCheck, ArrowRight, CheckCircle2, Building2, Send, Loader2, Receipt, Landmark, Droplets, Wrench
+} from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 
@@ -94,8 +96,8 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
               {/* 1. Registered Office (Main Address) */}
               <div className="p-4 rounded-2xl bg-[#F0F4FD] border border-[#123B92]/20 space-y-2">
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 rounded-lg bg-[#123B92] text-white flex items-center justify-center shrink-0 shadow-sm">
-                    <Building2 className="w-4 h-4" />
+                  <div className="w-12 h-12 rounded-xl bg-[#123B92] text-white flex items-center justify-center shrink-0 shadow-sm">
+                    <Building2 className="w-6 h-6" />
                   </div>
                   <div>
                     <span className="text-2xs font-extrabold uppercase tracking-wider text-[#002DC2] bg-white border border-[#123B92]/20 px-2 py-0.5 rounded inline-block">
@@ -114,8 +116,8 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
               {/* 2. Operation Address */}
               <div className="p-4 rounded-2xl bg-[#F0F4FD] border border-[#123B92]/20 space-y-2">
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 rounded-lg bg-[#002DC2] text-white flex items-center justify-center shrink-0 shadow-sm">
-                    <MapPin className="w-4 h-4" />
+                  <div className="w-12 h-12 rounded-xl bg-[#002DC2] text-white flex items-center justify-center shrink-0 shadow-sm">
+                    <MapPin className="w-6 h-6" />
                   </div>
                   <div>
                     <span className="text-2xs font-extrabold uppercase tracking-wider text-[#002DC2] bg-white border border-[#123B92]/20 px-2 py-0.5 rounded inline-block">
@@ -134,7 +136,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
               {/* 3. GSTIN Identification */}
               <div className="flex items-center justify-between p-3 rounded-xl bg-[#F0F4FD] border border-[#123B92]/20">
                 <div className="flex items-center space-x-2">
-                  <ShieldCheck className="w-4 h-4 text-[#002DC2] shrink-0" />
+                  <Receipt className="w-5 h-5 text-[#002DC2] shrink-0" />
                   <span className="font-bold text-[#123B92] text-xs">GSTIN:</span>
                 </div>
                 <span className="font-mono font-bold text-[#123B92] tracking-wider text-xs bg-white px-2.5 py-1 rounded border border-[#123B92]/30 shadow-sm">
@@ -144,8 +146,8 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
 
               {/* 4. Contact Numbers */}
               <div className="flex items-start space-x-3 pt-1">
-                <div className="w-9 h-9 rounded-xl bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center shrink-0 border border-[#123B92]/20">
-                  <Phone className="w-5 h-5" />
+                <div className="w-12 h-12 rounded-xl bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center shrink-0 border border-[#123B92]/20">
+                  <Phone className="w-6 h-6" />
                 </div>
                 <div className="space-y-1 min-w-0">
                   <div className="font-bold text-black/70 text-xs uppercase tracking-wider">{t('callUs')}</div>
@@ -161,8 +163,8 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
 
               {/* 5. Email Addresses */}
               <div className="flex items-start space-x-3">
-                <div className="w-9 h-9 rounded-xl bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center shrink-0 border border-[#123B92]/20">
-                  <Mail className="w-5 h-5" />
+                <div className="w-12 h-12 rounded-xl bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center shrink-0 border border-[#123B92]/20">
+                  <Mail className="w-6 h-6" />
                 </div>
                 <div className="space-y-0.5 min-w-0">
                   <div className="font-bold text-black/70 text-xs uppercase tracking-wider">{t('emailUs')}</div>
@@ -198,7 +200,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
 
             {submitted ? (
               <div className="p-6 rounded-2xl bg-[#F0F4FD] border-2 border-[#23AC39] text-center space-y-3">
-                <CheckCircle2 className="w-10 h-10 text-[#002DC2] mx-auto" />
+                <CheckCircle2 className="w-12 h-12 text-[#002DC2] mx-auto" />
                 <h4 className="text-lg font-bold text-[#123B92]">{t('common_contact_thanksTitle')}</h4>
                 <p className="text-sm text-black/70">
                   {t('common_contact_thanksDesc')}
@@ -308,15 +310,15 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
       <section className="bg-[#F0F4FD] p-6 rounded-2xl border border-[#123B92]/20 shadow-sm">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
           <div className="flex items-center justify-center gap-2 text-sm font-bold text-[#123B92]">
-            <ShieldCheck className="w-5 h-5 shrink-0 text-[#002DC2]" />
+            <Landmark className="w-5 h-5 shrink-0 text-[#002DC2]" />
             <span className="text-balance">{t('support1')}</span>
           </div>
           <div className="flex items-center justify-center gap-2 text-sm font-bold text-[#123B92]">
-            <CheckCircle2 className="w-5 h-5 shrink-0 text-[#002DC2]" />
+            <Droplets className="w-5 h-5 shrink-0 text-[#002DC2]" />
             <span className="text-balance">{t('support2')}</span>
           </div>
           <div className="flex items-center justify-center gap-2 text-sm font-bold text-[#123B92]">
-            <Building2 className="w-5 h-5 shrink-0 text-[#002DC2]" />
+            <Wrench className="w-5 h-5 shrink-0 text-[#002DC2]" />
             <span className="text-balance">{t('support3')}</span>
           </div>
         </div>

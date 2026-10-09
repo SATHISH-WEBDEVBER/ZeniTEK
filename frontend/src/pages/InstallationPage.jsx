@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MapPin, ShieldCheck, ArrowRight, Video, Image as ImageIcon } from 'lucide-react';
+import { MapPin, ShieldCheck, ArrowRight, Video, Image as ImageIcon, BadgeCheck } from 'lucide-react';
 import { activeLocationsData } from '../data/mapLocationsData';
-import PageBackBar from '../components/PageBackBar';
+import { usePageTitle } from '../components/SiteHeader';
 import { buildQuoteUrl } from './QuotePage';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -31,6 +31,8 @@ export default function InstallationPage() {
     return () => { cancelled = true; };
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  usePageTitle(project?.title);
+
   if (loading) {
     return <section className="w-full py-24 text-center text-slate-500 font-semibold">{t('gallery_instLoading')}</section>;
   }
@@ -42,7 +44,7 @@ export default function InstallationPage() {
           <h1 className="text-3xl font-black text-[#123B92]">{t('gallery_instNotFound')}</h1>
           <p className="text-slate-600">{t('gallery_instNotFoundDesc')}</p>
           <Link to="/" className="inline-flex items-center gap-2 px-6 py-3 bg-[#23AC39] text-white font-black text-sm uppercase tracking-wider rounded-xl">
-            {t('notFoundHome')} <ArrowRight className="w-4 h-4" />
+            {t('notFoundHome')} <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </section>
@@ -57,15 +59,13 @@ export default function InstallationPage() {
     <div className="bg-white">
       <section className="w-full py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <PageBackBar crumbs={[{ label: t('gallery_crumbInstallations') }, { label: project.title }]} fallback="/" />
-
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="text-xs font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3.5 py-1.5 rounded-full inline-block">
               {t('gallery_instBadge')}
             </span>
             <h1 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{project.title}</h1>
             <p className="text-base sm:text-lg font-semibold text-slate-600 inline-flex items-center justify-center gap-1.5">
-              <MapPin className="w-4 h-4 text-[#002DC2] shrink-0" /> {project.locationName}
+              <MapPin className="w-5 h-5 text-[#002DC2] shrink-0" /> {project.locationName}
             </p>
           </div>
 
@@ -78,7 +78,7 @@ export default function InstallationPage() {
                   onClick={() => setActiveTab(key)}
                   className={`px-4 py-2 rounded-xl text-sm font-bold border transition-all inline-flex items-center gap-1.5 cursor-pointer ${activeTab === key ? 'bg-[#002DC2] text-white border-[#002DC2]' : 'bg-white text-[#123B92] border-[#123B92]/25 hover:border-[#002DC2]'}`}
                 >
-                  <Icon className="w-4 h-4" /> {label}
+                  <Icon className="w-5 h-5" /> {label}
                 </button>
               ))}
             </div>
@@ -138,7 +138,7 @@ export default function InstallationPage() {
                 )}
 
                 <div className="flex items-center gap-2 text-sm font-bold text-[#123B92] bg-[#F0F4FD] p-3 rounded-xl border border-[#123B92]/20">
-                  <ShieldCheck className="w-4 h-4 text-[#002DC2] shrink-0" />
+                  <BadgeCheck className="w-5 h-5 text-[#002DC2] shrink-0" />
                   <span>{t('gallery_mnreCertified')}</span>
                 </div>
 
@@ -147,7 +147,7 @@ export default function InstallationPage() {
                   className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md transition-all text-center"
                 >
                   <span>{t('enquireSetup')}</span>
-                  <ArrowRight className="w-4 h-4 shrink-0" />
+                  <ArrowRight className="w-5 h-5 shrink-0" />
                 </Link>
               </div>
             </div>

@@ -3,12 +3,11 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { zenitekRealGallery } from '../data/zenitekRealGalleryData';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
-import { 
-  ArrowLeft, MapPin, CheckCircle2, ShieldCheck, Sun, Zap, 
-  Layers, Maximize2, Share2, PhoneCall, MessageCircle, 
-  ChevronRight, Calendar, Sparkles, SlidersHorizontal, Info, Award
+import {
+  ArrowLeft, MapPin, CheckCircle2, ShieldCheck, Sun, Zap, Layers, Maximize2, Share2, PhoneCall, MessageCircle, ChevronRight, Calendar, Sparkles, SlidersHorizontal, Info, Award, X, BadgeCheck, CalendarCheck, Calculator
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { usePageTitle } from '../components/SiteHeader';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 
 // Keep short parenthetical notes like "(with casters)" from splitting across lines
@@ -41,6 +40,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
   const { t, tf } = useLanguage();
 
   const item = zenitekRealGallery.find((p) => p.id === id) || zenitekRealGallery[0];
+  usePageTitle(item?.title);
   const [activeImage, setActiveImage] = useState(item.image);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -92,33 +92,18 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       
-      {/* BREADCRUMBS & TOP NAV (not a content section) */}
-      <div className="bg-white border-b border-slate-200 py-4">
+      {/* Share bar (breadcrumb + Back live in the global page header) */}
+      <div className="pt-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex items-center min-w-0 space-x-2 text-xs font-semibold text-slate-500 py-1">
-              <Link to="/" className="hover:text-[#002DC2] whitespace-nowrap shrink-0">{t('navHome')}</Link>
-              <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-              <Link to="/gallery" className="hover:text-[#002DC2] whitespace-nowrap shrink-0">{t('gallery_breadcrumb')}</Link>
-              <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-              <span className="text-[#002DC2] font-bold truncate min-w-0 max-w-xs" title={item.title}>{item.title}</span>
-            </div>
-
+          <div className="flex justify-end">
             <div className="flex items-center space-x-3 shrink-0">
               <button
                 onClick={handleShare}
                 className="px-3.5 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-100 flex items-center space-x-1.5 transition-all shadow-sm"
               >
-                <Share2 className="w-3.5 h-3.5 text-slate-600" />
+                <Share2 className="w-4 h-4 text-slate-600" />
                 <span>{copied ? t('gallery_linkCopied') : t('gallery_shareSite')}</span>
               </button>
-              <Link
-                to="/gallery"
-                className="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-[#123B92] flex items-center space-x-1.5 transition-all"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span>{t('gallery_allInstallations')}</span>
-              </Link>
             </div>
           </div>
         </div>
@@ -145,7 +130,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
             </h1>
             <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-base sm:text-lg font-bold text-[#002DC2]">
               <span className="inline-flex items-start min-w-0">
-                <MapPin className="w-4 h-4 mr-1.5 mt-1 text-[#002DC2] shrink-0" />
+                <MapPin className="w-5 h-5 mr-1.5 mt-1 text-[#002DC2] shrink-0" />
                 <span className="text-balance">{item.location}, {item.state}</span>
               </span>
               <span className="text-xs text-slate-500 font-mono whitespace-nowrap">
@@ -174,7 +159,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                     <span className="font-bold text-xs hidden sm:inline">{t('gallery_zoomPhoto')}</span>
                   </div>
                   <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md text-white px-3 py-1.5 rounded-xl text-xs flex items-center space-x-2">
-                    <ShieldCheck className="w-4 h-4 text-[#23AC39]" />
+                    <BadgeCheck className="w-4 h-4 text-[#23AC39]" />
                     <span className="font-bold text-xs">{t('gallery_authenticSite')}</span>
                   </div>
                 </div>
@@ -209,7 +194,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
               <div className="bg-[#F0F4FD] p-5 rounded-3xl border border-[#123B92]/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="space-y-1">
                   <div className="text-xs font-bold text-[#002DC2] uppercase tracking-wider flex items-center">
-                    <Award className="w-4 h-4 mr-1.5 text-[#002DC2]" />
+                    <CalendarCheck className="w-4 h-4 mr-1.5 text-[#002DC2]" />
                     {t('gallery_commissionedDetails')}
                   </div>
                   <div className="text-base font-extrabold text-[#123B92] leading-snug">
@@ -313,7 +298,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                     })}
                     className="w-full py-3.5 bg-[#002DC2] hover:bg-[#123B92] text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-lg transition-all hover:scale-[1.01] flex items-center justify-center gap-2 px-4 text-center cursor-pointer"
                   >
-                    <SlidersHorizontal className="w-4 h-4 shrink-0" />
+                    <Calculator className="w-4 h-4 shrink-0" />
                     <span className="text-balance">{t('gallery_quoteForModel')}</span>
                   </button>
 
@@ -342,7 +327,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <span className="text-xs font-bold text-[#002DC2] uppercase tracking-widest bg-[#F0F4FD] px-3 py-1 rounded-full border border-[#002DC2]/20 inline-flex items-center">
-              <MapPin className="w-3.5 h-3.5 mr-1 text-[#002DC2]" /> {t('gallery_mapBadge')}
+              <MapPin className="w-4 h-4 mr-1 text-[#002DC2]" /> {t('gallery_mapBadge')}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               {t('gallery_mapTitle', { place: `${item.location}, ${item.state}` })}
@@ -402,7 +387,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                     className="whitespace-nowrap text-sm font-bold text-[#002DC2] hover:underline inline-flex items-center gap-1"
                   >
                     <span>{t('gallery_viewAllSites', { count: zenitekRealGallery.length })}</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
+                    <ChevronRight className="w-4 h-4" />
                   </Link>
                 </div>
               </div>
@@ -428,7 +413,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
 
                       <div className="p-4 space-y-2">
                         <div className="flex items-start text-xs text-[#002DC2] font-bold leading-snug">
-                          <MapPin className="w-3.5 h-3.5 mr-1 mt-px shrink-0" />
+                          <MapPin className="w-4 h-4 mr-1 mt-px shrink-0" />
                           <span>{rel.location}, {rel.state}</span>
                         </div>
                         <h4 className="text-lg font-extrabold text-[#123B92] group-hover:text-[#002DC2] transition-colors line-clamp-2">
@@ -439,7 +424,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
 
                     <div className="p-4 pt-0 text-xs text-[#002DC2] font-bold flex items-center justify-between border-t border-slate-100">
                       <span>{t('gallery_viewSpecs')}</span>
-                      <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                      <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </Link>
                 ))}
@@ -469,9 +454,9 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
             <button
               type="button"
               onClick={() => setLightboxOpen(false)}
-              className="absolute -top-10 right-0 text-white font-bold text-sm bg-white/20 hover:bg-white/40 px-3 py-1 rounded-full cursor-pointer"
+              className="absolute -top-10 right-0 inline-flex items-center gap-1.5 text-white font-bold text-sm bg-white/20 hover:bg-white/40 px-3 py-1 rounded-full cursor-pointer"
             >
-              ✕ {t('close')}
+              <X className="w-4 h-4" /> {t('close')}
             </button>
           </div>
         </div>

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import SectionDividers from './components/SectionDividers';
+import SiteHeader, { PageTitleProvider } from './components/SiteHeader';
 
 import HomePage from './pages/HomePage';
 import AboutUsPage from './pages/AboutUsPage';
@@ -24,6 +25,17 @@ import DryerModelPage from './pages/DryerModelPage';
 import InstallationPage from './pages/InstallationPage';
 import BrochurePage from './pages/BrochurePage';
 import LegalPage from './pages/LegalPage';
+import ProductsPage from './pages/ProductsPage';
+import MapPage from './pages/MapPage';
+import FarmerStoriesPage from './pages/FarmerStoriesPage';
+import SitemapPage from './pages/SitemapPage';
+import NotFoundPage from './pages/NotFoundPage';
+
+// Old /dryers/:id links keep working by forwarding to the project page
+function LegacyProjectRedirect() {
+  const { id } = useParams();
+  return <Navigate to={`/projects/${id}`} replace />;
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -72,6 +84,7 @@ export default function App() {
 
   return (
     <LanguageProvider>
+      <PageTitleProvider>
       {/* Scroll to Top on route change */}
       <ScrollToTop />
       <SectionDividers />
@@ -91,9 +104,12 @@ export default function App() {
         >
           {/* Main Page Routing */}
           <main className="flex-1">
+            {/* Simple page header (breadcrumb + Back) on every page except Home */}
+            <SiteHeader />
             <Routes>
               <Route path="/" element={<HomePage onOpenQuoteModal={handleOpenQuoteModal} onOpenDetailModal={handleOpenDetailModal} />} />
               <Route path="/about" element={<AboutUsPage onOpenQuoteModal={handleOpenQuoteModal} />} />
+              <Route path="/products" element={<ProductsPage />} />
               
               {/* 7 Solution & Information Categories */}
               <Route path="/solar-dryer-models" element={<SolarDryersPage onOpenQuoteModal={handleOpenQuoteModal} onOpenDetailModal={handleOpenDetailModal} />} />
@@ -104,9 +120,14 @@ export default function App() {
               <Route path="/crop-preservation-guide" element={<SectionDetailPage slug="crop-preservation-guide" onOpenQuoteModal={handleOpenQuoteModal} />} />
               <Route path="/technical-spec-sheets" element={<SectionDetailPage slug="technical-spec-sheets" onOpenQuoteModal={handleOpenQuoteModal} />} />
               
-              {/* Legacy / Direct Routes for Maximum Compatibility */}
-              <Route path="/dryers" element={<SolarDryersPage onOpenQuoteModal={handleOpenQuoteModal} onOpenDetailModal={handleOpenDetailModal} />} />
-              <Route path="/dryers/:id" element={<ProjectDetailPage onOpenQuoteModal={handleOpenQuoteModal} />} />
+              {/* Old addresses forward to their current pages */}
+              <Route path="/dryers" element={<Navigate to="/solar-dryer-models" replace />} />
+              <Route path="/dryers/:id" element={<LegacyProjectRedirect />} />
+              <Route path="/map" element={<Navigate to="/installations" replace />} />
+
+              <Route path="/installations" element={<MapPage onOpenQuoteModal={handleOpenQuoteModal} />} />
+              <Route path="/projects/:id" element={<ProjectDetailPage onOpenQuoteModal={handleOpenQuoteModal} />} />
+              <Route path="/stories" element={<FarmerStoriesPage onOpenQuoteModal={handleOpenQuoteModal} />} />
               <Route path="/applications" element={<ApplicationsPage onOpenQuoteModal={handleOpenQuoteModal} />} />
               <Route path="/gallery" element={<GalleryPage onOpenQuoteModal={handleOpenQuoteModal} />} />
               <Route path="/gallery/:id" element={<GalleryDetailPage onOpenQuoteModal={handleOpenQuoteModal} />} />
@@ -118,7 +139,9 @@ export default function App() {
               <Route path="/brochures/:brochureId" element={<BrochurePage />} />
               <Route path="/privacy" element={<LegalPage type="privacy" />} />
               <Route path="/terms" element={<LegalPage type="terms" />} />
+              <Route path="/sitemap" element={<SitemapPage />} />
               <Route path="/admin" element={<AdminPanel />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>
 
@@ -130,6 +153,7 @@ export default function App() {
         {animStage >= 3 && <WhatsAppWidget />}
 
       </div>
+      </PageTitleProvider>
     </LanguageProvider>
   );
 }

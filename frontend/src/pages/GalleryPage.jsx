@@ -1,18 +1,19 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { zenitekRealGallery } from '../data/zenitekRealGalleryData';
+import { brochures } from '../data/brochuresData';
 import { fetchPublicGallery } from '../utils/api';
 import { 
   Camera, Filter, MapPin, X, ArrowRight, Sun, ZoomIn, ShieldCheck, 
-  Layers, Sparkles, CheckCircle2, SlidersHorizontal, Info, Tag, ExternalLink, Loader
+  Layers, Sparkles, CheckCircle2, SlidersHorizontal, Info, Tag, ExternalLink, Loader, FileText, Download
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 
-const CATEGORY_IDS = ['all', 'tunnel_external', 'tunnel_internal', 'box_dryers', 'trays_produce', 'engineering'];
-// Navbar / legacy aliases -> closest gallery filter. There is no dedicated brochure category,
-// so brochure & spec-sheet links open the engineering & fabrication photos.
-const CATEGORY_ALIASES = { brochure: 'engineering', brochures: 'engineering', specs: 'engineering' };
+const CATEGORY_IDS = ['all', 'tunnel_external', 'tunnel_internal', 'box_dryers', 'trays_produce', 'engineering', 'brochure'];
+// 'brochure' lists the PDF brochures as document cards (real product photo as cover), not as gallery photos.
+// Navbar / legacy aliases -> gallery filter.
+const CATEGORY_ALIASES = { brochures: 'brochure', specs: 'brochure' };
 
 const resolveCategory = (cat) => {
   if (!cat) return 'all';
@@ -101,8 +102,11 @@ export default function GalleryPage({ onOpenQuoteModal }) {
   const categories = CATEGORY_IDS.map(id => ({
     id,
     label: t(`gallery_filter_${id}`),
-    count: id === 'all' ? masterGalleryItems.length : masterGalleryItems.filter(i => i.category === id).length
+    count: id === 'all' ? masterGalleryItems.length
+      : id === 'brochure' ? brochures.length
+      : masterGalleryItems.filter(i => i.category === id).length
   }));
+  const showBrochures = activeCategory === 'brochure';
 
   return (
     <div className="text-black min-h-screen bg-white">
@@ -110,7 +114,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
       {/* SECTION 1: HERO (background photo, left-aligned heading) */}
       <PageHero
         images="/real-photos/zenitek_photo_43.jpeg"
-        badge={<><Camera className="w-3.5 h-3.5 text-[#002DC2]" /><span>{t('gallery_heroBadge')}</span></>}
+        badge={<><Camera className="w-4 h-4 text-[#002DC2]" /><span>{t('gallery_heroBadge')}</span></>}
         title={<>{t('gallery_heroTitle1')} <br /><span className="text-[#002DC2]">{t('gallery_heroTitle2')}</span></>}
         subtitle={t('gallery_heroSubtitle')}
       >
@@ -174,9 +178,58 @@ export default function GalleryPage({ onOpenQuoteModal }) {
             ))}
           </div>
 
-          {apiLoading ? (
+          {showBrochures ? (
+            <div className="space-y-6">
+              <p className="text-center text-sm sm:text-base text-slate-600 max-w-2xl mx-auto">{t('gallery_brochuresIntro')}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+                {brochures.map((b) => (
+                  <div
+                    key={b.id}
+                    className="group bg-white rounded-3xl overflow-hidden border border-[#123B92]/20 shadow-sm hover:shadow-xl hover:border-[#002DC2] transition-all duration-300 flex flex-col"
+                  >
+                    <Link to={`/brochures/${b.id}`} className="relative block aspect-[4/3] overflow-hidden bg-slate-100">
+                      <img
+                        src={b.cover}
+                        alt={b.coverAlt || b.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <span className="absolute top-3 left-3 inline-flex items-center gap-1 bg-[#123B92]/90 text-white text-2xs font-black px-2.5 py-1 rounded-lg shadow-sm">
+                        <FileText className="w-3.5 h-3.5" /> PDF
+                      </span>
+                    </Link>
+                    <div className="p-5 flex flex-col gap-3 flex-1">
+                      <div className="flex items-center justify-between gap-2 text-xs">
+                        <span className={`font-bold px-2 py-0.5 rounded-md border ${b.badgeColor}`}>{tf(`gallery_brochureBadge_${b.id}`, b.badge)}</span>
+                        <span className="text-slate-500 font-semibold">{t('gallery_pagesCount', { count: b.pageCount })} · {b.size}</span>
+                      </div>
+                      <h3 className="text-lg font-black text-[#123B92] leading-snug">{b.title}</h3>
+                      <p className="text-sm text-slate-500 leading-relaxed">{b.subtitle}</p>
+                      <div className="mt-auto pt-3 border-t border-slate-100 flex items-center gap-2">
+                        <Link
+                          to={`/brochures/${b.id}`}
+                          className="flex-1 py-2.5 text-center text-xs font-bold text-white bg-[#002DC2] hover:bg-[#123B92] rounded-xl transition-colors"
+                        >
+                          {t('sections_viewBrochure')}
+                        </Link>
+                        <a
+                          href={b.url}
+                          download={b.downloadName}
+                          title={t('gallery_downloadPdf')}
+                          aria-label={t('gallery_downloadPdf')}
+                          className="p-2.5 text-[#1A822B] bg-[#23AC39]/10 hover:bg-[#23AC39] hover:text-white rounded-xl transition-colors"
+                        >
+                          <Download className="w-4 h-4" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : apiLoading ? (
             <div className="flex flex-col items-center justify-center py-20 space-y-4">
-              <Loader className="w-10 h-10 text-[#002DC2] animate-spin" />
+              <Loader className="w-12 h-12 text-[#002DC2] animate-spin" />
               <p className="text-sm text-black/50 font-medium">{t('gallery_loading')}</p>
             </div>
           ) : filteredItems.length === 0 ? (
@@ -213,7 +266,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
 
                       {/* Map Coordinate Badge */}
                       <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md text-white px-2.5 py-1 rounded-lg text-2xs font-mono flex items-center space-x-1">
-                        <MapPin className="w-3 h-3 text-[#23AC39]" />
+                        <MapPin className="w-4 h-4 text-[#23AC39]" />
                         <span>{item.lat.toFixed(2)}°N, {item.lng.toFixed(2)}°E</span>
                       </div>
                     </div>
@@ -237,7 +290,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                           className="flex items-start min-w-0 min-h-10"
                           title={`${item.location}${item.state ? `, ${item.state}` : ''}`}
                         >
-                          <MapPin className="w-3.5 h-3.5 mr-1 mt-[3px] text-[#002DC2] shrink-0" />
+                          <MapPin className="w-4 h-4 mr-1 mt-[3px] text-[#002DC2] shrink-0" />
                           <span className="line-clamp-2">{item.location}{item.state ? `, ${item.state}` : ''}</span>
                         </div>
                         <div className="flex min-h-[20px]">
@@ -268,10 +321,10 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                     className="px-4 sm:px-5 py-3.5 bg-slate-50 hover:bg-[#F0F4FD] flex items-center justify-between text-xs text-[#002DC2] font-black border-t border-[#123B92]/10 transition-colors"
                   >
                     <span className="flex items-center space-x-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-[#002DC2]" />
+                      <MapPin className="w-4 h-4 text-[#002DC2]" />
                       <span>{t('gallery_viewDetailsMap')}</span>
                     </span>
-                    <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1.5 transition-transform" />
+                    <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform" />
                   </Link>
                 </div>
               ))}

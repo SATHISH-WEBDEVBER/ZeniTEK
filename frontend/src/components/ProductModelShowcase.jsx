@@ -17,8 +17,7 @@ export const teslaDryerProducts = [
       "/real-photos/zenitek_photo_34.jpeg",
       "/real-photos/zenitek_photo_10.jpeg",
       "/real-photos/zenitek_photo_02.jpeg",
-      "/real-photos/zenitek_photo_38.jpeg",
-      "/pdf-products/brochure_p1.png"
+      "/real-photos/zenitek_photo_38.jpeg"
     ]
   },
   {
@@ -35,9 +34,7 @@ export const teslaDryerProducts = [
       "/real-photos/zenitek_photo_19.jpeg",
       "/real-photos/zenitek_photo_20.jpeg",
       "/real-photos/zenitek_photo_23.jpeg",
-      "/real-photos/zenitek_photo_33.jpeg",
-      "/pdf-products/brochure_p2.png",
-      "/pdf-products/brochure_p3.png"
+      "/real-photos/zenitek_photo_33.jpeg"
     ]
   },
   {
@@ -55,8 +52,7 @@ export const teslaDryerProducts = [
       "/real-photos/zenitek_photo_31.jpeg",
       "/real-photos/zenitek_photo_35.jpeg",
       "/real-photos/zenitek_photo_36.jpeg",
-      "/real-photos/zenitek_photo_28.jpeg",
-      "/pdf-products/brochure_p6.png"
+      "/real-photos/zenitek_photo_28.jpeg"
     ]
   },
   {
@@ -73,8 +69,7 @@ export const teslaDryerProducts = [
       "/real-photos/zenitek_photo_42.jpeg",
       "/real-photos/zenitek_photo_32.jpeg",
       "/real-photos/zenitek_photo_40.jpeg",
-      "/real-photos/zenitek_photo_41.jpeg",
-      "/pdf-products/brochure_p9.png"
+      "/real-photos/zenitek_photo_41.jpeg"
     ]
   },
   {
@@ -91,8 +86,7 @@ export const teslaDryerProducts = [
       "/real-photos/zenitek_photo_13.jpeg",
       "/real-photos/zenitek_photo_15.jpeg",
       "/real-photos/zenitek_photo_16.jpeg",
-      "/real-photos/zenitek_photo_14.jpeg",
-      "/pdf-products/brochure_p5.png"
+      "/real-photos/zenitek_photo_14.jpeg"
     ]
   },
   {
@@ -109,8 +103,7 @@ export const teslaDryerProducts = [
       "/real-photos/zenitek_photo_06.jpeg",
       "/real-photos/zenitek_photo_37.jpeg",
       "/real-photos/zenitek_photo_29.jpeg",
-      "/real-photos/zenitek_photo_30.jpeg",
-      "/pdf-products/brochure_p4.png"
+      "/real-photos/zenitek_photo_30.jpeg"
     ]
   }
 ];

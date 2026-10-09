@@ -6,8 +6,9 @@ import MapComponent from '../components/MapComponent';
 import { sampleReviews } from '../data/sampleData';
 import { useLanguage } from '../context/LanguageContext';
 import {
-  Sun, ShieldCheck, Award, ArrowRight, Zap, ChevronRight, ChevronLeft, MapPin, Sprout, Cpu, Sparkles
+  Sun, ShieldCheck, Award, ArrowRight, Zap, ChevronRight, ChevronLeft, MapPin, Sprout, Cpu, Sparkles, Star, Microscope, ThermometerSun, PanelTop, BadgeCheck, Landmark
 } from 'lucide-react';
+import IconTile from '../components/IconTile';
 
 // Real ZeniTEK installation photos (no AI renders, no baked-in text)
 const heroSlides = [
@@ -23,10 +24,10 @@ const crops = [
 ];
 
 const pillars = [
-  { key: 'homePillarThermal', Icon: Zap },
+  { key: 'homePillarThermal', Icon: ThermometerSun },
   { key: 'homePillarAgri', Icon: Sprout },
-  { key: 'homePillarPV', Icon: Cpu },
-  { key: 'homePillarRnd', Icon: Sparkles },
+  { key: 'homePillarPV', Icon: PanelTop },
+  { key: 'homePillarRnd', Icon: Microscope },
 ];
 
 const clientPartners = [
@@ -103,7 +104,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
           aria-label={t('common_home_prevSlide')}
           className="absolute left-2 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/90 hover:bg-white text-slate-800 hover:text-[#123B92] border border-slate-200/90 shadow-xl hidden sm:flex items-center justify-center transition-all active:scale-90 cursor-pointer"
         >
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+          <ChevronLeft className="w-6 h-6" />
         </button>
 
         <button
@@ -111,7 +112,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
           aria-label={t('common_home_nextSlide')}
           className="absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/90 hover:bg-white text-slate-800 hover:text-[#123B92] border border-slate-200/90 shadow-xl hidden sm:flex items-center justify-center transition-all active:scale-90 cursor-pointer"
         >
-          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          <ChevronRight className="w-6 h-6" />
         </button>
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-20">
@@ -140,7 +141,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                 <ArrowRight className="w-4 h-4" />
               </a>
               <Link
-                to="/dryers"
+                to="/solar-dryer-models"
                 className="px-6 py-3.5 sm:px-8 sm:py-4 bg-white hover:bg-slate-50 border-2 border-[#123B92] text-[#123B92] font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl transition-all flex items-center justify-center space-x-2 shadow-md active:scale-95"
               >
                 <span>{t('exploreModels')}</span>
@@ -188,12 +189,12 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
             {[
-              { Icon: ShieldCheck, key: 'mnreBadge' },
+              { Icon: BadgeCheck, key: 'mnreBadge' },
               { Icon: Award, key: 'isoBadge' },
-              { Icon: Zap, key: 'subsidyBadge2' },
+              { Icon: Landmark, key: 'subsidyBadge2' },
             ].map(({ Icon, key }) => (
               <div key={key} className="flex items-center space-x-3 px-5 py-4 bg-white rounded-2xl border border-slate-200/90">
-                <Icon className="w-6 h-6 text-[#123B92] stroke-[1.8] shrink-0" />
+                <IconTile icon={Icon} size="md" />
                 <span className="text-sm font-bold text-[#123B92] leading-snug">{t(key)}</span>
               </div>
             ))}
@@ -248,7 +249,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('whatCanYouDry')}</h2>
             <Link to="/applications" className="text-sm font-bold text-[#002DC2] hover:underline inline-flex items-center justify-center">
-              {t('viewAllCrops')} <ArrowRight className="w-4 h-4 ml-1" />
+              {t('viewAllCrops')} <ArrowRight className="w-5 h-5 ml-1" />
             </Link>
           </div>
 
@@ -294,7 +295,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
               <div className="flex flex-wrap gap-2.5">
                 {pillars.map(({ key, Icon }) => (
                   <span key={key} className="inline-flex items-center gap-2 px-3.5 py-2 bg-white rounded-xl border border-slate-200 text-sm font-bold text-[#123B92]">
-                    <Icon className="w-4 h-4 text-[#002DC2]" />
+                    <Icon className="w-5 h-5 text-[#002DC2]" />
                     {t(key)}
                   </span>
                 ))}
@@ -305,7 +306,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                 className="inline-flex items-center space-x-2 px-6 py-3.5 bg-[#002DC2] hover:bg-[#123B92] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md transition-all"
               >
                 <span>{t('homeAboutCta')}</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
 
@@ -361,14 +362,16 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
             {sampleReviews.map(rev => (
               <div key={rev._id} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between gap-4">
                 <div className="space-y-3">
-                  <div className="text-[#23AC39]">{'★'.repeat(rev.rating || 5)}</div>
+                  <div className="flex items-center gap-1 text-[#23AC39]" aria-label={`${rev.rating || 5}/5`}>
+                    {Array.from({ length: rev.rating || 5 }, (_, i) => <Star key={i} className="w-5 h-5 fill-current" />)}
+                  </div>
                   <p className="text-sm text-slate-700 leading-relaxed italic">"{tf(`common_review_${rev._id}_comment`, rev.comment)}"</p>
                 </div>
                 <div className="pt-3 border-t border-slate-200">
                   <h4 className="text-lg font-extrabold text-[#123B92]">{rev.name}</h4>
                   <div className="text-xs font-semibold text-[#1A822B]">{tf(`common_review_${rev._id}_role`, rev.role)}</div>
                   <div className="text-xs text-slate-400 flex items-center mt-0.5">
-                    <MapPin className="w-3 h-3 mr-0.5" /> {rev.location}
+                    <MapPin className="w-4 h-4 mr-0.5" /> {rev.location}
                   </div>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { cropMatrixData } from '../data/sampleData';
-import { Layers, ArrowRight, ShieldCheck, Search, Users, Building, Sprout } from 'lucide-react';
+import { ArrowRight, Search, Users, Ship, Sprout, Wheat, Fish, Factory, Nut, Leaf, Flame, Shell, Trees } from 'lucide-react';
+import IconTile from '../components/IconTile';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 
@@ -25,17 +26,13 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
         .some(text => text.toLowerCase().includes(query))
     );
 
-  // Tab labels start with an emoji; render it larger so it stays legible next to the xs text.
-  const renderTabLabel = (label) => {
-    const match = label.match(/^(\p{Extended_Pictographic}\uFE0F?)\s*(.*)$/u);
-    if (!match) return label;
-    return (
-      <>
-        <span className="text-base leading-none" aria-hidden="true">{match[1]}</span>
-        <span className="text-balance">{match[2]}</span>
-      </>
-    );
-  };
+  // Tab labels: the translated text may start with an emoji; drop it and show the tab's lucide icon instead.
+  const renderTabLabel = (label, Icon) => (
+    <>
+      <Icon className="w-5 h-5" />
+      <span className="text-balance">{label.replace(/^\p{Extended_Pictographic}\uFE0F?\s*/u, '')}</span>
+    </>
+  );
 
   return (
     <div className="text-black min-h-screen bg-white">
@@ -66,47 +63,47 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
               onClick={() => setActiveTab('agri')}
               className={`inline-flex items-center gap-2 max-w-full px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold text-left transition-all cursor-pointer ${activeTab === 'agri' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#23AC39]' : 'bg-white text-[#123B92] hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
             >
-              {renderTabLabel(t('tabAgri'))}
+              {renderTabLabel(t('tabAgri'), Wheat)}
             </button>
             <button
               onClick={() => setActiveTab('marine')}
               className={`inline-flex items-center gap-2 max-w-full px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold text-left transition-all cursor-pointer ${activeTab === 'marine' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#23AC39]' : 'bg-white text-[#123B92] hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
             >
-              {renderTabLabel(t('tabMarine'))}
+              {renderTabLabel(t('tabMarine'), Fish)}
             </button>
             <button
               onClick={() => setActiveTab('industrial')}
               className={`inline-flex items-center gap-2 max-w-full px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold text-left transition-all cursor-pointer ${activeTab === 'industrial' ? 'bg-[#002DC2] text-white shadow ring-2 ring-[#23AC39]' : 'bg-white text-[#123B92] hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/30'}`}
             >
-              {renderTabLabel(t('tabIndustrial'))}
+              {renderTabLabel(t('tabIndustrial'), Factory)}
             </button>
           </div>
           {activeTab === 'agri' && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
-                <div className="text-3xl">🥥</div>
+                <IconTile icon={Nut} tone="green" />
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropCopra')}</h3>
                 <p className="text-sm text-black leading-relaxed">{t('common_apps_copraDesc')}</p>
                 <button onClick={() => onOpenQuoteModal({ cropType: 'Copra/Coconut' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
-                  {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
+                  {t('enquireSetup')} <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
 
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
-                <div className="text-3xl">🌿</div>
+                <IconTile icon={Leaf} tone="green" />
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropMoringa')}</h3>
                 <p className="text-sm text-black leading-relaxed">{t('common_apps_moringaDesc')}</p>
                 <button onClick={() => onOpenQuoteModal({ cropType: 'Moringa/Herbs' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
-                  {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
+                  {t('enquireSetup')} <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
 
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
-                <div className="text-3xl">🌶️</div>
+                <IconTile icon={Flame} tone="green" />
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropSpices')}</h3>
                 <p className="text-sm text-black leading-relaxed">{t('common_apps_spicesDesc')}</p>
                 <button onClick={() => onOpenQuoteModal({ cropType: 'Spices/Chillies' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
-                  {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
+                  {t('enquireSetup')} <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
             </div>
@@ -115,20 +112,20 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
           {activeTab === 'marine' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
-                <div className="text-3xl">🐟</div>
+                <IconTile icon={Fish} tone="blue" />
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropFish')}</h3>
                 <p className="text-sm text-black leading-relaxed">{t('common_apps_fishDesc')}</p>
                 <button onClick={() => onOpenQuoteModal({ cropType: 'Fish/Seafood' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
-                  {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
+                  {t('enquireSetup')} <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
 
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
-                <div className="text-3xl">🦐</div>
+                <IconTile icon={Shell} tone="blue" />
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropFish')}</h3>
                 <p className="text-sm text-black leading-relaxed">{t('common_apps_shrimpDesc')}</p>
                 <button onClick={() => onOpenQuoteModal({ cropType: 'Fish/Seafood' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
-                  {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
+                  {t('enquireSetup')} <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
             </div>
@@ -137,20 +134,20 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
           {activeTab === 'industrial' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
-                <div className="text-3xl">🏭</div>
+                <IconTile icon={Factory} tone="navy" />
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropOther')}</h3>
                 <p className="text-sm text-black leading-relaxed">{t('common_apps_sludgeDesc')}</p>
                 <button onClick={() => onOpenQuoteModal({ clientType: 'Industrial/Sludge Processor' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
-                  {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
+                  {t('enquireSetup')} <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
 
               <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
-                <div className="text-3xl">🪵</div>
+                <IconTile icon={Trees} tone="navy" />
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropOther')}</h3>
                 <p className="text-sm text-black leading-relaxed">{t('common_apps_timberDesc')}</p>
                 <button onClick={() => onOpenQuoteModal({ clientType: 'Industrial/Sludge Processor' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
-                  {t('enquireSetup')} <ArrowRight className="w-3 h-3 ml-1" />
+                  {t('enquireSetup')} <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
             </div>
@@ -168,7 +165,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
 
           <div className="flex justify-center">
             <div className="relative w-full sm:w-64">
-              <Search className="w-4 h-4 text-black/40 absolute left-3 top-3" />
+              <Search className="w-5 h-5 text-black/40 absolute left-3 top-3" />
               <input
                 type="text"
                 placeholder={t('searchPlaceholder')}
@@ -220,7 +217,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
-              <Users className="w-8 h-8 text-[#002DC2]" />
+              <IconTile icon={Users} />
               <h3 className="text-xl font-bold text-[#123B92]">{t('personaFpoTitle')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('personaFpoDesc')}</p>
               <button onClick={() => onOpenQuoteModal({ clientType: 'FPO / Cooperative Group' })} className="text-xs font-bold text-[#002DC2] hover:underline cursor-pointer">
@@ -229,7 +226,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
             </div>
 
             <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
-              <Building className="w-8 h-8 text-[#123B92]" />
+              <IconTile icon={Ship} tone="navy" />
               <h3 className="text-xl font-bold text-[#123B92]">{t('personaExpTitle')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('personaExpDesc')}</p>
               <button onClick={() => onOpenQuoteModal({ clientType: 'Food Processor & Exporter' })} className="text-xs font-bold text-[#002DC2] hover:underline cursor-pointer">
@@ -238,7 +235,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
             </div>
 
             <div className="bg-white p-6 rounded-2xl border border-[#123B92]/20 shadow-sm space-y-3">
-              <Sprout className="w-8 h-8 text-[#002DC2]" />
+              <IconTile icon={Sprout} tone="green" />
               <h3 className="text-xl font-bold text-[#123B92]">{t('personaFarmerTitle')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('personaFarmerDesc')}</p>
               <button onClick={() => onOpenQuoteModal({ clientType: 'Individual Farmer' })} className="text-xs font-bold text-[#002DC2] hover:underline cursor-pointer">

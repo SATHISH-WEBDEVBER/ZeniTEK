@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  Sparkles, 
-  ShieldCheck, 
-  Zap, 
-  Layers, 
-  CheckCircle2, 
-  ArrowRight 
+import {
+  ChevronLeft, ChevronRight, Sparkles, ShieldCheck, Zap, Layers, CheckCircle2, ArrowRight, TrendingUp, Weight, Timer, Leaf
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -266,7 +259,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
             aria-label={t('common_prevProduct')}
             className="absolute left-2.5 top-24 sm:top-1/2 sm:-translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/85 hover:bg-white text-slate-800 shadow-md flex items-center justify-center transition-all active:scale-90 cursor-pointer"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-5 h-5" />
           </button>
 
           <button
@@ -274,7 +267,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
             aria-label={t('common_nextProduct')}
             className="absolute right-2.5 top-24 sm:top-1/2 sm:-translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/85 hover:bg-white text-slate-800 shadow-md flex items-center justify-center transition-all active:scale-90 cursor-pointer"
           >
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-5 h-5" />
           </button>
 
           {/* Bottom Overlay Content */}
@@ -301,7 +294,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
             <div className="flex flex-wrap items-center gap-1.5 pt-1 border-t border-white/20">
               {activeSlide.features.map((feat, i) => (
                 <span key={i} className="text-2xs text-white/90 bg-white/10 backdrop-blur-sm px-2 py-0.5 rounded flex items-center">
-                  <CheckCircle2 className="w-2.5 h-2.5 text-[#23AC39] mr-1 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#23AC39] mr-1 shrink-0" />
                   {st(activeSlide, `f${i + 1}`)}
                 </span>
               ))}
@@ -333,7 +326,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
           {/* Header */}
           <div className="pb-2.5 border-b border-slate-100">
             <span className="text-2xs font-black text-[#002DC2] uppercase tracking-wider bg-[#F0F4FD] border border-[#002DC2]/20 px-3 py-1 rounded-full inline-flex items-center">
-              <Sparkles className="w-3.5 h-3.5 mr-1.5 text-[#002DC2]" /> {t('common_roi_metricsBadge')}
+              <TrendingUp className="w-4 h-4 mr-1.5 text-[#002DC2]" /> {t('common_roi_metricsBadge')}
             </span>
             <h3 className="text-xl font-black text-[#123B92] leading-snug mt-1.5">
               {t('common_roi_metricsTitle')}
@@ -352,7 +345,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
             <div className="p-2.5 sm:p-3 bg-[#F0F4FD] rounded-xl border border-[#123B92]/20 shadow-sm hover:border-[#002DC2]/50 transition-colors">
               <div className="flex items-center space-x-2">
                 <div className="w-6 h-6 rounded-lg bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center shrink-0">
-                  <Layers className="w-3.5 h-3.5" />
+                  <Weight className="w-4 h-4" />
                 </div>
                 <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">
                   {t('common_roi_lblLoading')}
@@ -370,7 +363,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
             <div className="p-2.5 sm:p-3 bg-white rounded-xl border border-slate-200/90 shadow-sm hover:border-[#23AC39]/60 transition-colors">
               <div className="flex items-center space-x-2">
                 <div className="w-6 h-6 rounded-lg bg-[#23AC39]/10 text-[#23AC39] flex items-center justify-center shrink-0">
-                  <Zap className="w-3.5 h-3.5" />
+                  <Timer className="w-4 h-4" />
                 </div>
                 <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">
                   {t('common_roi_lblSpeed')}
@@ -388,7 +381,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
             <div className="p-2.5 sm:p-3 bg-[#F0F4FD] rounded-xl border border-[#123B92]/20 shadow-sm hover:border-[#002DC2]/50 transition-colors">
               <div className="flex items-center space-x-2">
                 <div className="w-6 h-6 rounded-lg bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center shrink-0">
-                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <ShieldCheck className="w-4 h-4" />
                 </div>
                 <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">
                   {t('common_roi_lblHygiene')}
@@ -406,7 +399,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
             <div className="p-2.5 sm:p-3 bg-white rounded-xl border border-slate-200/90 shadow-sm hover:border-[#23AC39] transition-colors">
               <div className="flex items-center space-x-2">
                 <div className="w-6 h-6 rounded-lg bg-[#F0F4FD] text-[#002DC2] flex items-center justify-center shrink-0">
-                  <Sparkles className="w-3.5 h-3.5" />
+                  <Leaf className="w-4 h-4" />
                 </div>
                 <div className="text-2xs font-black text-slate-500 uppercase tracking-wider">
                   {t('common_roi_lblRetention')}
@@ -428,7 +421,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
               className="w-full py-2.5 px-3 sm:px-4 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-normal sm:tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer active:scale-[0.98]"
             >
               <span>{t('common_roi_cta')}</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-4 h-4" />
             </button>
           </div>
 

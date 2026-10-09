@@ -8,9 +8,7 @@ import { brochures } from '../data/brochuresData';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import PageHero from '../components/PageHero';
 import {
-  Sun, Zap, ShieldCheck, ArrowRight, CheckCircle2, FileText,
-  Download, HelpCircle, PhoneCall, Sparkles, Building, Layers,
-  Calculator, Sprout, Cpu, ChevronRight, ChevronDown, Eye, X, AlertCircle, Loader
+  Sun, Zap, ShieldCheck, ArrowRight, CheckCircle2, FileText, Download, HelpCircle, PhoneCall, Sparkles, Building, Layers, Calculator, Sprout, Cpu, ChevronRight, ChevronDown, Eye, X, AlertCircle, Loader, Lightbulb, MessageCircle, BadgeCheck, PiggyBank
 } from 'lucide-react';
 
 // Hero background photo per slug (overrides the DB thumbnail, some of which are unsuitable as a backdrop)
@@ -150,7 +148,7 @@ function WrapSelect({ value, onChange, options, ariaLabel }) {
       <div aria-hidden="true" className="pl-4 pr-10 py-3 text-white text-sm leading-snug">
         {label}
       </div>
-      <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/80 pointer-events-none" />
+      <ChevronDown className="w-5 h-5 absolute right-3.5 top-1/2 -translate-y-1/2 text-white/80 pointer-events-none" />
       <select
         value={value}
         onChange={onChange}
@@ -226,7 +224,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
   if (loading) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center bg-white py-20">
-        <Loader className="w-10 h-10 text-[#002DC2] animate-spin mb-4" />
+        <Loader className="w-12 h-12 text-[#002DC2] animate-spin mb-4" />
         <p className="text-slate-600 font-bold text-sm">{t('sections_loading')}</p>
       </div>
     );
@@ -317,15 +315,15 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
         top={
           <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold text-slate-600">
             <Link to="/" className="hover:text-[#002DC2] transition-colors">{t('navHome')}</Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+            <ChevronRight className="w-4 h-4 text-slate-400" />
             <span className="text-slate-500">{t('navbar_products')}</span>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+            <ChevronRight className="w-4 h-4 text-slate-400" />
             <span className="text-[#002DC2] font-bold">{sectionTitle}</span>
           </nav>
         }
         badge={
           <>
-            <Sparkles className="w-3.5 h-3.5 text-[#002DC2] shrink-0" />
+            <Lightbulb className="w-4 h-4 text-[#002DC2] shrink-0" />
             <span>{t('sections_solutionBadge')}</span>
           </>
         }
@@ -341,7 +339,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
               className="px-6 py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold rounded-xl shadow-lg shadow-[#23AC39]/25 hover:shadow-xl transition-all flex items-center justify-center space-x-2 cursor-pointer active:scale-95"
             >
               <span>{t('sections_quoteDpr')}</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-5 h-5" />
             </button>
 
             <a
@@ -350,7 +348,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
               rel="noopener noreferrer"
               className="px-5 py-3 bg-white border border-slate-300 hover:border-[#002DC2] text-[#123B92] hover:text-[#002DC2] font-bold rounded-xl transition-all shadow-sm flex items-center justify-center space-x-2"
             >
-              <PhoneCall className="w-4 h-4 text-[#23AC39]" />
+              <MessageCircle className="w-5 h-5 text-[#23AC39]" />
               <span>{t('sections_waEnquiry')}</span>
             </a>
           </>
@@ -359,15 +357,15 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
         {/* Highlights Micro Badges */}
         <div className="flex flex-wrap gap-2">
           <span className="inline-flex items-center text-xs font-semibold text-slate-700 bg-white/90 border border-slate-200 shadow-sm px-3 py-1 rounded-lg">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#23AC39] mr-1.5" />
+            <BadgeCheck className="w-4 h-4 text-[#23AC39] mr-1.5" />
             {t('sections_badgeMnre')}
           </span>
           <span className="inline-flex items-center text-xs font-semibold text-slate-700 bg-white/90 border border-slate-200 shadow-sm px-3 py-1 rounded-lg">
-            <Sun className="w-3.5 h-3.5 text-[#23AC39] mr-1.5" />
+            <Sun className="w-4 h-4 text-[#23AC39] mr-1.5" />
             {t('sections_badgeSolar')}
           </span>
           <span className="inline-flex items-center text-xs font-semibold text-slate-700 bg-white/90 border border-slate-200 shadow-sm px-3 py-1 rounded-lg">
-            <Zap className="w-3.5 h-3.5 text-[#002DC2] mr-1.5" />
+            <PiggyBank className="w-4 h-4 text-[#002DC2] mr-1.5" />
             {t('sections_badgeZeroBill')}
           </span>
         </div>
@@ -391,7 +389,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
                 key={idx}
                 className="w-full md:w-[calc(50%-0.5rem)] lg:w-[calc((100%-2rem)/3)] bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md hover:border-[#002DC2]/30 transition-all flex items-center gap-3.5 group"
               >
-                <div className="w-9 h-9 rounded-xl bg-[#F0F4FD] text-[#002DC2] group-hover:bg-[#002DC2] group-hover:text-white flex items-center justify-center shrink-0 transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-[#F0F4FD] text-[#002DC2] group-hover:bg-[#002DC2] group-hover:text-white flex items-center justify-center shrink-0 transition-colors">
                   <CheckCircle2 className="w-5 h-5" />
                 </div>
                 <div className="text-sm font-semibold text-slate-800 leading-snug text-balance">
@@ -407,8 +405,8 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
       {section.content && (
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#002DC2] text-white flex items-center justify-center font-bold mx-auto">
-              <FileText className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-xl bg-[#002DC2] text-white flex items-center justify-center mx-auto">
+              <FileText className="w-6 h-6" />
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">{copy.overviewTitle}</h2>
             <p className="text-base sm:text-lg text-slate-600">{copy.overviewSubtitle}</p>
@@ -525,7 +523,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
           </div>
 
           <p className="sm:hidden text-sm font-semibold text-slate-500 flex items-center">
-            <ArrowRight className="w-3.5 h-3.5 mr-1 text-[#002DC2]" />
+            <ArrowRight className="w-4 h-4 mr-1 text-[#002DC2]" />
             {t('sections_swipeHint')}
           </p>
           <div className="bg-white rounded-2xl border border-slate-200 overflow-x-auto overscroll-x-contain shadow-sm">
@@ -568,6 +566,11 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {brochures.map((b, idx) => (
               <div key={idx} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4">
+                {b.cover && (
+                  <Link to={`/brochures/${b.id}`} className="block -mx-5 -mt-5 aspect-[4/3] overflow-hidden rounded-t-2xl bg-slate-100">
+                    <img src={b.cover} alt={b.coverAlt || b.title} loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                  </Link>
+                )}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-xs text-slate-500">
                     <span className="font-bold text-[#002DC2] bg-[#F0F4FD] px-2 py-0.5 rounded-md">{t('sections_pdfSpecSheet')}</span>
@@ -590,7 +593,7 @@ export default function SectionDetailPage({ slug: propSlug, onOpenQuoteModal }) 
                     title={t('sections_downloadPdf')}
                     aria-label={t('sections_downloadPdf')}
                   >
-                    <Download className="w-4 h-4" />
+                    <Download className="w-5 h-5" />
                   </a>
                 </div>
               </div>

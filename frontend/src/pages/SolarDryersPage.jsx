@@ -15,10 +15,7 @@ import MapComponent from '../components/MapComponent';
 import PageHero from '../components/PageHero';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import {
-  MapPin, Calendar, Search, Filter, Sparkles, ArrowRight, ShieldCheck,
-  CheckCircle2, X, PhoneCall, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight,
-  SlidersHorizontal, Eye, LayoutGrid, Sun, Wind, Droplets, Cpu, Shield, Zap, Maximize2, Download, Layers, Grid, FileText,
-  Camera, Image as ImageIcon, ChevronDown, ChevronUp, Loader, Package
+  MapPin, Calendar, Search, Filter, Sparkles, ArrowRight, ShieldCheck, CheckCircle2, X, PhoneCall, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, SlidersHorizontal, Eye, LayoutGrid, Sun, Wind, Droplets, Cpu, Shield, Zap, Maximize2, Download, Layers, Grid, FileText, Camera, Image as ImageIcon, ChevronDown, ChevronUp, Loader, Package, Ruler, BookOpen, Timer, Images, Factory, Map as MapIcon
 } from 'lucide-react';
 
 export default function SolarDryersPage({ onOpenQuoteModal }) {
@@ -175,7 +172,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         top={
           <div className="flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/95 border border-[#23AC39]/30 text-[#1A822B] text-xs font-extrabold uppercase tracking-wider shadow-sm">
-              <Sun className="w-3.5 h-3.5 text-[#23AC39] animate-spin-slow" />
+              <Sun className="w-4 h-4 text-[#23AC39] animate-spin-slow" />
               <span>{t('dryers_heroBadge')}</span>
             </span>
             <span className="text-xs text-[#002DC2] font-bold bg-white/95 px-3 py-1 rounded-full border border-[#002DC2]/20 shadow-sm">
@@ -208,7 +205,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
             href="tel:+918903852623"
             className="w-full sm:w-auto py-3 px-5 bg-[#F0F4FD] hover:bg-[#F0F4FD] border border-[#002DC2]/20 text-[#123B92] font-semibold text-xs rounded-2xl transition-all flex items-center justify-center space-x-2 shadow-sm"
           >
-            <PhoneCall className="w-3.5 h-3.5 text-[#1A822B]" />
+            <PhoneCall className="w-4 h-4 text-[#1A822B]" />
             <span>{t('dryers_ctaCall', { phone: '+91 89038 52623' })}</span>
           </a>
         </>}
@@ -236,44 +233,44 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
           <button
             type="button"
             onClick={() => scrollToSection('models-section')}
-            className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#F0F4FD] border border-slate-200 text-slate-700 hover:text-[#123B92] font-bold shrink-0 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#F0F4FD] border border-slate-200 text-slate-700 hover:text-[#123B92] font-bold shrink-0 transition-colors cursor-pointer"
           >
-            ⚡ {t('dryers_jumpModels', { count: officialDryerModels.length })}
+            <LayoutGrid className="w-4 h-4" /> {t('dryers_jumpModels', { count: officialDryerModels.length })}
           </button>
           <button
             type="button"
             onClick={() => scrollToSection('profile-section')}
-            className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#F0F4FD] border border-slate-200 text-slate-700 hover:text-[#123B92] font-bold shrink-0 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#F0F4FD] border border-slate-200 text-slate-700 hover:text-[#123B92] font-bold shrink-0 transition-colors cursor-pointer"
           >
-            📐 {t('dryers_jumpProfile')}
+            <Ruler className="w-4 h-4" /> {t('dryers_jumpProfile')}
           </button>
           <button
             type="button"
             onClick={() => scrollToSection('working-principle-section')}
-            className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#F0F4FD] border border-slate-200 text-slate-700 hover:text-[#123B92] font-bold shrink-0 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#F0F4FD] border border-slate-200 text-slate-700 hover:text-[#123B92] font-bold shrink-0 transition-colors cursor-pointer"
           >
-            ☀️ {t('dryers_jumpPrinciple')}
+            <Sun className="w-4 h-4" /> {t('dryers_jumpPrinciple')}
           </button>
           <button
             type="button"
             onClick={() => scrollToSection('pdf-catalog-section')}
-            className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#F0F4FD] border border-slate-200 text-slate-700 hover:text-[#123B92] font-bold shrink-0 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#F0F4FD] border border-slate-200 text-slate-700 hover:text-[#123B92] font-bold shrink-0 transition-colors cursor-pointer"
           >
-            📑 {t('dryers_jumpCatalog')}
+            <BookOpen className="w-4 h-4" /> {t('dryers_jumpCatalog')}
           </button>
           <button
             type="button"
             onClick={() => scrollToSection('real-photos-section')}
-            className="px-3 py-1.5 rounded-xl bg-[#F0F4FD] hover:bg-[#F0F4FD] border border-[#002DC2]/20 text-[#002DC2] font-bold shrink-0 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#F0F4FD] hover:bg-[#F0F4FD] border border-[#002DC2]/20 text-[#002DC2] font-bold shrink-0 transition-colors cursor-pointer"
           >
-            📷 {t('dryers_jumpPhotos', { count: zenitekRealGallery.length })}
+            <Camera className="w-4 h-4" /> {t('dryers_jumpPhotos', { count: zenitekRealGallery.length })}
           </button>
           <button
             type="button"
             onClick={() => scrollToSection('map-section')}
-            className="px-3 py-1.5 rounded-xl bg-[#23AC39]/10 hover:bg-[#23AC39]/10 border border-[#23AC39]/30 text-[#1A822B] font-bold shrink-0 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#23AC39]/10 hover:bg-[#23AC39]/10 border border-[#23AC39]/30 text-[#1A822B] font-bold shrink-0 transition-colors cursor-pointer"
           >
-            📍 {t('dryers_jumpMap', { count: 35 })}
+            <MapPin className="w-4 h-4" /> {t('dryers_jumpMap', { count: 35 })}
           </button>
         </div>
       </nav>
@@ -308,7 +305,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                         ) : (
                           <div className="w-full h-full flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-[#F0F4FD] via-white to-emerald-50 px-6 text-center">
                             <span className="w-14 h-14 rounded-2xl bg-white border border-[#123B92]/15 shadow-sm flex items-center justify-center">
-                              <Package className="w-7 h-7 text-[#123B92]/60" />
+                              <Package className="w-8 h-8 text-[#123B92]/60" />
                             </span>
                             <span className="text-sm font-black text-[#123B92] line-clamp-1">{product.name}</span>
                             <span className="text-2xs font-bold uppercase tracking-wider text-slate-400">{t('dryers_cmsNoPhoto')}</span>
@@ -331,7 +328,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                           <ul className="space-y-1">
                             {product.features.slice(0, 4).map((f, i) => (
                               <li key={i} className="flex items-start space-x-2 text-xs text-slate-700">
-                                <CheckCircle2 className="w-3.5 h-3.5 text-[#1A822B] shrink-0 mt-0.5" />
+                                <CheckCircle2 className="w-4 h-4 text-[#1A822B] shrink-0 mt-0.5" />
                                 <span>{f}</span>
                               </li>
                             ))}
@@ -406,23 +403,23 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                 className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-blue-500 transition-all duration-300 flex flex-col justify-between shadow-sm hover:shadow-xl group"
               >
                 <div>
-                  {/* Product Brochure Image Container (Priority to Image: Full visual height) */}
+                  {/* Real product photo (uniform 4:3 crop) */}
                   <Link
                     to={`/solar-dryer-models/${model.id}`}
                     aria-label={t('dryers_modelDetailsAria', { name: model.name })}
-                    className="relative h-64 sm:h-72 overflow-hidden bg-gradient-to-b from-slate-100 to-slate-50 border-b border-slate-200 cursor-pointer p-4 flex items-center justify-center"
+                    className="relative block aspect-[4/3] overflow-hidden bg-slate-100 border-b border-slate-200 cursor-pointer"
                   >
                     <img
                       src={model.imageUrl}
-                      alt={model.name}
-                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                      alt={model.imageAlt || model.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
                   </Link>
 
                   {/* Clean Model Header & Image-First Action Button */}
                   <div className="p-4 sm:p-5 space-y-3">
-                    {/* Model Badges (kept below the image so they never cover the brochure artwork) */}
+                    {/* Model Badges (kept below the photo so they never cover the product) */}
                     <div className="flex flex-wrap items-center content-start gap-1.5 md:min-h-14">
                       <span className="bg-slate-900 text-white text-2xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg whitespace-nowrap inline-block">
                         {model.tier}
@@ -456,7 +453,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                       }`}
                     >
                       <span className="flex items-center space-x-1.5">
-                        <Eye className="w-3.5 h-3.5 text-[#002DC2]" />
+                        <Eye className="w-4 h-4 text-[#002DC2]" />
                         <span>{isExpanded ? t('dryers_hideSpecs') : t('dryers_viewSpecs')}</span>
                       </span>
                       <ChevronDown className={`w-4 h-4 text-[#002DC2] transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
@@ -494,7 +491,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                             to={`/solar-dryer-models/${model.id}`}
                             className="w-full py-2 bg-white hover:bg-[#002DC2] border border-[#002DC2] text-[#002DC2] hover:text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
                           >
-                            <Eye className="w-3.5 h-3.5" />
+                            <Eye className="w-4 h-4" />
                             <span>{t('dryers_fullSpecs')}</span>
                           </Link>
 
@@ -504,7 +501,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                             className="w-full py-2.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow hover:scale-[1.02] flex items-center justify-center space-x-1.5 cursor-pointer"
                           >
                             <span>{t('reqQuote')}</span>
-                            <ArrowRight className="w-3.5 h-3.5" />
+                            <ArrowRight className="w-4 h-4" />
                           </button>
                         </div>
                       </div>
@@ -527,7 +524,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
           
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
               <span className="text-xs font-bold text-[#1A822B] uppercase tracking-wide sm:tracking-widest text-balance bg-[#23AC39]/10 px-3 py-1 rounded-full border border-[#23AC39]/30 inline-flex items-center">
-                <SlidersHorizontal className="w-3.5 h-3.5 mr-1 text-[#1A822B]" /> {t('dryers_profileBadge')}
+                <Ruler className="w-4 h-4 mr-1 text-[#1A822B]" /> {t('dryers_profileBadge')}
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
                 {t('dryers_profileTitle')}
@@ -599,7 +596,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
           <div className="bg-gradient-to-r from-blue-900 to-green-900 text-white p-5 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
               <div className="text-sm font-bold flex items-center justify-center sm:justify-start space-x-1.5 text-[#23AC39]">
-                <CheckCircle2 className="w-4 h-4" />
+                <CheckCircle2 className="w-5 h-5" />
                 <span>{t('dryers_modularTitle')}</span>
               </div>
               <p className="text-sm text-white/85 max-w-2xl">
@@ -627,7 +624,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
           
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
               <span className="text-xs font-bold text-[#1A822B] uppercase tracking-wide sm:tracking-widest text-balance bg-[#23AC39]/10 border border-[#23AC39]/30 px-3 py-1 rounded-full inline-flex items-center">
-                <Sun className="w-3.5 h-3.5 mr-1.5 text-[#23AC39] animate-spin-slow" /> {t('dryers_principleBadge')}
+                <Sun className="w-4 h-4 mr-1.5 text-[#23AC39] animate-spin-slow" /> {t('dryers_principleBadge')}
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
                 {t('dryers_principleTitle')}
@@ -638,7 +635,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
 
             <div className="flex justify-center pt-1">
               <div className="inline-flex items-center space-x-2 text-xs font-extrabold text-[#1A822B] bg-[#23AC39]/10 px-4 py-2 rounded-2xl border border-[#23AC39]/30">
-                <Sparkles className="w-4 h-4 text-[#1A822B]" />
+                <Timer className="w-4 h-4 text-[#1A822B]" />
                 <span>{t('dryers_principleFaster')}</span>
               </div>
             </div>
@@ -675,7 +672,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                 </div>
 
                 <div className="pt-3 mt-3 border-t border-slate-200 flex items-center text-2xs text-[#1A822B] font-semibold">
-                  <CheckCircle2 className="w-3 h-3 mr-1 text-[#1A822B]" /> {t('dryers_stepOf', { step: stepItem.step, total: workingPrincipleSteps.length })}
+                  <CheckCircle2 className="w-4 h-4 mr-1 text-[#1A822B]" /> {t('dryers_stepOf', { step: stepItem.step, total: workingPrincipleSteps.length })}
                 </div>
               </div>
             ))}
@@ -708,13 +705,13 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <span className="text-xs font-bold text-[#002DC2] uppercase tracking-wide sm:tracking-widest text-balance bg-[#F0F4FD] px-3 py-1 rounded-full border border-[#002DC2]/20 inline-flex items-center">
-              <FileText className="w-3.5 h-3.5 mr-1 text-[#002DC2]" /> {t('dryers_catalogBadge')}
+              <FileText className="w-4 h-4 mr-1 text-[#002DC2]" /> {t('dryers_catalogBadge')}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               {t('dryers_catalogTitle')}
             </h2>
             <p className="text-base sm:text-lg text-slate-600">
-              {t('dryers_catalogSubtitle')}
+              {t('dryers_catalogSubtitlePhotos')}
             </p>
 
           <div className="flex items-center justify-center text-xs font-bold text-slate-600">
@@ -732,15 +729,12 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                 className="bg-white rounded-3xl overflow-hidden border border-[#123B92]/20 hover:border-[#002DC2] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  {/* Priority to Image: Full visual height */}
-                  <div 
-                    onClick={() => setSelectedBrochureModalPage(bPage)}
-                    className="relative h-80 sm:h-96 overflow-hidden bg-[#F0F4FD] border-b border-[#123B92]/20 flex items-center justify-center cursor-pointer"
-                  >
+                  {/* Real photo of the product this brochure page covers (the page itself opens in the viewer) */}
+                  <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 border-b border-[#123B92]/20">
                     <img
                       src={bPage.image}
-                      alt={bPage.title}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                      alt={bPage.imageAlt || bPage.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
 
@@ -758,12 +752,28 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                   </div>
 
                   <div className="p-4 sm:p-5 space-y-3">
-                    <h4 
-                      onClick={() => setSelectedBrochureModalPage(bPage)}
-                      className="text-base font-black text-[#123B92] group-hover:text-[#002DC2] transition-colors line-clamp-2 leading-6 sm:min-h-12 cursor-pointer"
-                    >
+                    <h4 className="text-base font-black text-[#123B92] group-hover:text-[#002DC2] transition-colors line-clamp-2 leading-6 sm:min-h-12">
                       {bPage.title}
                     </h4>
+
+                    {/* Open the brochure document: this page in the viewer, or the full PDF brochure */}
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedBrochureModalPage(bPage)}
+                        className="py-2.5 px-3 rounded-xl bg-[#002DC2] hover:bg-[#123B92] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer text-center"
+                      >
+                        <Eye className="w-4 h-4 shrink-0" />
+                        <span>{t('dryers_openBrochurePage')}</span>
+                      </button>
+                      <Link
+                        to={`/brochures/${bPage.brochureId || 'solar-dryer'}`}
+                        className="py-2.5 px-3 rounded-xl bg-[#F0F4FD] hover:bg-[#23AC39] border border-[#123B92]/20 hover:border-[#23AC39] text-[#123B92] hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors text-center"
+                      >
+                        <FileText className="w-4 h-4 shrink-0" />
+                        <span>{t('dryers_openFullBrochure')}</span>
+                      </Link>
+                    </div>
 
                     {/* Button to toggle content - Image Priority Requirement */}
                     <button
@@ -776,7 +786,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                       }`}
                     >
                       <span className="flex items-center space-x-1.5">
-                        <FileText className="w-3.5 h-3.5 text-[#002DC2]" />
+                        <FileText className="w-4 h-4 text-[#002DC2]" />
                         <span>{isExpanded ? t('dryers_hideBrochure') : t('dryers_viewBrochure')}</span>
                       </span>
                       <ChevronDown className={`w-4 h-4 text-[#002DC2] transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
@@ -794,9 +804,9 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                           onClick={() => setSelectedBrochureModalPage(bPage)}
                           className="w-full py-2.5 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-600 hover:to-blue-700 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-1.5 shadow-sm cursor-pointer"
                         >
-                          <Eye className="w-3.5 h-3.5" />
+                          <Eye className="w-4 h-4" />
                           <span>{t('dryers_viewHiRes')}</span>
-                          <ArrowRight className="w-3 h-3 ml-1" />
+                          <ArrowRight className="w-4 h-4 ml-1" />
                         </button>
                       </div>
                     )}
@@ -816,7 +826,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <span className="text-xs font-bold text-[#002DC2] uppercase tracking-wide sm:tracking-widest text-balance bg-[#F0F4FD] px-3 py-1 rounded-full border border-[#002DC2]/20 inline-flex items-center">
-              <Camera className="w-3.5 h-3.5 mr-1 text-[#002DC2]" /> {t('dryers_photosBadge')}
+              <Camera className="w-4 h-4 mr-1 text-[#002DC2]" /> {t('dryers_photosBadge')}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               {t('dryers_photosTitle')}
@@ -832,7 +842,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
           >
             <ImageIcon className="w-4 h-4 text-[#23AC39] group-hover:scale-110 transition-transform" />
             <span>{t('dryers_photosOpenAll', { count: zenitekRealGallery.length })}</span>
-            <ArrowRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
           </Link>
           </div>
         </div>
@@ -879,7 +889,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
               <div className="p-3.5 pt-0 border-t border-slate-100 mt-2 flex items-center justify-between text-2xs text-slate-500 font-semibold">
                 <span>{photo.productModel}</span>
                 <span className="text-[#002DC2] font-bold group-hover:underline flex items-center">
-                  {t('dryers_fullView')} <ArrowRight className="w-2.5 h-2.5 ml-0.5" />
+                  {t('dryers_fullView')} <ArrowRight className="w-4 h-4 ml-0.5" />
                 </span>
               </div>
             </div>
@@ -890,7 +900,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white p-6 rounded-3xl border border-blue-800/40 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-1 text-center sm:text-left">
             <h3 className="text-xl font-black text-white flex items-center justify-center sm:justify-start gap-2">
-              <Sparkles className="w-5 h-5 text-[#23AC39]" />
+              <Images className="w-5 h-5 text-[#23AC39]" />
               {t('dryers_galleryCtaTitle')}
             </h3>
             <p className="text-sm text-white/85">
@@ -916,7 +926,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <span className="text-xs font-bold text-[#1A822B] uppercase tracking-wide sm:tracking-widest text-balance bg-[#23AC39]/10 px-3 py-1 rounded-full border border-[#23AC39]/30 inline-flex items-center">
-              <Sparkles className="w-3.5 h-3.5 mr-1 text-[#1A822B]" /> {t('dryers_instBadge')}
+              <Factory className="w-4 h-4 mr-1 text-[#1A822B]" /> {t('dryers_instBadge')}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               {t('dryers_instTitle')}
@@ -936,7 +946,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         <div className="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm space-y-4" id="dryers-grid">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="relative w-full sm:max-w-md">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+              <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-3.5" />
               <input
                 type="text"
                 value={searchQuery}
@@ -953,7 +963,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                   title={t('dryers_clearSearch')}
                   className="absolute right-3.5 top-3 text-slate-400 hover:text-slate-600"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-5 h-5" />
                 </button>
               )}
             </div>
@@ -961,7 +971,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
             {/* Year Filters */}
             <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto pb-1 sm:pb-0">
               <span className="text-2xs uppercase font-bold text-slate-400 mr-1 flex items-center">
-                <Calendar className="w-3 h-3 mr-1" /> {t('dryers_yearLabel')}
+                <Calendar className="w-4 h-4 mr-1" /> {t('dryers_yearLabel')}
               </span>
               {yearOptions.map(yr => (
                 <button
@@ -978,7 +988,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
           {/* State Filter Pills */}
           <div className="flex flex-wrap items-center gap-1.5 pb-1 text-xs font-bold pt-1 border-t border-slate-100">
             <span className="text-2xs uppercase font-bold text-slate-400 shrink-0 mr-1 flex items-center">
-              <MapPin className="w-3 h-3 mr-1" /> {t('dryers_stateLabel')}
+              <MapPin className="w-4 h-4 mr-1" /> {t('dryers_stateLabel')}
             </span>
             {stateOptions.map(st => (
               <button
@@ -1049,7 +1059,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                         {proj.title}
                       </h3>
                       <p className="text-sm text-slate-500 flex items-center font-medium mt-1">
-                        <MapPin className="w-3.5 h-3.5 text-[#1A822B] mr-1 shrink-0" />
+                        <MapPin className="w-4 h-4 text-[#1A822B] mr-1 shrink-0" />
                         <span>{formatProjectLocation(proj)}</span>
                       </p>
                     </div>
@@ -1065,7 +1075,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                       }`}
                     >
                       <span className="flex items-center space-x-1.5">
-                        <Eye className="w-3.5 h-3.5 text-[#002DC2]" />
+                        <Eye className="w-4 h-4 text-[#002DC2]" />
                         <span>{isExpanded ? t('dryers_hideDetails') : t('dryers_viewInstDetails')}</span>
                       </span>
                       <ChevronDown className={`w-4 h-4 text-[#002DC2] transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
@@ -1081,12 +1091,12 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                         </div>
 
                         <Link
-                          to={`/dryers/${proj.id}`}
+                          to={`/projects/${proj.id}`}
                           className="w-full py-2.5 bg-[#002DC2] hover:bg-[#123B92] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow flex items-center justify-center space-x-1.5"
                         >
-                          <Eye className="w-3.5 h-3.5" />
+                          <Eye className="w-4 h-4" />
                           <span>{t('dryers_viewSiteDetails')}</span>
-                          <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                          <ArrowRight className="w-4 h-4 ml-1" />
                         </Link>
                       </div>
                     )}
@@ -1136,7 +1146,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                 title={t('dryers_firstPage')}
                 aria-label={t('dryers_firstPage')}
               >
-                <ChevronsLeft className="w-4 h-4" />
+                <ChevronsLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
@@ -1145,7 +1155,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                 title={t('dryers_prevPage')}
                 aria-label={t('dryers_prevPage')}
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-5 h-5" />
               </button>
 
               <span className="text-xs font-bold text-[#123B92] px-3">
@@ -1159,7 +1169,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                 title={t('dryers_nextPage')}
                 aria-label={t('dryers_nextPage')}
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-5 h-5" />
               </button>
               <button
                 onClick={() => handlePageChange(totalPages)}
@@ -1168,7 +1178,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                 title={t('dryers_lastPage')}
                 aria-label={t('dryers_lastPage')}
               >
-                <ChevronsRight className="w-4 h-4" />
+                <ChevronsRight className="w-5 h-5" />
               </button>
             </div>
           </div>
@@ -1183,7 +1193,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
               <span className="text-xs font-bold text-[#1A822B] uppercase tracking-wider bg-[#23AC39]/10 px-2.5 py-1 rounded-full border border-[#23AC39]/30 inline-flex items-center">
-                <Sparkles className="w-3 h-3 mr-1 text-[#1A822B]" /> {t('dryers_mapBadge')}
+                <MapIcon className="w-4 h-4 mr-1 text-[#1A822B]" /> {t('dryers_mapBadge')}
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
                 {t('dryers_mapTitle')}
@@ -1268,11 +1278,11 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
 
               <div className="flex items-center space-x-2">
                 <a
-                  href={selectedBrochureModalPage.image}
+                  href={selectedBrochureModalPage.brochurePageImage}
                   download={`ZeniTEK_Brochure_Page_${selectedBrochureModalPage.page}.png`}
                   className="px-3 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-xs font-bold text-white flex items-center space-x-1 transition-colors"
                 >
-                  <Download className="w-3.5 h-3.5" />
+                  <Download className="w-4 h-4" />
                   <span className="hidden sm:inline">{t('dryers_saveImage')}</span>
                 </a>
                 <button
@@ -1282,7 +1292,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
                   title={t('close')}
                   className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-5 h-5" />
                 </button>
               </div>
             </div>
@@ -1290,8 +1300,8 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
             {/* High-Res Image Viewport */}
             <div className="p-2 sm:p-4 overflow-auto flex-1 bg-slate-100 flex items-center justify-center">
               <img
-                src={selectedBrochureModalPage.image}
-                alt={selectedBrochureModalPage.title}
+                src={selectedBrochureModalPage.brochurePageImage}
+                alt={`${selectedBrochureModalPage.title} - ${t('dryers_pageBadge', { page: selectedBrochureModalPage.page })}`}
                 className="max-w-full max-h-[75vh] object-contain rounded-xl shadow border border-slate-300"
               />
             </div>

@@ -16,7 +16,7 @@ function WrapSelect({ value, onChange, options, ariaLabel }) {
       <div aria-hidden="true" className="pl-3.5 pr-9 py-2.5 text-sm font-bold text-[#123B92] leading-snug">
         {(current ? current[1] : value).replace(/\(([^)]{1,16})\)/g, (m) => m.replace(/ /g, ' '))}
       </div>
-      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#123B92] pointer-events-none" />
+      <ChevronDown className="w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 text-[#123B92] pointer-events-none" />
       <select
         value={value}
         onChange={onChange}
@@ -74,7 +74,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
       {/* SECTION 1: HERO HEADER (background photo, left-aligned heading) */}
       <PageHero
         images="/real-photos/zenitek_photo_33.jpeg"
-        badge={<><Landmark className="w-4 h-4 text-[#002DC2] shrink-0" /><span className="text-balance">{t('sections_subHeroBadge')}</span></>}
+        badge={<><Landmark className="w-5 h-5 text-[#002DC2] shrink-0" /><span className="text-balance">{t('sections_subHeroBadge')}</span></>}
         title={<>{t('sections_subHeroTitle1')} <br /><span className="text-[#002DC2]">{t('sections_subHeroTitle2')}{' '}<span className="whitespace-nowrap">(40% – 60%)</span></span></>}
         subtitle={<>{t('sections_subHeroSubPre')} <strong>{t('sections_subHeroSubStrong')}</strong> {t('sections_subHeroSubPost')}</>}
         actions={<>
@@ -105,8 +105,8 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <div className="flex justify-center">
-              <div className="w-10 h-10 rounded-xl bg-[#F0F4FD] border border-[#123B92]/20 flex items-center justify-center text-[#123B92]">
-                <Calculator className="w-5 h-5" />
+              <div className="w-12 h-12 rounded-xl bg-[#F0F4FD] border border-[#123B92]/20 flex items-center justify-center text-[#123B92]">
+                <Calculator className="w-6 h-6" />
               </div>
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
@@ -197,7 +197,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
                 className="w-full sm:w-auto px-6 py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all shrink-0 cursor-pointer flex items-center justify-center space-x-1.5"
               >
                 <span>{t('sections_applyZenitek')}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-4 h-4" />
               </button>
             </div>
 

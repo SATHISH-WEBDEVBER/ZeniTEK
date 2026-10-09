@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  Award, Zap, Sprout, Cpu, Microscope, ShieldCheck, CheckCircle2,
-  MapPin, Phone, Mail, ArrowRight, ExternalLink, ChevronRight,
-  ChevronLeft, Sparkles, Building2, Factory, GraduationCap, X,
-  Layers, Maximize2, Check
+  Award, Zap, Sprout, Cpu, Microscope, ShieldCheck, CheckCircle2, MapPin, Phone, Mail, ArrowRight, ExternalLink, ChevronRight, ChevronLeft, Sparkles, Building2, Factory, GraduationCap, X, Layers, Maximize2, Check, Receipt
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
@@ -360,7 +357,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                   className="w-full sm:w-auto max-w-full px-6 sm:px-7 py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-sm uppercase tracking-wide sm:tracking-wider rounded-2xl shadow-md hover:shadow-lg transition-all inline-flex items-center justify-center gap-2.5 text-center cursor-pointer hover:scale-[1.02]"
                 >
                   <span className="text-balance">{t('about_connectTeam')}</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-5 h-5" />
                 </button>
               </div>
 
@@ -445,7 +442,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
 
-                    <span className="absolute top-4 left-4 sm:top-5 sm:left-5 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full text-xs sm:text-sm font-black text-[#002DC2] shadow-sm max-w-[calc(100%-2rem)] sm:max-w-[calc(100%-2.5rem)] truncate">
+                    <span className="absolute top-4 left-4 sm:top-5 sm:left-5 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full text-xs sm:text-sm font-black text-[#002DC2] shadow-sm max-w-[calc(100%-2rem)] sm:max-w-[calc(100%-2.5rem)] leading-snug break-words">
                       {t(`about_d${domain.k}Badge`)}
                     </span>
 
@@ -455,7 +452,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                         <span className="text-[#23AC39] font-black whitespace-nowrap">{domain.k === 'Thermal' ? domain.metric : t(`about_d${domain.k}Metric`)}</span>
                         <span>{t(`about_d${domain.k}MetricLabel`)}</span>
                       </div>
-                      <h3 className="text-2xl font-black text-white leading-tight">
+                      <h3 className="text-2xl font-black text-white leading-tight break-words">
                         {title}
                       </h3>
                     </div>
@@ -472,7 +469,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                       {domain.specs.map((_, idx) => (
                         <div key={idx} className="flex items-center space-x-3 text-sm sm:text-base font-bold text-[#123B92]">
                           <div className="w-5 h-5 rounded-full bg-[#002DC2]/15 text-[#002DC2] flex items-center justify-center shrink-0">
-                            <Check className="w-3.5 h-3.5 stroke-[3]" />
+                            <Check className="w-4 h-4" />
                           </div>
                           <span>{t(`about_d${domain.k}Spec${idx + 1}`)}</span>
                         </div>
@@ -605,7 +602,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                       className="text-sm sm:text-base font-bold text-[#002DC2] hover:underline flex items-center space-x-1.5 cursor-pointer"
                     >
                       <span>{t('about_inquireSimilar')}</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-5 h-5" />
                     </button>
                   </div>
                 </div>
@@ -819,7 +816,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                   className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 text-white">
-                  <div className="text-sm sm:text-base font-black">{t(`about_g${idx + 1}Title`)}</div>
+                  <div className="text-sm sm:text-base font-black leading-snug break-words">{t(`about_g${idx + 1}Title`)}</div>
                   <div className="text-xs text-slate-300 font-semibold">{t(`about_g${idx + 1}Tag`)}</div>
                 </div>
               </div>
@@ -866,7 +863,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                     <span>+91-8903852623</span>
                   </a>
                   <div className="flex items-center space-x-2.5">
-                    <ShieldCheck className="w-5 h-5 text-[#23AC39] shrink-0" />
+                    <Receipt className="w-5 h-5 text-[#23AC39] shrink-0" />
                     <span>GST: 33AACFZ8530G1Z5</span>
                   </div>
                 </div>

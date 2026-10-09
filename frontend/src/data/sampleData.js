@@ -103,7 +103,7 @@ export const sampleGalleryItems = [
     category: "installations",
     location: "Komarapalayam, Tamil Nadu",
     modelName: "SOLDRY 1210 - 150",
-    imageUrl: "/pdf-products/brochure_p1.png",
+    imageUrl: "/real-photos/zenitek_photo_04.jpeg",
     caption: "Walk-in polyhouse solar tunnel dryer with 9 trolleys and 36 SS304 trays for commercial drying."
   },
   {
@@ -112,7 +112,7 @@ export const sampleGalleryItems = [
     category: "installations",
     location: "Sathyamangalam, Tamil Nadu",
     modelName: "SOLDRY 1709 - 200",
-    imageUrl: "/pdf-products/brochure_p2.png",
+    imageUrl: "/real-photos/zenitek_photo_21.jpeg",
     caption: "Aerodynamic 17 ft wide parabolic profile combining tray trolleys and floor drying bed."
   },
   {
@@ -121,7 +121,7 @@ export const sampleGalleryItems = [
     category: "installations",
     location: "Pollachi, Tamil Nadu",
     modelName: "SOLDRY 1210 - 300",
-    imageUrl: "/pdf-products/brochure_p9.png",
+    imageUrl: "/real-photos/zenitek_photo_12.jpeg",
     caption: "High-capacity commercial system with 18 trolleys, 72 food-grade trays, and 450 sq.ft tray drying area."
   },
   {
@@ -130,7 +130,7 @@ export const sampleGalleryItems = [
     category: "models",
     location: "ZeniTEK Works, Erode",
     modelName: "SUNDRY 50",
-    imageUrl: "/pdf-products/brochure_p6.png",
+    imageUrl: "/real-photos/zenitek_photo_36.jpeg",
     caption: "50 sq.ft tray area on heavy-duty 4\" caster wheels with 24V solar battery storage and SMPS."
   },
   {
@@ -139,7 +139,7 @@ export const sampleGalleryItems = [
     category: "models",
     location: "Erode, Tamil Nadu",
     modelName: "SUNDRY 12",
-    imageUrl: "/pdf-products/brochure_p5.png",
+    imageUrl: "/real-photos/zenitek_photo_16.jpeg",
     caption: "12 sq.ft SS304 perforated food-grade trays with 20W solar fan and 500W night heater."
   },
   {
@@ -148,7 +148,7 @@ export const sampleGalleryItems = [
     category: "models",
     location: "Erode, Tamil Nadu",
     modelName: "SUNDRY 6",
-    imageUrl: "/pdf-products/brochure_p4.png",
+    imageUrl: "/real-photos/zenitek_photo_37.jpeg",
     caption: "Compact box solar dryer for households, small entrepreneurs, and farm kitchens."
   },
   {
@@ -157,7 +157,7 @@ export const sampleGalleryItems = [
     category: "installations",
     location: "Field Site, Tamil Nadu",
     modelName: "Commercial Polyhouse Tunnel",
-    imageUrl: "/pdf-gallery/gallery_20a_p1.jpg",
+    imageUrl: "/real-photos/zenitek_photo_45.jpeg",
     caption: "Active operational solar polyhouse tunnel installation in farm fields."
   },
   {
@@ -166,7 +166,7 @@ export const sampleGalleryItems = [
     category: "factory",
     location: "Manufacturing Hub, Erode",
     modelName: "ZeniTEK Works",
-    imageUrl: "/pdf-gallery/gallery_13_p1.jpg",
+    imageUrl: "/real-photos/zenitek_photo_07.jpeg",
     caption: "GI steel laser cut and CNC folded frame with double-walled UV polycarbonate glazing."
   }
 ];
