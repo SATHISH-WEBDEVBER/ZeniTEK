@@ -31,14 +31,14 @@ const pillars = [
 ];
 
 const clientPartners = [
-  { name: 'IIT Bhubaneswar', logo: '/client-logos/academic_iit_bhubaneswar.png' },
-  { name: 'Anna University', logo: '/client-logos/academic_anna_univ.jpeg' },
-  { name: 'SRM University', logo: '/client-logos/industry_srm.png' },
-  { name: 'Mitsui Chemicals', logo: '/client-logos/industry_mitsui.jpeg' },
-  { name: 'Indo-MIM', logo: '/client-logos/industry_indomim.jpeg' },
-  { name: 'SELCO Foundation', logo: '/client-logos/industry_selco.png' },
-  { name: 'TNJFU Fisheries Univ', logo: '/client-logos/academic_fisheries.png' },
-  { name: 'Gandhigram Rural Inst.', logo: '/client-logos/academic_gandhigram.jpeg' },
+  { name: 'IIT Bhubaneswar', logo: '/client-logos/iit-bhubaneswar.png' },
+  { name: 'Anna University', logo: '/client-logos/anna-university.png' },
+  { name: 'SRM University', logo: '/client-logos/srm-ist.png' },
+  { name: 'Mitsui Chemicals', logo: '/client-logos/mitsui-chemicals.png' },
+  { name: 'Indo-MIM', logo: '/client-logos/indo-mim.png' },
+  { name: 'SELCO Foundation', logo: '/client-logos/selco-foundation.png' },
+  { name: 'TNJFU Fisheries Univ', logo: '/client-logos/tnjfu-fisheries.png' },
+  { name: 'Gandhigram Rural Inst.', logo: '/client-logos/gandhigram-rural-institute.png' },
 ];
 
 const inputClass = 'w-full bg-[#F0F4FD] border border-[#123B92]/30 text-black rounded-xl px-4 py-3 text-base placeholder-black/50 font-medium focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2]';

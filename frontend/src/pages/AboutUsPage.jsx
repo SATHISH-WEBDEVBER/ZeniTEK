@@ -206,37 +206,37 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       name: "IIT Bhubaneswar",
       branch: "School of Mechanical Science",
       tag: "Academic R&D",
-      logo: "/client-logos/academic_iit_bhubaneswar.png"
+      logo: "/client-logos/iit-bhubaneswar.png"
     },
     {
       name: "Anna University Chennai",
       branch: "DST NRDMS Tribal Community Project",
       tag: "Govt Research",
-      logo: "/client-logos/academic_anna_univ.jpeg"
+      logo: "/client-logos/anna-university.png"
     },
     {
       name: "SRM University",
       branch: "592 Sq.m Scheffler Solar Thermal Array",
       tag: "Campus Thermal",
-      logo: "/client-logos/industry_srm.png"
+      logo: "/client-logos/srm-ist.png"
     },
     {
       name: "Sree Sankara College",
       branch: "Energy Department, Kalady, Kerala",
       tag: "Lab Test Rigs",
-      logo: "/client-logos/academic_sree_sankara.jpeg"
+      logo: "/client-logos/sree-sankara-college.png"
     },
     {
       name: "Gandhigram University",
       branch: "Centre for Rural Energy, Dindigul",
       tag: "Rural Energy",
-      logo: "/client-logos/academic_gandhigram.jpeg"
+      logo: "/client-logos/gandhigram-rural-institute.png"
     },
     {
       name: "College of Fisheries",
       branch: "Fisheries Engineering, Nagapattinam",
       tag: "Marine Drying",
-      logo: "/client-logos/academic_fisheries.png"
+      logo: "/client-logos/tnjfu-fisheries.png"
     }
   ];
 
@@ -245,25 +245,25 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       name: "Mitsui Chemicals Group",
       detail: "Solar PV Certification Lab (Ahmedabad)",
       tag: "Global Industry",
-      logo: "/client-logos/industry_mitsui.jpeg"
+      logo: "/client-logos/mitsui-chemicals.png"
     },
     {
       name: "Indo-MIM Pvt Ltd",
       detail: "Industrial Scheffler Thermal (Bangalore)",
       tag: "Aerospace & MIM",
-      logo: "/client-logos/industry_indomim.jpeg"
+      logo: "/client-logos/indo-mim.png"
     },
     {
       name: "SELCO Foundation",
       detail: "Solar Tunnel Dryers & Paddy Transplanters",
       tag: "Social Innovation",
-      logo: "/client-logos/industry_selco.png"
+      logo: "/client-logos/selco-foundation.png"
     },
     {
       name: "Pro-Target & NISE",
       detail: "Technical Mentorship (Germany / India)",
       tag: "Solar Pioneers",
-      logo: "/client-logos/industry_nise_protarget.svg"
+      logo: "/client-logos/nise.png"
     }
   ];
 

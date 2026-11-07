@@ -45,12 +45,12 @@ const PROTOTYPES = [
 
 // Academic partners (names and logos as on the About page; notes are about_a<N>Branch / Tag)
 const PARTNERS = [
-  { name: 'IIT Bhubaneswar', logo: '/client-logos/academic_iit_bhubaneswar.png' },
-  { name: 'Anna University Chennai', logo: '/client-logos/academic_anna_univ.jpeg' },
-  { name: 'SRM University', logo: '/client-logos/industry_srm.png' },
-  { name: 'Sree Sankara College', logo: '/client-logos/academic_sree_sankara.jpeg' },
-  { name: 'Gandhigram University', logo: '/client-logos/academic_gandhigram.jpeg' },
-  { name: 'College of Fisheries', logo: '/client-logos/academic_fisheries.png' },
+  { name: 'IIT Bhubaneswar', logo: '/client-logos/iit-bhubaneswar.png' },
+  { name: 'Anna University Chennai', logo: '/client-logos/anna-university.png' },
+  { name: 'SRM University', logo: '/client-logos/srm-ist.png' },
+  { name: 'Sree Sankara College', logo: '/client-logos/sree-sankara-college.png' },
+  { name: 'Gandhigram University', logo: '/client-logos/gandhigram-rural-institute.png' },
+  { name: 'College of Fisheries', logo: '/client-logos/tnjfu-fisheries.png' },
 ];
 
 function SectionTitle({ title, subtitle }) {
@@ -186,7 +186,7 @@ export default function ResearchPage({ onOpenQuoteModal }) {
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('prod_rdPvTitle')}</h2>
             <p className="text-base sm:text-lg text-slate-700 leading-relaxed"><BoldText text={t('prod_rdPvBody')} /></p>
             <div className="inline-flex items-center gap-3 p-3 pr-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
-              <img src="/client-logos/industry_mitsui.jpeg" alt="Mitsui Chemicals" className="w-14 h-14 object-contain" />
+              <img src="/client-logos/mitsui-chemicals.png" alt="Mitsui Chemicals" className="w-14 h-14 object-contain" />
               <div className="text-sm">
                 <div className="font-bold text-slate-900">Mitsui Chemicals Group</div>
                 <div className="text-slate-500">{t('about_i1Detail')}</div>
@@ -238,7 +238,7 @@ export default function ResearchPage({ onOpenQuoteModal }) {
             ))}
           </div>
           <div className="mt-6 flex items-center justify-center gap-4 p-4 rounded-2xl bg-white border border-[#002DC2]/15 max-w-xl mx-auto">
-            <img src="/client-logos/industry_nise_protarget.svg" alt="Pro-Target & NISE" loading="lazy" className="w-20 h-12 object-contain shrink-0" />
+            <img src="/client-logos/nise.png" alt="NISE — National Institute of Solar Energy" loading="lazy" className="w-16 h-16 object-contain shrink-0" />
             <div>
               <div className="font-bold text-[#123B92]">Pro-Target & NISE</div>
               <div className="text-sm text-slate-600">{t('about_i4Detail')}</div>
