@@ -7,8 +7,9 @@ import common from './common';
 import navbar from './navbar';
 import site from './site';
 import products from './products';
+import subsidies from './subsidies';
 
-const modules = [about, dryers, gallery, sections, common, navbar, site, products];
+const modules = [about, dryers, gallery, sections, common, navbar, site, products, subsidies];
 
 export const LANGS = ['en', 'ta', 'hi', 'ml', 'te', 'kn'];
 
