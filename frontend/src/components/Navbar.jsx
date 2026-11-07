@@ -1,20 +1,24 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
-  Menu, X, ArrowRight, ChevronDown, Sun, FileText, Image as ImageIcon, LayoutGrid
+  Menu, X, ArrowRight, ChevronDown, FileText, Image as ImageIcon, LayoutGrid
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import LanguageWidget from './LanguageWidget';
-import { fetchPublicSections } from '../utils/api';
-import { defaultSectionsData } from '../data/defaultSectionsData';
-import { SOLUTION_ICONS } from '../data/siteMap';
+import SolarThermalArt from './SolarThermalArt';
+import { PRODUCTS } from '../data/siteMap';
 
-// Fallback icon per solution page, shown when a section has no thumbnail photo
-const SectionIcon = ({ slug, className }) => {
-  const Icon = SOLUTION_ICONS[slug] || Sun;
-  return <Icon className={className} />;
-};
+// Product thumbnail: the product's real photo, or its drawing when there is no photo
+const ProductThumb = ({ product, className }) => (
+  <div className={`overflow-hidden shrink-0 border border-slate-200 bg-[#F0F4FD] ${className}`}>
+    {product.image ? (
+      <img src={product.image} alt="" className="w-full h-full object-cover" />
+    ) : (
+      <SolarThermalArt type={product.art} className="w-full h-full" />
+    )}
+  </div>
+);
 
 export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -23,15 +27,12 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [mobileGalleryOpen, setMobileGalleryOpen] = useState(false);
 
-  // Dynamic published sections for the 7 major categories
-  const [sections, setSections] = useState(defaultSectionsData);
-
   const navigate = useNavigate();
   const productsRef = useRef(null);
   const galleryRef = useRef(null);
   const timeoutRef = useRef(null);
   const location = useLocation();
-  const { t, tf, lang } = useLanguage();
+  const { t, lang } = useLanguage();
 
   // Desktop (lg+) always gets the desktop menu; the phone menu button is only used below lg.
   // When the labels don't fit on one row (long languages such as Tamil/Malayalam, or narrow laptops)
@@ -84,19 +85,6 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   // Freeze the page behind the open mobile menu; Esc closes it
   useScrollLock(mobileMenuOpen);
   useEscapeKey(mobileMenuOpen, () => setMobileMenuOpen(false));
-
-  // Fetch published sections dynamically from API
-  useEffect(() => {
-    fetchPublicSections()
-      .then(data => {
-        if (data?.sections && Array.isArray(data.sections) && data.sections.length > 0) {
-          setSections(data.sections);
-        }
-      })
-      .catch(() => {
-        // Retain default sections on network hiccup
-      });
-  }, [location.pathname]);
 
   // Close menus on route change
   useEffect(() => {
@@ -181,24 +169,12 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
     }
   ];
 
-  const productRoutes = [
-    '/products',
-    '/solar-dryer-models',
-    '/solar-thermal-system',
-    '/agri-solar-innovation',
-    '/photovoltaic-solutions',
-    '/government-subsidies',
-    '/crop-preservation-guide',
-    '/technical-spec-sheets',
-    '/dryers',
-    '/applications'
-  ];
+  const productRoutes = ['/products', '/dryers', ...PRODUCTS.map(p => p.path)];
 
-  const isSubsidiesActive = location.pathname === '/subsidies' || location.pathname === '/government-subsidies';
-  const isProductsActive = !isSubsidiesActive && productRoutes.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
+  const isSubsidiesActive = location.pathname === '/subsidies';
+  const isProductsActive = productRoutes.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
   const isGalleryActive = location.pathname.startsWith('/gallery');
-  const isRnDActive = location.pathname === '/about' && location.hash === '#rnd';
-  const isAboutActive = location.pathname === '/about' && location.hash !== '#rnd';
+  const isAboutActive = location.pathname === '/about';
   const isContactActive = location.pathname === '/contact';
 
   return (
@@ -271,22 +247,17 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                 <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${productsDropdownOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
               </button>
 
-              {/* PRODUCTS 7 CATEGORIES DROPDOWN MENU */}
+              {/* PRODUCTS DROPDOWN: the three product pages */}
               {productsDropdownOpen && (
-                <div 
-                  className={`absolute top-full ${twoRow ? 'left-0' : 'left-1/2 -translate-x-1/2'} mt-2 w-[760px] xl:w-[820px] bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-4 z-50 animate-fade-in space-y-3`}
+                <div
+                  className={`absolute top-full ${twoRow ? 'left-0' : 'left-1/2 -translate-x-1/2'} mt-2 w-[460px] bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-3 z-50 animate-fade-in space-y-2`}
                   onMouseEnter={handleProductsEnter}
                   onMouseLeave={handleProductsLeave}
                 >
-                  <div className="flex items-center justify-between pb-2 border-b border-slate-100 px-2">
-                    <div>
-                      <span className="text-xs font-black uppercase tracking-wider text-[#002DC2]">
-                        {t('site_productsBadge')}
-                      </span>
-                      <p className="text-sm text-slate-500 font-medium">
-                        {t('navbar_productsCount', { count: sections.length })}
-                      </p>
-                    </div>
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-100 px-2 pt-1">
+                    <span className="text-xs font-black uppercase tracking-wider text-[#002DC2]">
+                      {t('site_productsBadge')}
+                    </span>
                     <Link
                       to="/products"
                       onClick={() => setProductsDropdownOpen(false)}
@@ -296,61 +267,43 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                     </Link>
                   </div>
 
-                  {/* 2-Column Structured Grid of the 7 Solution Categories */}
-                  <div className="grid grid-cols-2 gap-2.5">
-                    {sections.map((item) => (
-                      <Link
-                        key={item.slug}
-                        to={`/${item.slug}`}
-                        onClick={() => setProductsDropdownOpen(false)}
-                        className="flex items-center space-x-3.5 p-2.5 rounded-xl hover:bg-[#F0F4FD] transition-all duration-200 border border-transparent hover:border-[#002DC2]/20 group cursor-pointer"
-                      >
-                        <div className="w-16 h-12 rounded-lg overflow-hidden bg-slate-100 shrink-0 border border-slate-200 shadow-sm group-hover:scale-105 transition-transform duration-300">
-                          {item.thumbnail?.url ? (
-                            <img
-                              src={item.thumbnail.url}
-                              alt={tf(`section_${item.slug}_title`, item.title)}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-slate-100 text-slate-400">
-                              <SectionIcon slug={item.slug} className="w-5 h-5" />
-                            </div>
-                          )}
+                  {PRODUCTS.map((product) => (
+                    <Link
+                      key={product.path}
+                      to={product.path}
+                      onClick={() => setProductsDropdownOpen(false)}
+                      className="flex items-center gap-3.5 p-2.5 rounded-xl hover:bg-[#F0F4FD] transition-colors border border-transparent hover:border-[#002DC2]/20 group"
+                    >
+                      <ProductThumb product={product} className="w-[72px] h-14 rounded-lg" />
+                      <div className="min-w-0 flex-1">
+                        <div className="text-base font-bold text-[#123B92] group-hover:text-[#002DC2] transition-colors leading-snug">
+                          {t(product.key)}
                         </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="text-sm xl:text-sm font-bold text-[#123B92] group-hover:text-[#002DC2] transition-colors leading-snug flex items-center justify-between">
-                            <span className="truncate">{tf(`section_${item.slug}_title`, item.title)}</span>
-                            <ArrowRight className="w-4 h-4 text-[#002DC2] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all shrink-0 ml-1" />
-                          </div>
-                          {item.subtitle && (
-                            <div className="text-xs text-slate-500 font-medium truncate mt-0.5 leading-tight">
-                              {tf(`section_${item.slug}_subtitle`, item.subtitle)}
-                            </div>
-                          )}
+                        <div className="text-sm text-slate-500 font-medium leading-snug mt-0.5">
+                          {t(product.shortKey)}
                         </div>
-                      </Link>
-                    ))}
-
-                    {/* 8th Slot: Fast Quote Assistant */}
-                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-emerald-50 to-green-50 border border-[#23AC39]/30">
-                      <div className="min-w-0 pr-2">
-                        <div className="text-xs font-black text-[#1A822B]">{t('navbar_customDpr')}</div>
-                        <div className="text-xs text-[#1A822B] font-medium truncate">{t('navbar_customDprDesc')}</div>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setProductsDropdownOpen(false);
-                          if (onOpenQuoteModal) onOpenQuoteModal();
-                        }}
-                        className="px-3 py-1.5 bg-[#23AC39] hover:bg-[#1f9632] text-white text-xs font-extrabold rounded-lg shadow-sm cursor-pointer shrink-0 transition-transform active:scale-95"
-                      >
-                        {t('getQuote')}
-                      </button>
-                    </div>
-                  </div>
+                      <ArrowRight className="w-5 h-5 text-[#002DC2] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all shrink-0" />
+                    </Link>
+                  ))}
 
+                  {/* Quote shortcut */}
+                  <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-gradient-to-r from-emerald-50 to-green-50 border border-[#23AC39]/30">
+                    <div className="min-w-0">
+                      <div className="text-sm font-black text-[#1A822B]">{t('navbar_customDpr')}</div>
+                      <div className="text-xs text-[#1A822B] font-medium">{t('navbar_customDprDesc')}</div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setProductsDropdownOpen(false);
+                        if (onOpenQuoteModal) onOpenQuoteModal();
+                      }}
+                      className="px-3 py-1.5 bg-[#23AC39] hover:bg-[#1f9632] text-white text-xs font-extrabold rounded-lg shadow-sm cursor-pointer shrink-0 transition-transform active:scale-95"
+                    >
+                      {t('getQuote')}
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -421,19 +374,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               <span>{t('navbar_subsidies')}</span>
             </Link>
 
-            {/* 5. R&D (RESEARCH & DEVELOPMENT SHORT FORM) */}
-            <Link
-              to="/about#rnd"
-              className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap flex items-center space-x-1 ${
-                isRnDActive
-                  ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'
-                  : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
-              }`}
-            >
-              <span>{t('navbar_rnd')}</span>
-            </Link>
-
-            {/* 6. ABOUT US */}
+            {/* 5. ABOUT US */}
             <Link
               to="/about"
               className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap ${
@@ -445,7 +386,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               {t('navAbout')}
             </Link>
 
-            {/* 7. CONTACT US */}
+            {/* 6. CONTACT US */}
             <Link
               to="/contact"
               className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap ${
@@ -522,14 +463,14 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {t('navHome')}
           </Link>
 
-          {/* Mobile: 2. Products Accordion (7 Categories) */}
+          {/* Mobile: 2. Products Accordion (the three product pages) */}
           <div>
             <button
               type="button"
               onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
               className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-base font-bold text-[#123B92] hover:bg-slate-50 transition-colors"
             >
-              <span>{t('navbar_productsCount', { count: sections.length })}</span>
+              <span>{t('navbar_products')}</span>
               <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${mobileProductsOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
             </button>
 
@@ -542,35 +483,21 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                 >
                   <LayoutGrid className="w-5 h-5" /> {t('site_viewAllProducts')}
                 </Link>
-                {sections.map((item) => (
+                {PRODUCTS.map((product) => (
                   <Link
-                    key={item.slug}
-                    to={`/${item.slug}`}
+                    key={product.path}
+                    to={product.path}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center space-x-3 p-2 rounded-lg bg-white border border-slate-200/60 hover:border-[#002DC2]/30 text-slate-800 hover:text-[#002DC2] transition-colors"
+                    className="flex items-center gap-3 p-2 rounded-lg bg-white border border-slate-200/60 hover:border-[#002DC2]/30 text-slate-800 hover:text-[#002DC2] transition-colors"
                   >
-                    <div className="w-10 h-10 rounded-md overflow-hidden bg-slate-100 shrink-0 border border-slate-200">
-                      {item.thumbnail?.url ? (
-                        <img
-                          src={item.thumbnail.url}
-                          alt={tf(`section_${item.slug}_title`, item.title)}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-slate-400">
-                          <SectionIcon slug={item.slug} className="w-5 h-5" />
-                        </div>
-                      )}
-                    </div>
+                    <ProductThumb product={product} className="w-12 h-12 rounded-md" />
                     <div className="min-w-0 flex-1">
-                      <div className="text-xs font-bold text-[#123B92] leading-tight truncate">
-                        {tf(`section_${item.slug}_title`, item.title)}
+                      <div className="text-sm font-bold text-[#123B92] leading-tight">
+                        {t(product.key)}
                       </div>
-                      {item.subtitle && (
-                        <div className="text-2xs text-slate-500 font-medium truncate mt-0.5">
-                          {tf(`section_${item.slug}_subtitle`, item.subtitle)}
-                        </div>
-                      )}
+                      <div className="text-xs text-slate-500 font-medium mt-0.5">
+                        {t(product.shortKey)}
+                      </div>
                     </div>
                   </Link>
                 ))}
@@ -615,26 +542,10 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                 : 'text-slate-800 hover:bg-slate-50'
             }`}
           >
-            Subsidies
+            {t('navbar_subsidies')}
           </Link>
 
-          {/* Mobile: 5. R&D (Research & Development Short Form) */}
-          <Link
-            to="/about#rnd"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-base font-bold transition-colors ${
-              isRnDActive
-                ? 'text-[#002DC2] bg-[#F0F4FD]'
-                : 'text-slate-800 hover:bg-slate-50'
-            }`}
-          >
-            <span>{t('navbar_rnd')}</span>
-            <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
-              Research & Dev
-            </span>
-          </Link>
-
-          {/* Mobile: 6. About Us */}
+          {/* Mobile: 5. About Us */}
           <Link
             to="/about"
             onClick={() => setMobileMenuOpen(false)}
@@ -647,7 +558,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {t('navAbout')}
           </Link>
 
-          {/* Mobile: 7. Contact Us */}
+          {/* Mobile: 6. Contact Us */}
           <Link
             to="/contact"
             onClick={() => setMobileMenuOpen(false)}

@@ -24,7 +24,8 @@ const TesterApp = React.lazy(() => import('./pages/bugs/TesterApp'));
 import BugReportButton from './components/BugReportButton';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import SectionDetailPage from './pages/SectionDetailPage';
+import SolarThermalPage from './pages/SolarThermalPage';
+import ResearchPage from './pages/ResearchPage';
 import QuotePage, { buildQuoteUrl } from './pages/QuotePage';
 import DryerModelPage from './pages/DryerModelPage';
 import InstallationPage from './pages/InstallationPage';
@@ -140,16 +141,17 @@ function PublicSite() {
               <Route path="/about" element={<AboutUsPage onOpenQuoteModal={handleOpenQuoteModal} />} />
               <Route path="/products" element={<ProductsPage />} />
               
-              {/* 7 Solution & Information Categories */}
+              {/* The three product pages */}
               <Route path="/solar-dryer-models" element={<SolarDryersPage onOpenQuoteModal={handleOpenQuoteModal} onOpenDetailModal={handleOpenDetailModal} />} />
-              <Route path="/solar-thermal-system" element={<SectionDetailPage slug="solar-thermal-system" onOpenQuoteModal={handleOpenQuoteModal} />} />
-              <Route path="/agri-solar-innovation" element={<SectionDetailPage slug="agri-solar-innovation" onOpenQuoteModal={handleOpenQuoteModal} />} />
-              <Route path="/photovoltaic-solutions" element={<SectionDetailPage slug="photovoltaic-solutions" onOpenQuoteModal={handleOpenQuoteModal} />} />
-              <Route path="/government-subsidies" element={<SectionDetailPage slug="government-subsidies" onOpenQuoteModal={handleOpenQuoteModal} />} />
-              <Route path="/crop-preservation-guide" element={<SectionDetailPage slug="crop-preservation-guide" onOpenQuoteModal={handleOpenQuoteModal} />} />
-              <Route path="/technical-spec-sheets" element={<SectionDetailPage slug="technical-spec-sheets" onOpenQuoteModal={handleOpenQuoteModal} />} />
-              
+              <Route path="/solar-thermal-system" element={<SolarThermalPage onOpenQuoteModal={handleOpenQuoteModal} />} />
+              <Route path="/research-and-development" element={<ResearchPage onOpenQuoteModal={handleOpenQuoteModal} />} />
+
               {/* Old addresses forward to their current pages */}
+              <Route path="/agri-solar-innovation" element={<Navigate to="/solar-dryer-models" replace />} />
+              <Route path="/photovoltaic-solutions" element={<Navigate to="/research-and-development" replace />} />
+              <Route path="/government-subsidies" element={<Navigate to="/subsidies" replace />} />
+              <Route path="/crop-preservation-guide" element={<Navigate to="/applications" replace />} />
+              <Route path="/technical-spec-sheets" element={<Navigate to="/solar-dryer-models" replace />} />
               <Route path="/dryers" element={<Navigate to="/solar-dryer-models" replace />} />
               <Route path="/dryers/:id" element={<LegacyProjectRedirect />} />
               <Route path="/map" element={<Navigate to="/installations" replace />} />

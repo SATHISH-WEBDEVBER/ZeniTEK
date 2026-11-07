@@ -6,7 +6,7 @@ import {
 import { useLanguage } from '../context/LanguageContext';
 import { PAGES } from '../data/siteMap';
 
-const QUICK_LINKS = ['/products', '/solar-dryer-models', '/applications', '/subsidies', '/gallery', '/installations', '/stories', '/about', '/contact'];
+const QUICK_LINKS = ['/products', '/solar-dryer-models', '/solar-thermal-system', '/research-and-development', '/applications', '/subsidies', '/gallery', '/installations', '/stories', '/about', '/contact'];
 import { brochures } from '../data/brochuresData';
 
 export default function Footer({ onOpenQuoteModal }) {

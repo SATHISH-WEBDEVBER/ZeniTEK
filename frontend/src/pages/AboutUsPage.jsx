@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   Award, Zap, Sprout, Cpu, Microscope, ShieldCheck, CheckCircle2, MapPin, Phone, Mail, ArrowRight, ExternalLink, ChevronRight, ChevronLeft, Sparkles, Building2, Factory, GraduationCap, X, Layers, Maximize2, Check, Receipt
 } from 'lucide-react';
@@ -19,6 +19,9 @@ function renderRich(text, cls = {}) {
     return <React.Fragment key={i}>{part}</React.Fragment>;
   });
 }
+
+// "What We Do" domains that have their own page in the Products section
+const PRODUCT_PAGE = { thermal: '/solar-thermal-system', rnd: '/research-and-development' };
 
 export default function AboutUsPage({ onOpenQuoteModal }) {
   const { t } = useLanguage();
@@ -470,8 +473,17 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                       ))}
                     </div>
 
-                    {/* Action Button */}
-                    <div className="pt-2">
+                    {/* Action Button (+ link to the product page for Solar Thermal and R&D) */}
+                    <div className="pt-2 space-y-2">
+                      {PRODUCT_PAGE[domain.id] && (
+                        <Link
+                          to={PRODUCT_PAGE[domain.id]}
+                          className="w-full py-3.5 bg-[#002DC2] hover:bg-[#123B92] text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-2xl transition-colors flex items-center justify-center space-x-2 shadow-sm"
+                        >
+                          <span>{title}</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      )}
                       <button
                         onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: domain.title })}
                         className="w-full py-3.5 bg-[#F0F4FD] hover:bg-[#002DC2] text-[#002DC2] hover:text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-2xl transition-colors flex items-center justify-center space-x-2 cursor-pointer shadow-sm"
