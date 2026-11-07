@@ -124,11 +124,13 @@ function PublicSite() {
         {/* Navigation Header with Opening Reveal Animation */}
         <Navbar onOpenQuoteModal={() => handleOpenQuoteModal()} animStage={animStage} />
 
-        {/* Full Website Content - Hidden Initially, Reveals at Stage 3 */}
+        {/* Full Website Content - Hidden Initially, Reveals at Stage 3.
+            Once revealed it must have no transform: a transform here would make every
+            position:fixed pop-up (lightboxes, viewers) position against the page instead of the screen. */}
         <div
           className={`flex-1 flex flex-col transition-all duration-1000 ease-out ${
             animStage >= 3
-              ? 'opacity-100 translate-y-0'
+              ? 'opacity-100 transform-none'
               : 'opacity-0 translate-y-4 pointer-events-none'
           }`}
         >

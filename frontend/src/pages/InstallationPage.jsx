@@ -52,7 +52,7 @@ export default function InstallationPage() {
     );
   }
 
-  const photos = project.photos && project.photos.length > 0 ? project.photos : [project.imageUrl || '/real-photos/zenitek_photo_12.jpeg'];
+  const photos = project.photos && project.photos.length > 0 ? project.photos : [project.imageUrl || '/real-photos/zenitek_photo_12.webp'];
   const stats = project.dryingStats || null;
   const quoteUrl = buildQuoteUrl({ cropType: project.cropDrying, capacityNeeded: project.capacity, district: project.locationName });
 

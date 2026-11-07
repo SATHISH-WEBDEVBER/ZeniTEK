@@ -39,7 +39,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
       
       {/* SECTION 1: HERO HEADER — full-bleed photo with left-aligned heading (matches Home hero) */}
       <PageHero
-        images="/real-photos/zenitek_photo_35.jpeg"
+        images="/real-photos/zenitek_photo_02.webp"
         title={
           <>
             {t('appMatrixTitle1')} <br />

@@ -646,7 +646,7 @@ export function SectionForm({ section, onSave, onCancel, toast }) {
                 if (e.target.value) setThumbPreview(e.target.value);
               }}
               className="w-full border border-slate-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#002DC2]"
-              placeholder="e.g. /real-photos/zenitek_photo_21.jpeg"
+              placeholder="e.g. /real-photos/zenitek_photo_21.webp"
             />
           </div>
         </div>

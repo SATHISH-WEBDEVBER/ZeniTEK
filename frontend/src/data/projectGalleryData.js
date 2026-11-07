@@ -10,8 +10,8 @@ export const projectGalleryData = [
     "application": "Custard apple skin and seeds",
     "category": "Business",
     "mapRef": "Locality",
-    "image": "/projects/project-01.jpg",
-    "produceImage": "/projects/project-01-produce.png",
+    "image": "/projects/project-01.webp",
+    "produceImage": "/projects/project-01-produce.webp",
     "description": "HUT810 - 200 solar polyhouse dryer installed in Lakhanpuri, Kanker district, Chhattisgarh for commercial dehydration of custard apple skin and seeds."
   },
   {
@@ -25,8 +25,8 @@ export const projectGalleryData = [
     "application": "Maize, paddy, turmeric and multiple crops",
     "category": "Household",
     "mapRef": "Approx. Chinnasalem",
-    "image": "/projects/project-02.jpg",
-    "produceImage": "/projects/project-02-produce.png",
+    "image": "/projects/project-02.webp",
+    "produceImage": "/projects/project-02-produce.webp",
     "description": "1208 - 150 household solar dryer installed in Chinnasalem, Tamil Nadu for versatile multi-crop drying including maize, paddy, and turmeric."
   },
   {
@@ -40,8 +40,8 @@ export const projectGalleryData = [
     "application": "Maize, paddy, turmeric and multiple crops",
     "category": "Household",
     "mapRef": "Locality",
-    "image": "/projects/project-03.jpg",
-    "produceImage": "/projects/project-03-produce.png",
+    "image": "/projects/project-03.webp",
+    "produceImage": "/projects/project-03-produce.webp",
     "description": "1209 - 150 solar thermal dryer deployed in Vazhapady, Salem district for smallholder multi-crop drying of turmeric, paddy, and grains."
   },
   {
@@ -55,8 +55,8 @@ export const projectGalleryData = [
     "application": "Coconut / copra",
     "category": "Business",
     "mapRef": "Locality",
-    "image": "/projects/project-04.jpg",
-    "produceImage": "/projects/project-04-produce.png",
+    "image": "/projects/project-04.webp",
+    "produceImage": "/projects/project-04-produce.webp",
     "description": "High-efficiency 1208 - 300 walk-in polyhouse solar tunnel dryer installed in Pollachi coconut belt, producing Grade-1 White Copra with zero sulfur/dust."
   },
   {
@@ -70,8 +70,8 @@ export const projectGalleryData = [
     "application": "Moringa leaves for value addition",
     "category": "Business",
     "mapRef": "Locality",
-    "image": "/projects/project-05.jpg",
-    "produceImage": "/projects/project-05-produce.png",
+    "image": "/projects/project-05.webp",
+    "produceImage": "/projects/project-05-produce.webp",
     "description": "D1210 - 300 commercial solar dryer installed in Chikkaballapur, Karnataka for high-retention moringa leaf drying and export value addition."
   },
   {
@@ -85,9 +85,9 @@ export const projectGalleryData = [
     "application": "Tomato, herbal leaves and multiple crops",
     "category": "Farm business",
     "mapRef": "Locality",
-    "image": "/projects/project-06.jpg",
-    "interiorImage": "/projects/project-06-interior.jpg",
-    "produceImage": "/projects/project-06-produce.png",
+    "image": "/projects/project-06.webp",
+    "interiorImage": "/projects/project-06-interior.webp",
+    "produceImage": "/projects/project-06-produce.webp",
     "description": "Large D1210 - 450 walk-in solar tunnel dryer with interior tiered stainless steel drying racks in Mulbagal, Karnataka for commercial tomato and herb processing."
   },
   {
@@ -101,8 +101,8 @@ export const projectGalleryData = [
     "application": "Areca nut",
     "category": "Business",
     "mapRef": "Locality",
-    "image": "/projects/project-07.jpg",
-    "produceImage": "/projects/project-07-produce.png",
+    "image": "/projects/project-07.webp",
+    "produceImage": "/projects/project-07-produce.webp",
     "description": "D1210 - 300 solar thermal polyhouse installation in Sirsi, Uttara Kannada for rapid, mold-free areca nut (betel nut) processing."
   },
   {
@@ -116,8 +116,8 @@ export const projectGalleryData = [
     "application": "Moringa leaves and multiple crops",
     "category": "Farm business",
     "mapRef": "Locality",
-    "image": "/projects/project-08.jpg",
-    "produceImage": "/projects/project-08-produce.png",
+    "image": "/projects/project-08.webp",
+    "produceImage": "/projects/project-08-produce.webp",
     "description": "Farm business D1210 - 300 solar installation in Haveri, Karnataka delivering clean, dust-free dehydration for moringa leaves and local horticulture crops."
   },
   {
@@ -131,8 +131,8 @@ export const projectGalleryData = [
     "application": "Coconut / copra",
     "category": "Business",
     "mapRef": "Locality",
-    "image": "/projects/project-09.jpg",
-    "produceImage": "/projects/project-09-produce.png",
+    "image": "/projects/project-09.webp",
+    "produceImage": "/projects/project-09-produce.webp",
     "description": "Commercial D1210 - 300 solar polyhouse in Vazhapady, Salem district ensuring year-round rainproof coconut and copra processing."
   },
   {
@@ -146,8 +146,8 @@ export const projectGalleryData = [
     "application": "Amla, jackfruit, grains and hill-grown produce",
     "category": "Women's self-help group business",
     "mapRef": "Approx. Kotagiri",
-    "image": "/projects/project-10.jpg",
-    "produceImage": "/projects/project-10-produce.png",
+    "image": "/projects/project-10.webp",
+    "produceImage": "/projects/project-10-produce.webp",
     "description": "D1210 - 150 solar polyhouse unit empowering tribal women's self-help groups in Banagudi, Kotagiri to dehydrate wild amla, jackfruit, and hill grains."
   },
   {
@@ -161,8 +161,8 @@ export const projectGalleryData = [
     "application": "Amla, jackfruit, grains and hill-grown produce",
     "category": "Women's self-help group business",
     "mapRef": "Approx. Kotagiri",
-    "image": "/projects/project-11.jpg",
-    "produceImage": "/projects/project-11-produce.png",
+    "image": "/projects/project-11.webp",
+    "produceImage": "/projects/project-11-produce.webp",
     "description": "D1210 - 150 installation at Bangalapadikai, Nilgiris supporting women micro-entrepreneurs producing value-added organic hill produce and amla."
   },
   {
@@ -176,8 +176,8 @@ export const projectGalleryData = [
     "application": "Moringa leaves for value addition",
     "category": "Business",
     "mapRef": "Locality",
-    "image": "/projects/project-12.jpg",
-    "produceImage": "/projects/project-12-produce.png",
+    "image": "/projects/project-12.webp",
+    "produceImage": "/projects/project-12-produce.webp",
     "description": "D1210 - 100 compact polyhouse solar dryer installed near SRM University, Trichy for commercial green moringa powder production."
   },
   {
@@ -191,8 +191,8 @@ export const projectGalleryData = [
     "application": "Ingredients for ready-made masala",
     "category": "Business",
     "mapRef": "Approx. locality match",
-    "image": "/projects/project-13.jpg",
-    "produceImage": "/projects/project-13-produce.png",
+    "image": "/projects/project-13.webp",
+    "produceImage": "/projects/project-13-produce.webp",
     "description": "P1709 - 200 solar thermal dryer in Kombupalayam, Erode dehydrating specialty spices, coriander, and ingredients for ready-made masala."
   },
   {
@@ -206,8 +206,8 @@ export const projectGalleryData = [
     "application": "Oil seeds, vegetables, herbs, grapes and multiple crops",
     "category": "Business",
     "mapRef": "Approx. Chinnalapatti",
-    "image": "/projects/project-14.jpg",
-    "produceImage": "/projects/project-14-produce.png",
+    "image": "/projects/project-14.webp",
+    "produceImage": "/projects/project-14-produce.webp",
     "description": "H2008 - 250 commercial polyhouse dryer in Kalikkampatti, Dindigul district processing oil seeds, grapes, vegetables, and medicinal herbs."
   },
   {
@@ -221,8 +221,8 @@ export const projectGalleryData = [
     "application": "Hibiscus, butterfly pea and other flowers",
     "category": "Business",
     "mapRef": "Approx. Nagpur",
-    "image": "/projects/project-15.jpg",
-    "produceImage": "/projects/project-15-produce.png",
+    "image": "/projects/project-15.webp",
+    "produceImage": "/projects/project-15-produce.webp",
     "description": "D1210 - 150 solar floral dryer in Kusumdhara, Nagpur, Maharashtra preserving vibrant natural colors and petals in hibiscus, butterfly pea, and edible flowers."
   },
   {
@@ -236,8 +236,8 @@ export const projectGalleryData = [
     "application": "Amla, jackfruit, grains and hill-grown produce",
     "category": "Women's self-help group business",
     "mapRef": "Approx. Kadambur area",
-    "image": "/projects/project-16.jpg",
-    "produceImage": "/projects/project-16-produce.png",
+    "image": "/projects/project-16.webp",
+    "produceImage": "/projects/project-16-produce.webp",
     "description": "D1210 - 300 hill-region solar dryer in Kadambur, Sathyamangalam hills supporting tribal women SHGs in value-adding wild forest produce."
   },
   {
@@ -251,8 +251,8 @@ export const projectGalleryData = [
     "application": "Oil seeds, grapes and multiple crops",
     "category": "Business",
     "mapRef": "Approx. Chikkaballapur",
-    "image": "/projects/project-17.jpg",
-    "produceImage": "/projects/project-17-produce.png",
+    "image": "/projects/project-17.webp",
+    "produceImage": "/projects/project-17-produce.webp",
     "description": "D1210 - 150 solar dryer in Manchenahalli, Chikkaballapur, Karnataka for high-grade raisin drying and local oilseed processing."
   },
   {
@@ -266,8 +266,8 @@ export const projectGalleryData = [
     "application": "Multiple crops",
     "category": "Business",
     "mapRef": "Locality",
-    "image": "/projects/project-18.jpg",
-    "produceImage": "/projects/project-18-produce.png",
+    "image": "/projects/project-18.webp",
+    "produceImage": "/projects/project-18-produce.webp",
     "description": "P1709 - 200 solar polyhouse in Raichur, Karnataka for multi-crop commercial drying with high thermal efficiency."
   },
   {
@@ -281,8 +281,8 @@ export const projectGalleryData = [
     "application": "Chilli and regional agricultural produce",
     "category": "Business",
     "mapRef": "Approx. Gohpur",
-    "image": "/projects/project-19.jpg",
-    "produceImage": "/projects/project-19-produce.png",
+    "image": "/projects/project-19.webp",
+    "produceImage": "/projects/project-19-produce.webp",
     "description": "D1210 - 300 industrial polyhouse solar dryer in Gohpur, Assam operating effectively under Northeast monsoon conditions for King Chilli and regional crops."
   },
   {
@@ -296,8 +296,8 @@ export const projectGalleryData = [
     "application": "Fish",
     "category": "Business",
     "mapRef": "Approx. Thoothukudi",
-    "image": "/projects/project-20.jpg",
-    "produceImage": "/projects/project-20-produce.png",
+    "image": "/projects/project-20.webp",
+    "produceImage": "/projects/project-20-produce.webp",
     "description": "Massive H2008 - 1000 industrial hygienic seafood dryer in Perurani, Thoothukudi coastal belt for clean, fly-free, 100% solar dried fish production."
   },
   {
@@ -311,8 +311,8 @@ export const projectGalleryData = [
     "application": "Chilli, ginger, turmeric and regional produce",
     "category": "Business",
     "mapRef": "Approx. village reference",
-    "image": "/projects/project-21.jpg",
-    "produceImage": "/projects/project-21-produce.png",
+    "image": "/projects/project-21.webp",
+    "produceImage": "/projects/project-21-produce.webp",
     "description": "D1210 - 300 high-elevation solar polyhouse in Sailulak, Mizoram preserving high curcumin turmeric, bird's eye chilli, and organic ginger."
   },
   {
@@ -326,8 +326,8 @@ export const projectGalleryData = [
     "application": "Mushroom, areca nut, copra, amla and other produce",
     "category": "Business",
     "mapRef": "Approx. Bangarapet",
-    "image": "/projects/project-22.jpg",
-    "produceImage": "/projects/project-22-produce.png",
+    "image": "/projects/project-22.webp",
+    "produceImage": "/projects/project-22-produce.webp",
     "description": "D1210 - 300 commercial solar dryer in Sakkanahalli, Bangarapet, Karnataka designed for high-value mushroom, areca nut, and copra drying."
   },
   {
@@ -341,8 +341,8 @@ export const projectGalleryData = [
     "application": "Chilli, ginger, turmeric and regional produce",
     "category": "Business",
     "mapRef": "Approx. village reference",
-    "image": "/projects/project-23.jpg",
-    "produceImage": "/projects/project-23-produce.png",
+    "image": "/projects/project-23.webp",
+    "produceImage": "/projects/project-23-produce.webp",
     "description": "D1210 - 300 solar greenhouse tunnel dryer in Khuangthing, Mizoram for organic ginger, turmeric, and Naga chilli processing."
   },
   {
@@ -356,8 +356,8 @@ export const projectGalleryData = [
     "application": "Multiple crops for drying-data acquisition",
     "category": "Research & development",
     "mapRef": "Location pending",
-    "image": "/projects/project-24.jpg",
-    "produceImage": "/projects/project-24-produce.png",
+    "image": "/projects/project-24.webp",
+    "produceImage": "/projects/project-24-produce.webp",
     "description": "R&D testing D1210 - 150 solar polyhouse at ZeniTEK Incubation Centre, SSM College of Engineering for live crop drying-data acquisition and thermal testing."
   },
   {
@@ -371,8 +371,8 @@ export const projectGalleryData = [
     "application": "Multiple crops and regional agricultural produce",
     "category": "Business installation",
     "mapRef": "Locality pin",
-    "image": "/projects/project-25.jpg",
-    "produceImage": "/projects/project-25-produce.png",
+    "image": "/projects/project-25.webp",
+    "produceImage": "/projects/project-25-produce.webp",
     "description": "D1210 - 150 business installation in Chintamani, Karnataka for multi-crop commercial drying and regional agricultural produce."
   }
 ];

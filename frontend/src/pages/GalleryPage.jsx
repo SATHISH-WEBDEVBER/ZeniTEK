@@ -113,7 +113,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
       
       {/* SECTION 1: HERO (background photo, left-aligned heading) */}
       <PageHero
-        images="/real-photos/zenitek_photo_43.jpeg"
+        images="/real-photos/zenitek_photo_43.webp"
         title={<>{t('gallery_heroTitle1')} <br /><span className="text-[#002DC2]">{t('gallery_heroTitle2')}</span></>}
         subtitle={t('gallery_heroSubtitle')}
       >

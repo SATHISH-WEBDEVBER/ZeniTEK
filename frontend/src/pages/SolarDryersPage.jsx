@@ -18,6 +18,11 @@ import {
   MapPin, Calendar, Search, Filter, Sparkles, ArrowRight, ShieldCheck, CheckCircle2, X, PhoneCall, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, SlidersHorizontal, Eye, LayoutGrid, Sun, Wind, Droplets, Cpu, Shield, Zap, Maximize2, Download, Layers, Grid, FileText, Camera, Image as ImageIcon, ChevronDown, ChevronUp, Loader, Package, Ruler, BookOpen, Timer, Images, Factory, Map as MapIcon
 } from 'lucide-react';
 
+// Brochure pages in /pdf-products are also stored as two halves (-1 top, -2 bottom) for the viewer
+const pageImageParts = (src) => (
+  /\/pdf-products\/.+\.webp$/.test(src || '') ? [1, 2].map(n => src.replace(/\.webp$/, `-${n}.webp`)) : [src]
+);
+
 export default function SolarDryersPage({ onOpenQuoteModal }) {
   const { t, tf } = useLanguage();
   const navigate = useNavigate();
@@ -168,7 +173,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
       
       {/* SECTION 1: HERO HEADER (background photo, left-aligned heading) */}
       <PageHero
-        images="/real-photos/zenitek_photo_44.jpeg"
+        images="/real-photos/zenitek_photo_44.webp"
         title={<>{t('dryers_heroTitle1')} <span className="text-[#1A822B]">{t('dryers_heroTitle2')}</span></>}
         subtitle={<>{richT('dryers_heroSubtitle', { pct: <strong className="text-slate-900">40%</strong> })}</>}
         actions={<>
@@ -1241,7 +1246,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
               <div className="flex items-center space-x-2">
                 <a
                   href={selectedBrochureModalPage.brochurePageImage}
-                  download={`ZeniTEK_Brochure_Page_${selectedBrochureModalPage.page}.png`}
+                  download={`ZeniTEK_Brochure_Page_${selectedBrochureModalPage.page}.webp`}
                   className="px-3 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-xs font-bold text-white flex items-center space-x-1 transition-colors"
                 >
                   <Download className="w-4 h-4" />
@@ -1260,12 +1265,19 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
             </div>
 
             {/* High-Res Image Viewport */}
-            <div className="p-2 sm:p-4 overflow-auto flex-1 bg-slate-100 flex items-center justify-center">
-              <img
-                src={selectedBrochureModalPage.brochurePageImage}
-                alt={`${selectedBrochureModalPage.title} - ${t('dryers_pageBadge', { page: selectedBrochureModalPage.page })}`}
-                className="max-w-full max-h-[75vh] object-contain rounded-xl shadow border border-slate-300"
-              />
+            {/* Dense brochure pages are stored as a top and a bottom half (each kept under 50 KB),
+                stacked seamlessly so the page can be read at full width and scrolled */}
+            <div className="p-2 sm:p-4 overflow-auto flex-1 bg-slate-100">
+              <div className="mx-auto w-full max-w-3xl rounded-xl shadow border border-slate-300 overflow-hidden bg-white">
+                {pageImageParts(selectedBrochureModalPage.brochurePageImage).map((src, i) => (
+                  <img
+                    key={src}
+                    src={src}
+                    alt={i === 0 ? `${selectedBrochureModalPage.title} - ${t('dryers_pageBadge', { page: selectedBrochureModalPage.page })}` : ''}
+                    className="block w-full h-auto"
+                  />
+                ))}
+              </div>
             </div>
 
             {/* Modal Footer */}

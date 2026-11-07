@@ -12,15 +12,15 @@ import IconTile from '../components/IconTile';
 
 // Real ZeniTEK installation photos (no AI renders, no baked-in text)
 const heroSlides = [
-  { image: '/real-photos/zenitek_photo_34.jpeg', alt: 'ZeniTEK solar tunnel dryer with PV canopy in paddy fields' },
-  { image: '/real-photos/zenitek_photo_45.jpeg', alt: 'Long ZeniTEK solar tunnel dryer in an open field' },
-  { image: '/real-photos/zenitek_photo_12.jpeg', alt: 'ZeniTEK solar tunnel dryer on a stone plinth' },
+  { image: '/real-photos/zenitek_photo_34.webp', alt: 'ZeniTEK solar tunnel dryer with PV canopy in paddy fields' },
+  { image: '/real-photos/zenitek_photo_45.webp', alt: 'Long ZeniTEK solar tunnel dryer in an open field' },
+  { image: '/real-photos/zenitek_photo_12.webp', alt: 'ZeniTEK solar tunnel dryer on a stone plinth' },
 ];
 
 const crops = [
-  { titleKey: 'cropSpices', descKey: 'homeSpicesDesc', image: '/real-photos/zenitek_photo_23.jpeg', alt: 'Red chillies drying on trays inside a ZeniTEK tunnel dryer' },
-  { titleKey: 'homeHerbsTitle', descKey: 'homeHerbsDesc', image: '/real-photos/zenitek_photo_35.jpeg', alt: 'Butterfly-pea flowers on trays of a ZeniTEK cabinet dryer' },
-  { titleKey: 'cropFish', descKey: 'homeFishDesc', image: '/real-photos/zenitek_photo_27.jpeg', alt: 'Dried shrimp on trays of a ZeniTEK cabinet dryer' },
+  { titleKey: 'cropSpices', descKey: 'homeSpicesDesc', image: '/real-photos/zenitek_photo_23.webp', alt: 'Red chillies drying on trays inside a ZeniTEK tunnel dryer' },
+  { titleKey: 'homeHerbsTitle', descKey: 'homeHerbsDesc', image: '/real-photos/zenitek_photo_35.webp', alt: 'Butterfly-pea flowers on trays of a ZeniTEK cabinet dryer' },
+  { titleKey: 'cropFish', descKey: 'homeFishDesc', image: '/real-photos/zenitek_photo_27.webp', alt: 'Dried shrimp on trays of a ZeniTEK cabinet dryer' },
 ];
 
 const pillars = [
@@ -31,14 +31,14 @@ const pillars = [
 ];
 
 const clientPartners = [
-  { name: 'IIT Bhubaneswar', logo: '/client-logos/iit-bhubaneswar.png' },
-  { name: 'Anna University', logo: '/client-logos/anna-university.png' },
-  { name: 'SRM University', logo: '/client-logos/srm-ist.png' },
-  { name: 'Mitsui Chemicals', logo: '/client-logos/mitsui-chemicals.png' },
-  { name: 'Indo-MIM', logo: '/client-logos/indo-mim.png' },
-  { name: 'SELCO Foundation', logo: '/client-logos/selco-foundation.png' },
-  { name: 'TNJFU Fisheries Univ', logo: '/client-logos/tnjfu-fisheries.png' },
-  { name: 'Gandhigram Rural Inst.', logo: '/client-logos/gandhigram-rural-institute.png' },
+  { name: 'IIT Bhubaneswar', logo: '/client-logos/iit-bhubaneswar.webp' },
+  { name: 'Anna University', logo: '/client-logos/anna-university.webp' },
+  { name: 'SRM University', logo: '/client-logos/srm-ist.webp' },
+  { name: 'Mitsui Chemicals', logo: '/client-logos/mitsui-chemicals.webp' },
+  { name: 'Indo-MIM', logo: '/client-logos/indo-mim.webp' },
+  { name: 'SELCO Foundation', logo: '/client-logos/selco-foundation.webp' },
+  { name: 'TNJFU Fisheries Univ', logo: '/client-logos/tnjfu-fisheries.webp' },
+  { name: 'Gandhigram Rural Inst.', logo: '/client-logos/gandhigram-rural-institute.webp' },
 ];
 
 const inputClass = 'w-full bg-[#F0F4FD] border border-[#123B92]/30 text-black rounded-xl px-4 py-3 text-base placeholder-black/50 font-medium focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2]';
@@ -294,13 +294,13 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
             <div className="grid grid-cols-2 gap-4">
               <img
-                src="/real-photos/zenitek_photo_02.jpeg"
+                src="/real-photos/zenitek_photo_02.webp"
                 alt="Farmers spreading chillies on racks inside a ZeniTEK tunnel dryer"
                 loading="lazy"
                 className="w-full h-64 sm:h-80 object-cover rounded-2xl shadow-md"
               />
               <img
-                src="/real-photos/zenitek_photo_19.jpeg"
+                src="/real-photos/zenitek_photo_19.webp"
                 alt="ZeniTEK solar tunnel dryer among palm trees"
                 loading="lazy"
                 className="w-full h-64 sm:h-80 object-cover rounded-2xl shadow-md mt-8"

@@ -14,7 +14,7 @@ export const initialProjects = [
     "cropDrying": "Multi-Crop Thermal Research & Training",
     "dryerType": "D1210 - 150 Incubation Dryer",
     "capacity": "150 kg Batch Research Unit",
-    "imageUrl": "/projects/project-24.jpg",
+    "imageUrl": "/projects/project-24.webp",
     "description": "Active operational solar polyhouse at ZeniTEK Incubation Center, SSM College of Engineering, Komarapalayam for continuous drying analytics and farmer training."
   },
   {
@@ -25,7 +25,7 @@ export const initialProjects = [
     "cropDrying": "Turmeric, Grains & Spices",
     "dryerType": "SOLDRY 1208 Tunnel Dryer",
     "capacity": "250 kg Batch",
-    "imageUrl": "/projects/project-03.jpg",
+    "imageUrl": "/projects/project-03.webp",
     "description": "Walk-in solar thermal dryer installation in Sathyamangalam belt for commercial turmeric and spice preservation."
   },
   {
@@ -36,7 +36,7 @@ export const initialProjects = [
     "cropDrying": "Maize, Paddy & Turmeric",
     "dryerType": "1209 - 150 Solar Dryer",
     "capacity": "150 kg Batch Unit",
-    "imageUrl": "/projects/project-03.jpg",
+    "imageUrl": "/projects/project-03.webp",
     "description": "Household and farm solar dryer in Vazhapady, Salem district enabling smallholders to dehydrate turmeric, paddy, and grains with zero electricity cost."
   },
   {
@@ -47,7 +47,7 @@ export const initialProjects = [
     "cropDrying": "Maize, Paddy & Multi-Crops",
     "dryerType": "1208 - 150 Polyhouse Dryer",
     "capacity": "150 kg Batch Setup",
-    "imageUrl": "/projects/project-02.jpg",
+    "imageUrl": "/projects/project-02.webp",
     "description": "1208 - 150 household solar polyhouse installed in Chinnasalem, Kallakurichi for rapid, rainproof food drying."
   },
   {
@@ -58,7 +58,7 @@ export const initialProjects = [
     "cropDrying": "Chillies, Spices & Horticulture",
     "dryerType": "SOLDRY 1210 Walk-In",
     "capacity": "300 kg Batch",
-    "imageUrl": "/projects/project-02.jpg",
+    "imageUrl": "/projects/project-02.webp",
     "description": "Commercial walk-in polyhouse solar dryer in Kallakurichi protecting chilli harvests from rain spoilage and mold contamination."
   },
   {
@@ -69,7 +69,7 @@ export const initialProjects = [
     "cropDrying": "Moringa Leaves for Value Addition",
     "dryerType": "D1210 - 100 Solar Polyhouse",
     "capacity": "100 kg Batch Setup",
-    "imageUrl": "/projects/project-12.jpg",
+    "imageUrl": "/projects/project-12.webp",
     "description": "D1210 - 100 compact polyhouse solar dryer installed near SRM University, Trichy for commercial export-grade green moringa powder production."
   },
   {
@@ -80,7 +80,7 @@ export const initialProjects = [
     "cropDrying": "Coconut / Grade-1 White Copra",
     "dryerType": "1208 - 300 Walk-In Tunnel",
     "capacity": "300 kg Batch / 500 Nuts Daily",
-    "imageUrl": "/projects/project-04.jpg",
+    "imageUrl": "/projects/project-04.webp",
     "description": "High-capacity walk-in polyhouse solar tunnel dryer in Pollachi coconut belt yielding 100% Grade-1 White Copra with zero sulfur or smoke contamination."
   },
   {
@@ -91,7 +91,7 @@ export const initialProjects = [
     "cropDrying": "Wild Amla, Jackfruit & Hill Grains",
     "dryerType": "D1210 - 150 Hill Polyhouse",
     "capacity": "150 kg Batch Unit",
-    "imageUrl": "/projects/project-10.jpg",
+    "imageUrl": "/projects/project-10.webp",
     "description": "D1210 - 150 solar polyhouse empowering tribal women's self-help groups in Kotagiri, Nilgiris to process organic forest amla and jackfruit chips."
   },
   {
@@ -102,7 +102,7 @@ export const initialProjects = [
     "cropDrying": "Spices, Herbs & Horticulture",
     "dryerType": "Commercial Polyhouse Tunnel",
     "capacity": "250 kg Batch Setup",
-    "imageUrl": "/projects/project-02.jpg",
+    "imageUrl": "/projects/project-02.webp",
     "description": "Rain-proof greenhouse solar thermal installation providing continuous clean dehydration for regional farmers."
   },
   {
@@ -113,7 +113,7 @@ export const initialProjects = [
     "cropDrying": "Tomatoes, Herbal Leaves & Vegetables",
     "dryerType": "D1210 - 450 Multi-Tier Walk-In",
     "capacity": "450 kg Large Multi-Tier Batch",
-    "imageUrl": "/projects/project-06.jpg",
+    "imageUrl": "/projects/project-06.webp",
     "description": "Large D1210 - 450 walk-in solar tunnel dryer with interior tiered stainless steel drying racks in Mulbagal, Karnataka for commercial tomato dehydration."
   },
   {
@@ -124,7 +124,7 @@ export const initialProjects = [
     "cropDrying": "Moringa Leaves & Horticulture Produce",
     "dryerType": "D1210 - 300 Polyhouse",
     "capacity": "300 kg Batch Unit",
-    "imageUrl": "/projects/project-05.jpg",
+    "imageUrl": "/projects/project-05.webp",
     "description": "D1210 - 300 commercial solar dryer installed in Chikkaballapur, Karnataka for high-retention moringa leaf drying and export value addition."
   },
   {
@@ -135,7 +135,7 @@ export const initialProjects = [
     "cropDrying": "Areca Nut / Betel Nut",
     "dryerType": "D1210 - 300 Walk-In",
     "capacity": "300 kg Batch Setup",
-    "imageUrl": "/projects/project-07.jpg",
+    "imageUrl": "/projects/project-07.webp",
     "description": "D1210 - 300 solar thermal polyhouse installation in Sirsi, Uttara Kannada for rapid, mold-free areca nut processing during humid monsoon season."
   },
   {
@@ -146,7 +146,7 @@ export const initialProjects = [
     "cropDrying": "Moringa Leaves & Agricultural Crops",
     "dryerType": "D1210 - 300 Polyhouse",
     "capacity": "300 kg Batch Unit",
-    "imageUrl": "/projects/project-08.jpg",
+    "imageUrl": "/projects/project-08.webp",
     "description": "Farm business D1210 - 300 solar installation in Haveri, Karnataka delivering clean, dust-free dehydration for moringa leaves and local horticulture crops."
   },
   {
@@ -157,7 +157,7 @@ export const initialProjects = [
     "cropDrying": "Custard Apple Skin & Seeds",
     "dryerType": "HUT810 - 200 Commercial Dryer",
     "capacity": "200 kg Batch Setup",
-    "imageUrl": "/projects/project-01.jpg",
+    "imageUrl": "/projects/project-01.webp",
     "description": "HUT810 - 200 commercial solar dryer installed in Lakhanpuri, Kanker district, Chhattisgarh for processing custard apple skin and seeds for agro-biomass."
   },
   {
@@ -168,7 +168,7 @@ export const initialProjects = [
     "cropDrying": "Tapioca, Pepper & Turmeric",
     "dryerType": "SOLDRY 1210 Polyhouse",
     "capacity": "250 kg Batch Unit",
-    "imageUrl": "/projects/project-09.jpg",
+    "imageUrl": "/projects/project-09.webp",
     "description": "Solar thermal drying unit in Attur, Salem district for tapioca and spice processing, reducing drying time from 6 days to 2 days."
   },
   {
@@ -179,7 +179,7 @@ export const initialProjects = [
     "cropDrying": "Herbal Powders, Vegetables & Greens",
     "dryerType": "Polyhouse Solar Dehydrator",
     "capacity": "200 kg Batch",
-    "imageUrl": "/projects/project-12.jpg",
+    "imageUrl": "/projects/project-12.webp",
     "description": "Clean hygienic solar dehydration unit serving organic farmers cooperative in Chengalpattu district."
   },
   {
@@ -190,7 +190,7 @@ export const initialProjects = [
     "cropDrying": "Vegetables, Flowers & Herbs",
     "dryerType": "SOLDRY 1210 Walk-In",
     "capacity": "250 kg Batch Setup",
-    "imageUrl": "/projects/project-05.jpg",
+    "imageUrl": "/projects/project-05.webp",
     "description": "Hoskote installation near Bengaluru supporting peri-urban vegetable and medicinal plant dehydration."
   },
   {
@@ -201,7 +201,7 @@ export const initialProjects = [
     "cropDrying": "Ginger, Turmeric & Marine Catch",
     "dryerType": "Hybrid Solar Polyhouse",
     "capacity": "300 kg Batch",
-    "imageUrl": "/projects/project-19.jpg",
+    "imageUrl": "/projects/project-19.webp",
     "description": "Odisha installation serving farmer collectives for hygienic ginger, turmeric, and dried produce value addition."
   },
   {
@@ -212,7 +212,7 @@ export const initialProjects = [
     "cropDrying": "Oil Seeds, Vegetables, Herbs & Grapes",
     "dryerType": "H2008 - 250 Solar Tunnel",
     "capacity": "250 kg Batch Setup",
-    "imageUrl": "/projects/project-14.jpg",
+    "imageUrl": "/projects/project-14.webp",
     "description": "H2008 - 250 commercial polyhouse dryer in Kalikkampatti, Dindigul district processing oil seeds, grapes, vegetables, and medicinal herbs."
   },
   {
@@ -223,7 +223,7 @@ export const initialProjects = [
     "cropDrying": "Black Pepper, Cardamom & Nutmeg",
     "dryerType": "High-Humidity Solar Dryer",
     "capacity": "250 kg Batch Setup",
-    "imageUrl": "/projects/project-07.jpg",
+    "imageUrl": "/projects/project-07.webp",
     "description": "Kerala spice corridor installation in Angamaly preserving 100% natural essential oils and volatile compounds in black pepper and nutmeg."
   },
   {
@@ -234,7 +234,7 @@ export const initialProjects = [
     "cropDrying": "Cumin, Fennel & Agricultural Seeds",
     "dryerType": "High-Volume Solar Tunnel",
     "capacity": "400 kg Batch",
-    "imageUrl": "/projects/project-14.jpg",
+    "imageUrl": "/projects/project-14.webp",
     "description": "Gujarat agricultural installation in Bavla processing seed spices with clean sun-powered moisture extraction."
   },
   {
@@ -245,7 +245,7 @@ export const initialProjects = [
     "cropDrying": "Shallots, Banana Chips & Herbs",
     "dryerType": "SOLDRY 1210 Tunnel",
     "capacity": "200 kg Batch",
-    "imageUrl": "/projects/project-12.jpg",
+    "imageUrl": "/projects/project-12.webp",
     "description": "Trichy district solar dryer empowering rural farmers with commercial dehydration of shallots and bananas."
   },
   {
@@ -256,7 +256,7 @@ export const initialProjects = [
     "cropDrying": "Salted Fish & Coastal Seafood",
     "dryerType": "Sealed Coastal Solar Dryer",
     "capacity": "300 kg Marine Catch",
-    "imageUrl": "/projects/project-20.jpg",
+    "imageUrl": "/projects/project-20.webp",
     "description": "Sealed fly-free coastal solar dryer protecting fishermen's marine catch from sand, flies, and rain damage."
   },
   {
@@ -267,7 +267,7 @@ export const initialProjects = [
     "cropDrying": "Vegetables, Flowers & Spices",
     "dryerType": "H2008 - 250 Commercial Unit",
     "capacity": "250 kg Batch Setup",
-    "imageUrl": "/projects/project-14.jpg",
+    "imageUrl": "/projects/project-14.webp",
     "description": "Dindigul district solar greenhouse dryer serving local horticulture cooperatives."
   },
   {
@@ -278,7 +278,7 @@ export const initialProjects = [
     "cropDrying": "Marine Fish & Salted Seafood",
     "dryerType": "H2008 - 1000 Industrial Dryer",
     "capacity": "1,000 kg Batch Industrial Unit",
-    "imageUrl": "/projects/project-20.jpg",
+    "imageUrl": "/projects/project-20.webp",
     "description": "Massive H2008 - 1000 industrial hygienic seafood dryer in Perurani, Thoothukudi coastal belt for clean, fly-free, 100% solar dried fish production."
   },
   {
@@ -289,7 +289,7 @@ export const initialProjects = [
     "cropDrying": "Bird's Eye Chilli, Ginger & Turmeric",
     "dryerType": "D1210 - 300 High-Elevation Unit",
     "capacity": "300 kg Batch Setup",
-    "imageUrl": "/projects/project-21.jpg",
+    "imageUrl": "/projects/project-21.webp",
     "description": "D1210 - 300 high-elevation solar polyhouse in Sailulak, Mizoram preserving high curcumin turmeric, bird's eye chilli, and organic ginger."
   },
   {
@@ -300,7 +300,7 @@ export const initialProjects = [
     "cropDrying": "Hibiscus, Butterfly Pea & Edible Flowers",
     "dryerType": "D1210 - 150 Solar Dehydrator",
     "capacity": "150 kg Batch Setup",
-    "imageUrl": "/projects/project-15.jpg",
+    "imageUrl": "/projects/project-15.webp",
     "description": "D1210 - 150 solar floral dryer in Kusumdhara, Nagpur, Maharashtra preserving vibrant natural colors and petals in hibiscus and butterfly pea."
   },
   {
@@ -311,7 +311,7 @@ export const initialProjects = [
     "cropDrying": "Red Chillies & Regional Field Crops",
     "dryerType": "P1709 - 200 Polyhouse",
     "capacity": "200 kg Batch Setup",
-    "imageUrl": "/projects/project-18.jpg",
+    "imageUrl": "/projects/project-18.webp",
     "description": "P1709 - 200 solar polyhouse in Raichur, Karnataka for multi-crop commercial drying with high thermal efficiency."
   },
   {
@@ -322,7 +322,7 @@ export const initialProjects = [
     "cropDrying": "Oil Seeds, Grapes & Multiple Crops",
     "dryerType": "D1210 - 150 Solar Polyhouse",
     "capacity": "150 kg Batch Setup",
-    "imageUrl": "/projects/project-17.jpg",
+    "imageUrl": "/projects/project-17.webp",
     "description": "D1210 - 150 solar dryer in Manchenahalli, Chikkaballapur, Karnataka for high-grade raisin drying and local oilseed processing."
   },
   {
@@ -333,7 +333,7 @@ export const initialProjects = [
     "cropDrying": "Mushroom, Areca Nut, Copra & Amla",
     "dryerType": "D1210 - 300 Walk-In",
     "capacity": "300 kg Batch Setup",
-    "imageUrl": "/projects/project-22.jpg",
+    "imageUrl": "/projects/project-22.webp",
     "description": "D1210 - 300 commercial solar dryer in Sakkanahalli, Bangarapet, Karnataka designed for high-value mushroom, areca nut, and copra drying."
   },
   {
@@ -344,7 +344,7 @@ export const initialProjects = [
     "cropDrying": "Amla, Jackfruit, Grains & Forest Harvest",
     "dryerType": "D1210 - 300 Hill Polyhouse",
     "capacity": "300 kg Batch Setup",
-    "imageUrl": "/projects/project-16.jpg",
+    "imageUrl": "/projects/project-16.webp",
     "description": "D1210 - 300 hill-region solar dryer in Kadambur, Sathyamangalam hills supporting tribal women SHGs in value-adding wild forest produce."
   },
   {
@@ -355,7 +355,7 @@ export const initialProjects = [
     "cropDrying": "Naga Chilli, Specialty Tea & Spices",
     "dryerType": "D1210 - 300 Industrial Plant",
     "capacity": "300 sqft / 500 kg Batch",
-    "imageUrl": "/projects/project-19.jpg",
+    "imageUrl": "/projects/project-19.webp",
     "description": "D1210 - 300 industrial plant in Gohpur, Assam operating effectively under Northeast monsoon conditions for King Chilli and regional crops."
   },
   {
@@ -366,7 +366,7 @@ export const initialProjects = [
     "cropDrying": "Organic Ginger, Turmeric & Chillies",
     "dryerType": "D1210 - 300 Solar Polyhouse",
     "capacity": "300 kg Batch Setup",
-    "imageUrl": "/projects/project-23.jpg",
+    "imageUrl": "/projects/project-23.webp",
     "description": "D1210 - 300 solar greenhouse tunnel dryer in Khuangthing, Mizoram for organic ginger, turmeric, and Naga chilli processing."
   },
   {
@@ -377,7 +377,7 @@ export const initialProjects = [
     "cropDrying": "Spices, Herbs & Food Products",
     "dryerType": "SOLDRY 1210 Setup",
     "capacity": "200 kg Batch Setup",
-    "imageUrl": "/projects/project-12.jpg",
+    "imageUrl": "/projects/project-12.webp",
     "description": "Urban agro-processing solar thermal dryer serving micro-entrepreneurs in greater Chennai region."
   },
   {
@@ -388,7 +388,7 @@ export const initialProjects = [
     "cropDrying": "Regional Agricultural Produce & Crops",
     "dryerType": "D1210 - 150 Solar Dryer",
     "capacity": "150 kg Batch Unit",
-    "imageUrl": "/projects/project-25.jpg",
+    "imageUrl": "/projects/project-25.webp",
     "description": "D1210 - 150 business installation in Chintamani, Karnataka for multi-crop commercial drying and regional agricultural produce."
   }
 ];

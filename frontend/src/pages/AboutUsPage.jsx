@@ -56,7 +56,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       badge: "High-Temp Process Heat",
       icon: Zap,
       category: "thermal",
-      image: "/real-photos/zenitek_photo_18.jpeg",
+      image: "/real-photos/zenitek_photo_18.webp",
       desc: "Engineered solar concentrated and non-concentrated thermal collectors delivering industrial process heat, steam generation, and bulk boiling water.",
       specs: [
         "Evacuated Tube Collectors (ETC)",
@@ -74,7 +74,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       badge: "Post-Harvest Crop Preservation",
       icon: Sprout,
       category: "agri",
-      image: "/real-photos/zenitek_photo_04.jpeg",
+      image: "/real-photos/zenitek_photo_04.webp",
       desc: "Clean-energy technologies for agricultural operations. Reduces drying times by 40%, preserves nutrient quality, and eliminates crop spoilage.",
       specs: [
         "Commercial Polyhouse Tunnel Dryers (150 – 1000 kg)",
@@ -92,7 +92,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       badge: "Testing & Turnkey Solar PV",
       icon: Cpu,
       category: "pv",
-      image: "/real-photos/zenitek_photo_26.jpeg",
+      image: "/real-photos/zenitek_photo_26.webp",
       desc: "Precision photovoltaic integration alongside specialized testing test rigs engineered for national and corporate solar PV certification laboratories.",
       specs: [
         "PV Panels & Turnkey System Integration",
@@ -110,7 +110,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       badge: "Academic & Prototype R&D",
       icon: Microscope,
       category: "rnd",
-      image: "/real-photos/zenitek_photo_23.jpeg",
+      image: "/real-photos/zenitek_photo_23.webp",
       desc: "Collaborative engineering with India's premier academic institutions. Developing demonstration models, research rigs, and turnkey commercialization pipelines.",
       specs: [
         "Academic Demonstration Models",
@@ -133,7 +133,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       client: "Anna University Chennai • Funded by DST (NRDMS)",
       clientKey: "about_p1Client",
       desc: "Commissioned to deliver 1,000 litres of boiling water daily for a remote scheduled tribal community, funded by Department of Science & Technology.",
-      image: "/real-photos/zenitek_photo_18.jpeg",
+      image: "/real-photos/zenitek_photo_18.webp",
       badge: "Tribal Welfare Project",
       tag: "Solar Thermal"
     },
@@ -145,7 +145,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       client: "Mitsui Chemicals Group (Global Industry)",
       clientKey: "about_p2Client",
       desc: "Custom visual inspection test rigs, outdoor solar testing rigs, and indoor testing rigs commissioned for a specialized PV certification laboratory.",
-      image: "/real-photos/zenitek_photo_25.jpeg",
+      image: "/real-photos/zenitek_photo_25.webp",
       badge: "Corporate Testing Lab",
       tag: "PV Solutions"
     },
@@ -156,7 +156,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       location: "SRM University, Chennai, Tamil Nadu",
       client: "SRM Institute of Science & Technology",
       desc: "Complete re-engineering, structural alignment, and commissioning of a massive 592 sq.m Scheffler dish solar thermal array.",
-      image: "/real-photos/zenitek_photo_12.jpeg",
+      image: "/real-photos/zenitek_photo_12.webp",
       badge: "Campus Renewable Energy",
       tag: "Solar Thermal"
     },
@@ -167,7 +167,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       location: "Chhattisgarh, India",
       client: "SELCO Foundation, Bangalore",
       desc: "Turnkey design, fabrication, and installation of a 192 sq.m industrial solar tunnel dryer for clean agricultural food processing.",
-      image: "/real-photos/zenitek_photo_04.jpeg",
+      image: "/real-photos/zenitek_photo_04.webp",
       badge: "Agricultural Processing",
       tag: "Agri-Solar"
     },
@@ -178,7 +178,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       location: "Bangalore, Karnataka",
       client: "SELCO Foundation, Bangalore",
       desc: "Full engineering design, prototyping, and field deployment of a clean solar-powered 4-row paddy transplanter machine.",
-      image: "/real-photos/zenitek_photo_27.jpeg",
+      image: "/real-photos/zenitek_photo_27.webp",
       badge: "Farm Mechanization",
       tag: "Agri-Solar"
     },
@@ -190,7 +190,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       client: "Indo-MIM Pvt Ltd (Precision Aerospace & MIM)",
       clientKey: "about_p6Client",
       desc: "Restored and recommissioned high-efficiency 80 sq.m Scheffler dish concentrator providing sustainable industrial process heat.",
-      image: "/real-photos/zenitek_photo_21.jpeg",
+      image: "/real-photos/zenitek_photo_21.webp",
       badge: "Industrial Process Heat",
       tag: "Solar Thermal"
     }
@@ -206,37 +206,37 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       name: "IIT Bhubaneswar",
       branch: "School of Mechanical Science",
       tag: "Academic R&D",
-      logo: "/client-logos/iit-bhubaneswar.png"
+      logo: "/client-logos/iit-bhubaneswar.webp"
     },
     {
       name: "Anna University Chennai",
       branch: "DST NRDMS Tribal Community Project",
       tag: "Govt Research",
-      logo: "/client-logos/anna-university.png"
+      logo: "/client-logos/anna-university.webp"
     },
     {
       name: "SRM University",
       branch: "592 Sq.m Scheffler Solar Thermal Array",
       tag: "Campus Thermal",
-      logo: "/client-logos/srm-ist.png"
+      logo: "/client-logos/srm-ist.webp"
     },
     {
       name: "Sree Sankara College",
       branch: "Energy Department, Kalady, Kerala",
       tag: "Lab Test Rigs",
-      logo: "/client-logos/sree-sankara-college.png"
+      logo: "/client-logos/sree-sankara-college.webp"
     },
     {
       name: "Gandhigram University",
       branch: "Centre for Rural Energy, Dindigul",
       tag: "Rural Energy",
-      logo: "/client-logos/gandhigram-rural-institute.png"
+      logo: "/client-logos/gandhigram-rural-institute.webp"
     },
     {
       name: "College of Fisheries",
       branch: "Fisheries Engineering, Nagapattinam",
       tag: "Marine Drying",
-      logo: "/client-logos/tnjfu-fisheries.png"
+      logo: "/client-logos/tnjfu-fisheries.webp"
     }
   ];
 
@@ -245,38 +245,38 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       name: "Mitsui Chemicals Group",
       detail: "Solar PV Certification Lab (Ahmedabad)",
       tag: "Global Industry",
-      logo: "/client-logos/mitsui-chemicals.png"
+      logo: "/client-logos/mitsui-chemicals.webp"
     },
     {
       name: "Indo-MIM Pvt Ltd",
       detail: "Industrial Scheffler Thermal (Bangalore)",
       tag: "Aerospace & MIM",
-      logo: "/client-logos/indo-mim.png"
+      logo: "/client-logos/indo-mim.webp"
     },
     {
       name: "SELCO Foundation",
       detail: "Solar Tunnel Dryers & Paddy Transplanters",
       tag: "Social Innovation",
-      logo: "/client-logos/selco-foundation.png"
+      logo: "/client-logos/selco-foundation.webp"
     },
     {
       name: "Pro-Target & NISE",
       detail: "Technical Mentorship (Germany / India)",
       tag: "Solar Pioneers",
-      logo: "/client-logos/nise.png"
+      logo: "/client-logos/nise.webp"
     }
   ];
 
   // Real Photo Showcase Grid (8 authentic field photos)
   const realPhotoGallery = [
-    { src: "/real-photos/zenitek_photo_18.jpeg", title: "Parabolic Trough Concentrator", tag: "Pachamalai Hills" },
-    { src: "/real-photos/zenitek_photo_04.jpeg", title: "SOLDRY 1210 Polyhouse Tunnel", tag: "Commercial Dryer" },
-    { src: "/real-photos/zenitek_photo_23.jpeg", title: "Active Solar Dehydration Hub", tag: "SS304 Food Trays" },
-    { src: "/real-photos/zenitek_photo_27.jpeg", title: "SUNDRY 50 Stainless Box Dryer", tag: "50 kg Farm Dryer" },
-    { src: "/real-photos/zenitek_photo_12.jpeg", title: "Industrial Solar Greenhouse", tag: "SRM Campus" },
-    { src: "/real-photos/zenitek_photo_25.jpeg", title: "SUNDRY 12 Dual-Tier Unit", tag: "Micro-Enterprise" },
-    { src: "/real-photos/zenitek_photo_26.jpeg", title: "Dual Mobile Testing Rigs", tag: "Field Validation" },
-    { src: "/real-photos/zenitek_photo_08.jpeg", title: "Multi-Tier Automated Airflow", tag: "Drying Chamber" }
+    { src: "/real-photos/zenitek_photo_18.webp", title: "Parabolic Trough Concentrator", tag: "Pachamalai Hills" },
+    { src: "/real-photos/zenitek_photo_04.webp", title: "SOLDRY 1210 Polyhouse Tunnel", tag: "Commercial Dryer" },
+    { src: "/real-photos/zenitek_photo_23.webp", title: "Active Solar Dehydration Hub", tag: "SS304 Food Trays" },
+    { src: "/real-photos/zenitek_photo_27.webp", title: "SUNDRY 50 Stainless Box Dryer", tag: "50 kg Farm Dryer" },
+    { src: "/real-photos/zenitek_photo_12.webp", title: "Industrial Solar Greenhouse", tag: "SRM Campus" },
+    { src: "/real-photos/zenitek_photo_25.webp", title: "SUNDRY 12 Dual-Tier Unit", tag: "Micro-Enterprise" },
+    { src: "/real-photos/zenitek_photo_26.webp", title: "Dual Mobile Testing Rigs", tag: "Field Validation" },
+    { src: "/real-photos/zenitek_photo_08.webp", title: "Multi-Tier Automated Airflow", tag: "Drying Chamber" }
   ];
 
   return (
@@ -284,7 +284,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
       {/* 1. HERO — full-bleed photo with left-aligned heading (matches Home hero) */}
       <PageHero
-        images="/real-photos/zenitek_photo_42.jpeg"
+        images="/real-photos/zenitek_photo_42.webp"
         title={
           <>
             {renderRich(t('about_heroTitle'), { br: 'hidden sm:block', hl: 'text-[#002DC2]' })}
@@ -364,14 +364,14 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
             <div className="lg:col-span-6 relative">
               <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-2xl bg-white group">
                 <img
-                  src="/real-photos/zenitek_photo_12.jpeg"
+                  src="/real-photos/zenitek_photo_12.webp"
                   alt={t('about_installAlt')}
                   className="w-full h-96 sm:h-[450px] object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
 
                 {/* Floating Glassmorphic Emblem */}
                 <div className="absolute top-4 left-4 sm:top-5 sm:left-5 bg-white/95 backdrop-blur-md px-4 sm:px-5 py-3 rounded-2xl border border-white/60 shadow-xl flex items-center space-x-3.5">
-                  <img src="/emblem.png" alt={t('about_emblemAlt')} className="w-10 h-10 object-contain" />
+                  <img src="/emblem.webp" alt={t('about_emblemAlt')} className="w-10 h-10 object-contain" />
                   <div>
                     <div className="text-sm font-black text-[#123B92]">{t('about_rndHub')}</div>
                     <div className="text-xs font-bold text-slate-500">Erode, Tamil Nadu</div>

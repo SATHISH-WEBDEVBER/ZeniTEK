@@ -94,7 +94,7 @@ const buildPinIcon = (isSelected) => L.divIcon({
       <div class="zenitek-pin-pulse"></div>
       <div class="zenitek-pin-body">
         <div class="zenitek-pin-emblem-wrap">
-          <img src="/emblem.png" alt="" class="zenitek-pin-emblem-img" draggable="false" />
+          <img src="/emblem.webp" alt="" class="zenitek-pin-emblem-img" draggable="false" />
         </div>
       </div>
       <div class="zenitek-pin-tip"></div>

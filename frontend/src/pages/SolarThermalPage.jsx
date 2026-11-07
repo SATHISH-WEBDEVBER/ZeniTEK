@@ -193,7 +193,7 @@ export default function SolarThermalPage({ onOpenQuoteModal }) {
       <section className="w-full pb-12 sm:pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-2xl border border-slate-200 overflow-hidden grid grid-cols-1 md:grid-cols-5 bg-white shadow-sm">
-            <img src="/real-photos/zenitek_photo_04.jpeg" alt="ZeniTEK SOLDRY polycarbonate tunnel solar dryer" loading="lazy" className="md:col-span-2 w-full h-56 md:h-full object-cover" />
+            <img src="/real-photos/zenitek_photo_04.webp" alt="ZeniTEK SOLDRY polycarbonate tunnel solar dryer" loading="lazy" className="md:col-span-2 w-full h-56 md:h-full object-cover" />
             <div className="md:col-span-3 p-6 sm:p-8 flex flex-col justify-center gap-3">
               <h3 className="text-2xl font-black text-[#123B92]">{t('prod_thDryerTitle')}</h3>
               <p className="text-base text-slate-600 leading-relaxed">{t('prod_thDryerBody')}</p>

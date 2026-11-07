@@ -11,7 +11,7 @@ import {
 // drawing from SolarThermalArt is shown instead.
 export const PRODUCTS = [
   {
-    path: '/solar-dryer-models', icon: Sun, image: '/real-photos/zenitek_photo_04.jpeg',
+    path: '/solar-dryer-models', icon: Sun, image: '/real-photos/zenitek_photo_04.webp',
     key: 'prod_dryersTitle', shortKey: 'prod_dryersShort', descKey: 'prod_dryersDesc',
     points: ['prod_dryersPoint1', 'prod_dryersPoint2', 'prod_dryersPoint3']
   },
@@ -21,7 +21,7 @@ export const PRODUCTS = [
     points: ['prod_thermalPoint1', 'prod_thermalPoint2', 'prod_thermalPoint3']
   },
   {
-    path: '/research-and-development', icon: Microscope, image: '/projects/project-24.jpg',
+    path: '/research-and-development', icon: Microscope, image: '/projects/project-24.webp',
     key: 'prod_rndTitle', shortKey: 'prod_rndShort', descKey: 'prod_rndDesc',
     points: ['prod_rndPoint1', 'prod_rndPoint2', 'prod_rndPoint3']
   }

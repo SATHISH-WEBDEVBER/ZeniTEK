@@ -12,12 +12,12 @@ export const teslaDryerProducts = [
     leaseInfo: "Govt Subsidy Assistance 40% – 60%",
     quoteCategory: "100 to 500 kg (Commercial)",
     images: [
-      "/real-photos/zenitek_photo_04.jpeg",
-      "/real-photos/zenitek_photo_12.jpeg",
-      "/real-photos/zenitek_photo_34.jpeg",
-      "/real-photos/zenitek_photo_10.jpeg",
-      "/real-photos/zenitek_photo_02.jpeg",
-      "/real-photos/zenitek_photo_38.jpeg"
+      "/real-photos/zenitek_photo_04.webp",
+      "/real-photos/zenitek_photo_12.webp",
+      "/real-photos/zenitek_photo_34.webp",
+      "/real-photos/zenitek_photo_10.webp",
+      "/real-photos/zenitek_photo_02.webp",
+      "/real-photos/zenitek_photo_38.webp"
     ]
   },
   {
@@ -29,12 +29,12 @@ export const teslaDryerProducts = [
     leaseInfo: "Govt Subsidy Assistance 50%",
     quoteCategory: "100 to 500 kg (Commercial)",
     images: [
-      "/real-photos/zenitek_photo_43.jpeg",
-      "/real-photos/zenitek_photo_44.jpeg",
-      "/real-photos/zenitek_photo_19.jpeg",
-      "/real-photos/zenitek_photo_20.jpeg",
-      "/real-photos/zenitek_photo_23.jpeg",
-      "/real-photos/zenitek_photo_33.jpeg"
+      "/real-photos/zenitek_photo_43.webp",
+      "/real-photos/zenitek_photo_44.webp",
+      "/real-photos/zenitek_photo_19.webp",
+      "/real-photos/zenitek_photo_20.webp",
+      "/real-photos/zenitek_photo_23.webp",
+      "/real-photos/zenitek_photo_33.webp"
     ]
   },
   {
@@ -46,13 +46,13 @@ export const teslaDryerProducts = [
     leaseInfo: "Govt Subsidy Assistance 40% – 50%",
     quoteCategory: "100 to 500 kg (Commercial)",
     images: [
-      "/real-photos/zenitek_photo_27.jpeg",
-      "/real-photos/zenitek_photo_01.jpeg",
-      "/real-photos/zenitek_photo_26.jpeg",
-      "/real-photos/zenitek_photo_31.jpeg",
-      "/real-photos/zenitek_photo_35.jpeg",
-      "/real-photos/zenitek_photo_36.jpeg",
-      "/real-photos/zenitek_photo_28.jpeg"
+      "/real-photos/zenitek_photo_27.webp",
+      "/real-photos/zenitek_photo_01.webp",
+      "/real-photos/zenitek_photo_26.webp",
+      "/real-photos/zenitek_photo_31.webp",
+      "/real-photos/zenitek_photo_35.webp",
+      "/real-photos/zenitek_photo_36.webp",
+      "/real-photos/zenitek_photo_28.webp"
     ]
   },
   {
@@ -64,12 +64,12 @@ export const teslaDryerProducts = [
     leaseInfo: "Govt Subsidy Assistance 50% – 60%",
     quoteCategory: "1 Ton+ (Industrial)",
     images: [
-      "/real-photos/zenitek_photo_45.jpeg",
-      "/real-photos/zenitek_photo_39.jpeg",
-      "/real-photos/zenitek_photo_42.jpeg",
-      "/real-photos/zenitek_photo_32.jpeg",
-      "/real-photos/zenitek_photo_40.jpeg",
-      "/real-photos/zenitek_photo_41.jpeg"
+      "/real-photos/zenitek_photo_45.webp",
+      "/real-photos/zenitek_photo_39.webp",
+      "/real-photos/zenitek_photo_42.webp",
+      "/real-photos/zenitek_photo_32.webp",
+      "/real-photos/zenitek_photo_40.webp",
+      "/real-photos/zenitek_photo_41.webp"
     ]
   },
   {
@@ -81,12 +81,12 @@ export const teslaDryerProducts = [
     leaseInfo: "Micro-Enterprise Grant Eligible",
     quoteCategory: "Under 50 kg (Portable)",
     images: [
-      "/real-photos/zenitek_photo_25.jpeg",
-      "/real-photos/zenitek_photo_09.jpeg",
-      "/real-photos/zenitek_photo_13.jpeg",
-      "/real-photos/zenitek_photo_15.jpeg",
-      "/real-photos/zenitek_photo_16.jpeg",
-      "/real-photos/zenitek_photo_14.jpeg"
+      "/real-photos/zenitek_photo_25.webp",
+      "/real-photos/zenitek_photo_09.webp",
+      "/real-photos/zenitek_photo_13.webp",
+      "/real-photos/zenitek_photo_15.webp",
+      "/real-photos/zenitek_photo_16.webp",
+      "/real-photos/zenitek_photo_14.webp"
     ]
   },
   {
@@ -98,12 +98,12 @@ export const teslaDryerProducts = [
     leaseInfo: "Home & Kitchen Enterprise",
     quoteCategory: "Under 50 kg (Portable)",
     images: [
-      "/real-photos/zenitek_photo_22.jpeg",
-      "/real-photos/zenitek_photo_05.jpeg",
-      "/real-photos/zenitek_photo_06.jpeg",
-      "/real-photos/zenitek_photo_37.jpeg",
-      "/real-photos/zenitek_photo_29.jpeg",
-      "/real-photos/zenitek_photo_30.jpeg"
+      "/real-photos/zenitek_photo_22.webp",
+      "/real-photos/zenitek_photo_05.webp",
+      "/real-photos/zenitek_photo_06.webp",
+      "/real-photos/zenitek_photo_37.webp",
+      "/real-photos/zenitek_photo_29.webp",
+      "/real-photos/zenitek_photo_30.webp"
     ]
   }
 ];

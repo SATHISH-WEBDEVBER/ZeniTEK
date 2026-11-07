@@ -8,7 +8,7 @@ import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 import IconTile from '../components/IconTile';
 
-const PHOTO = (n) => `/real-photos/zenitek_photo_${String(n).padStart(2, '0')}.jpeg`;
+const PHOTO = (n) => `/real-photos/zenitek_photo_${String(n).padStart(2, '0')}.webp`;
 const WHATSAPP = `https://wa.me/918098613422?text=${encodeURIComponent('Hello ZeniTEK team, I would like help with the government subsidy for a solar dryer.')}`;
 
 // Estimator choices. `value` stays English (it goes into the enquiry); labels are translated.

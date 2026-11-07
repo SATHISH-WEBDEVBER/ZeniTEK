@@ -8,8 +8,8 @@ export const zenitekRealGallery = [
     title: "SUNDRY 50 Commercial 8-Tray Solar Box Dryer",
     category: "box_dryers",
     categoryLabel: "Box Type Solar Dryers",
-    image: "/real-photos/zenitek_photo_01.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_01.jpeg",
+    image: "/real-photos/zenitek_photo_01.webp",
+    thumbnail: "/real-photos/zenitek_photo_01.webp",
     location: "ZeniTEK Works, Erode",
     state: "Tamil Nadu",
     lat: 11.3410,
@@ -23,15 +23,15 @@ export const zenitekRealGallery = [
     temperatureRange: "45°C – 65°C Thermostatic",
     traySpecs: "8 Food-Grade SS304 Perforated Trays (50 sq.ft)",
     description: "SUNDRY 50 commercial unit mounted with rooftop solar PV panel, temperature control panel, and industrial heavy-duty caster wheels.",
-    relatedImages: ["/real-photos/zenitek_photo_09.jpeg", "/real-photos/zenitek_photo_25.jpeg", "/real-photos/zenitek_photo_26.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_09.webp", "/real-photos/zenitek_photo_25.webp", "/real-photos/zenitek_photo_26.webp"]
   },
   {
     id: "photo-02",
     title: "Inside Commercial Tunnel Dryer with Multi-Tier Trolleys",
     category: "tunnel_internal",
     categoryLabel: "Tunnel Interior & Trays",
-    image: "/real-photos/zenitek_photo_02.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_02.jpeg",
+    image: "/real-photos/zenitek_photo_02.webp",
+    thumbnail: "/real-photos/zenitek_photo_02.webp",
     location: "Pollachi Agri Hub",
     state: "Tamil Nadu",
     lat: 10.6609,
@@ -45,15 +45,15 @@ export const zenitekRealGallery = [
     temperatureRange: "50°C – 68°C Continuous Airflow",
     traySpecs: "72 SS304 Food-Grade Trays on 18 Mobile Trolleys",
     description: "Walk-in tunnel dryer interior showing operators loading perforated SS304 stainless steel trays with fresh produce under continuous circulation.",
-    relatedImages: ["/real-photos/zenitek_photo_23.jpeg", "/real-photos/zenitek_photo_40.jpeg", "/real-photos/zenitek_photo_10.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_23.webp", "/real-photos/zenitek_photo_40.webp", "/real-photos/zenitek_photo_10.webp"]
   },
   {
     id: "photo-03",
     title: "Multi-Tier SS304 Perforated Food-Grade Trays",
     category: "trays_produce",
     categoryLabel: "Produce & Drying Trays",
-    image: "/real-photos/zenitek_photo_03.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_03.jpeg",
+    image: "/real-photos/zenitek_photo_03.webp",
+    thumbnail: "/real-photos/zenitek_photo_03.webp",
     location: "Dharapuram Spice Processing Center",
     state: "Tamil Nadu",
     lat: 10.7289,
@@ -67,15 +67,15 @@ export const zenitekRealGallery = [
     temperatureRange: "48°C – 62°C",
     traySpecs: "Precision CNC punched SS304 1.2mm sheet with hemmed edges",
     description: "Close-up view of precision perforated SS304 food-grade drying trays loaded with uniformly sliced agricultural produce under active airflow.",
-    relatedImages: ["/real-photos/zenitek_photo_08.jpeg", "/real-photos/zenitek_photo_27.jpeg", "/real-photos/zenitek_photo_23.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_08.webp", "/real-photos/zenitek_photo_27.webp", "/real-photos/zenitek_photo_23.webp"]
   },
   {
     id: "photo-04",
     title: "SOLDRY Tunnel Polyhouse Elevation with Solar Apex",
     category: "tunnel_external",
     categoryLabel: "Commercial Polyhouse Tunnels",
-    image: "/real-photos/zenitek_photo_04.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_04.jpeg",
+    image: "/real-photos/zenitek_photo_04.webp",
+    thumbnail: "/real-photos/zenitek_photo_04.webp",
     location: "Agricultural Farm Installation, Byadagi",
     state: "Karnataka",
     lat: 14.6756,
@@ -89,15 +89,15 @@ export const zenitekRealGallery = [
     temperatureRange: "50°C – 65°C",
     traySpecs: "36 SS304 Trays across 9 Mobile Trolleys",
     description: "Exterior frontal profile showing concrete plinth foundation, airtight EPDM sealed door, rooftop solar PV array, and lower fresh-air louvers.",
-    relatedImages: ["/real-photos/zenitek_photo_11.jpeg", "/real-photos/zenitek_photo_34.jpeg", "/real-photos/zenitek_photo_17.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_11.webp", "/real-photos/zenitek_photo_34.webp", "/real-photos/zenitek_photo_17.webp"]
   },
   {
     id: "photo-05",
     title: "SUNDRY 12 Compact Dual-Tier Box Dryer (Door Open)",
     category: "box_dryers",
     categoryLabel: "Box Type Solar Dryers",
-    image: "/real-photos/zenitek_photo_05.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_05.jpeg",
+    image: "/real-photos/zenitek_photo_05.webp",
+    thumbnail: "/real-photos/zenitek_photo_05.webp",
     location: "ZeniTEK Incubation Center, Perundurai",
     state: "Tamil Nadu",
     lat: 11.2778,
@@ -111,15 +111,15 @@ export const zenitekRealGallery = [
     temperatureRange: "40°C – 55°C",
     traySpecs: "2 SS304 Food-Grade Slide Trays",
     description: "SUNDRY 12 front door open showing internal SS304 perforated tray loaded with medicinal green leaves, internal blower, and thermostat control.",
-    relatedImages: ["/real-photos/zenitek_photo_06.jpeg", "/real-photos/zenitek_photo_22.jpeg", "/real-photos/zenitek_photo_29.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_06.webp", "/real-photos/zenitek_photo_22.webp", "/real-photos/zenitek_photo_29.webp"]
   },
   {
     id: "photo-06",
     title: "SUNDRY Box Dryer Transport Preparation",
     category: "box_dryers",
     categoryLabel: "Box Type Solar Dryers",
-    image: "/real-photos/zenitek_photo_06.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_06.jpeg",
+    image: "/real-photos/zenitek_photo_06.webp",
+    thumbnail: "/real-photos/zenitek_photo_06.webp",
     location: "ZeniTEK Works, Erode",
     state: "Tamil Nadu",
     lat: 11.3410,
@@ -133,15 +133,15 @@ export const zenitekRealGallery = [
     temperatureRange: "45°C – 60°C",
     traySpecs: "Protective film wrapped SS304 Trays",
     description: "Portable solar box dryer unit with protective film, ready for installation or dispatch.",
-    relatedImages: ["/real-photos/zenitek_photo_05.jpeg", "/real-photos/zenitek_photo_22.jpeg", "/real-photos/zenitek_photo_24.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_05.webp", "/real-photos/zenitek_photo_22.webp", "/real-photos/zenitek_photo_24.webp"]
   },
   {
     id: "photo-07",
     title: "Precision GI Base Trolley Frame with Caster Wheels",
     category: "engineering",
     categoryLabel: "Engineering & Fabrication",
-    image: "/real-photos/zenitek_photo_07.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_07.jpeg",
+    image: "/real-photos/zenitek_photo_07.webp",
+    thumbnail: "/real-photos/zenitek_photo_07.webp",
     location: "Manufacturing Unit, Coimbatore",
     state: "Tamil Nadu",
     lat: 11.0168,
@@ -155,15 +155,15 @@ export const zenitekRealGallery = [
     temperatureRange: "High thermal endurance",
     traySpecs: "Galvanized Iron Tube Frame with Ball-Bearing Casters",
     description: "Heavy-duty galvanized steel trolley frame with 360-degree rotating swivel casters for smooth material handling inside tunnel dryers.",
-    relatedImages: ["/real-photos/zenitek_photo_10.jpeg", "/real-photos/zenitek_photo_24.jpeg", "/real-photos/zenitek_photo_06.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_10.webp", "/real-photos/zenitek_photo_24.webp", "/real-photos/zenitek_photo_06.webp"]
   },
   {
     id: "photo-08",
     title: "Herb & Flower Dehydration on Multi-Tier SS304 Trays",
     category: "trays_produce",
     categoryLabel: "Produce & Drying Trays",
-    image: "/real-photos/zenitek_photo_31.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_31.jpeg",
+    image: "/real-photos/zenitek_photo_31.webp",
+    thumbnail: "/real-photos/zenitek_photo_31.webp",
     location: "Farmer Processing Hub, Theni",
     state: "Tamil Nadu",
     lat: 10.0104,
@@ -177,15 +177,15 @@ export const zenitekRealGallery = [
     temperatureRange: "42°C – 52°C (Preserves Chlorophyll & Color)",
     traySpecs: "SS304 3mm Perforations for Maximum Under-Airflow",
     description: "Detailed view of dried botanical herbs and flowers retaining vivid natural pigment and zero dust contamination inside UV-protected enclosure.",
-    relatedImages: ["/real-photos/zenitek_photo_35.jpeg", "/real-photos/zenitek_photo_27.jpeg", "/real-photos/zenitek_photo_03.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_35.webp", "/real-photos/zenitek_photo_27.webp", "/real-photos/zenitek_photo_03.webp"]
   },
   {
     id: "photo-09",
     title: "Export Wooden Crate Packaging for Safe Transit",
     category: "engineering",
     categoryLabel: "Engineering & Fabrication",
-    image: "/real-photos/zenitek_photo_24.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_24.jpeg",
+    image: "/real-photos/zenitek_photo_24.webp",
+    thumbnail: "/real-photos/zenitek_photo_24.webp",
     location: "Dispatch Hub, Erode",
     state: "Tamil Nadu",
     lat: 11.3410,
@@ -199,15 +199,15 @@ export const zenitekRealGallery = [
     temperatureRange: "All-weather crating",
     traySpecs: "ISPM-15 Heat Treated Plywood & Steel Corner Bands",
     description: "Reinforced wooden crate packaging with steel strapping ensuring damage-free delivery to remote farms across all Indian states.",
-    relatedImages: ["/real-photos/zenitek_photo_06.jpeg", "/real-photos/zenitek_photo_07.jpeg", "/real-photos/zenitek_photo_22.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_06.webp", "/real-photos/zenitek_photo_07.webp", "/real-photos/zenitek_photo_22.webp"]
   },
   {
     id: "photo-10",
     title: "SUNDRY 12 Box Dryer on High-Clearance Stand",
     category: "box_dryers",
     categoryLabel: "Box Type Solar Dryers",
-    image: "/real-photos/zenitek_photo_09.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_09.jpeg",
+    image: "/real-photos/zenitek_photo_09.webp",
+    thumbnail: "/real-photos/zenitek_photo_09.webp",
     location: "Farm Household Setup, Salem",
     state: "Tamil Nadu",
     lat: 11.6643,
@@ -221,15 +221,15 @@ export const zenitekRealGallery = [
     temperatureRange: "45°C – 60°C",
     traySpecs: "2 SS304 Trays with Ergonomic Slide Rail",
     description: "Elevated ergonomic box dryer mounted with solar PV panel, analog thermometer dial, and easy-roll caster wheels.",
-    relatedImages: ["/real-photos/zenitek_photo_25.jpeg", "/real-photos/zenitek_photo_37.jpeg", "/real-photos/zenitek_photo_22.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_25.webp", "/real-photos/zenitek_photo_37.webp", "/real-photos/zenitek_photo_22.webp"]
   },
   {
     id: "photo-11",
     title: "Empty Walk-In Tunnel Dryer with 3-Row Trolley Layout",
     category: "tunnel_internal",
     categoryLabel: "Tunnel Interior & Trays",
-    image: "/real-photos/zenitek_photo_10.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_10.jpeg",
+    image: "/real-photos/zenitek_photo_10.webp",
+    thumbnail: "/real-photos/zenitek_photo_10.webp",
     location: "Commercial Site, Haveri",
     state: "Karnataka",
     lat: 14.7954,
@@ -243,15 +243,15 @@ export const zenitekRealGallery = [
     temperatureRange: "50°C – 68°C Controlled",
     traySpecs: "Modular GI tracks with floor clearance for sanitization",
     description: "Interior walkthrough showcasing three parallel trolley tracks, high-velocity circulation fans, and end-wall exhaust fan assembly.",
-    relatedImages: ["/real-photos/zenitek_photo_32.jpeg", "/real-photos/zenitek_photo_20.jpeg", "/real-photos/zenitek_photo_42.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_32.webp", "/real-photos/zenitek_photo_20.webp", "/real-photos/zenitek_photo_42.webp"]
   },
   {
     id: "photo-12",
     title: "SOLDRY Polyhouse Tunnel on Elevated Foundation",
     category: "tunnel_external",
     categoryLabel: "Commercial Polyhouse Tunnels",
-    image: "/real-photos/zenitek_photo_12.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_12.jpeg",
+    image: "/real-photos/zenitek_photo_12.webp",
+    thumbnail: "/real-photos/zenitek_photo_12.webp",
     location: "Rural Farm Installation, Golaghat",
     state: "Assam",
     lat: 26.5167,
@@ -265,15 +265,15 @@ export const zenitekRealGallery = [
     temperatureRange: "50°C – 65°C",
     traySpecs: "72 Food-Grade SS304 Drying Trays",
     description: "Full landscape photograph of operational commercial solar polyhouse tunnel erected on elevated concrete foundation in open agricultural land.",
-    relatedImages: ["/real-photos/zenitek_photo_33.jpeg", "/real-photos/zenitek_photo_41.jpeg", "/real-photos/zenitek_photo_45.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_33.webp", "/real-photos/zenitek_photo_41.webp", "/real-photos/zenitek_photo_45.webp"]
   },
   {
     id: "photo-13",
     title: "Commercial Solar Tunnel in Lush Green Fields",
     category: "tunnel_external",
     categoryLabel: "Commercial Polyhouse Tunnels",
-    image: "/real-photos/zenitek_photo_34.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_34.jpeg",
+    image: "/real-photos/zenitek_photo_34.webp",
+    thumbnail: "/real-photos/zenitek_photo_34.webp",
     location: "Farm Field Installation, Udumalpet",
     state: "Tamil Nadu",
     lat: 10.5855,
@@ -287,15 +287,15 @@ export const zenitekRealGallery = [
     temperatureRange: "52°C – 66°C",
     traySpecs: "36 Perforated SS304 Trays",
     description: "Full side-angle view showing UV-stabilized double-walled polycarbonate arch structure under natural sunlight in farm surroundings.",
-    relatedImages: ["/real-photos/zenitek_photo_45.jpeg", "/real-photos/zenitek_photo_39.jpeg", "/real-photos/zenitek_photo_04.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_45.webp", "/real-photos/zenitek_photo_39.webp", "/real-photos/zenitek_photo_04.webp"]
   },
   {
     id: "photo-14",
     title: "SUNDRY Box Dryer Open Door Side View",
     category: "box_dryers",
     categoryLabel: "Box Type Solar Dryers",
-    image: "/real-photos/zenitek_photo_13.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_13.jpeg",
+    image: "/real-photos/zenitek_photo_13.webp",
+    thumbnail: "/real-photos/zenitek_photo_13.webp",
     location: "Production Center, Erode",
     state: "Tamil Nadu",
     lat: 11.3410,
@@ -309,15 +309,15 @@ export const zenitekRealGallery = [
     temperatureRange: "45°C – 58°C",
     traySpecs: "Double shelf stainless steel runners with EPDM door seals",
     description: "Side perspective of box dryer showcasing EPDM rubber door gasket seal, sturdy stainless steel pull handle, and multi-tier tray slide tracks.",
-    relatedImages: ["/real-photos/zenitek_photo_14.jpeg", "/real-photos/zenitek_photo_15.jpeg", "/real-photos/zenitek_photo_16.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_14.webp", "/real-photos/zenitek_photo_15.webp", "/real-photos/zenitek_photo_16.webp"]
   },
   {
     id: "photo-15",
     title: "SUNDRY Box Dryer Rear PV Panel & Ventilation",
     category: "box_dryers",
     categoryLabel: "Box Type Solar Dryers",
-    image: "/real-photos/zenitek_photo_14.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_14.jpeg",
+    image: "/real-photos/zenitek_photo_14.webp",
+    thumbnail: "/real-photos/zenitek_photo_14.webp",
     location: "Testing Facility, Perundurai",
     state: "Tamil Nadu",
     lat: 11.2778,
@@ -331,15 +331,15 @@ export const zenitekRealGallery = [
     temperatureRange: "45°C – 55°C",
     traySpecs: "SS304 Slide-in Trays",
     description: "Rear angled view highlighting the solar PV panel angle designed for maximum sun capture and continuous airflow exhaust.",
-    relatedImages: ["/real-photos/zenitek_photo_13.jpeg", "/real-photos/zenitek_photo_15.jpeg", "/real-photos/zenitek_photo_16.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_13.webp", "/real-photos/zenitek_photo_15.webp", "/real-photos/zenitek_photo_16.webp"]
   },
   {
     id: "photo-16",
     title: "SUNDRY Unit Clean Frame Architecture",
     category: "box_dryers",
     categoryLabel: "Box Type Solar Dryers",
-    image: "/real-photos/zenitek_photo_15.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_15.jpeg",
+    image: "/real-photos/zenitek_photo_15.webp",
+    thumbnail: "/real-photos/zenitek_photo_15.webp",
     location: "Fabrication Unit, Coimbatore",
     state: "Tamil Nadu",
     lat: 11.0168,
@@ -353,15 +353,15 @@ export const zenitekRealGallery = [
     temperatureRange: "40°C – 55°C",
     traySpecs: "Corrosion-resistant GI and Polycarbonate casing",
     description: "Demonstrating the rust-proof galvanized steel framing and double-walled polycarbonate glazing engineered for 15+ years service life.",
-    relatedImages: ["/real-photos/zenitek_photo_13.jpeg", "/real-photos/zenitek_photo_14.jpeg", "/real-photos/zenitek_photo_16.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_13.webp", "/real-photos/zenitek_photo_14.webp", "/real-photos/zenitek_photo_16.webp"]
   },
   {
     id: "photo-17",
     title: "SUNDRY 12 With Solar Panel & Control Station",
     category: "box_dryers",
     categoryLabel: "Box Type Solar Dryers",
-    image: "/real-photos/zenitek_photo_16.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_16.jpeg",
+    image: "/real-photos/zenitek_photo_16.webp",
+    thumbnail: "/real-photos/zenitek_photo_16.webp",
     location: "Demonstration Room, Erode",
     state: "Tamil Nadu",
     lat: 11.3410,
@@ -375,15 +375,15 @@ export const zenitekRealGallery = [
     temperatureRange: "45°C – 60°C Dial Control",
     traySpecs: "SS304 Trays with Front Access Door",
     description: "Mounted with ZeniTEK nameplate, solar PV panel, master power switch, and thermostat dial for precision drying control.",
-    relatedImages: ["/real-photos/zenitek_photo_13.jpeg", "/real-photos/zenitek_photo_14.jpeg", "/real-photos/zenitek_photo_15.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_13.webp", "/real-photos/zenitek_photo_14.webp", "/real-photos/zenitek_photo_15.webp"]
   },
   {
     id: "photo-18",
     title: "SOLDRY 1709 Inverted Parabolic Arch Landscape View",
     category: "tunnel_external",
     categoryLabel: "Commercial Polyhouse Tunnels",
-    image: "/real-photos/zenitek_photo_18.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_18.jpeg",
+    image: "/real-photos/zenitek_photo_18.webp",
+    thumbnail: "/real-photos/zenitek_photo_18.webp",
     location: "Agro Industrial Site, Pollachi",
     state: "Tamil Nadu",
     lat: 10.6609,
@@ -397,15 +397,15 @@ export const zenitekRealGallery = [
     temperatureRange: "52°C – 68°C Aerodynamic Airflow",
     traySpecs: "Custom Floor Bed or 48 SS304 Trays",
     description: "Wide landscape photograph capturing the inverted parabolic aerodynamic tunnel dryer under clear blue sky with palm trees in the background.",
-    relatedImages: ["/real-photos/zenitek_photo_17.jpeg", "/real-photos/zenitek_photo_21.jpeg", "/real-photos/zenitek_photo_19.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_17.webp", "/real-photos/zenitek_photo_21.webp", "/real-photos/zenitek_photo_19.webp"]
   },
   {
     id: "photo-19",
     title: "Full Side Profile of Parabolic Solar Polyhouse",
     category: "tunnel_external",
     categoryLabel: "Commercial Polyhouse Tunnels",
-    image: "/real-photos/zenitek_photo_17.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_17.jpeg",
+    image: "/real-photos/zenitek_photo_17.webp",
+    thumbnail: "/real-photos/zenitek_photo_17.webp",
     location: "Commercial Agro Hub, Kangeyam",
     state: "Tamil Nadu",
     lat: 11.0045,
@@ -419,15 +419,15 @@ export const zenitekRealGallery = [
     temperatureRange: "50°C – 66°C",
     traySpecs: "Food-grade stainless steel multi-level drying",
     description: "Side elevation illustrating continuous arch glazing with engineered expansion joints and roof-mounted solar PV array.",
-    relatedImages: ["/real-photos/zenitek_photo_18.jpeg", "/real-photos/zenitek_photo_21.jpeg", "/real-photos/zenitek_photo_12.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_18.webp", "/real-photos/zenitek_photo_21.webp", "/real-photos/zenitek_photo_12.webp"]
   },
   {
     id: "photo-20",
     title: "SOLDRY Rear Moisture Exhaust Blower Vents",
     category: "tunnel_external",
     categoryLabel: "Commercial Polyhouse Tunnels",
-    image: "/real-photos/zenitek_photo_19.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_19.jpeg",
+    image: "/real-photos/zenitek_photo_19.webp",
+    thumbnail: "/real-photos/zenitek_photo_19.webp",
     location: "Commercial Field Site, Pollachi",
     state: "Tamil Nadu",
     lat: 10.6609,
@@ -441,15 +441,15 @@ export const zenitekRealGallery = [
     temperatureRange: "Vents humidity above 70% RH automatically",
     traySpecs: "Weather-hooded back louvers",
     description: "Rear gable wall highlighting heavy-duty weather-hooded exhaust blowers that automatically vent warm, moisture-laden air to prevent condensation.",
-    relatedImages: ["/real-photos/zenitek_photo_18.jpeg", "/real-photos/zenitek_photo_21.jpeg", "/real-photos/zenitek_photo_17.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_18.webp", "/real-photos/zenitek_photo_21.webp", "/real-photos/zenitek_photo_17.webp"]
   },
   {
     id: "photo-21",
     title: "Spacious Empty Floor Bed in Wide Profile Polyhouse",
     category: "tunnel_internal",
     categoryLabel: "Tunnel Interior & Trays",
-    image: "/real-photos/zenitek_photo_20.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_20.jpeg",
+    image: "/real-photos/zenitek_photo_20.webp",
+    thumbnail: "/real-photos/zenitek_photo_20.webp",
     location: "Industrial Processing Plant, Bhubaneswar",
     state: "Odisha",
     lat: 20.2961,
@@ -463,15 +463,15 @@ export const zenitekRealGallery = [
     temperatureRange: "50°C – 67°C",
     traySpecs: "Food-grade sanitized concrete apron floor with expansion joints",
     description: "Interior perspective looking along the length of wide-profile tunnel with concrete floor, ceiling circulation fans, and rear exhaust vents.",
-    relatedImages: ["/real-photos/zenitek_photo_42.jpeg", "/real-photos/zenitek_photo_32.jpeg", "/real-photos/zenitek_photo_10.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_42.webp", "/real-photos/zenitek_photo_32.webp", "/real-photos/zenitek_photo_10.webp"]
   },
   {
     id: "photo-22",
     title: "Front View of Parabolic Polyhouse with Solar Array",
     category: "tunnel_external",
     categoryLabel: "Commercial Polyhouse Tunnels",
-    image: "/real-photos/zenitek_photo_21.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_21.jpeg",
+    image: "/real-photos/zenitek_photo_21.webp",
+    thumbnail: "/real-photos/zenitek_photo_21.webp",
     location: "Rural Agritech Center, Theni",
     state: "Tamil Nadu",
     lat: 10.0104,
@@ -485,15 +485,15 @@ export const zenitekRealGallery = [
     temperatureRange: "52°C – 68°C",
     traySpecs: "48 Perforated SS304 Trays",
     description: "Front gable view showcasing double walk-in doors, concrete access ramp, lower air intake louvers, and roof-mounted solar PV power plant.",
-    relatedImages: ["/real-photos/zenitek_photo_18.jpeg", "/real-photos/zenitek_photo_17.jpeg", "/real-photos/zenitek_photo_11.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_18.webp", "/real-photos/zenitek_photo_17.webp", "/real-photos/zenitek_photo_11.webp"]
   },
   {
     id: "photo-23",
     title: "SUNDRY Compact Unit Under Testing",
     category: "box_dryers",
     categoryLabel: "Box Type Solar Dryers",
-    image: "/real-photos/zenitek_photo_37.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_37.jpeg",
+    image: "/real-photos/zenitek_photo_37.webp",
+    thumbnail: "/real-photos/zenitek_photo_37.webp",
     location: "Testing Grounds, Erode",
     state: "Tamil Nadu",
     lat: 11.3410,
@@ -507,15 +507,15 @@ export const zenitekRealGallery = [
     temperatureRange: "45°C – 55°C",
     traySpecs: "1 Removable SS304 Food-Grade Tray",
     description: "Compact unit on its stand under direct sun with side-mounted solar PV module, evaluating temperature rise and exhaust fan airflow efficiency.",
-    relatedImages: ["/real-photos/zenitek_photo_22.jpeg", "/real-photos/zenitek_photo_05.jpeg", "/real-photos/zenitek_photo_30.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_22.webp", "/real-photos/zenitek_photo_05.webp", "/real-photos/zenitek_photo_30.webp"]
   },
   {
     id: "photo-24",
     title: "Commercial Red Chilli Dehydration on SS304 Trays",
     category: "trays_produce",
     categoryLabel: "Produce & Drying Trays",
-    image: "/real-photos/zenitek_photo_23.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_23.jpeg",
+    image: "/real-photos/zenitek_photo_23.webp",
+    thumbnail: "/real-photos/zenitek_photo_23.webp",
     location: "Farmer Cluster Site, Haveri",
     state: "Karnataka",
     lat: 14.7954,
@@ -529,15 +529,15 @@ export const zenitekRealGallery = [
     temperatureRange: "55°C – 65°C Controlled",
     traySpecs: "72 Perforated SS304 Food-Grade Trays",
     description: "Close-up of premium red chillies drying on SS304 perforated food-grade trays, retaining vibrant crimson color and high oleoresin content.",
-    relatedImages: ["/real-photos/zenitek_photo_02.jpeg", "/real-photos/zenitek_photo_40.jpeg", "/real-photos/zenitek_photo_03.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_02.webp", "/real-photos/zenitek_photo_40.webp", "/real-photos/zenitek_photo_03.webp"]
   },
   {
     id: "photo-25",
     title: "Double SUNDRY Station for Dual-Batch Processing",
     category: "box_dryers",
     categoryLabel: "Box Type Solar Dryers",
-    image: "/real-photos/zenitek_photo_26.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_26.jpeg",
+    image: "/real-photos/zenitek_photo_26.webp",
+    thumbnail: "/real-photos/zenitek_photo_26.webp",
     location: "Farmer Training Center, Pollachi",
     state: "Tamil Nadu",
     lat: 10.6609,
@@ -551,15 +551,15 @@ export const zenitekRealGallery = [
     temperatureRange: "45°C – 60°C",
     traySpecs: "4 Removable SS304 Trays Total",
     description: "Two SUNDRY units side by side, each with its own solar PV module, demonstrating modular domestic and small-enterprise deployment.",
-    relatedImages: ["/real-photos/zenitek_photo_25.jpeg", "/real-photos/zenitek_photo_01.jpeg", "/real-photos/zenitek_photo_09.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_25.webp", "/real-photos/zenitek_photo_01.webp", "/real-photos/zenitek_photo_09.webp"]
   },
   {
     id: "photo-26",
     title: "SUNDRY 50 Full Loading View with Open Door",
     category: "box_dryers",
     categoryLabel: "Box Type Solar Dryers",
-    image: "/real-photos/zenitek_photo_35.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_35.jpeg",
+    image: "/real-photos/zenitek_photo_35.webp",
+    thumbnail: "/real-photos/zenitek_photo_35.webp",
     location: "Organic Processing Farm, Nashik",
     state: "Maharashtra",
     lat: 19.9975,
@@ -573,15 +573,15 @@ export const zenitekRealGallery = [
     temperatureRange: "48°C – 62°C",
     traySpecs: "8 Full Food-Grade SS304 Trays",
     description: "Open-door photograph of SUNDRY 50 showing all 8 SS304 perforated trays fully loaded with edible flowers for commercial tea production.",
-    relatedImages: ["/real-photos/zenitek_photo_31.jpeg", "/real-photos/zenitek_photo_36.jpeg", "/real-photos/zenitek_photo_27.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_31.webp", "/real-photos/zenitek_photo_36.webp", "/real-photos/zenitek_photo_27.webp"]
   },
   {
     id: "photo-27",
     title: "Outdoor Deployment of SUNDRY 50 Commercial Dryer",
     category: "box_dryers",
     categoryLabel: "Box Type Solar Dryers",
-    image: "/real-photos/zenitek_photo_36.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_36.jpeg",
+    image: "/real-photos/zenitek_photo_36.webp",
+    thumbnail: "/real-photos/zenitek_photo_36.webp",
     location: "Organic Farm Estate, Pune",
     state: "Maharashtra",
     lat: 18.5204,
@@ -595,15 +595,15 @@ export const zenitekRealGallery = [
     temperatureRange: "45°C – 65°C",
     traySpecs: "8 Heavy-Duty SS304 Trays",
     description: "Outdoor working photograph of SUNDRY 50 commercial unit on stone-paved farm courtyard operating in bright natural sun.",
-    relatedImages: ["/real-photos/zenitek_photo_35.jpeg", "/real-photos/zenitek_photo_31.jpeg", "/real-photos/zenitek_photo_01.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_35.webp", "/real-photos/zenitek_photo_31.webp", "/real-photos/zenitek_photo_01.webp"]
   },
   {
     id: "photo-28",
     title: "Farmers Inspecting Trolley Racks inside SOLDRY Tunnel",
     category: "tunnel_internal",
     categoryLabel: "Tunnel Interior & Trays",
-    image: "/real-photos/zenitek_photo_40.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_40.jpeg",
+    image: "/real-photos/zenitek_photo_40.webp",
+    thumbnail: "/real-photos/zenitek_photo_40.webp",
     location: "FPO Community Installation, Aizawl",
     state: "Mizoram",
     lat: 23.7271,
@@ -617,15 +617,15 @@ export const zenitekRealGallery = [
     temperatureRange: "50°C – 66°C",
     traySpecs: "72 SS304 Trays across 18 Mobile Trolleys",
     description: "Local farmers and technical operators inspecting the three parallel trolley rows and ceiling circulation fans inside the polyhouse solar tunnel.",
-    relatedImages: ["/real-photos/zenitek_photo_02.jpeg", "/real-photos/zenitek_photo_23.jpeg", "/real-photos/zenitek_photo_10.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_02.webp", "/real-photos/zenitek_photo_23.webp", "/real-photos/zenitek_photo_10.webp"]
   },
   {
     id: "photo-29",
     title: "Commercial Polyhouse with Solar Canopy on Concrete Apron",
     category: "tunnel_external",
     categoryLabel: "Commercial Polyhouse Tunnels",
-    image: "/real-photos/zenitek_photo_44.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_44.jpeg",
+    image: "/real-photos/zenitek_photo_44.webp",
+    thumbnail: "/real-photos/zenitek_photo_44.webp",
     location: "Agri Export Hub, Coimbatore",
     state: "Tamil Nadu",
     lat: 11.0168,
@@ -639,15 +639,15 @@ export const zenitekRealGallery = [
     temperatureRange: "52°C – 68°C",
     traySpecs: "Full floor drainage and multi-tier cart compatibility",
     description: "Wide view of solar polyhouse tunnel showing its broad concrete apron, rooftop solar PV canopy, and pristine polycarbonate glazing.",
-    relatedImages: ["/real-photos/zenitek_photo_43.jpeg", "/real-photos/zenitek_photo_04.jpeg", "/real-photos/zenitek_photo_11.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_43.webp", "/real-photos/zenitek_photo_04.webp", "/real-photos/zenitek_photo_11.webp"]
   },
   {
     id: "photo-30",
     title: "SOLDRY Commercial Polyhouse in Open Field",
     category: "tunnel_external",
     categoryLabel: "Commercial Polyhouse Tunnels",
-    image: "/real-photos/zenitek_photo_45.jpeg",
-    thumbnail: "/real-photos/zenitek_photo_45.jpeg",
+    image: "/real-photos/zenitek_photo_45.webp",
+    thumbnail: "/real-photos/zenitek_photo_45.webp",
     location: "Agricultural Project Site, Jagdalpur",
     state: "Chhattisgarh",
     lat: 19.0748,
@@ -661,6 +661,6 @@ export const zenitekRealGallery = [
     temperatureRange: "50°C – 65°C",
     traySpecs: "Multi-tier SS304 food-grade carts",
     description: "Exterior perspective of completed solar polyhouse tunnel in agricultural terrain under wide open skies.",
-    relatedImages: ["/real-photos/zenitek_photo_12.jpeg", "/real-photos/zenitek_photo_34.jpeg", "/real-photos/zenitek_photo_39.jpeg"]
+    relatedImages: ["/real-photos/zenitek_photo_12.webp", "/real-photos/zenitek_photo_34.webp", "/real-photos/zenitek_photo_39.webp"]
   }
 ];
