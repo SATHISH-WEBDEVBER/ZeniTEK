@@ -5,7 +5,7 @@ import { brochures } from '../data/brochuresData';
 import { fetchPublicGallery } from '../utils/api';
 import { 
   Camera, Filter, MapPin, X, ArrowRight, Sun, ZoomIn, ShieldCheck, 
-  Layers, Sparkles, CheckCircle2, SlidersHorizontal, Info, Tag, ExternalLink, Loader, FileText, Download
+  Layers, Sparkles, CheckCircle2, SlidersHorizontal, Info, Tag, ExternalLink, Loader, FileText, Download, MessageSquareQuote
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
@@ -114,32 +114,18 @@ export default function GalleryPage({ onOpenQuoteModal }) {
       {/* SECTION 1: HERO (background photo, left-aligned heading) */}
       <PageHero
         images="/real-photos/zenitek_photo_43.webp"
-        title={<>{t('gallery_heroTitle1')} <br /><span className="text-[#002DC2]">{t('gallery_heroTitle2')}</span></>}
-        subtitle={t('gallery_heroSubtitle')}
-      >
-        {/* Quick Search Bar */}
-        <div className="max-w-md pt-1">
-          <div className="relative">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={t('gallery_searchPlaceholder')}
-              aria-label={t('gallery_searchAria')}
-              className="w-full bg-white/95 border border-[#123B92]/30 rounded-2xl px-4 py-3 text-sm text-black placeholder-black/40 focus:outline-none focus:border-[#002DC2] focus:ring-2 focus:ring-[#002DC2]/20 shadow-md"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3.5 top-3 text-xs font-bold text-black/50 hover:text-black cursor-pointer"
-              >
-                {t('gallery_clear')}
-              </button>
-            )}
-          </div>
-        </div>
-      </PageHero>
+        title={<>{t('gallery_heroTitle1')} <span className="text-[#002DC2]">{t('gallery_heroTitle2')}</span></>}
+        subtitle={t('hero_gallerySub')}
+        actions={[
+          { label: t('getQuote'), onClick: () => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: 'Complete Turnkey Dryer Project' }), icon: MessageSquareQuote },
+          { label: t('hero_viewBrochures'), to: '/gallery?cat=brochure', icon: FileText },
+        ]}
+        stats={[
+          { value: String(zenitekRealGallery.length), label: t('hero_galPhotos') },
+          { value: String(brochures.length), label: t('hero_galBrochures') },
+          { value: String(CATEGORY_IDS.filter(id => id !== 'all' && id !== 'brochure').length), label: t('hero_galCategories') },
+        ]}
+      />
 
       {/* SECTION 2: GALLERY GRID (EVEN: LIGHT TINT, FULLY RESPONSIVE CARDS) */}
       <section className="w-full section-even py-12 sm:py-16">
@@ -151,6 +137,29 @@ export default function GalleryPage({ onOpenQuoteModal }) {
             <p className="text-base sm:text-lg text-slate-600">
               {t('gallery_gridSubtitle')}
             </p>
+          </div>
+
+          {/* Search */}
+          <div className="max-w-md mx-auto mb-5">
+            <div className="relative">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={t('gallery_searchPlaceholder')}
+                aria-label={t('gallery_searchAria')}
+                className="w-full bg-white border border-[#123B92]/30 rounded-2xl px-4 py-3 text-sm text-black placeholder-black/40 focus:outline-none focus:border-[#002DC2] focus:ring-2 focus:ring-[#002DC2]/20 shadow-sm"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3.5 top-3 text-xs font-bold text-black/50 hover:text-black cursor-pointer"
+                >
+                  {t('gallery_clear')}
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Filter Chips */}

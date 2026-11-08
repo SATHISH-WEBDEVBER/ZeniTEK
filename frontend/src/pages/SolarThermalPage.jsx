@@ -1,23 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight, CheckCircle2, MessageCircle, Phone, Search, Wrench, Flame, MapPin,
-  GraduationCap, Factory, HeartHandshake, Award
+  ArrowRight, CheckCircle2, MessageSquareQuote, MessageCircle, Phone, Search, Wrench, Flame, MapPin,
+  GraduationCap, Factory, HeartHandshake, Award, ShowerHead
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 import IconTile from '../components/IconTile';
-import SolarThermalArt from '../components/SolarThermalArt';
 import BoldText from '../components/BoldText';
+import { ProductGrid } from '../components/ProductCards';
+import { CATALOG, productImage } from '../data/productCatalog';
 
 const WHATSAPP = `https://wa.me/918098613422?text=${encodeURIComponent('Hello ZeniTEK team, I would like to enquire about a Solar Thermal System.')}`;
 
-// Collector types: title from the About page list, the rest from src/i18n/products.js
-const COLLECTORS = [
-  { art: 'trough', titleKey: 'about_dThermalSpec2', typeKey: 'prod_thPtcType', bodyKey: 'prod_thPtcBody', useKey: 'prod_thPtcUse' },
-  { art: 'scheffler', titleKey: 'about_dThermalSpec3', typeKey: 'prod_thSchType', bodyKey: 'prod_thSchBody', useKey: 'prod_thSchUse' },
-  { art: 'tubes', titleKey: 'about_dThermalSpec1', typeKey: 'prod_thEtcType', bodyKey: 'prod_thEtcBody', useKey: 'prod_thEtcUse' },
-];
+// This product area and its two collectors (Parabolic Trough Collector, Scheffler Dish), each with
+// its own page - see src/data/productCatalog.js
+const THERMAL = CATALOG.find(n => n.id === 'solar-thermal');
 
 const REFURB_STEPS = [
   { Icon: Search, titleKey: 'prod_thRef1', bodyKey: 'prod_thRef1d' },
@@ -57,27 +55,17 @@ export default function SolarThermalPage({ onOpenQuoteModal }) {
       <PageHero
         title={<>{t('prod_thHeroTitle1')} <span className="text-[#002DC2]">{t('prod_thHeroTitle2')}</span></>}
         subtitle={t('prod_thHeroSub')}
-        art={<SolarThermalArt type="trough" className="w-full drop-shadow-sm" />}
-        actions={
-          <>
-            <button type="button" onClick={quote} className="px-6 py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold rounded-xl shadow-lg shadow-[#23AC39]/25 transition-colors inline-flex items-center justify-center gap-2 cursor-pointer">
-              {t('getQuote')} <ArrowRight className="w-5 h-5" />
-            </button>
-            <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="px-5 py-3 bg-white border border-slate-300 hover:border-[#002DC2] text-[#123B92] font-bold rounded-xl transition-colors inline-flex items-center justify-center gap-2">
-              <MessageCircle className="w-5 h-5 text-[#23AC39]" /> {t('prod_whatsapp')}
-            </a>
-          </>
-        }
-      >
-        <div className="grid grid-cols-3 gap-3 max-w-xl pt-2">
-          {[['1,000 L+', 'prod_thStat1'], ['592 sq.m', 'prod_thStat2'], ['3', 'prod_thStat3']].map(([v, k]) => (
-            <div key={k} className="bg-white/90 border border-slate-200 rounded-xl p-3 shadow-sm">
-              <div className="text-lg sm:text-xl font-black text-[#123B92] whitespace-nowrap">{v}</div>
-              <div className="text-xs text-slate-600 font-semibold leading-snug mt-0.5 [overflow-wrap:anywhere]">{t(k)}</div>
-            </div>
-          ))}
-        </div>
-      </PageHero>
+        images={productImage(THERMAL)}
+        actions={[
+          { label: t('getQuote'), onClick: quote, icon: MessageSquareQuote },
+          { label: t('prod_whatsapp'), href: WHATSAPP, external: true, icon: MessageCircle },
+        ]}
+        stats={[
+          { value: '1,000 L+', label: t('prod_thStat1') },
+          { value: '592 sq.m', label: t('prod_thStat2') },
+          { value: String(THERMAL.children.length), label: t('prod_thStat3') },
+        ]}
+      />
 
       {/* What it is */}
       <section className="w-full py-12 sm:py-16">
@@ -100,22 +88,20 @@ export default function SolarThermalPage({ onOpenQuoteModal }) {
       {/* Collector technologies */}
       <section className="w-full py-12 sm:py-16 bg-slate-50 border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle title={t('prod_thTechTitle')} subtitle={t('prod_thTechSub')} />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {COLLECTORS.map(c => (
-              <article key={c.art} className="flex flex-col bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                <SolarThermalArt type={c.art} className="w-full" />
-                <div className="flex-1 flex flex-col gap-3 p-6">
-                  <span className="self-start text-xs font-bold uppercase tracking-wider text-[#1A822B] bg-[#EAF7EC] px-2.5 py-1 rounded-md">{t(c.typeKey)}</span>
-                  <h3 className="text-xl font-bold text-[#123B92]">{t(c.titleKey)}</h3>
-                  <p className="text-sm text-slate-600 leading-relaxed flex-1">{t(c.bodyKey)}</p>
-                  <p className="text-sm font-semibold text-slate-800 pt-3 border-t border-slate-100">
-                    <span className="text-[#002DC2]">{t('prod_thBestFor')}:</span> {t(c.useKey)}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
+          <SectionTitle title={t('prod_thTechTitle')} subtitle={t('cat_thTechSub')} />
+          <ProductGrid nodes={THERMAL.children} />
+
+          {/* Hot water: evacuated tube collectors are on the Solar Water Heater page */}
+          <Link to="/solar-water-heater" className="group mt-8 flex flex-col sm:flex-row sm:items-center gap-4 p-5 sm:p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-[#002DC2]/40 hover:shadow-md transition-all">
+            <IconTile icon={ShowerHead} tone="green" />
+            <div className="flex-1">
+              <h3 className="text-lg font-bold text-[#123B92]">{t('cat_swhBannerTitle')}</h3>
+              <p className="text-sm text-slate-600 leading-relaxed mt-1">{t('cat_swhBannerBody')}</p>
+            </div>
+            <span className="inline-flex items-center gap-1.5 text-sm font-bold text-[#002DC2] shrink-0">
+              {t('cat_swh')} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </span>
+          </Link>
         </div>
       </section>
 

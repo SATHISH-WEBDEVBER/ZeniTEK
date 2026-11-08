@@ -4,6 +4,7 @@ import {
   Sun, Phone, Mail, MapPin, Download, ShieldCheck, ExternalLink, ArrowRight, Building2, X, FileText, Lock, Eye, Share2, BadgeCheck
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { CATALOG } from '../data/productCatalog';
 import { PAGES } from '../data/siteMap';
 
 const QUICK_LINKS = ['/products', '/solar-dryer-models', '/solar-thermal-system', '/research-and-development', '/applications', '/subsidies', '/gallery', '/installations', '/stories', '/about', '/contact'];
@@ -60,38 +61,17 @@ export default function Footer({ onOpenQuoteModal }) {
 
           {/* Col 2: Dryer Models (2 cols on desktop) */}
           <div className="lg:col-span-2">
-            <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4">{t('footerDryerModels')}</h4>
+            <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4">{t('navbar_products')}</h4>
+            {/* the product areas and their sub-products, from src/data/productCatalog.js */}
             <ul className="space-y-2.5 text-xs font-medium">
-              <li>
-                <Link to="/solar-dryer-models/soldry-1210-150" className="hover:text-[#002DC2] text-black transition-colors block">
-                  <span className="font-bold text-[#123B92] block">SOLDRY 1210</span>
-                  <span className="text-2xs text-slate-500 block">{t('common_footer_m1210')} <span className="whitespace-nowrap">(100-300 kg)</span></span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/solar-dryer-models/soldry-1709-200" className="hover:text-[#002DC2] text-black transition-colors block">
-                  <span className="font-bold text-[#123B92] block">SOLDRY 1709</span>
-                  <span className="text-2xs text-slate-500 block">{t('common_footer_m1709')} <span className="whitespace-nowrap">(500 kg-1 Ton)</span></span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/solar-dryer-models/soldry-1210-300" className="hover:text-[#002DC2] text-black transition-colors block">
-                  <span className="font-bold text-[#123B92] block">SOLDRY 300</span>
-                  <span className="text-2xs text-slate-500 block">{t('common_footer_m300')}</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/solar-dryer-models/sundry-50" className="hover:text-[#002DC2] text-black transition-colors block">
-                  <span className="font-bold text-[#123B92] block">SUNDRY 50</span>
-                  <span className="text-2xs text-slate-500 block">{t('common_footer_m50')} <span className="whitespace-nowrap">(50 kg)</span></span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/solar-dryer-models/sundry-12" className="hover:text-[#002DC2] text-black transition-colors block">
-                  <span className="font-bold text-[#123B92] block">SUNDRY 12 &amp; 6</span>
-                  <span className="text-2xs text-slate-500 block">{t('common_footer_m12')}</span>
-                </Link>
-              </li>
+              {CATALOG.map(product => (
+                <li key={product.id}>
+                  <Link to={product.path} className="hover:text-[#002DC2] text-black transition-colors block">
+                    <span className="font-bold text-[#123B92] block">{t(product.titleKey)}</span>
+                    <span className="text-2xs text-slate-500 block">{t(product.shortKey)}</span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

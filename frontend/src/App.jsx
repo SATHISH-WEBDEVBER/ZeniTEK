@@ -32,6 +32,8 @@ import InstallationPage from './pages/InstallationPage';
 import BrochurePage from './pages/BrochurePage';
 import LegalPage from './pages/LegalPage';
 import ProductsPage from './pages/ProductsPage';
+import CatalogPage from './pages/CatalogPage';
+import { CATALOG_PAGES } from './data/productCatalog';
 import MapPage from './pages/MapPage';
 import FarmerStoriesPage from './pages/FarmerStoriesPage';
 import SitemapPage from './pages/SitemapPage';
@@ -143,10 +145,15 @@ function PublicSite() {
               <Route path="/about" element={<AboutUsPage onOpenQuoteModal={handleOpenQuoteModal} />} />
               <Route path="/products" element={<ProductsPage />} />
               
-              {/* The three product pages */}
+              {/* Product areas with their own pages */}
               <Route path="/solar-dryer-models" element={<SolarDryersPage onOpenQuoteModal={handleOpenQuoteModal} onOpenDetailModal={handleOpenDetailModal} />} />
               <Route path="/solar-thermal-system" element={<SolarThermalPage onOpenQuoteModal={handleOpenQuoteModal} />} />
               <Route path="/research-and-development" element={<ResearchPage onOpenQuoteModal={handleOpenQuoteModal} />} />
+              {/* Every other product / sub-product page from the catalogue (Tunnel Dryers, Parabolic Trough,
+                  Scheffler Dish, Solar Water Heater, PV Laboratory and its setups, Wood Log Splitter) */}
+              {CATALOG_PAGES.map(path => (
+                <Route key={path} path={path} element={<CatalogPage onOpenQuoteModal={handleOpenQuoteModal} />} />
+              ))}
 
               {/* Old addresses forward to their current pages */}
               <Route path="/agri-solar-innovation" element={<Navigate to="/solar-dryer-models" replace />} />

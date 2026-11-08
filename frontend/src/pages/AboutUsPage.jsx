@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  Award, Zap, Sprout, Cpu, Microscope, ShieldCheck, CheckCircle2, MapPin, Phone, Mail, ArrowRight, ExternalLink, ChevronRight, ChevronLeft, Sparkles, Building2, Factory, GraduationCap, X, Layers, Maximize2, Check, Receipt
+  Award, Zap, Sprout, Cpu, Microscope, ShieldCheck, CheckCircle2, MapPin, Phone, Mail, ArrowRight, ExternalLink, ChevronRight, ChevronLeft, Sparkles, Building2, Factory, GraduationCap, X, Layers, Maximize2, Check, Receipt, MessageSquareQuote
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
@@ -284,29 +284,19 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
       {/* 1. HERO — full-bleed photo with left-aligned heading (matches Home hero) */}
       <PageHero
-        images="/real-photos/zenitek_photo_42.webp"
-        title={
-          <>
-            {renderRich(t('about_heroTitle'), { br: 'hidden sm:block', hl: 'text-[#002DC2]' })}
-          </>
-        }
+        images="/real-photos/zenitek_photo_19.webp"
+        title={renderRich(t('about_heroTitle'), { br: 'hidden', hl: 'text-[#002DC2]' })}
         subtitle={t('about_heroSubtitle')}
-      >
-        {/* 4 compact stat cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 max-w-xl pt-2">
-          {[
-            { id: 'year', value: '2021', label: t('about_statEstablished'), color: 'text-[#002DC2]' },
-            { id: 'place', value: 'Erode', label: 'Tamil Nadu', color: 'text-slate-900' },
-            { id: 'epc', value: t('about_statTurnkey'), label: t('about_statDesignEpc'), color: 'text-[#23AC39]' },
-            { id: 'clean', value: '100%', label: t('about_statCleanEnergy'), color: 'text-[#123B92]' },
-          ].map(stat => (
-            <div key={stat.id} className="bg-white/90 backdrop-blur-sm px-3 py-3 sm:py-4 rounded-2xl border border-slate-200/90 shadow-md text-left min-w-0">
-              <div className={`text-xl sm:text-2xl leading-tight font-black tracking-tight break-words ${stat.color}`}>{stat.value}</div>
-              <div className="text-2xs sm:text-xs font-black text-slate-600 uppercase tracking-wider mt-1">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-      </PageHero>
+        actions={[
+          { label: t('about_ctaQuote'), onClick: () => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: 'About Us Consultation' }), icon: MessageSquareQuote },
+          { label: t('prod_rndTitle'), to: '/research-and-development', icon: Microscope },
+        ]}
+        stats={[
+          { value: '2021', label: t('about_statEstablished') },
+          { value: 'Erode', label: t('sections_state_TN') },
+          { value: t('about_statTurnkey'), label: t('about_statDesignEpc') },
+        ]}
+      />
 
 
       {/* 2. OUR ROOTS, EVOLUTION & GLOBAL MENTORS (DOCUMENT 2) */}

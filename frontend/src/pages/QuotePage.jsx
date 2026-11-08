@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ShieldCheck, MessageCircle, Clock, BadgeCheck, Landmark } from 'lucide-react';
+import { MessageCircle, Phone } from 'lucide-react';
 import LeadForm from '../components/LeadForm';
+import PageHero from '../components/PageHero';
 import { useLanguage } from '../context/LanguageContext';
 
 // Prefill keys accepted in the URL, e.g. /quote?crop=Spices/Chillies&capacity=SOLDRY%201210
@@ -41,32 +42,24 @@ export default function QuotePage() {
 
   return (
     <div className="bg-white">
-      <section className="w-full py-8 sm:py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <h1 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
-              {t('sections_quoteTitle')}
-            </h1>
-            <p className="text-base sm:text-lg text-slate-600">
-              {t('quickFormDesc')}
-            </p>
-          </div>
+      <PageHero
+        images="/real-photos/zenitek_photo_17.webp"
+        title={t('sections_quoteTitle')}
+        subtitle={t('quickFormDesc')}
+        actions={[
+          { label: t('chatWhatsapp'), href: 'https://wa.me/918098613422?text=Hi%20ZeniTEK%20Team!%20I%20want%20a%20quote%20for%20a%20ZeniTEK%20Solar%20Thermal%20Dryer.', external: true, icon: MessageCircle },
+          { label: t('about_callDirectly'), href: 'tel:+918903852623', icon: Phone },
+        ]}
+        stats={[
+          { value: 'MNRE', label: t('hero_quoteMnre') },
+          { value: '30 sec', label: t('hero_quoteTime') },
+          { value: '40–60%', label: t('subsidyHelp') },
+        ]}
+      />
 
-          <div className="max-w-3xl mx-auto">
-            <LeadForm prefill={prefill} />
-          </div>
-
-          <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm font-semibold text-slate-700">
-            <div className="flex items-center justify-center gap-2 p-3 rounded-xl border border-slate-200">
-              <BadgeCheck className="w-5 h-5 text-[#002DC2] shrink-0" /> {t('mnreBadge')}
-            </div>
-            <div className="flex items-center justify-center gap-2 p-3 rounded-xl border border-slate-200">
-              <MessageCircle className="w-5 h-5 text-[#23AC39] shrink-0" /> {t('sections_quoteWhatsapp')}
-            </div>
-            <div className="flex items-center justify-center gap-2 p-3 rounded-xl border border-slate-200">
-              <Landmark className="w-5 h-5 text-[#002DC2] shrink-0" /> {t('subsidyHelp')}
-            </div>
-          </div>
+      <section className="w-full py-10 sm:py-14">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <LeadForm prefill={prefill} />
         </div>
       </section>
     </div>

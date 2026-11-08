@@ -63,13 +63,17 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
       {/* Hero Header — full-bleed photo with left-aligned heading (matches Home hero) */}
       <PageHero
         images="/real-photos/zenitek_photo_04.webp"
-        title={
-          <>
-            {t('contactTitle1')} <br />
-            <span className="text-[#002DC2]">{t('contactTitle2')}</span>
-          </>
-        }
+        title={<>{t('contactTitle1')} <span className="text-[#002DC2]">{t('contactTitle2')}</span></>}
         subtitle={t('contactSubtitle')}
+        actions={[
+          { label: t('chatWhatsapp'), href: 'https://wa.me/918098613422?text=Hi%20ZeniTEK%20Team!%20I%20want%20a%20quote%20for%20a%20ZeniTEK%20Solar%20Thermal%20Dryer.', external: true, icon: MessageCircle },
+          { label: t('about_callDirectly'), href: 'tel:+918903852623', icon: Phone },
+        ]}
+        stats={[
+          { value: 'Mon–Sat', label: t('hero_contactDays') },
+          { value: '9 AM – 7 PM', label: t('hero_contactHours') },
+          { value: '2', label: t('hero_contactOffices') },
+        ]}
       />
 
     <div className="space-y-16 pb-16 pt-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

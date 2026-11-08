@@ -4,10 +4,12 @@ import { zenitekRealGallery } from '../data/zenitekRealGalleryData';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import {
-  ArrowLeft, MapPin, CheckCircle2, ShieldCheck, Sun, Zap, Layers, Maximize2, Share2, PhoneCall, MessageCircle, ChevronRight, Calendar, Sparkles, SlidersHorizontal, Info, Award, X, BadgeCheck, CalendarCheck, Calculator
+  MapPin, CheckCircle2, ShieldCheck, Sun, Zap, Layers, Maximize2, Share2, PhoneCall, MessageCircle, ChevronRight, Calendar, Sparkles, SlidersHorizontal, Info, Award, X, BadgeCheck, CalendarCheck, Calculator, MessageSquareQuote
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { usePageTitle } from '../components/SiteHeader';
+import PageHero from '../components/PageHero';
+import NotFoundPage from './NotFoundPage';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 
 // Keep short parenthetical notes like "(with casters)" from splitting across lines
@@ -39,9 +41,9 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
   const navigate = useNavigate();
   const { t, tf } = useLanguage();
 
-  const item = zenitekRealGallery.find((p) => p.id === id) || zenitekRealGallery[0];
+  const item = zenitekRealGallery.find((p) => p.id === id) || null;
   usePageTitle(item?.title);
-  const [activeImage, setActiveImage] = useState(item.image);
+  const [activeImage, setActiveImage] = useState(item?.image);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -50,26 +52,12 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
   useEscapeKey(lightboxOpen, () => setLightboxOpen(false));
 
   useEffect(() => {
-    setActiveImage(item.image);
+    setActiveImage(item?.image);
     window.scrollTo(0, 0);
-  }, [id, item.image]);
+  }, [id, item?.image]);
 
   if (!item) {
-    return (
-      <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
-        <div className="text-center space-y-4 max-w-md bg-white p-8 rounded-3xl border border-slate-200 shadow-md">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#123B92]">{t('gallery_notFoundTitle')}</h2>
-          <p className="text-base sm:text-lg text-slate-600">{t('gallery_notFoundDesc')}</p>
-          <Link
-            to="/gallery"
-            className="inline-flex items-center space-x-2 px-6 py-2.5 bg-[#002DC2] text-white rounded-xl font-bold text-xs"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>{t('gallery_returnToGallery')}</span>
-          </Link>
-        </div>
-      </div>
-    );
+    return <NotFoundPage title={t('gallery_notFoundTitle')} description={t('gallery_notFoundDesc')} />;
   }
 
   // Related photos from same category (excluding current)
@@ -85,14 +73,40 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
     }
   };
 
+  const openQuote = () => onOpenQuoteModal && onOpenQuoteModal({
+    capacityNeeded: item.capacity,
+    cropType: item.crop,
+    district: `${item.location}, ${item.state}`
+  });
+
+  // Third hero fact: the drying time when it is a short figure ("2 – 3 Days"), else the gallery size
+  const dryingTime = (item.dryingTime || '').replace(/\s*\(.*\)\s*$/, '');
+  const thirdStat = /^\d/.test(dryingTime) && dryingTime.length <= 14
+    ? { value: dryingTime, label: t('gallery_specDryingTime') }
+    : { value: String(zenitekRealGallery.length), label: t('hero_galPhotos') };
+
   const whatsappMessage = encodeURIComponent(
     `Hello ZeniTEK Team, I am interested in learning more about the ${item.title} (${item.productModel}) installed at ${item.location}, ${item.state}. Please share pricing and subsidy details.`
   );
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
-      
-      {/* Share bar (breadcrumb + Back live in the global page header) */}
+      <PageHero
+        images={item.image}
+        title={item.title}
+        subtitle={`${tf(`gallery_cat_${item.category}`, item.categoryLabel)} · ${item.location}, ${item.state}`}
+        actions={[
+          { label: t('gallery_requestSizingQuote'), onClick: openQuote, icon: MessageSquareQuote },
+          { label: t('gallery_chatWhatsapp'), href: `https://wa.me/919443729576?text=${whatsappMessage}`, external: true, icon: MessageCircle },
+        ]}
+        stats={[
+          { value: item.productModel || '—', label: t('gallery_specModel') },
+          { value: item.state || '—', label: t('gallery_projState') },
+          thirdStat,
+        ]}
+      />
+
+      {/* Share bar */}
       <div className="pt-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-end">
@@ -112,32 +126,6 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
       {/* SECTION 1: SHOWCASE & SPECIFICATIONS */}
       <section className="py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-
-          {/* Centred page header */}
-          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              <span className="bg-[#123B92] text-white font-black text-xs uppercase px-3 py-1 rounded-full shadow-sm inline-block">
-                {tf(`gallery_cat_${item.category}`, item.categoryLabel)}
-              </span>
-              {item.productModel && (
-                <span className="bg-[#23AC39]/10 text-[#1A822B] font-extrabold text-xs px-3 py-1 rounded-full border border-[#23AC39]/30">
-                  {item.productModel}
-                </span>
-              )}
-            </div>
-            <h1 className="text-2xl xs:text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight leading-tight text-balance">
-              {item.title}
-            </h1>
-            <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-base sm:text-lg font-bold text-[#002DC2]">
-              <span className="inline-flex items-start min-w-0">
-                <MapPin className="w-5 h-5 mr-1.5 mt-1 text-[#002DC2] shrink-0" />
-                <span className="text-balance">{item.location}, {item.state}</span>
-              </span>
-              <span className="text-xs text-slate-500 font-mono whitespace-nowrap">
-                {item.lat.toFixed(4)}°N, {item.lng.toFixed(4)}°E
-              </span>
-            </p>
-          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start lg:items-stretch">
             
@@ -206,11 +194,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                 </div>
 
                 <button
-                  onClick={() => onOpenQuoteModal && onOpenQuoteModal({
-                    capacityNeeded: item.capacity,
-                    cropType: item.crop,
-                    district: `${item.location}, ${item.state}`
-                  })}
+                  onClick={openQuote}
                   className="px-5 py-2.5 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md shrink-0 cursor-pointer whitespace-nowrap"
                 >
                   {t('gallery_requestSizingQuote')}
@@ -291,11 +275,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                 {/* Primary CTA Buttons */}
                 <div className="pt-2 space-y-2.5">
                   <button
-                    onClick={() => onOpenQuoteModal && onOpenQuoteModal({
-                      capacityNeeded: item.capacity,
-                      cropType: item.crop,
-                      district: `${item.location}, ${item.state}`
-                    })}
+                    onClick={openQuote}
                     className="w-full py-3.5 bg-[#002DC2] hover:bg-[#123B92] text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-lg transition-all hover:scale-[1.01] flex items-center justify-center gap-2 px-4 text-center cursor-pointer"
                   >
                     <Calculator className="w-4 h-4 shrink-0" />

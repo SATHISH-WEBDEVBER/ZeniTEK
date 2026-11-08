@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { Download, ExternalLink, Share2, FileText, ArrowRight } from 'lucide-react';
 import { brochures } from '../data/brochuresData';
 import { usePageTitle } from '../components/SiteHeader';
+import PageHero from '../components/PageHero';
+import NotFoundPage from './NotFoundPage';
 import { useLanguage } from '../context/LanguageContext';
 
 // PDF brochure reader page: /brochures/:brochureId (pages shown as images, works on every device)
@@ -13,36 +15,31 @@ export default function BrochurePage() {
   usePageTitle(brochure?.title);
 
   if (!brochure) {
-    return (
-      <section className="w-full py-20">
-        <div className="max-w-xl mx-auto px-4 text-center space-y-5">
-          <h1 className="text-3xl font-black text-[#123B92]">{t('gallery_brochureNotFound')}</h1>
-          <Link to="/" className="inline-flex items-center gap-2 px-6 py-3 bg-[#23AC39] text-white font-black text-sm uppercase tracking-wider rounded-xl">
-            {t('notFoundHome')} <ArrowRight className="w-5 h-5" />
-          </Link>
-        </div>
-      </section>
-    );
+    return <NotFoundPage title={t('gallery_brochureNotFound')} />;
   }
 
   const shareUrl = `https://wa.me/?text=${encodeURIComponent(`Check out the official ZeniTEK ${brochure.title}: ${window.location.origin}${brochure.url}`)}`;
 
   return (
     <div className="bg-white">
+      <PageHero
+        images={brochure.cover}
+        title={brochure.title}
+        subtitle={brochure.subtitle}
+        actions={[
+          { label: t('gallery_downloadPdf'), href: brochure.url, download: brochure.downloadName, icon: Download },
+          { label: t('gallery_openPdf'), href: brochure.url, external: true, icon: ExternalLink },
+        ]}
+        stats={[
+          { value: String(brochure.pageCount), label: t('hero_pages') },
+          { value: brochure.size, label: t('hero_fileSize') },
+          { value: tf(`gallery_brochureBadge_${brochure.id}`, brochure.badge), label: t('hero_brochureType') },
+        ]}
+      />
+
       <section className="w-full py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <h1 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{brochure.title}</h1>
-            <p className="text-base sm:text-lg text-slate-600">{brochure.subtitle} · {t('gallery_pagesCount', { count: brochure.pageCount })} · {brochure.size}</p>
-          </div>
-
           <div className="flex flex-wrap justify-center gap-3">
-            <a href={brochure.url} download={brochure.downloadName} className="inline-flex items-center gap-2 px-5 py-3 bg-[#002DC2] hover:bg-[#123B92] text-white rounded-xl text-sm font-bold shadow-sm">
-              <Download className="w-5 h-5" /> {t('gallery_downloadPdf')}
-            </a>
-            <a href={brochure.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-3 bg-white border border-[#123B92]/25 hover:border-[#002DC2] text-[#123B92] rounded-xl text-sm font-bold">
-              <ExternalLink className="w-5 h-5" /> {t('gallery_openPdf')}
-            </a>
             <a href={shareUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-3 bg-[#23AC39] hover:bg-[#1A822B] text-white rounded-xl text-sm font-bold">
               <Share2 className="w-5 h-5" /> {t('gallery_shareWhatsapp')}
             </a>

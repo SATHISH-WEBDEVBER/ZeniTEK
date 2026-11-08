@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { projectGalleryData } from '../data/projectGalleryData';
 import { useLanguage } from '../context/LanguageContext';
 import { usePageTitle } from '../components/SiteHeader';
+import PageHero from '../components/PageHero';
+import NotFoundPage from './NotFoundPage';
 import {
-  ArrowLeft, ArrowRight, MapPin, Calendar, ShieldCheck,
-  CheckCircle2, Sparkles, PhoneCall, ChevronLeft, ChevronRight,
-  Layers, Award, FileText, Share2
+  ArrowRight, MapPin, Calendar,
+  CheckCircle2, PhoneCall, ChevronLeft, ChevronRight,
+  Share2, MessageSquareQuote
 } from 'lucide-react';
 
 export default function ProjectDetailPage({ onOpenQuoteModal }) {
@@ -26,20 +28,14 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
   }, [id]);
 
   if (!project) {
-    return (
-      <div className="min-h-[70vh] flex flex-col items-center justify-center p-6 text-center space-y-4">
-        <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">{t('gallery_projNotFoundTitle')}</h2>
-        <p className="text-base sm:text-lg text-slate-500">{t('gallery_projNotFoundDesc')}</p>
-        <Link
-          to="/installations"
-          className="px-6 py-2.5 bg-[#002DC2] text-white font-bold text-xs rounded-xl shadow hover:bg-[#002DC2] transition-all flex items-center space-x-2"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>{t('gallery_backAllDryers')}</span>
-        </Link>
-      </div>
-    );
+    return <NotFoundPage title={t('gallery_projNotFoundTitle')} description={t('gallery_projNotFoundDesc')} />;
   }
+
+  const openQuote = () => onOpenQuoteModal && onOpenQuoteModal({
+    capacityNeeded: `${project.dryerCode} (${project.title} Reference)`,
+    cropType: project.application,
+    district: project.locality
+  });
 
   // Calculate Previous and Next projects
   const currentIndex = projectGalleryData.findIndex(p => p.id === project.id);
@@ -55,8 +51,23 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 pb-20 pt-6">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div className="min-h-screen bg-slate-50 text-slate-900 pb-20">
+      <PageHero
+        images={project.image}
+        title={project.title}
+        subtitle={`${project.application} · ${(project.locality || '').replace(' | ', ', ')}`}
+        actions={[
+          { label: t('gallery_projCtaBtn'), onClick: openQuote, icon: MessageSquareQuote },
+          { label: t('hero_viewInstallations'), to: '/installations', icon: MapPin },
+        ]}
+        stats={[
+          { value: String(project.year), label: t('gallery_projYear') },
+          { value: project.dryerCode, label: t('gallery_projDryerCode') },
+          { value: project.state, label: t('gallery_projState') },
+        ]}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pt-6">
         
         {/* Share bar (breadcrumb + Back live in the global page header) */}
         <div className="flex items-center justify-end gap-3">
@@ -188,9 +199,9 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
                 <span className="text-2xs font-extrabold uppercase tracking-widest text-[#002DC2] bg-[#F0F4FD] px-2.5 py-1 rounded-md border border-[#002DC2]/20 inline-block">
                   {t('gallery_installSpecs')}
                 </span>
-                <h1 className="text-2xl sm:text-3xl font-black text-[#123B92] mt-2">
+                <h2 className="text-2xl sm:text-3xl font-black text-[#123B92] mt-2">
                   {project.title}
-                </h1>
+                </h2>
                 <div className="flex items-center text-xs font-semibold text-slate-500 mt-1">
                   <MapPin className="w-4 h-4 text-[#002DC2] mr-1 shrink-0" />
                   <span>{project.locality}</span>
@@ -265,11 +276,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
                 </div>
 
                 <button
-                  onClick={() => onOpenQuoteModal && onOpenQuoteModal({
-                    capacityNeeded: `${project.dryerCode} (${project.title} Reference)`,
-                    cropType: project.application,
-                    district: project.locality
-                  })}
+                  onClick={openQuote}
                   className="w-full py-3.5 bg-[#23AC39] hover:bg-[#23AC39] text-[#123B92] font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 hover:scale-[1.02]"
                 >
                   <span>{t('gallery_projCtaBtn')}</span>

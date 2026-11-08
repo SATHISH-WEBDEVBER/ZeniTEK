@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Play, TrendingUp, ShieldCheck, Award, ArrowRight, CheckCircle2, Star, Landmark, Wrench, Handshake
+  Play, TrendingUp, ShieldCheck, Award, ArrowRight, CheckCircle2, Star, Landmark, Wrench, Handshake, MessageSquareQuote, MapPin
 } from 'lucide-react';
 import IconTile from '../components/IconTile';
+import PageHero from '../components/PageHero';
 import { sampleReviews } from '../data/sampleData';
 import { useLanguage } from '../context/LanguageContext';
 import { API_BASE } from '../utils/api';
@@ -29,44 +30,21 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
   return (
     <div className="text-black min-h-screen bg-white">
       
-      {/* SECTION 1: HERO TITLE (ODD: WHITE) */}
-      <section className="w-full section-odd py-12 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-[#123B92]">
-            {t('storiesTitle1')} <br />
-            <span className="text-[#002DC2]">
-              {t('storiesTitle2')}
-            </span>
-          </h1>
-          <p className="text-sm text-black max-w-2xl mx-auto font-medium leading-relaxed">
-            {t('storiesSubtitle')}
-          </p>
-        </div>
-      </section>
-
-      {/* SECTION 2: GLOBAL IMPACT DASHBOARD (EVEN SECTION - SOFT LIGHT TINT) */}
-      <section className="w-full section-even py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="p-5 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm">
-              <div className="text-3xl sm:text-4xl font-black text-[#123B92]">1,200+</div>
-              <div className="text-xs text-black font-semibold mt-1">{t('impactFamilies')}</div>
-            </div>
-            <div className="p-5 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm">
-              <div className="text-3xl sm:text-4xl font-black text-[#002DC2]">₹4.2 Cr+</div>
-              <div className="text-xs text-black font-semibold mt-1">{t('impactValue')}</div>
-            </div>
-            <div className="p-5 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm">
-              <div className="text-3xl sm:text-4xl font-black text-[#123B92]">500+ Tons</div>
-              <div className="text-xs text-black font-semibold mt-1">{t('impactCrops')}</div>
-            </div>
-            <div className="p-5 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm">
-              <div className="text-3xl sm:text-4xl font-black text-[#002DC2]">100%</div>
-              <div className="text-xs text-black font-semibold mt-1">{t('impactCleanEnergy')}</div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* SECTION 1: HERO (the impact figures live here) */}
+      <PageHero
+        images="/real-photos/zenitek_photo_02.webp"
+        title={<>{t('storiesTitle1')} <span className="text-[#002DC2]">{t('storiesTitle2')}</span></>}
+        subtitle={t('storiesSubtitle')}
+        actions={[
+          { label: t('startProsperityBtn'), onClick: () => onOpenQuoteModal(), icon: MessageSquareQuote },
+          { label: t('hero_viewInstallations'), to: '/installations', icon: MapPin },
+        ]}
+        stats={[
+          { value: '1,200+', label: t('impactFamilies') },
+          { value: '₹4.2 Cr+', label: t('impactValue') },
+          { value: '500+ Tons', label: t('impactCrops') },
+        ]}
+      />
 
       {/* SECTION 3: VIDEO REVIEWS (ODD SECTION - CRISP WHITE) */}
       <section className="w-full section-odd py-12 sm:py-16">

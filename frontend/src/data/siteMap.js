@@ -2,36 +2,23 @@
 // Every route is listed with its label (translation key) and parent page, which drives
 // the page header breadcrumb, the browser tab title and the Site Map page.
 import {
-  Home, Info, Phone, Landmark, Sun, ThermometerSun, Microscope,
+  Home, Info, Phone, Landmark,
   LayoutGrid, Wheat, Images, MapPin, MessageSquareQuote, FileText, Lock, ScrollText, Map as MapIcon, Package
 } from 'lucide-react';
+import { CATALOG, CATALOG_ENTRIES, productImage } from './productCatalog';
 
-// The Products section: exactly these three pages, in this order (navbar menu, /products overview,
-// breadcrumbs and Site Map). `image` is a real photo of that product; without one, the `art`
-// drawing from SolarThermalArt is shown instead.
-export const PRODUCTS = [
-  {
-    path: '/solar-dryer-models', icon: Sun, image: '/real-photos/zenitek_photo_04.webp',
-    key: 'prod_dryersTitle', shortKey: 'prod_dryersShort', descKey: 'prod_dryersDesc',
-    points: ['prod_dryersPoint1', 'prod_dryersPoint2', 'prod_dryersPoint3']
-  },
-  {
-    path: '/solar-thermal-system', icon: ThermometerSun, image: null, art: 'trough',
-    key: 'prod_thermalTitle', shortKey: 'prod_thermalShort', descKey: 'prod_thermalDesc',
-    points: ['prod_thermalPoint1', 'prod_thermalPoint2', 'prod_thermalPoint3']
-  },
-  {
-    path: '/research-and-development', icon: Microscope, image: '/projects/project-24.webp',
-    key: 'prod_rndTitle', shortKey: 'prod_rndShort', descKey: 'prod_rndDesc',
-    points: ['prod_rndPoint1', 'prod_rndPoint2', 'prod_rndPoint3']
-  }
-];
+// The Products section: the four product areas from the product catalogue (navbar menu,
+// /products overview, breadcrumbs and Site Map). Each keeps its sub-products in `children`.
+export const PRODUCTS = CATALOG.map(node => ({ ...node, key: node.titleKey, image: productImage(node) }));
 
 // path pattern -> { key: label translation key, parent: parent path, icon }
 export const PAGES = {
   '/': { key: 'navHome', icon: Home },
   '/products': { key: 'navbar_products', parent: '/', icon: LayoutGrid },
-  ...Object.fromEntries(PRODUCTS.map(p => [p.path, { key: p.key, parent: '/products', icon: p.icon }])),
+  // every product, sub-product and model page from the catalogue, under its parent
+  ...Object.fromEntries(CATALOG_ENTRIES.map(({ node, parent }) => [
+    node.path, { key: node.titleKey, code: node.code, parent: parent ? parent.path : '/products', icon: node.icon }
+  ])),
   '/solar-dryer-models/:modelId': { key: 'site_productsDryerModels', parent: '/solar-dryer-models', icon: Package },
   '/applications': { key: 'navApplications', parent: '/', icon: Wheat },
   '/subsidies': { key: 'navbar_subsidies', parent: '/', icon: Landmark },
@@ -53,7 +40,7 @@ export const PAGES = {
 // Groups shown on the Site Map page (static pages only; detail pages are reached from their lists)
 export const SITEMAP_GROUPS = [
   { key: 'site_groupMain', paths: ['/', '/about', '/subsidies', '/applications', '/contact', '/quote'] },
-  { key: 'site_groupProducts', paths: ['/products', ...PRODUCTS.map(p => p.path)] },
+  { key: 'site_groupProducts', paths: ['/products', ...CATALOG_ENTRIES.map(e => e.node.path)] },
   { key: 'site_groupMedia', paths: ['/gallery', '/installations', '/stories'] },
   { key: 'site_groupSupport', paths: ['/sitemap', '/privacy', '/terms'] }
 ];

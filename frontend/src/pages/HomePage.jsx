@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ROICalculator from '../components/ROICalculator';
 import ProductModelShowcase from '../components/ProductModelShowcase';
@@ -6,15 +6,20 @@ import MapComponent from '../components/MapComponent';
 import { sampleReviews } from '../data/sampleData';
 import { useLanguage } from '../context/LanguageContext';
 import {
-  Sun, ShieldCheck, Award, ArrowRight, Zap, ChevronRight, ChevronLeft, MapPin, Sprout, Cpu, Sparkles, Star, Microscope, ThermometerSun, PanelTop, BadgeCheck, Landmark
+  Sun, ShieldCheck, Award, ArrowRight, Zap, ChevronRight, ChevronLeft, MapPin, Sprout, Cpu, Sparkles, Star, Microscope, ThermometerSun, PanelTop, BadgeCheck, Landmark, MessageSquareQuote
 } from 'lucide-react';
 import IconTile from '../components/IconTile';
+import PageHero from '../components/PageHero';
 
-// Real ZeniTEK installation photos (no AI renders, no baked-in text)
+// Home hero backgrounds: five ZeniTEK solar tunnel dryers, each with clear sky on the left (behind
+// the hero text) and the dryer on the right, so on desktop they fill the hero as they are (focus 1).
+// Phones and tablets show them as a banner above the text.
 const heroSlides = [
-  { image: '/real-photos/zenitek_photo_34.webp', alt: 'ZeniTEK solar tunnel dryer with PV canopy in paddy fields' },
-  { image: '/real-photos/zenitek_photo_45.webp', alt: 'Long ZeniTEK solar tunnel dryer in an open field' },
-  { image: '/real-photos/zenitek_photo_12.webp', alt: 'ZeniTEK solar tunnel dryer on a stone plinth' },
+  { image: '/home-hero/slide-1.webp', alt: 'ZeniTEK solar tunnel dryer with roof-mounted solar panel on a concrete platform' },
+  { image: '/home-hero/slide-2.webp', alt: 'Long ZeniTEK polyhouse tunnel dryer on a brick plinth in an open field' },
+  { image: '/home-hero/slide-3.webp', alt: 'Large ZeniTEK solar tunnel dryer with exhaust vents beside a coconut grove' },
+  { image: '/home-hero/slide-4.webp', alt: 'ZeniTEK solar tunnel dryer with control panel and solar panel near palm trees' },
+  { image: '/home-hero/slide-5.webp', alt: 'ZeniTEK solar dryer with front doors and steps on a raised concrete base' },
 ];
 
 const crops = [
@@ -55,24 +60,6 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
     cropType: 'Copra/Coconut',
     message: ''
   });
-  const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
-
-  // Auto-advance every 5 seconds
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentHeroSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const handlePrevSlide = () => {
-    setCurrentHeroSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
-  };
-
-  const handleNextSlide = () => {
-    setCurrentHeroSlide((prev) => (prev + 1) % heroSlides.length);
-  };
-
   const handleQuickSubmit = (e) => {
     e.preventDefault();
     onOpenQuoteModal(quickForm);
@@ -81,92 +68,24 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
   return (
     <div className="bg-slate-50 text-slate-900 w-full max-w-full overflow-x-hidden">
 
-      {/* SECTION 1: HERO CAROUSEL */}
-      <section className="no-divider relative pt-12 pb-16 lg:pt-20 lg:pb-24 section-odd w-full overflow-hidden min-h-[600px] lg:min-h-[680px] flex items-center select-none">
-
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          {heroSlides.map((slide, idx) => (
-            <div
-              key={slide.image}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                idx === currentHeroSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-              }`}
-            >
-              <img src={slide.image} alt={slide.alt} className="w-full h-full object-cover object-center select-none" />
-            </div>
-          ))}
-          {/* Left fade keeps the heading readable while the photo shows on the right */}
-          <div className="absolute inset-0 z-[15] bg-gradient-to-r from-white/95 via-white/75 to-transparent sm:from-white/85 sm:via-white/50 lg:via-white/40 pointer-events-none" />
-        </div>
-
-        <button
-          onClick={handlePrevSlide}
-          aria-label={t('common_home_prevSlide')}
-          className="absolute left-2 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/90 hover:bg-white text-slate-800 hover:text-[#123B92] border border-slate-200/90 shadow-xl hidden sm:flex items-center justify-center transition-all active:scale-90 cursor-pointer"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-
-        <button
-          onClick={handleNextSlide}
-          aria-label={t('common_home_nextSlide')}
-          className="absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/90 hover:bg-white text-slate-800 hover:text-[#123B92] border border-slate-200/90 shadow-xl hidden sm:flex items-center justify-center transition-all active:scale-90 cursor-pointer"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
-
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-20">
-          <div className="max-w-xl lg:max-w-3xl text-left flex flex-col items-start space-y-6">
-
-            <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#123B92] leading-tight">
-              {t('heroTitle1')} <br />
-              <span className="text-[#002DC2]">{t('heroTitle2')}</span>
-            </h1>
-
-            <p className="text-sm sm:text-base lg:text-lg text-slate-800 leading-relaxed font-semibold max-w-xl">
-              {t('heroSubtitle')}
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3 pt-2 w-full sm:w-auto">
-              <Link
-                to="/solar-dryer-models"
-                className="px-6 py-3.5 sm:px-8 sm:py-4 bg-white hover:bg-slate-50 border-2 border-[#123B92] text-[#123B92] font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl transition-all flex items-center justify-center space-x-2 shadow-md active:scale-95"
-              >
-                <span>{t('exploreModels')}</span>
-                <ChevronRight className="w-4 h-4" />
-              </Link>
-            </div>
-
-            <div className="bg-white/90 backdrop-blur-md border border-slate-200/90 shadow-xl rounded-2xl p-4 sm:p-5 w-full max-w-lg grid grid-cols-3 gap-3 sm:gap-4 divide-x divide-slate-200">
-              <div className="pr-2">
-                <div className="text-xl sm:text-2xl lg:text-3xl font-black text-[#123B92] tracking-tight whitespace-nowrap">1,200+</div>
-                <div className="text-xs sm:text-xs text-slate-700 font-bold mt-1 leading-snug">{t('dryersInstalled')}</div>
-              </div>
-              <div className="px-2 sm:px-3">
-                <div className="text-xl sm:text-2xl lg:text-3xl font-black text-[#002DC2] tracking-tight whitespace-nowrap">500+ MT</div>
-                <div className="text-xs sm:text-xs text-slate-700 font-bold mt-1 leading-snug">{t('foodSaved')}</div>
-              </div>
-              <div className="pl-2 sm:pl-3">
-                <div className="text-xl sm:text-2xl lg:text-3xl font-black text-[#23AC39] tracking-tight whitespace-nowrap">40-60%</div>
-                <div className="text-xs sm:text-xs text-slate-700 font-bold mt-1 leading-snug">{t('subsidyHelp')}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="absolute bottom-6 inset-x-0 z-20 flex items-center justify-center space-x-2">
-          {heroSlides.map((slide, idx) => (
-            <button
-              key={slide.image}
-              onClick={() => setCurrentHeroSlide(idx)}
-              aria-label={t('common_home_goToSlide', { n: idx + 1 })}
-              className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                currentHeroSlide === idx ? 'w-8 bg-slate-900 shadow-md ring-2 ring-white' : 'w-2.5 bg-white/90 ring-1 ring-slate-500 hover:bg-white'
-              }`}
-            />
-          ))}
-        </div>
-      </section>
+      {/* SECTION 1: HERO (standard page hero with three cross-fading photos; no breadcrumb on Home) */}
+      <PageHero
+        images={heroSlides.map(s => s.image)}
+        breadcrumb={false}
+        position="78% 50%"
+        focus={1}
+        title={<>{t('heroTitle1')} <span className="text-[#002DC2]">{t('heroTitle2')}</span></>}
+        subtitle={t('heroSubtitle')}
+        actions={[
+          { label: t('getQuote'), onClick: () => onOpenQuoteModal(), icon: MessageSquareQuote },
+          { label: t('exploreModels'), to: '/solar-dryer-models', icon: ChevronRight },
+        ]}
+        stats={[
+          { value: '1,200+', label: t('dryersInstalled') },
+          { value: '500+ MT', label: t('foodSaved') },
+          { value: '40-60%', label: t('subsidyHelp') },
+        ]}
+      />
 
 
       {/* SECTION 2: TRUST STRIP */}

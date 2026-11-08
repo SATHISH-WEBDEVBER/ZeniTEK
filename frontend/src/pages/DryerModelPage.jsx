@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { CheckCircle2, ShieldCheck, ArrowRight, Sun, Zap, Layers, Wind, Grid, Check, Ruler } from 'lucide-react';
+import { CheckCircle2, ShieldCheck, ArrowRight, Sun, Zap, Layers, Wind, Grid, Check, Ruler, MessageSquareQuote, LayoutGrid } from 'lucide-react';
 import { officialDryerModels } from '../data/zenitekBrochureData';
 import { usePageTitle } from '../components/SiteHeader';
+import PageHero from '../components/PageHero';
+import NotFoundPage from './NotFoundPage';
 import { buildQuoteUrl } from './QuotePage';
 import { useLanguage } from '../context/LanguageContext';
+import { ProductGrid } from '../components/ProductCards';
+import { findNodeByModelId, productImage, isPlaceholder, nodeTitle } from '../data/productCatalog';
+
+// "2.5 kg to 12.5 kg per batch (…)" -> "2.5–12.5 kg" for the hero fact
+const shortCapacity = (text = '') => {
+  const m = /([\d.,]+\+?)\s*kg\s*to\s*([\d.,]+\+?)\s*kg/i.exec(text);
+  return m ? `${m[1]}–${m[2]} kg` : (text || '—');
+};
 
 // Home-page showcase ids that differ from the brochure model ids
 const MODEL_ALIASES = {
@@ -26,25 +36,23 @@ export default function DryerModelPage() {
   const { modelId } = useParams();
   const model = findDryerModel(modelId);
   const { t } = useLanguage();
-  usePageTitle(model?.name);
+  // The model's place in the product catalogue: its display name ("D1210 – 150 Tunnel Solar Dryer"),
+  // its product image and its family (box dryers / tunnel dryers)
+  const entry = model ? findNodeByModelId(model.id) : null;
+  const name = entry ? nodeTitle(entry.node, t) : model?.name;
+  usePageTitle(name);
   const [selectedImg, setSelectedImg] = useState(0);
 
   if (!model) {
-    return (
-      <section className="w-full py-20">
-        <div className="max-w-xl mx-auto px-4 text-center space-y-5">
-          <h1 className="text-3xl font-black text-[#123B92]">{t('sections_modelNotFound')}</h1>
-          <p className="text-slate-600">{t('sections_modelNotFoundDesc')}</p>
-          <Link to="/solar-dryer-models" className="inline-flex items-center gap-2 px-6 py-3 bg-[#23AC39] text-white font-black text-sm uppercase tracking-wider rounded-xl">
-            {t('sections_viewAllModels')} <ArrowRight className="w-5 h-5" />
-          </Link>
-        </div>
-      </section>
-    );
+    return <NotFoundPage title={t('sections_modelNotFound')} description={t('sections_modelNotFoundDesc')} />;
   }
 
-  const images = model.gallery && model.gallery.length > 0 ? model.gallery : [model.imageUrl];
-  const quoteUrl = buildQuoteUrl({ capacityNeeded: model.name });
+  const productPhoto = entry ? productImage(entry.node) : (model.realProductPhoto || model.imageUrl);
+  const images = [productPhoto];
+  const quoteUrl = buildQuoteUrl({ capacityNeeded: name });
+  // other models in the same family (tunnel models list each other; box dryers list each other)
+  const family = entry?.parent;
+  const siblings = family ? family.children.filter(c => c.id !== entry.node.id) : [];
 
   const specs = [
     { icon: Grid, label: t('sections_specFloorTray'), main: t('sections_floor', { value: model.floorArea || t('sections_defCustom') }), sub: t('sections_trayArea', { value: model.totalTrayArea || model.trays || t('sections_defFoodTrays') }) },
@@ -57,19 +65,27 @@ export default function DryerModelPage() {
 
   return (
     <div className="bg-white">
-      <section className="w-full py-8 sm:py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <h1 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{model.name}</h1>
-            {model.capacityRange && (
-              <p className="text-base sm:text-lg font-bold text-[#002DC2]">{model.capacityRange}</p>
-            )}
-          </div>
+      <PageHero
+        images={productPhoto}
+        title={name}
+        subtitle={model.tagline}
+        actions={[
+          { label: t('sections_quoteThisModel'), to: quoteUrl, icon: MessageSquareQuote },
+          { label: family ? nodeTitle(family, t) : t('sections_viewAllModels'), to: family ? family.path : '/solar-dryer-models', icon: LayoutGrid },
+        ]}
+        stats={[
+          { value: shortCapacity(model.capacityRange), label: t('hero_perBatch') },
+          { value: model.floorArea || '—', label: t('hero_floorArea') },
+          { value: model.paybackPeriod || '—', label: t('sections_payback') },
+        ]}
+      />
 
+      <section className="w-full py-10 sm:py-14">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <div className="space-y-3">
               <div className="rounded-2xl overflow-hidden border border-[#123B92]/20 shadow-md bg-[#F0F4FD] aspect-[4/3]">
-                <img src={images[selectedImg] || model.imageUrl} alt={(selectedImg === 0 && model.imageAlt) || model.name} className="w-full h-full object-cover" />
+                <img src={images[selectedImg] || productPhoto} alt={isPlaceholder(images[selectedImg]) ? '' : name} className="w-full h-full object-cover" />
               </div>
               {images.length > 1 && (
                 <div className="flex flex-wrap gap-2">
@@ -89,6 +105,9 @@ export default function DryerModelPage() {
             </div>
 
             <div className="space-y-5">
+              {model.capacityRange && (
+                <p className="text-base sm:text-lg font-bold text-[#002DC2]">{model.capacityRange}</p>
+              )}
               <p className="text-base text-slate-700 leading-relaxed">{model.description}</p>
 
               <div className="p-4 bg-[#F0F4FD] rounded-2xl border border-[#123B92]/20 space-y-2 text-sm">
@@ -117,7 +136,7 @@ export default function DryerModelPage() {
                 to={quoteUrl}
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md transition-all text-center"
               >
-                <span>{t('sections_quoteForModel', { name: model.name })}</span>
+                <span>{t('sections_quoteForModel', { name })}</span>
                 <ArrowRight className="w-5 h-5 shrink-0" />
               </Link>
             </div>
@@ -178,6 +197,17 @@ export default function DryerModelPage() {
                 {t('sections_quoteThisModel')} <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
+          </div>
+        </section>
+      )}
+
+      {siblings.length > 0 && (
+        <section className="w-full py-10 sm:py-14 bg-slate-50 border-t border-slate-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div className="text-center max-w-3xl mx-auto">
+              <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('cat_moreIn', { name: nodeTitle(family, t) })}</h2>
+            </div>
+            <ProductGrid nodes={siblings} />
           </div>
         </section>
       )}

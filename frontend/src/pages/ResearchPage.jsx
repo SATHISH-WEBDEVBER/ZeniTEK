@@ -2,12 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, MapPin, MessageCircle, Phone, GraduationCap, FlaskConical, Rocket, Gauge,
-  ScanSearch, Sun, Microscope, Sprout, Warehouse, Award
+  Sprout, Warehouse, Award, Handshake
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 import IconTile from '../components/IconTile';
 import BoldText from '../components/BoldText';
+import { ProductGrid } from '../components/ProductCards';
+import { CATALOG, nodeTitle } from '../data/productCatalog';
+
+// What the R&D team has built (PV Laboratory with its three setups, Wood Log Splitter),
+// each with its own page - see src/data/productCatalog.js
+const RND = CATALOG.find(n => n.id === 'research-and-development');
+const PV_LAB = RND.children.find(n => n.id === 'pv-laboratory');
 
 const PHOTO = (n) => `/real-photos/zenitek_photo_${String(n).padStart(2, '0')}.webp`;
 const HUB_PHOTO = '/projects/project-24.webp';
@@ -29,12 +36,6 @@ const LAB_PHOTOS = [
   { image: PHOTO(14), captionKey: 'prod_rdPic3', to: '/gallery/photo-15' },
   { image: PHOTO(15), captionKey: 'prod_rdPic4', to: '/gallery/photo-16' },
   { image: PHOTO(10), captionKey: 'prod_rdPic5', to: '/gallery/photo-11' },
-];
-
-const PV_RIGS = [
-  { Icon: ScanSearch, key: 'about_dPvSpec2' },
-  { Icon: Sun, key: 'about_dPvSpec3' },
-  { Icon: Microscope, key: 'about_dPvSpec4' },
 ];
 
 const PROTOTYPES = [
@@ -75,28 +76,26 @@ export default function ResearchPage({ onOpenQuoteModal }) {
         images={PHOTO(42)}
         title={<>{t('prod_rdHeroTitle1')} <span className="text-[#002DC2]">{t('prod_rdHeroTitle2')}</span></>}
         subtitle={t('prod_rdHeroSub')}
-        actions={
-          <>
-            <button type="button" onClick={collaborate} className="px-6 py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold rounded-xl shadow-lg shadow-[#23AC39]/25 transition-colors inline-flex items-center justify-center gap-2 cursor-pointer">
-              {t('prod_rdCollaborate')} <ArrowRight className="w-5 h-5" />
-            </button>
-            <Link to="/installations/loc-1" className="px-5 py-3 bg-white border border-slate-300 hover:border-[#002DC2] text-[#123B92] font-bold rounded-xl transition-colors inline-flex items-center justify-center gap-2">
-              <MapPin className="w-5 h-5 text-[#002DC2]" /> {t('prod_rdVisitHub')}
-            </Link>
-          </>
-        }
-      >
-        <div className="grid grid-cols-3 gap-3 max-w-xl pt-2">
-          {[['6+', 'prod_rdStat1'], ['150 kg', 'prod_rdStat2'], ['3', 'prod_rdStat3']].map(([v, k]) => (
-            <div key={k} className="bg-white/90 border border-slate-200 rounded-xl p-3 shadow-sm">
-              <div className="text-lg sm:text-xl font-black text-[#123B92] whitespace-nowrap">{v}</div>
-              <div className="text-xs text-slate-600 font-semibold leading-snug mt-0.5 [overflow-wrap:anywhere]">{t(k)}</div>
-            </div>
-          ))}
-        </div>
-      </PageHero>
+        actions={[
+          { label: t('prod_rdCollaborate'), onClick: collaborate, icon: Handshake },
+          { label: t('prod_rdVisitHub'), to: '/installations/loc-1', icon: MapPin },
+        ]}
+        stats={[
+          { value: '6+', label: t('prod_rdStat1') },
+          { value: '150 kg', label: t('prod_rdStat2') },
+          { value: '3', label: t('prod_rdStat3') },
+        ]}
+      />
 
-      {/* 2. R&D HUB */}
+      {/* 2. WHAT WE HAVE BUILT (product cards, each opening its own page) */}
+      <section className="w-full py-12 sm:py-16 bg-slate-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionTitle title={t('cat_rndBuiltTitle')} subtitle={t('cat_rndBuiltSub')} />
+          <ProductGrid nodes={RND.children} />
+        </div>
+      </section>
+
+      {/* R&D HUB */}
       <section className="w-full py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <figure className="relative">
@@ -194,10 +193,13 @@ export default function ResearchPage({ onOpenQuoteModal }) {
             </div>
           </div>
           <ul className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3">
-            {PV_RIGS.map(({ Icon, key }) => (
-              <li key={key} className="flex items-center gap-4 p-4 rounded-2xl border border-slate-200 bg-white shadow-sm">
-                <IconTile icon={Icon} size="md" />
-                <span className="text-base font-bold text-[#123B92]">{t(key)}</span>
+            {PV_LAB.children.map(item => (
+              <li key={item.id}>
+                <Link to={item.path} className="group flex items-center gap-4 p-4 rounded-2xl border border-slate-200 bg-white shadow-sm hover:border-[#002DC2]/40 hover:shadow-md transition-all">
+                  <IconTile icon={item.icon} size="md" />
+                  <span className="flex-1 text-base font-bold text-[#123B92] group-hover:text-[#002DC2] transition-colors">{nodeTitle(item, t)}</span>
+                  <ArrowRight className="w-5 h-5 text-[#002DC2] shrink-0 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </li>
             ))}
           </ul>

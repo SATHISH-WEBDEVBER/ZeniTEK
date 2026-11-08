@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   ArrowRight, CheckCircle2, ChevronDown, Check, MessageCircle, Phone,
   User, UserCheck, Users, Briefcase, FileText, ClipboardList, Landmark, Wrench, BadgeCheck,
-  ScrollText, CreditCard, FileCheck2, Camera
+  ScrollText, CreditCard, FileCheck2, Camera, Calculator
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
@@ -125,27 +125,19 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
 
       {/* 1. HERO */}
       <PageHero
-        images={PHOTO(34)}
+        images={PHOTO(11)}
         title={<>{t('sections_subHeroTitle1')} <span className="text-[#002DC2]">{t('sections_subHeroTitle2')}</span></>}
-        subtitle={<>{t('sections_subHeroSubPre')} <strong>{t('sections_subHeroSubStrong')}</strong> {t('sections_subHeroSubPost')}</>}
-        actions={<>
-          <a href="#estimator" onClick={scrollTo('estimator')} className="px-6 py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold rounded-xl shadow-lg shadow-[#23AC39]/25 transition-colors inline-flex items-center justify-center gap-2">
-            {t('sections_checkEligibility')} <ArrowRight className="w-5 h-5" />
-          </a>
-          <a href="#subsidy-schemes" onClick={scrollTo('subsidy-schemes')} className="px-6 py-3 bg-white border border-slate-300 hover:border-[#002DC2] text-[#123B92] font-bold rounded-xl transition-colors inline-flex items-center justify-center">
-            {t('sections_viewSchemes')}
-          </a>
-        </>}
-      >
-        <div className="grid grid-cols-3 gap-3 max-w-xl pt-2">
-          {[['40–60%', 'subsidyHelp'], ['4', 'sub_statSchemes'], ['5', 'sub_statSteps']].map(([v, k]) => (
-            <div key={k} className="bg-white/90 border border-slate-200 rounded-xl p-3 shadow-sm">
-              <div className="text-lg sm:text-xl font-black text-[#123B92] whitespace-nowrap">{v}</div>
-              <div className="text-xs text-slate-600 font-semibold leading-snug mt-0.5 [overflow-wrap:anywhere]">{t(k)}</div>
-            </div>
-          ))}
-        </div>
-      </PageHero>
+        subtitle={t('hero_subsidiesSub')}
+        actions={[
+          { label: t('sections_checkEligibility'), href: '#estimator', onClick: scrollTo('estimator'), icon: Calculator },
+          { label: t('sections_viewSchemes'), href: '#subsidy-schemes', onClick: scrollTo('subsidy-schemes'), icon: ScrollText },
+        ]}
+        stats={[
+          { value: '40–60%', label: t('subsidyHelp') },
+          { value: '4', label: t('sub_statSchemes') },
+          { value: '5', label: t('sub_statSteps') },
+        ]}
+      />
 
       {/* 2. ESTIMATOR */}
       <section id="estimator" className="w-full py-12 sm:py-16 bg-slate-50 border-b border-slate-200 scroll-mt-20">

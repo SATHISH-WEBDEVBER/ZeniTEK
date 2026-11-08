@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { cropMatrixData } from '../data/sampleData';
-import { ArrowRight, Search, Users, Ship, Sprout, Wheat, Fish, Factory, Nut, Leaf, Flame, Shell, Trees } from 'lucide-react';
+import { ArrowRight, Search, Users, Ship, Sprout, Wheat, Fish, Factory, Nut, Leaf, Flame, Shell, Trees, MessageSquareQuote, Table2 } from 'lucide-react';
 import IconTile from '../components/IconTile';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
@@ -34,19 +34,28 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
     </>
   );
 
+  const scrollToMatrix = (e) => {
+    const el = document.getElementById('crop-matrix');
+    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  };
+
   return (
     <div className="text-black min-h-screen bg-white">
-      
+
       {/* SECTION 1: HERO HEADER — full-bleed photo with left-aligned heading (matches Home hero) */}
       <PageHero
-        images="/real-photos/zenitek_photo_02.webp"
-        title={
-          <>
-            {t('appMatrixTitle1')} <br />
-            <span className="text-[#002DC2]">{t('appMatrixTitle2')}</span>
-          </>
-        }
+        images="/real-photos/zenitek_photo_23.webp"
+        title={<>{t('appMatrixTitle1')} <span className="text-[#002DC2]">{t('appMatrixTitle2')}</span></>}
         subtitle={t('appMatrixSubtitle')}
+        actions={[
+          { label: t('getQuote'), onClick: () => onOpenQuoteModal(), icon: MessageSquareQuote },
+          { label: t('hero_viewMatrix'), href: '#crop-matrix', onClick: scrollToMatrix, icon: Table2 },
+        ]}
+        stats={[
+          { value: '50+', label: t('hero_appsProducts') },
+          { value: '3', label: t('hero_appsSegments') },
+          { value: String(cropMatrixData.length), label: t('hero_appsMatrix') },
+        ]}
       />
 
       {/* SECTION 2: SEGMENT FILTER + CARD GRID ACTIVE VIEWS (EVEN: SOFT LIGHT TINT) */}
@@ -155,7 +164,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
       </section>
 
       {/* SECTION 3: PARAMETER MATRIX TABLE (ODD: WHITE) */}
-      <section className="w-full section-odd py-12 sm:py-16">
+      <section id="crop-matrix" className="w-full section-odd py-12 sm:py-16 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('matrixCropTitle')}</h2>

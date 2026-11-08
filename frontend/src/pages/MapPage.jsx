@@ -1,23 +1,40 @@
 import React from 'react';
 import MapComponent from '../components/MapComponent';
-import { MapPin, ArrowRight } from 'lucide-react';
+import { MapPin, ArrowRight, CalendarCheck, Map as MapIcon } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 import IconTile from '../components/IconTile';
+import { activeLocationsData } from '../data/mapLocationsData';
+
+const STATES = new Set(activeLocationsData.map(l => l.state));
+const IN_TAMIL_NADU = activeLocationsData.filter(l => l.state === 'Tamil Nadu').length;
 
 // Installations page: every working ZeniTEK site on an interactive map.
 export default function MapPage({ onOpenQuoteModal }) {
   const { t } = useLanguage();
+  const scrollToMap = (e) => {
+    const el = document.getElementById('installations-map');
+    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  };
 
   return (
     <div className="text-black min-h-screen bg-white">
       <PageHero
         images="/real-photos/zenitek_photo_21.webp"
-        title={<>{t('mapTitle1')} <br /><span className="text-[#1A822B]">{t('mapTitle2')}</span></>}
+        title={<>{t('mapTitle1')} <span className="text-[#002DC2]">{t('mapTitle2')}</span></>}
         subtitle={t('mapSubtitle')}
+        actions={[
+          { label: t('bookVisitBtn'), onClick: () => onOpenQuoteModal(), icon: CalendarCheck },
+          { label: t('hero_viewMap'), href: '#installations-map', onClick: scrollToMap, icon: MapIcon },
+        ]}
+        stats={[
+          { value: String(activeLocationsData.length), label: t('hero_mapSites') },
+          { value: String(STATES.size), label: t('hero_mapStates') },
+          { value: String(IN_TAMIL_NADU), label: t('hero_mapTN') },
+        ]}
       />
 
-      <section className="w-full py-12 sm:py-16">
+      <section id="installations-map" className="w-full py-12 sm:py-16 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <MapComponent onSelectProjectQuote={(project) => onOpenQuoteModal({ cropType: project.cropDrying, capacityNeeded: project.capacity, district: project.locationName })} />
 

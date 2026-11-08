@@ -13,9 +13,14 @@ import { fetchPublicProducts } from '../utils/api';
 import { useLanguage } from '../context/LanguageContext';
 import MapComponent from '../components/MapComponent';
 import PageHero from '../components/PageHero';
+import { ProductGrid } from '../components/ProductCards';
+import { CATALOG } from '../data/productCatalog';
+
+// 6, 12 and 50 sq.ft box dryers + Tunnel Solar Dryers (which lists its five models)
+const DRYER_PRODUCTS = CATALOG.find(n => n.id === 'solar-dryer').children;
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import {
-  MapPin, Calendar, Search, Filter, Sparkles, ArrowRight, ShieldCheck, CheckCircle2, X, PhoneCall, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, SlidersHorizontal, Eye, LayoutGrid, Sun, Wind, Droplets, Cpu, Shield, Zap, Maximize2, Download, Layers, Grid, FileText, Camera, Image as ImageIcon, ChevronDown, ChevronUp, Loader, Package, Ruler, BookOpen, Timer, Images, Factory, Map as MapIcon
+  MapPin, Calendar, Search, Filter, Sparkles, ArrowRight, ShieldCheck, CheckCircle2, X, PhoneCall, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, SlidersHorizontal, Eye, LayoutGrid, Sun, Wind, Droplets, Cpu, Shield, Zap, Maximize2, Download, Layers, Grid, FileText, Camera, Image as ImageIcon, ChevronDown, ChevronUp, Loader, Package, Ruler, BookOpen, Timer, Images, Factory, Map as MapIcon, MessageSquareQuote
 } from 'lucide-react';
 
 // Brochure pages in /pdf-products are also stored as two halves (-1 top, -2 bottom) for the viewer
@@ -45,8 +50,6 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
   };
   const brochureCategoryLabel = (cat) => (brochureCategoryKeys[cat] ? t(brochureCategoryKeys[cat]) : cat);
 
-  const boxModelCount = officialDryerModels.filter(m => m.category.includes('Box Type')).length;
-  const tunnelModelCount = officialDryerModels.filter(m => m.category.includes('Tunnel')).length;
 
   // Dynamic CMS products from backend
   const [cmsProducts, setCmsProducts] = useState([]);
@@ -59,8 +62,6 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
       .finally(() => setCmsProductsLoading(false));
   }, []);
 
-  // State for active top tab / section filter
-  const [modelCategoryFilter, setModelCategoryFilter] = useState('All');
   const [selectedBrochureModalPage, setSelectedBrochureModalPage] = useState(null);
 
   // Brochure page viewer: freeze background scrolling and close with Esc
@@ -68,13 +69,8 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
   useEscapeKey(!!selectedBrochureModalPage, () => setSelectedBrochureModalPage(null));
 
   // In-Card Expandable Details State (Image-Priority Mode)
-  const [expandedModels, setExpandedModels] = useState({});
   const [expandedBrochures, setExpandedBrochures] = useState({});
   const [expandedProjects, setExpandedProjects] = useState({});
-
-  const toggleModelExpand = (id) => {
-    setExpandedModels(prev => ({ ...prev, [id]: !prev[id] }));
-  };
 
   const toggleBrochureExpand = (page) => {
     setExpandedBrochures(prev => ({ ...prev, [page]: !prev[page] }));
@@ -102,17 +98,6 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
   ];
 
   const yearOptions = ['All', '2026', '2025', '2024', '2023'];
-
-  // Filter official models by category
-  const filteredModels = useMemo(() => {
-    if (modelCategoryFilter === 'Box Type') {
-      return officialDryerModels.filter(m => m.category.includes('Box Type'));
-    }
-    if (modelCategoryFilter === 'Tunnel Type') {
-      return officialDryerModels.filter(m => m.category.includes('Tunnel'));
-    }
-    return officialDryerModels;
-  }, [modelCategoryFilter]);
 
   // Filter project gallery items
   const filteredProjects = useMemo(() => {
@@ -174,51 +159,18 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
       {/* SECTION 1: HERO HEADER (background photo, left-aligned heading) */}
       <PageHero
         images="/real-photos/zenitek_photo_44.webp"
-        title={<>{t('dryers_heroTitle1')} <span className="text-[#1A822B]">{t('dryers_heroTitle2')}</span></>}
-        subtitle={<>{richT('dryers_heroSubtitle', { pct: <strong className="text-slate-900">40%</strong> })}</>}
-        actions={<>
-          <button
-            type="button"
-            onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: 'Commercial Solar Dryer Lineup' })}
-            className="w-full sm:w-auto py-3.5 px-6 bg-gradient-to-r from-blue-700 via-blue-600 to-green-700 hover:from-blue-600 hover:to-green-600 text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-md transition-all hover:scale-105 flex items-center justify-center space-x-2 cursor-pointer"
-          >
-            <span>{t('dryers_ctaPricing')}</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-
-          <button
-            type="button"
-            onClick={() => scrollToSection('pdf-catalog-section')}
-            className="w-full sm:w-auto py-3 px-5 bg-white hover:bg-slate-50 border border-slate-300 text-[#123B92] font-bold text-xs rounded-2xl transition-all flex items-center justify-center space-x-2 shadow-sm cursor-pointer"
-          >
-            <FileText className="w-4 h-4 text-[#1A822B]" />
-            <span>{t('dryers_ctaCatalog', { count: brochurePages.length })}</span>
-          </button>
-
-          <a
-            href="tel:+918903852623"
-            className="w-full sm:w-auto py-3 px-5 bg-[#F0F4FD] hover:bg-[#F0F4FD] border border-[#002DC2]/20 text-[#123B92] font-semibold text-xs rounded-2xl transition-all flex items-center justify-center space-x-2 shadow-sm"
-          >
-            <PhoneCall className="w-4 h-4 text-[#1A822B]" />
-            <span>{t('dryers_ctaCall', { phone: '+91 89038 52623' })}</span>
-          </a>
-        </>}
-      >
-        {/* Direct Brochure Value Props */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-xl">
-          {[
-            { value: '40%', labelKey: 'dryers_tileFaster', color: 'text-[#1A822B]' },
-            { value: 'SS304', labelKey: 'dryers_tileTrays', color: 'text-[#002DC2]' },
-            { value: 'PLC + HMI', labelKey: 'dryers_tileMoisture', color: 'text-[#002DC2]' },
-            { value: '40%-60%', labelKey: 'dryers_tileSubsidy', color: 'text-[#1A822B]' },
-          ].map((tile) => (
-            <div key={tile.labelKey} className="px-2.5 py-2 bg-white/90 rounded-2xl border border-slate-200 text-center shadow-sm">
-              <div className={`text-base font-black ${tile.color}`}>{tile.value}</div>
-              <div className="text-2xs text-slate-600 font-bold mt-0.5 leading-tight">{t(tile.labelKey)}</div>
-            </div>
-          ))}
-        </div>
-      </PageHero>
+        title={<>{t('dryers_heroTitle1')} <span className="text-[#002DC2]">{t('dryers_heroTitle2')}</span></>}
+        subtitle={t('hero_dryersSub')}
+        actions={[
+          { label: t('dryers_ctaPricing'), onClick: () => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: 'Commercial Solar Dryer Lineup' }), icon: MessageSquareQuote },
+          { label: t('dryers_ctaCatalog', { count: brochurePages.length }), onClick: () => scrollToSection('pdf-catalog-section'), icon: FileText },
+        ]}
+        stats={[
+          { value: '40%', label: t('dryers_tileFaster') },
+          { value: 'SS304', label: t('dryers_tileTrays') },
+          { value: '40–60%', label: t('dryers_tileSubsidy') },
+        ]}
+      />
 
       {/* Quick Jump navigation (compact strip right below the hero) */}
       <nav aria-label={t('dryers_jumpAria')} className="w-full bg-white border-y border-slate-200">
@@ -343,167 +295,21 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         </section>
       )}
 
-      {/* SECTION 2: OFFICIAL PRODUCT MODELS LINEUP (EVEN SECTION - SOFT OFF-WHITE) */}
+      {/* SECTION 2: OUR SOLAR DRYERS - 6, 12 and 50 sq.ft box dryers and the tunnel dryers (5 models),
+          each card opening that product's own page (product list in src/data/productCatalog.js) */}
       <section className="w-full section-even py-14 sm:py-20" id="models-section">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               {t('dryers_modelsTitle')}
             </h2>
             <p className="text-base sm:text-lg text-slate-600">
               {t('dryers_modelsSubtitle')}
             </p>
-
-          {/* Model Category Switcher */}
-          <div className="flex justify-center pt-2">
-          <div role="group" aria-label={t('dryers_filterAria')} className="inline-flex flex-wrap items-center justify-center gap-1.5 bg-[#F0F4FD] border border-[#123B92]/20 p-1 rounded-2xl">
-            {['All', 'Box Type', 'Tunnel Type'].map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                aria-pressed={modelCategoryFilter === cat}
-                onClick={() => setModelCategoryFilter(cat)}
-                className={`px-3 sm:px-4 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all cursor-pointer ${
-                  modelCategoryFilter === cat 
-                    ? 'bg-[#002DC2] text-white shadow' 
-                    : 'text-black hover:text-[#002DC2]'
-                }`}
-              >
-                {cat === 'All'
-                  ? t('dryers_filterAll', { count: officialDryerModels.length })
-                  : cat === 'Box Type'
-                    ? t('dryers_filterBox', { count: boxModelCount })
-                    : t('dryers_filterTunnel', { count: tunnelModelCount })}
-              </button>
-            ))}
           </div>
-          </div>
+          <ProductGrid nodes={DRYER_PRODUCTS} />
         </div>
-
-        {/* Models Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredModels.map((model) => {
-            const isExpanded = !!expandedModels[model.id];
-            return (
-              <div
-                key={model.id}
-                className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-blue-500 transition-all duration-300 flex flex-col justify-between shadow-sm hover:shadow-xl group"
-              >
-                <div>
-                  {/* Real product photo (uniform 4:3 crop) */}
-                  <Link
-                    to={`/solar-dryer-models/${model.id}`}
-                    aria-label={t('dryers_modelDetailsAria', { name: model.name })}
-                    className="relative block aspect-[4/3] overflow-hidden bg-slate-100 border-b border-slate-200 cursor-pointer"
-                  >
-                    <img
-                      src={model.imageUrl}
-                      alt={model.imageAlt || model.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                  </Link>
-
-                  {/* Clean Model Header & Image-First Action Button */}
-                  <div className="p-4 sm:p-5 space-y-3">
-                    {/* Model Badges (kept below the photo so they never cover the product) */}
-                    <div className="flex flex-wrap items-center content-start gap-1.5 md:min-h-14">
-                      <span className="bg-slate-900 text-white text-2xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg whitespace-nowrap inline-block">
-                        {model.tier}
-                      </span>
-                      <span className="bg-[#002DC2] text-white font-extrabold text-2xs uppercase px-2.5 py-1 rounded-lg shadow-sm whitespace-nowrap inline-block">
-                        {model.badge}
-                      </span>
-                      {model.floorArea && (
-                        <span className="bg-white text-[#123B92] font-extrabold text-2xs px-2.5 py-1 rounded-lg border border-slate-200 shadow-sm whitespace-nowrap">
-                          {model.floorArea}
-                        </span>
-                      )}
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-black text-[#123B92] group-hover:text-[#002DC2] transition-colors leading-6 md:min-h-12">
-                        <Link to={`/solar-dryer-models/${model.id}`} className="hover:underline">
-                          {model.name}
-                        </Link>
-                      </h3>
-                      <p className="text-sm font-bold text-[#1A822B] mt-1 md:min-h-12">{model.capacityRange}</p>
-                    </div>
-
-                    {/* Button to toggle content - Image Priority Requirement */}
-                    <button
-                      type="button"
-                      onClick={() => toggleModelExpand(model.id)}
-                      className={`w-full py-2.5 px-4 rounded-xl border font-bold text-xs flex items-center justify-between transition-all cursor-pointer ${
-                        isExpanded 
-                          ? 'bg-blue-50 border-blue-400 text-[#123B92] shadow-sm' 
-                          : 'bg-slate-50 hover:bg-[#F0F4FD] border-slate-300 hover:border-blue-500 text-slate-800'
-                      }`}
-                    >
-                      <span className="flex items-center space-x-1.5">
-                        <Eye className="w-4 h-4 text-[#002DC2]" />
-                        <span>{isExpanded ? t('dryers_hideSpecs') : t('dryers_viewSpecs')}</span>
-                      </span>
-                      <ChevronDown className={`w-4 h-4 text-[#002DC2] transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
-                    </button>
-
-                    {/* In-Card Expandable / Slide-Up Panel */}
-                    {isExpanded && (
-                      <div className="pt-3 space-y-3 border-t border-slate-100 animate-fade-in text-left">
-                        <p className="text-sm text-slate-600 leading-relaxed">
-                          {model.description}
-                        </p>
-
-                        {/* 4-Item Key Spec Metric Chips */}
-                        <div className="grid grid-cols-2 gap-2 text-xs">
-                          <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
-                            <span className="text-2xs text-slate-400 font-bold uppercase block">{t('dryers_specTrayArea')}</span>
-                            <span className="font-extrabold text-[#123B92]">{model.totalTrayArea}</span>
-                          </div>
-                          <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
-                            <span className="text-2xs text-slate-400 font-bold uppercase block">{t('dryers_specTrays')}</span>
-                            <span className="font-extrabold text-[#123B92] line-clamp-1">{model.trayCount}</span>
-                          </div>
-                          <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
-                            <span className="text-2xs text-slate-400 font-bold uppercase block">{t('dryers_specSolar')}</span>
-                            <span className="font-extrabold text-[#123B92] line-clamp-1">{model.solarPower}</span>
-                          </div>
-                          <div className="p-2 bg-slate-50 rounded-xl border border-slate-200/80">
-                            <span className="text-2xs text-slate-400 font-bold uppercase block">{t('dryers_specNight')}</span>
-                            <span className="font-extrabold text-[#123B92] line-clamp-1">{model.electricalHeater}</span>
-                          </div>
-                        </div>
-
-                        <div className="pt-1 space-y-2">
-                          <Link
-                            to={`/solar-dryer-models/${model.id}`}
-                            className="w-full py-2 bg-white hover:bg-[#002DC2] border border-[#002DC2] text-[#002DC2] hover:text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
-                          >
-                            <Eye className="w-4 h-4" />
-                            <span>{t('dryers_fullSpecs')}</span>
-                          </Link>
-
-                          <button
-                            type="button"
-                            onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: model.name })}
-                            className="w-full py-2.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow hover:scale-[1.02] flex items-center justify-center space-x-1.5 cursor-pointer"
-                          >
-                            <span>{t('reqQuote')}</span>
-                            <ArrowRight className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        </div>
-
       </section>
-
 
       {/* SECTION 3: SOLDRY PROFILE COMPARISON (ODD SECTION - CRISP WHITE) */}
       <section className="w-full section-odd py-14 sm:py-20" id="profile-section">

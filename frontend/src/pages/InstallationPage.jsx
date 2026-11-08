@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MapPin, ShieldCheck, ArrowRight, Video, Image as ImageIcon, BadgeCheck } from 'lucide-react';
+import { MapPin, ArrowRight, Video, Image as ImageIcon, BadgeCheck, MessageSquareQuote } from 'lucide-react';
 import { activeLocationsData } from '../data/mapLocationsData';
 import { usePageTitle } from '../components/SiteHeader';
+import PageHero from '../components/PageHero';
+import NotFoundPage from './NotFoundPage';
 import { buildQuoteUrl } from './QuotePage';
 import { useLanguage } from '../context/LanguageContext';
 import { API_BASE } from '../utils/api';
+
+// "250 kg Batch Setup" -> "250 kg" for the hero fact
+const shortKg = (text = '') => {
+  const m = /([\d,]+)\s*kg/i.exec(text);
+  return m ? `${m[1]} kg` : (text || '—');
+};
 
 // Detail page for one map installation site: /installations/:id
 // Looks the site up in the bundled map data first, then asks the API (GET /api/projects/:id).
@@ -39,34 +47,40 @@ export default function InstallationPage() {
   }
 
   if (!project) {
-    return (
-      <section className="w-full py-20">
-        <div className="max-w-xl mx-auto px-4 text-center space-y-5">
-          <h1 className="text-3xl font-black text-[#123B92]">{t('gallery_instNotFound')}</h1>
-          <p className="text-slate-600">{t('gallery_instNotFoundDesc')}</p>
-          <Link to="/" className="inline-flex items-center gap-2 px-6 py-3 bg-[#23AC39] text-white font-black text-sm uppercase tracking-wider rounded-xl">
-            {t('notFoundHome')} <ArrowRight className="w-5 h-5" />
-          </Link>
-        </div>
-      </section>
-    );
+    return <NotFoundPage title={t('gallery_instNotFound')} description={t('gallery_instNotFoundDesc')} />;
   }
 
   const photos = project.photos && project.photos.length > 0 ? project.photos : [project.imageUrl || '/real-photos/zenitek_photo_12.webp'];
   const stats = project.dryingStats || null;
   const quoteUrl = buildQuoteUrl({ cropType: project.cropDrying, capacityNeeded: project.capacity, district: project.locationName });
+  const heroStats = [
+    { value: shortKg(project.capacity), label: t('gallery_specCapacity') },
+    ...(stats
+      ? [
+          { value: (stats.solarDays || '').replace(/\s*solar$/i, '') || '—', label: t('gallery_specDryingTime') },
+          { value: `${stats.moistureStart} → ${stats.moistureEnd}`, label: t('gallery_moisture') },
+        ]
+      : [
+          { value: project.state || '—', label: t('gallery_projState') },
+          { value: String(photos.length), label: t('hero_galPhotos') },
+        ]),
+  ];
 
   return (
     <div className="bg-white">
+      <PageHero
+        images={photos[0]}
+        title={project.title}
+        subtitle={[project.cropDrying, project.locationName].filter(Boolean).join(' · ')}
+        actions={[
+          { label: t('enquireSetup'), to: quoteUrl, icon: MessageSquareQuote },
+          { label: t('hero_viewMap'), to: '/installations', icon: MapPin },
+        ]}
+        stats={heroStats}
+      />
+
       <section className="w-full py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <h1 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{project.title}</h1>
-            <p className="text-base sm:text-lg font-semibold text-slate-600 inline-flex items-center justify-center gap-1.5">
-              <MapPin className="w-5 h-5 text-[#002DC2] shrink-0" /> {project.locationName}
-            </p>
-          </div>
-
           {project.videoUrl && (
             <div className="flex justify-center gap-2">
               {[['overview', ImageIcon, t('gallery_tabOverview')], ['video', Video, t('gallery_tabVideo')]].map(([key, Icon, label]) => (

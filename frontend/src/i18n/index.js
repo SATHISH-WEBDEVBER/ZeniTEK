@@ -8,8 +8,10 @@ import navbar from './navbar';
 import site from './site';
 import products from './products';
 import subsidies from './subsidies';
+import hero from './hero';
+import catalog from './catalog';
 
-const modules = [about, dryers, gallery, sections, common, navbar, site, products, subsidies];
+const modules = [about, dryers, gallery, sections, common, navbar, site, products, subsidies, hero, catalog];
 
 export const LANGS = ['en', 'ta', 'hi', 'ml', 'te', 'kn'];
 

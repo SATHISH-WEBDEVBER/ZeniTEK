@@ -8,6 +8,7 @@ import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import LanguageWidget from './LanguageWidget';
 import SolarThermalArt from './SolarThermalArt';
 import { PRODUCTS } from '../data/siteMap';
+import { nodeTitle } from '../data/productCatalog';
 
 // Product thumbnail: the product's real photo, or its drawing when there is no photo
 const ProductThumb = ({ product, className }) => (
@@ -247,10 +248,10 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                 <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${productsDropdownOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
               </button>
 
-              {/* PRODUCTS DROPDOWN: the three product pages */}
+              {/* PRODUCTS DROPDOWN: the four product areas, each with links to its sub-products */}
               {productsDropdownOpen && (
                 <div
-                  className={`absolute top-full ${twoRow ? 'left-0' : 'left-1/2 -translate-x-1/2'} mt-2 w-[460px] bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-3 z-50 animate-fade-in space-y-2`}
+                  className={`absolute top-full ${twoRow ? 'left-0' : 'left-1/2 -translate-x-1/2'} mt-2 w-[540px] bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-3 z-50 animate-fade-in space-y-2`}
                   onMouseEnter={handleProductsEnter}
                   onMouseLeave={handleProductsLeave}
                 >
@@ -268,23 +269,38 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                   </div>
 
                   {PRODUCTS.map((product) => (
-                    <Link
-                      key={product.path}
-                      to={product.path}
-                      onClick={() => setProductsDropdownOpen(false)}
-                      className="flex items-center gap-3.5 p-2.5 rounded-xl hover:bg-[#F0F4FD] transition-colors border border-transparent hover:border-[#002DC2]/20 group"
-                    >
-                      <ProductThumb product={product} className="w-[72px] h-14 rounded-lg" />
-                      <div className="min-w-0 flex-1">
-                        <div className="text-base font-bold text-[#123B92] group-hover:text-[#002DC2] transition-colors leading-snug">
-                          {t(product.key)}
+                    <div key={product.path} className="rounded-xl hover:bg-[#F0F4FD] transition-colors border border-transparent hover:border-[#002DC2]/20">
+                      <Link
+                        to={product.path}
+                        onClick={() => setProductsDropdownOpen(false)}
+                        className="flex items-center gap-3.5 p-2.5 group"
+                      >
+                        <ProductThumb product={product} className="w-[72px] h-14 rounded-lg" />
+                        <div className="min-w-0 flex-1">
+                          <div className="text-base font-bold text-[#123B92] group-hover:text-[#002DC2] transition-colors leading-snug">
+                            {t(product.key)}
+                          </div>
+                          <div className="text-sm text-slate-500 font-medium leading-snug mt-0.5">
+                            {t(product.shortKey)}
+                          </div>
                         </div>
-                        <div className="text-sm text-slate-500 font-medium leading-snug mt-0.5">
-                          {t(product.shortKey)}
+                        <ArrowRight className="w-5 h-5 text-[#002DC2] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all shrink-0" />
+                      </Link>
+                      {product.children && (
+                        <div className="flex flex-wrap gap-1.5 pl-[98px] pr-2.5 pb-2.5 -mt-1">
+                          {product.children.map(child => (
+                            <Link
+                              key={child.id}
+                              to={child.path}
+                              onClick={() => setProductsDropdownOpen(false)}
+                              className="px-2.5 py-1 rounded-md bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:border-[#002DC2] hover:text-[#002DC2] transition-colors"
+                            >
+                              {nodeTitle(child, t)}
+                            </Link>
+                          ))}
                         </div>
-                      </div>
-                      <ArrowRight className="w-5 h-5 text-[#002DC2] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all shrink-0" />
-                    </Link>
+                      )}
+                    </div>
                   ))}
 
                   {/* Quote shortcut */}
@@ -484,11 +500,11 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                   <LayoutGrid className="w-5 h-5" /> {t('site_viewAllProducts')}
                 </Link>
                 {PRODUCTS.map((product) => (
+                  <div key={product.path} className="rounded-lg bg-white border border-slate-200/60">
                   <Link
-                    key={product.path}
                     to={product.path}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 p-2 rounded-lg bg-white border border-slate-200/60 hover:border-[#002DC2]/30 text-slate-800 hover:text-[#002DC2] transition-colors"
+                    className="flex items-center gap-3 p-2 rounded-lg hover:border-[#002DC2]/30 text-slate-800 hover:text-[#002DC2] transition-colors"
                   >
                     <ProductThumb product={product} className="w-12 h-12 rounded-md" />
                     <div className="min-w-0 flex-1">
@@ -500,6 +516,21 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                       </div>
                     </div>
                   </Link>
+                  {product.children && (
+                    <div className="flex flex-wrap gap-1.5 px-2 pb-2">
+                      {product.children.map(child => (
+                        <Link
+                          key={child.id}
+                          to={child.path}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="px-2.5 py-1.5 rounded-md bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 hover:border-[#002DC2] hover:text-[#002DC2] transition-colors"
+                        >
+                          {nodeTitle(child, t)}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                  </div>
                 ))}
               </div>
             )}

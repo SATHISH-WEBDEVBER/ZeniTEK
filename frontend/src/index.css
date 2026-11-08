@@ -641,3 +641,14 @@ main section.divider-full:not(section section):not([class*="rounded"]):not(.no-d
 .animate-calm-fade {
   animation: calmFadeIn 650ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+/* Page hero: Tamil, Malayalam, Telugu and Kannada glyphs are wider than Latin ones, so the
+   title and subtitle step down a size there to keep the card inside the fixed-height hero. */
+@media (min-width: 1024px) {
+  html:is([lang="ta"], [lang="ml"], [lang="te"], [lang="kn"]) .hero-title {
+    font-size: 1.95rem;
+    line-height: 1.25;
+  }
+  html:is([lang="ta"], [lang="ml"], [lang="te"], [lang="kn"]) .hero-sub {
+    font-size: 1rem;
+  }
+}
