@@ -1,13 +1,58 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
-  Menu, X, ArrowRight, ChevronDown, ChevronRight, FileText, Images, PlayCircle, MapPin, LayoutGrid, CheckCircle2
+  Menu, X, ArrowRight, ChevronDown, ChevronRight, FileText, Images, PlayCircle, Play, MapPin, LayoutGrid, CheckCircle2
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import LanguageWidget from './LanguageWidget';
 import { PRODUCTS } from '../data/siteMap';
 import { nodeTitle, nodeShortTitle, productImage, productThumb, DRYER_GROUPS, dryerModels } from '../data/productCatalog';
+import { PRODUCT_PHOTOS, PRODUCT_VIDEOS } from '../data/productMedia';
+import { zenitekRealGallery } from '../data/zenitekRealGalleryData';
+import { brochures } from '../data/brochuresData';
+
+const PRODUCT_PHOTO_COUNT = Object.values(PRODUCT_PHOTOS).reduce((n, list) => n + list.length, 0);
+
+// Gallery menu, right-hand side: a large preview of the hovered Gallery section
+function GalleryMenuPreview({ item, onNavigate }) {
+  const { t } = useLanguage();
+  return (
+    <Link to={item.path} onClick={onNavigate} className="group flex-1 min-w-0 flex flex-col gap-2">
+      {item.id === 'brochures' ? (
+        // the brochures as three PDF covers (real product photos), fanned out
+        <span className="relative flex-1 min-h-[250px] rounded-2xl overflow-hidden bg-gradient-to-br from-[#F0F4FD] to-[#EAF7EC] ring-1 ring-slate-200 group-hover:ring-2 group-hover:ring-[#23AC39] transition-shadow">
+          {brochures.slice(0, 3).map((b, i) => (
+            <span
+              key={b.id}
+              style={{ transform: `translate(-50%, -50%) rotate(${(i - 1) * 10}deg)`, left: `${28 + i * 22}%`, zIndex: i === 1 ? 2 : 1 }}
+              className="absolute top-1/2 w-[38%] aspect-[3/4] bg-white rounded-lg shadow-xl p-1.5 flex flex-col group-hover:scale-105 transition-transform duration-500"
+            >
+              <img src={b.cover} alt="" className="flex-1 min-h-0 w-full object-cover rounded" />
+              <span className={`mt-1 items-center justify-center gap-1 text-2xs font-black text-[#123B92] ${i === 1 ? 'inline-flex' : 'invisible inline-flex'}`}>
+                <FileText className="w-3 h-3" /> PDF
+              </span>
+            </span>
+          ))}
+        </span>
+      ) : (
+        <span className="relative flex-1 min-h-[250px] rounded-2xl overflow-hidden bg-slate-100 ring-1 ring-slate-200 group-hover:ring-2 group-hover:ring-[#23AC39] transition-shadow">
+          <img src={item.image} alt="" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          {item.id === 'videos' && (
+            <span className="absolute inset-0 flex items-center justify-center bg-black/15">
+              <span className="w-16 h-16 rounded-full bg-white/90 text-[#002DC2] flex items-center justify-center shadow-lg">
+                <Play className="w-8 h-8 ml-1" fill="currentColor" />
+              </span>
+            </span>
+          )}
+        </span>
+      )}
+      <span className="inline-flex items-center gap-1.5 text-sm font-bold text-[#002DC2] group-hover:text-[#1A822B] transition-colors">
+        {t(item.nameKey)} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+      </span>
+    </Link>
+  );
+}
 
 // Sub-products of a product area for the menus: its products and their own sub-products, in order
 const menuChildren = (product) => (product.children || []).flatMap(c => [{ node: c, depth: 0 }, ...(c.children || []).map(g => ({ node: g, depth: 1 }))]);
@@ -130,6 +175,8 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   // Product area shown in the right-hand panel of the Products menu (follows the hovered area)
   const [menuProductId, setMenuProductId] = useState(PRODUCTS[0].id);
   const menuProduct = PRODUCTS.find(p => p.id === menuProductId) || PRODUCTS[0];
+  // Gallery section previewed on the right of the Gallery menu (follows the hovered entry)
+  const [galleryItemId, setGalleryItemId] = useState('products');
 
   const navigate = useNavigate();
   const productsRef = useRef(null);
@@ -257,13 +304,14 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
     }, 180);
   };
 
-  // Gallery menu: one entry per Gallery tab
+  // Gallery menu: one entry per Gallery tab - its size and a preview picture for the desktop menu
   const galleryDropdownItems = [
-    { nameKey: 'media_tabProducts', path: '/gallery?tab=products', icon: Images },
-    { nameKey: 'media_tabVideos', path: '/gallery?tab=videos', icon: PlayCircle },
-    { nameKey: 'media_tabSites', path: '/gallery?tab=sites', icon: MapPin },
-    { nameKey: 'media_tabBrochures', path: '/gallery?tab=brochures', icon: FileText },
+    { id: 'products', nameKey: 'media_tabProducts', path: '/gallery?tab=products', icon: Images, image: '/images/products/solar-dryer/dryer-50/dryer-50-01-sm.webp', count: t('media_photos', { count: PRODUCT_PHOTO_COUNT }) },
+    { id: 'videos', nameKey: 'media_tabVideos', path: '/gallery?tab=videos', icon: PlayCircle, image: '/videos/rose-petal-drying.webp', count: t('media_videosCount', { count: PRODUCT_VIDEOS.length }) },
+    { id: 'sites', nameKey: 'media_tabSites', path: '/gallery?tab=sites', icon: MapPin, image: '/images/gallery/photo-43.webp', count: t('media_photos', { count: zenitekRealGallery.length }) },
+    { id: 'brochures', nameKey: 'media_tabBrochures', path: '/gallery?tab=brochures', icon: FileText, count: t('media_brochuresCount', { count: brochures.length }) },
   ];
+  const galleryPreview = galleryDropdownItems.find(item => item.id === galleryItemId) || galleryDropdownItems[0];
 
   const productRoutes = ['/products', '/dryers', ...PRODUCTS.map(p => p.path)];
 
@@ -305,7 +353,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
 
           {/* Desktop Nav Items - Stage 2 Animation */}
           <nav
-            className={`hidden lg:flex items-center ${twoRow ? 'order-last w-full justify-center flex-wrap gap-y-1 mt-2 pt-2 border-t border-slate-100 space-x-1' : density === 0 ? 'space-x-1 xl:space-x-2 2xl:space-x-3' : 'space-x-0.5'} transition-[opacity,transform] duration-700 ease-out transform ${
+            className={`hidden lg:flex relative z-40 items-center ${twoRow ? 'order-last w-full justify-center flex-wrap gap-y-1 mt-2 pt-2 border-t border-slate-100 space-x-1' : density === 0 ? 'space-x-1 xl:space-x-2 2xl:space-x-3' : 'space-x-0.5'} transition-[opacity,transform] duration-700 ease-out transform ${
               animStage >= 2
                 ? 'opacity-100 translate-y-0 scale-100'
                 : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'
@@ -365,27 +413,43 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                 <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${galleryDropdownOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
               </button>
 
-              {/* Gallery Dropdown Card */}
+              {/* GALLERY MENU: the four Gallery sections (name + size) on the left; a large preview of the
+                  hovered section on the right */}
               {galleryDropdownOpen && (
-                <div 
-                  className="absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-2 z-50 animate-fade-in space-y-0.5"
+                <div
+                  className="absolute top-full left-0 mt-2 w-[620px] bg-white rounded-3xl shadow-2xl border border-slate-200 p-4 z-50 flex gap-4"
                   onMouseEnter={handleGalleryEnter}
                   onMouseLeave={handleGalleryLeave}
                 >
-                  {galleryDropdownItems.map((item) => {
-                    const ItemIcon = item.icon;
-                    return (
-                      <Link
-                        key={item.nameKey}
-                        to={item.path}
-                        onClick={() => setGalleryDropdownOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-slate-700 hover:text-[#002DC2] hover:bg-[#F0F4FD] transition-colors"
-                      >
-                        <ItemIcon className="w-5 h-5 text-[#002DC2] shrink-0" />
-                        <span>{t(item.nameKey)}</span>
-                      </Link>
-                    );
-                  })}
+                  <ul className="w-[250px] shrink-0 space-y-1">
+                    {galleryDropdownItems.map((item) => {
+                      const ItemIcon = item.icon;
+                      const active = item.id === galleryPreview.id;
+                      return (
+                        <li key={item.id}>
+                          <Link
+                            to={item.path}
+                            onMouseEnter={() => setGalleryItemId(item.id)}
+                            onFocus={() => setGalleryItemId(item.id)}
+                            onClick={() => setGalleryDropdownOpen(false)}
+                            className={`flex items-center gap-3 px-3 py-3 rounded-2xl transition-colors ${
+                              active ? 'bg-[#F0F4FD] ring-1 ring-[#002DC2]/20' : 'hover:bg-slate-50'
+                            }`}
+                          >
+                            <span className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors ${active ? 'bg-[#002DC2] text-white' : 'bg-slate-100 text-[#002DC2]'}`}>
+                              <ItemIcon className="w-5 h-5" />
+                            </span>
+                            <span className="flex-1 min-w-0">
+                              <span className="block text-sm font-bold text-[#002DC2] leading-snug">{t(item.nameKey)}</span>
+                              <span className="block text-xs font-semibold text-[#1A822B]">{item.count}</span>
+                            </span>
+                            <ChevronRight className={`w-4 h-4 shrink-0 ${active ? 'text-[#002DC2]' : 'text-slate-300'}`} />
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <GalleryMenuPreview item={galleryPreview} onNavigate={() => setGalleryDropdownOpen(false)} />
                 </div>
               )}
             </div>
@@ -475,12 +539,12 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
         />
       )}
 
-      {/* PRODUCTS MENU: centred under the navbar, 80% of the screen width and 60% of its height. The four
+      {/* PRODUCTS MENU: centred under the navbar, 80% of the screen width and 70% of its height. The four
           product areas on the left; the hovered area's products as photo tiles, each named below. */}
       {productsDropdownOpen && (
         <div
           ref={productsPanelRef}
-          className="hidden lg:block absolute inset-x-0 top-full mx-auto mt-2 w-[80vw] h-[60vh] min-h-[400px] bg-white rounded-3xl border border-slate-200 shadow-2xl z-50 overflow-hidden"
+          className="hidden lg:block absolute inset-x-0 top-full mx-auto mt-2 w-[80vw] h-[70vh] min-h-[440px] bg-white rounded-3xl border border-slate-200 shadow-2xl z-50 overflow-hidden"
           onMouseEnter={handleProductsEnter}
           onMouseLeave={handleProductsLeave}
         >

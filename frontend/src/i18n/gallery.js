@@ -20,7 +20,6 @@ export default {
     gallery_filter_trays_produce: "Produce & SS304 Trays",
     gallery_filter_engineering: "Engineering & Packaging",
     gallery_filter_brochure: "Brochures (PDF)",
-    gallery_brochuresIntro: "Official ZeniTEK product brochures. Each cover is a real photo of the dryer it describes; open a brochure to read every page or download the PDF.",
     gallery_cat_tunnel_external: "Commercial Polyhouse Tunnels",
     gallery_cat_tunnel_internal: "Tunnel Interior & Trays",
     gallery_cat_box_dryers: "Box Type Solar Dryers",
@@ -136,11 +135,7 @@ export default {
     "gallery_brochureBadge_entrepreneur-box": "Business Brochure",
     gallery_pagesCount: "{count} Pages",
     gallery_downloadPdf: "Download PDF",
-    gallery_openPdf: "Open Original PDF",
     gallery_shareWhatsapp: "Share on WhatsApp",
-    gallery_brochurePages: "Brochure Pages",
-    gallery_pageOf: "Page {n} of {total}",
-    gallery_pageN: "Page {n}",
     gallery_requestTechQuote: "Request Technical Quotation",
 
     // Farmer stories page
@@ -164,7 +159,6 @@ export default {
     gallery_filter_trays_produce: "விளைபொருள் & SS304 தட்டுகள்",
     gallery_filter_engineering: "பொறியியல் & பேக்கேஜிங்",
     gallery_filter_brochure: "கையேடுகள் (PDF)",
-    gallery_brochuresIntro: "அதிகாரப்பூர்வ ZeniTEK தயாரிப்புக் கையேடுகள். ஒவ்வொரு அட்டைப் படமும் அது விவரிக்கும் உலர்த்தியின் உண்மையான படம்; எல்லாப் பக்கங்களையும் படிக்க கையேட்டைத் திறக்கவும் அல்லது PDF-ஐப் பதிவிறக்கவும்.",
     gallery_cat_tunnel_external: "வணிக பாலிஹவுஸ் டன்னல்கள்",
     gallery_cat_tunnel_internal: "டன்னல் உட்புறம் & தட்டுகள்",
     gallery_cat_box_dryers: "பெட்டி வகை சோலார் உலர்த்திகள்",
@@ -276,11 +270,7 @@ export default {
     "gallery_brochureBadge_entrepreneur-box": "தொழில் கையேடு",
     gallery_pagesCount: "{count} பக்கங்கள்",
     gallery_downloadPdf: "PDF பதிவிறக்கு",
-    gallery_openPdf: "அசல் PDF ஐத் திற",
     gallery_shareWhatsapp: "வாட்ஸ்அப்பில் பகிர்",
-    gallery_brochurePages: "கையேட்டுப் பக்கங்கள்",
-    gallery_pageOf: "பக்கம் {n} / {total}",
-    gallery_pageN: "பக்கம் {n}",
     gallery_requestTechQuote: "தொழில்நுட்ப விலைப்புள்ளி கேட்க",
 
     gallery_caseStudyAlt: "வணிகக் கள ஆய்வு"
@@ -303,7 +293,6 @@ export default {
     gallery_filter_trays_produce: "उपज व SS304 ट्रे",
     gallery_filter_engineering: "इंजीनियरिंग व पैकेजिंग",
     gallery_filter_brochure: "ब्रोशर (PDF)",
-    gallery_brochuresIntro: "आधिकारिक ZeniTEK उत्पाद ब्रोशर। हर कवर उसी ड्रायर की असली तस्वीर है जिसका वह वर्णन करता है; सभी पेज पढ़ने के लिए ब्रोशर खोलें या PDF डाउनलोड करें।",
     gallery_cat_tunnel_external: "वाणिज्यिक पॉलीहाउस टनल",
     gallery_cat_tunnel_internal: "टनल का अंदरूनी भाग व ट्रे",
     gallery_cat_box_dryers: "बॉक्स टाइप सोलर ड्रायर",
@@ -415,11 +404,7 @@ export default {
     "gallery_brochureBadge_entrepreneur-box": "व्यवसाय ब्रोशर",
     gallery_pagesCount: "{count} पेज",
     gallery_downloadPdf: "PDF डाउनलोड करें",
-    gallery_openPdf: "मूल PDF खोलें",
     gallery_shareWhatsapp: "व्हाट्सएप पर शेयर करें",
-    gallery_brochurePages: "ब्रोशर के पेज",
-    gallery_pageOf: "पेज {n} / {total}",
-    gallery_pageN: "पेज {n}",
     gallery_requestTechQuote: "तकनीकी कोटेशन मांगें",
 
     gallery_caseStudyAlt: "वाणिज्यिक फील्ड केस स्टडी"
@@ -442,7 +427,6 @@ export default {
     gallery_filter_trays_produce: "ഉൽപ്പന്നങ്ങൾ & SS304 ട്രേകൾ",
     gallery_filter_engineering: "എഞ്ചിനീയറിംഗ് & പാക്കേജിംഗ്",
     gallery_filter_brochure: "ബ്രോഷറുകൾ (PDF)",
-    gallery_brochuresIntro: "ഔദ്യോഗിക ZeniTEK ഉൽപ്പന്ന ബ്രോഷറുകൾ. ഓരോ കവറും അത് വിവരിക്കുന്ന ഡ്രയറിന്റെ യഥാർത്ഥ ചിത്രമാണ്; എല്ലാ പേജുകളും വായിക്കാൻ ബ്രോഷർ തുറക്കുക അല്ലെങ്കിൽ PDF ഡൗൺലോഡ് ചെയ്യുക.",
     gallery_cat_tunnel_external: "വാണിജ്യ പോളിഹൗസ് ടണലുകൾ",
     gallery_cat_tunnel_internal: "ടണൽ ഉൾവശം & ട്രേകൾ",
     gallery_cat_box_dryers: "ബോക്സ് ടൈപ്പ് സോളാർ ഡ്രയറുകൾ",
@@ -554,11 +538,7 @@ export default {
     "gallery_brochureBadge_entrepreneur-box": "ബിസിനസ് ബ്രോഷർ",
     gallery_pagesCount: "{count} പേജുകൾ",
     gallery_downloadPdf: "PDF ഡൗൺലോഡ് ചെയ്യൂ",
-    gallery_openPdf: "യഥാർത്ഥ PDF തുറക്കൂ",
     gallery_shareWhatsapp: "വാട്സാപ്പിൽ പങ്കിടൂ",
-    gallery_brochurePages: "ബ്രോഷർ പേജുകൾ",
-    gallery_pageOf: "പേജ് {n} / {total}",
-    gallery_pageN: "പേജ് {n}",
     gallery_requestTechQuote: "സാങ്കേതിക വിലവിവരം ചോദിക്കൂ",
 
     gallery_caseStudyAlt: "വാണിജ്യ ഫീൽഡ് കേസ് സ്റ്റഡി"
@@ -581,7 +561,6 @@ export default {
     gallery_filter_trays_produce: "ఉత్పత్తులు & SS304 ట్రేలు",
     gallery_filter_engineering: "ఇంజనీరింగ్ & ప్యాకేజింగ్",
     gallery_filter_brochure: "బ్రోచర్లు (PDF)",
-    gallery_brochuresIntro: "అధికారిక ZeniTEK ఉత్పత్తి బ్రోచర్లు. ప్రతి కవర్ అది వివరించే డ్రైయర్ యొక్క నిజమైన ఫోటో; అన్ని పేజీలు చదవడానికి బ్రోచర్‌ను తెరవండి లేదా PDF డౌన్‌లోడ్ చేయండి.",
     gallery_cat_tunnel_external: "వాణిజ్య పాలీహౌస్ టన్నెల్స్",
     gallery_cat_tunnel_internal: "టన్నెల్ లోపలి భాగం & ట్రేలు",
     gallery_cat_box_dryers: "బాక్స్ టైప్ సోలార్ డ్రైయర్లు",
@@ -693,11 +672,7 @@ export default {
     "gallery_brochureBadge_entrepreneur-box": "వ్యాపార బ్రోచర్",
     gallery_pagesCount: "{count} పేజీలు",
     gallery_downloadPdf: "PDF డౌన్‌లోడ్ చేయండి",
-    gallery_openPdf: "అసలు PDF తెరవండి",
     gallery_shareWhatsapp: "వాట్సాప్‌లో షేర్ చేయండి",
-    gallery_brochurePages: "బ్రోచర్ పేజీలు",
-    gallery_pageOf: "పేజీ {n} / {total}",
-    gallery_pageN: "పేజీ {n}",
     gallery_requestTechQuote: "సాంకేతిక కొటేషన్ అడగండి",
 
     gallery_caseStudyAlt: "వాణిజ్య ఫీల్డ్ కేస్ స్టడీ"
@@ -720,7 +695,6 @@ export default {
     gallery_filter_trays_produce: "ಉತ್ಪನ್ನಗಳು & SS304 ಟ್ರೇಗಳು",
     gallery_filter_engineering: "ಎಂಜಿನಿಯರಿಂಗ್ & ಪ್ಯಾಕೇಜಿಂಗ್",
     gallery_filter_brochure: "ಬ್ರೋಷರ್‌ಗಳು (PDF)",
-    gallery_brochuresIntro: "ಅಧಿಕೃತ ZeniTEK ಉತ್ಪನ್ನ ಬ್ರೋಷರ್‌ಗಳು. ಪ್ರತಿ ಕವರ್ ಅದು ವಿವರಿಸುವ ಡ್ರೈಯರ್‌ನ ನೈಜ ಫೋಟೋ; ಎಲ್ಲಾ ಪುಟಗಳನ್ನು ಓದಲು ಬ್ರೋಷರ್ ತೆರೆಯಿರಿ ಅಥವಾ PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ.",
     gallery_cat_tunnel_external: "ವಾಣಿಜ್ಯ ಪಾಲಿಹೌಸ್ ಟನಲ್‌ಗಳು",
     gallery_cat_tunnel_internal: "ಟನಲ್ ಒಳಭಾಗ & ಟ್ರೇಗಳು",
     gallery_cat_box_dryers: "ಬಾಕ್ಸ್ ಮಾದರಿ ಸೋಲಾರ್ ಡ್ರೈಯರ್‌ಗಳು",
@@ -832,11 +806,7 @@ export default {
     "gallery_brochureBadge_entrepreneur-box": "ವ್ಯಾಪಾರ ಬ್ರೋಷರ್",
     gallery_pagesCount: "{count} ಪುಟಗಳು",
     gallery_downloadPdf: "PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ",
-    gallery_openPdf: "ಮೂಲ PDF ತೆರೆಯಿರಿ",
     gallery_shareWhatsapp: "ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಿ",
-    gallery_brochurePages: "ಬ್ರೋಷರ್ ಪುಟಗಳು",
-    gallery_pageOf: "ಪುಟ {n} / {total}",
-    gallery_pageN: "ಪುಟ {n}",
     gallery_requestTechQuote: "ತಾಂತ್ರಿಕ ಧಾರಣೆ ಕೇಳಿ",
 
     gallery_caseStudyAlt: "ವಾಣಿಜ್ಯ ಕ್ಷೇತ್ರ ಕೇಸ್ ಸ್ಟಡಿ"

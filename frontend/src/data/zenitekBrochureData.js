@@ -1,144 +1,6 @@
 // ZeniTEK Official Product & Engineering Brochure Dataset
 // Extracted from the official ZeniTEK PDF Product Line Catalog
 
-export const brochurePages = [
-  {
-    page: 1,
-    id: "soldry-1210-150",
-    title: "SOLDRY 1210 - 150 Tunnel Type Solar Dryer",
-    subtitle: "Sustainable Drying Solution for a Healthier Tomorrow",
-    // Real product photo shown in the catalog card; the brochure page itself stays available via brochurePageImage / brochureId
-    image: "/images/gallery/photo-04.webp",
-    imageAlt: "ZeniTEK SOLDRY 1210-150 polycarbonate tunnel solar dryer with rooftop solar panel on a concrete plinth",
-    brochurePageImage: "/images/brochure-pages/brochure-page-1.webp",
-    brochureId: "solar-dryer",
-    category: "Tunnel Dryer",
-    floorArea: "150 sq.ft",
-    trayArea: "225 sq.ft (36 trays)",
-    summary: "Standard 150 sq.ft tunnel type solar dryer engineered with GI steel structure, 6mm UV polycarbonate sheet, PLC 4\" touchscreen HMI, Victron MPPT solar power, and 36 SS304 perforated food-grade trays."
-  },
-  {
-    page: 2,
-    id: "soldry-1709-200",
-    title: "SOLDRY 1709 - 200 Inverted Parabolic Tunnel Type Solar Dryer",
-    subtitle: "Smart Drying for a Healthier Tomorrow • 200 Sq.ft Floor Area",
-    // Real product photo shown in the catalog card; the brochure page itself stays available via brochurePageImage / brochureId
-    image: "/images/gallery/photo-21.webp",
-    imageAlt: "ZeniTEK SOLDRY 1709-200 inverted parabolic tunnel solar dryer with solar panel and exhaust vents",
-    brochurePageImage: "/images/brochure-pages/brochure-page-2.webp",
-    brochureId: "solar-dryer",
-    category: "Tunnel Dryer",
-    floorArea: "200 sq.ft",
-    trayArea: "225 sq.ft (36 trays)",
-    summary: "Inverted parabolic aerodynamic arch profile providing 200 sq.ft floor area with 17 ft front width, 4 internal circulation fans, 2 exhaust fans, and hybrid heating backup."
-  },
-  {
-    page: 3,
-    id: "profile-comparison",
-    title: "SOLDRY Solar Tunnel Dryer Profile Comparison",
-    subtitle: "150 • 200 • 250 SQ.FT — Same Construction Technology, Different Profiles, More Usable Floor Area",
-    // Real product photo shown in the catalog card; the brochure page itself stays available via brochurePageImage / brochureId
-    image: "/images/gallery/photo-17.webp",
-    imageAlt: "Side profile of a ZeniTEK SOLDRY polycarbonate tunnel solar dryer on a concrete base",
-    brochurePageImage: "/images/brochure-pages/brochure-page-3.webp",
-    brochureId: "solar-dryer",
-    category: "Engineering Analysis",
-    floorArea: "150 to 1,000 sq.ft",
-    trayArea: "Modular & Scalable",
-    summary: "Side-by-side engineering comparison between SOLDRY 1210-150 (Tray Drying), SOLDRY 1709-200 (Tray + Floor Drying), and SOLDRY 2008-250 (Floor Drying), scalable up to 1,000 sq.ft."
-  },
-  {
-    page: 4,
-    id: "sundry-6",
-    title: "SUNDRY 6 Box Type Solar Dryer",
-    subtitle: "Compact • Efficient • Hygienic — Smart Drying Powered by the Sun",
-    // Real product photo shown in the catalog card; the brochure page itself stays available via brochurePageImage / brochureId
-    image: "/images/gallery/photo-37.webp",
-    imageAlt: "ZeniTEK SUNDRY 6 compact box solar dryer on a leg stand with its solar panel",
-    brochurePageImage: "/images/brochure-pages/brochure-page-4.webp",
-    brochureId: "household-box",
-    category: "Box Type Dryer",
-    floorArea: "8 sq.ft",
-    trayArea: "6.25 sq.ft (1 SS304 tray)",
-    summary: "Portable box solar dryer with 20W solar panel, thermostat exhaust fan, 500W electric heater, and caster wheels. Ideal for households, herbalists, and kitchen entrepreneurs."
-  },
-  {
-    page: 5,
-    id: "sundry-12",
-    title: "SUNDRY 12 Box Type Solar Dryer",
-    subtitle: "Harness the Sun for a Healthier Tomorrow — Natural, Clean, Nutritious, Sustainable",
-    // Real product photo shown in the catalog card; the brochure page itself stays available via brochurePageImage / brochureId
-    image: "/images/gallery/photo-16.webp",
-    imageAlt: "ZeniTEK SUNDRY 12 box solar dryer on a stand with solar panel and control box",
-    brochurePageImage: "/images/brochure-pages/brochure-page-5.webp",
-    brochureId: "household-box",
-    category: "Box Type Dryer",
-    floorArea: "8 sq.ft",
-    trayArea: "12 sq.ft (2 SS304 trays)",
-    summary: "Dual-tier box dryer with 12 sq.ft tray drying capacity, 20W solar fan, 500W hybrid night heater, and optional 2 ft leg extension with 2\" caster wheels."
-  },
-  {
-    page: 6,
-    id: "sundry-50",
-    title: "SUNDRY 50 Box Type Solar Dryer",
-    subtitle: "Efficient • Hygienic • Reliable — 50 Sq.ft Tray Drying Area, 20 Kg to 100 Kg",
-    // Real product photo shown in the catalog card; the brochure page itself stays available via brochurePageImage / brochureId
-    image: "/images/gallery/photo-28.webp",
-    imageAlt: "ZeniTEK SUNDRY 50 box solar dryer with door open showing eight loaded SS304 trays",
-    brochurePageImage: "/images/brochure-pages/brochure-page-6.webp",
-    brochureId: "entrepreneur-box",
-    category: "Box Type Dryer",
-    floorArea: "16 sq.ft",
-    trayArea: "50 sq.ft (8 SS304 trays)",
-    summary: "High-capacity commercial box dryer with 8 trays, 4 internal circulation fans, 2 exhaust fans, 24V solar + SMPS grid backup, and 750W thermostat heater on 4\" caster wheels."
-  },
-  {
-    page: 7,
-    id: "segmentation-tiers",
-    title: "Solar Drying Solutions for Every Need",
-    subtitle: "Household Model • Small Business Model • Commercial Large Scale",
-    // Real product photo shown in the catalog card; the brochure page itself stays available via brochurePageImage / brochureId
-    image: "/images/gallery/photo-26.webp",
-    imageAlt: "Two ZeniTEK SUNDRY box solar dryers with solar panels side by side",
-    brochurePageImage: "/images/brochure-pages/brochure-page-7.webp",
-    brochureId: "entrepreneur-box",
-    category: "Product Solutions",
-    floorArea: "8 sq.ft to 1,000 sq.ft",
-    trayArea: "6.25 sq.ft to 500+ sq.ft",
-    summary: "Three tailored product tiers engineered for homes (SUNDRY 6 & 12), agri-entrepreneurs (SUNDRY 50), and industrial commercial producers (SOLDRY series)."
-  },
-  {
-    page: 8,
-    id: "working-principle",
-    title: "Solar Dryer Working Principle",
-    subtitle: "Smart, Efficient, Sustainable — 7-Step Precision Thermal Engineering",
-    // Real product photo shown in the catalog card; the brochure page itself stays available via brochurePageImage / brochureId
-    image: "/images/gallery/photo-42.webp",
-    imageAlt: "Inside a ZeniTEK tunnel solar dryer showing the rear exhaust fans and polycarbonate arch",
-    brochurePageImage: "/images/brochure-pages/brochure-page-8.webp",
-    brochureId: "solar-dryer",
-    category: "Technology",
-    floorArea: "All Models",
-    trayArea: "Thermodynamic Flow",
-    summary: "Step-by-step scientific cycle: Solar Heat Generation, Moisture Release, Moist Air Exhaust & Fresh Air Intake, Automatic Control, UV Protection, Hygienic Enclosed Drying, and 40% Faster Drying."
-  },
-  {
-    page: 9,
-    id: "soldry-1210-300",
-    title: "SOLDRY 1210 - 300 Tunnel Type Solar Dryer",
-    subtitle: "Dry • Preserve • Add Value Naturally — 300 Sq.ft Floor Area, 72 Trays (450 Sq.ft)",
-    // Real product photo shown in the catalog card; the brochure page itself stays available via brochurePageImage / brochureId
-    image: "/images/gallery/photo-12.webp",
-    imageAlt: "ZeniTEK SOLDRY 1210-300 long polycarbonate tunnel solar dryer with solar panel on an elevated foundation",
-    brochurePageImage: "/images/brochure-pages/brochure-page-9.webp",
-    brochureId: "solar-dryer",
-    category: "Tunnel Dryer",
-    floorArea: "300 sq.ft",
-    trayArea: "450 sq.ft (72 trays)",
-    summary: "Commercial 300 sq.ft tunnel dryer featuring 18 trolleys, 72 food-grade SS304 trays, 3 exhaust blowers, 4 internal circulation fans, 220W 24V solar array with Victron MPPT, and 1kW to 6kW auxiliary heater."
-  }
-];
-
 export const officialDryerModels = [
   // 1. SUNDRY 6
   {
@@ -153,7 +15,6 @@ export const officialDryerModels = [
     imageUrl: "/images/gallery/photo-37.webp",
     imageAlt: "ZeniTEK SUNDRY 6 compact box solar dryer on a leg stand with its solar panel",
     realProductPhoto: "/images/gallery/photo-37.webp",
-    brochurePageImage: "/images/brochure-pages/brochure-page-4.webp",
     gallery: [
       "/images/gallery/photo-37.webp",
       "/images/gallery/photo-30.webp",
@@ -201,7 +62,6 @@ export const officialDryerModels = [
     imageUrl: "/images/gallery/photo-16.webp",
     imageAlt: "ZeniTEK SUNDRY 12 box solar dryer on a stand with solar panel and control box",
     realProductPhoto: "/images/gallery/photo-16.webp",
-    brochurePageImage: "/images/brochure-pages/brochure-page-5.webp",
     gallery: [
       "/images/gallery/photo-16.webp",
       "/images/gallery/photo-13.webp",
@@ -249,7 +109,6 @@ export const officialDryerModels = [
     imageUrl: "/images/gallery/photo-36.webp",
     imageAlt: "ZeniTEK SUNDRY 50 eight-tray box solar dryer with solar panel, installed outdoors",
     realProductPhoto: "/images/gallery/photo-36.webp",
-    brochurePageImage: "/images/brochure-pages/brochure-page-6.webp",
     gallery: [
       "/images/gallery/photo-36.webp",
       "/images/gallery/photo-35.webp",
@@ -297,7 +156,6 @@ export const officialDryerModels = [
     imageUrl: "/images/gallery/photo-04.webp",
     imageAlt: "ZeniTEK SOLDRY 1210-150 polycarbonate tunnel solar dryer with rooftop solar panel on a concrete plinth",
     realProductPhoto: "/images/gallery/photo-04.webp",
-    brochurePageImage: "/images/brochure-pages/brochure-page-1.webp",
     gallery: [
       "/images/gallery/photo-04.webp",
       "/images/gallery/photo-11.webp",
@@ -347,7 +205,6 @@ export const officialDryerModels = [
     imageUrl: "/images/gallery/photo-21.webp",
     imageAlt: "ZeniTEK SOLDRY 1709-200 inverted parabolic tunnel solar dryer with solar panel and exhaust vents",
     realProductPhoto: "/images/gallery/photo-21.webp",
-    brochurePageImage: "/images/brochure-pages/brochure-page-2.webp",
     gallery: [
       "/images/gallery/photo-21.webp",
       "/images/gallery/photo-18.webp",
@@ -397,7 +254,6 @@ export const officialDryerModels = [
     imageUrl: "/images/gallery/photo-43.webp",
     imageAlt: "ZeniTEK SOLDRY 2008-250 wide, low-profile tunnel solar dryer on a raised concrete base",
     realProductPhoto: "/images/gallery/photo-43.webp",
-    brochurePageImage: "/images/brochure-pages/brochure-page-3.webp",
     gallery: [
       "/images/gallery/photo-43.webp",
       "/images/gallery/photo-20.webp",
@@ -445,7 +301,6 @@ export const officialDryerModels = [
     imageUrl: "/images/gallery/photo-12.webp",
     imageAlt: "ZeniTEK SOLDRY 1210-300 long polycarbonate tunnel solar dryer with solar panel on an elevated foundation",
     realProductPhoto: "/images/gallery/photo-12.webp",
-    brochurePageImage: "/images/brochure-pages/brochure-page-9.webp",
     gallery: [
       "/images/gallery/photo-12.webp",
       "/images/gallery/photo-23.webp",
@@ -495,7 +350,6 @@ export const officialDryerModels = [
     imageUrl: "/images/gallery/photo-45.webp",
     imageAlt: "Long modular ZeniTEK SOLDRY tunnel solar dryer installed in an open field",
     realProductPhoto: "/images/gallery/photo-45.webp",
-    brochurePageImage: "/images/brochure-pages/brochure-page-3.webp",
     gallery: [
       "/images/gallery/photo-45.webp",
       "/images/gallery/photo-33.webp",

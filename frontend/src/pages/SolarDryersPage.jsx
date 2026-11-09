@@ -4,10 +4,10 @@ import { projectGalleryData } from '../data/projectGalleryData';
 import { 
   officialDryerModels, 
   profileComparisonData, 
-  workingPrincipleSteps, 
-  brochurePages, 
-  brochureKeyBenefits 
+  workingPrincipleSteps
 } from '../data/zenitekBrochureData';
+import { brochures } from '../data/brochuresData';
+import BrochureCards from '../components/BrochureCards';
 import { zenitekRealGallery } from '../data/zenitekRealGalleryData';
 import { fetchPublicProducts } from '../utils/api';
 import { useLanguage } from '../context/LanguageContext';
@@ -17,15 +17,9 @@ import { ProductGrid } from '../components/ProductCards';
 import { VideoGrid } from '../components/MediaGallery';
 import { DRYER_GROUPS, dryerModels } from '../data/productCatalog';
 import { PRODUCT_VIDEOS } from '../data/productMedia';
-import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import {
   MapPin, Calendar, Search, Filter, Sparkles, ArrowRight, ShieldCheck, CheckCircle2, X, PhoneCall, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, SlidersHorizontal, Eye, LayoutGrid, Sun, Wind, Droplets, Cpu, Shield, Zap, Maximize2, Download, Layers, Grid, FileText, Camera, Image as ImageIcon, ChevronDown, ChevronUp, Loader, Package, Ruler, BookOpen, Timer, Images, Factory, Map as MapIcon, MessageSquareQuote
 } from 'lucide-react';
-
-// Brochure pages in /pdf-products are also stored as two halves (-1 top, -2 bottom) for the viewer
-const pageImageParts = (src) => (
-  /\/pdf-products\/.+\.webp$/.test(src || '') ? [1, 2].map(n => src.replace(/\.webp$/, `-${n}.webp`)) : [src]
-);
 
 export default function SolarDryersPage({ onOpenQuoteModal }) {
   const { t, tf } = useLanguage();
@@ -39,15 +33,6 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
       return m && nodes[m[1]] !== undefined ? <React.Fragment key={i}>{nodes[m[1]]}</React.Fragment> : part;
     });
 
-  // Brochure page categories (data labels) -> translation keys; unknown categories stay as entered
-  const brochureCategoryKeys = {
-    'Tunnel Dryer': 'dryers_bcat_tunnel',
-    'Box Type Dryer': 'dryers_bcat_box',
-    'Engineering Analysis': 'dryers_bcat_engineering',
-    'Product Solutions': 'dryers_bcat_solutions',
-    'Technology': 'dryers_bcat_technology'
-  };
-  const brochureCategoryLabel = (cat) => (brochureCategoryKeys[cat] ? t(brochureCategoryKeys[cat]) : cat);
 
 
   // Dynamic CMS products from backend
@@ -61,19 +46,8 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
       .finally(() => setCmsProductsLoading(false));
   }, []);
 
-  const [selectedBrochureModalPage, setSelectedBrochureModalPage] = useState(null);
-
-  // Brochure page viewer: freeze background scrolling and close with Esc
-  useScrollLock(!!selectedBrochureModalPage);
-  useEscapeKey(!!selectedBrochureModalPage, () => setSelectedBrochureModalPage(null));
-
   // In-Card Expandable Details State (Image-Priority Mode)
-  const [expandedBrochures, setExpandedBrochures] = useState({});
   const [expandedProjects, setExpandedProjects] = useState({});
-
-  const toggleBrochureExpand = (page) => {
-    setExpandedBrochures(prev => ({ ...prev, [page]: !prev[page] }));
-  };
 
   const toggleProjectExpand = (id) => {
     setExpandedProjects(prev => ({ ...prev, [id]: !prev[id] }));
@@ -162,7 +136,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         subtitle={t('hero_dryersSub')}
         actions={[
           { label: t('dryers_ctaPricing'), onClick: () => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: 'Commercial Solar Dryer Lineup' }), icon: MessageSquareQuote },
-          { label: t('dryers_ctaCatalog', { count: brochurePages.length }), onClick: () => scrollToSection('pdf-catalog-section'), icon: FileText },
+          { label: t('hero_viewBrochures'), onClick: () => scrollToSection('pdf-catalog-section'), icon: FileText },
         ]}
         stats={[
           { value: '40%', label: t('dryers_tileFaster') },
@@ -507,121 +481,18 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
       </section>
 
 
-      {/* SECTION 5: OFFICIAL PDF CATALOG BROCHURE PAGES (ODD SECTION - CRISP WHITE) */}
+      {/* SECTION 5: THE PDF BROCHURES (real product photos as covers; each opens or downloads the PDF) */}
       <section className="w-full section-odd py-14 sm:py-20" id="pdf-catalog-section">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
               {t('dryers_catalogTitle')}
             </h2>
             <p className="text-base sm:text-lg text-slate-600">
-              {t('dryers_catalogSubtitlePhotos')}
+              {t('media_brochuresIntro')}
             </p>
-
-          <div className="flex items-center justify-center text-xs font-bold text-slate-600">
-            <span>{t('dryers_catalogCount', { count: brochurePages.length })}</span>
           </div>
-        </div>
-
-        {/* Brochure Pages Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {brochurePages.map((bPage) => {
-            const isExpanded = !!expandedBrochures[bPage.page];
-            return (
-              <div
-                key={bPage.page}
-                className="bg-white rounded-3xl overflow-hidden border border-[#123B92]/20 hover:border-[#002DC2] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
-              >
-                <div>
-                  {/* Real photo of the product this brochure page covers (the page itself opens in the viewer) */}
-                  <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 border-b border-[#123B92]/20">
-                    <img
-                      src={bPage.image}
-                      alt={bPage.imageAlt || bPage.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-
-                    {/* Floating Badges */}
-                    <div className="absolute top-3 left-3">
-                      <span className="bg-[#123B92]/90 backdrop-blur-sm text-white font-black text-2xs px-2.5 py-1 rounded-lg shadow-sm whitespace-nowrap">
-                        {t('dryers_pageBadge', { page: bPage.page })}
-                      </span>
-                    </div>
-                    <div className="absolute top-3 right-3">
-                      <span className="bg-[#23AC39]/95 backdrop-blur-sm text-white font-black text-2xs px-2.5 py-1 rounded-lg shadow-sm whitespace-nowrap">
-                        {brochureCategoryLabel(bPage.category)}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="p-4 sm:p-5 space-y-3">
-                    <h4 className="text-base font-black text-[#123B92] group-hover:text-[#002DC2] transition-colors line-clamp-2 leading-6 sm:min-h-12">
-                      {bPage.title}
-                    </h4>
-
-                    {/* Open the brochure document: this page in the viewer, or the full PDF brochure */}
-                    <div className="grid grid-cols-2 gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setSelectedBrochureModalPage(bPage)}
-                        className="py-2.5 px-3 rounded-xl bg-[#002DC2] hover:bg-[#123B92] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer text-center"
-                      >
-                        <Eye className="w-4 h-4 shrink-0" />
-                        <span>{t('dryers_openBrochurePage')}</span>
-                      </button>
-                      <Link
-                        to={`/brochures/${bPage.brochureId || 'solar-dryer'}`}
-                        className="py-2.5 px-3 rounded-xl bg-[#F0F4FD] hover:bg-[#23AC39] border border-[#123B92]/20 hover:border-[#23AC39] text-[#123B92] hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors text-center"
-                      >
-                        <FileText className="w-4 h-4 shrink-0" />
-                        <span>{t('dryers_openFullBrochure')}</span>
-                      </Link>
-                    </div>
-
-                    {/* Button to toggle content - Image Priority Requirement */}
-                    <button
-                      type="button"
-                      onClick={() => toggleBrochureExpand(bPage.page)}
-                      className={`w-full py-2.5 px-4 rounded-xl border font-bold text-xs flex items-center justify-between transition-all cursor-pointer ${
-                        isExpanded 
-                          ? 'bg-blue-50 border-blue-400 text-[#123B92] shadow-sm' 
-                          : 'bg-slate-50 hover:bg-[#F0F4FD] border-slate-300 hover:border-blue-500 text-slate-800'
-                      }`}
-                    >
-                      <span className="flex items-center space-x-1.5">
-                        <FileText className="w-4 h-4 text-[#002DC2]" />
-                        <span>{isExpanded ? t('dryers_hideBrochure') : t('dryers_viewBrochure')}</span>
-                      </span>
-                      <ChevronDown className={`w-4 h-4 text-[#002DC2] transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
-                    </button>
-
-                    {/* In-Card Expandable / Slide-Up Panel */}
-                    {isExpanded && (
-                      <div className="pt-3 space-y-3 border-t border-slate-100 animate-fade-in text-left">
-                        <p className="text-sm text-black/80 leading-relaxed font-normal">
-                          {bPage.summary}
-                        </p>
-
-                        <button
-                          type="button"
-                          onClick={() => setSelectedBrochureModalPage(bPage)}
-                          className="w-full py-2.5 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-600 hover:to-blue-700 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-1.5 shadow-sm cursor-pointer"
-                        >
-                          <Eye className="w-4 h-4" />
-                          <span>{t('dryers_viewHiRes')}</span>
-                          <ArrowRight className="w-4 h-4 ml-1" />
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
+          <BrochureCards brochures={brochures} />
         </div>
       </section>
 
@@ -1044,89 +915,6 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         </div>
       </section>
 
-
-      {/* LIGHTBOX MODAL: FULL HIGH-RES PDF BROCHURE PAGE ZOOM */}
-      {selectedBrochureModalPage && (
-        <div
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 bg-slate-950/85 backdrop-blur-md animate-fade-in"
-          onClick={() => setSelectedBrochureModalPage(null)}
-          role="dialog"
-          aria-modal="true"
-          aria-label={t('dryers_modalAria', { page: selectedBrochureModalPage.page })}
-        >
-          <div 
-            className="relative bg-white rounded-3xl max-w-5xl w-full max-h-[95vh] flex flex-col overflow-hidden shadow-2xl border border-slate-200"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal Header */}
-            <div className="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800 shrink-0">
-              <div className="flex items-center space-x-2">
-                <span className="text-2xs font-black uppercase bg-[#23AC39] text-white px-2 py-0.5 rounded inline-block">
-                  {t('dryers_pageBadge', { page: selectedBrochureModalPage.page })}
-                </span>
-                <h3 className="text-xl font-bold text-white line-clamp-1">
-                  {selectedBrochureModalPage.title}
-                </h3>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <a
-                  href={selectedBrochureModalPage.brochurePageImage}
-                  download={`ZeniTEK_Brochure_Page_${selectedBrochureModalPage.page}.webp`}
-                  className="px-3 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-xs font-bold text-white flex items-center space-x-1 transition-colors"
-                >
-                  <Download className="w-4 h-4" />
-                  <span className="hidden sm:inline">{t('dryers_saveImage')}</span>
-                </a>
-                <button
-                  type="button"
-                  onClick={() => setSelectedBrochureModalPage(null)}
-                  aria-label={t('close')}
-                  title={t('close')}
-                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-
-            {/* High-Res Image Viewport */}
-            {/* Dense brochure pages are stored as a top and a bottom half (each kept under 50 KB),
-                stacked seamlessly so the page can be read at full width and scrolled */}
-            <div className="p-2 sm:p-4 overflow-auto flex-1 bg-slate-100">
-              <div className="mx-auto w-full max-w-3xl rounded-xl shadow border border-slate-300 overflow-hidden bg-white">
-                {pageImageParts(selectedBrochureModalPage.brochurePageImage).map((src, i) => (
-                  <img
-                    key={src}
-                    src={src}
-                    alt={i === 0 ? `${selectedBrochureModalPage.title} - ${t('dryers_pageBadge', { page: selectedBrochureModalPage.page })}` : ''}
-                    className="block w-full h-auto"
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Modal Footer */}
-            <div className="px-5 py-3 bg-white border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0 text-xs">
-              <p className="text-slate-600 font-medium text-center sm:text-left">
-                {selectedBrochureModalPage.subtitle}
-              </p>
-              
-              <button
-                onClick={() => {
-                  const title = selectedBrochureModalPage.title;
-                  setSelectedBrochureModalPage(null);
-                  if (onOpenQuoteModal) onOpenQuoteModal({ capacityNeeded: title });
-                }}
-                className="px-5 py-2 bg-[#002DC2] hover:bg-[#123B92] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow cursor-pointer shrink-0"
-              >
-                {t('dryers_enquireModel')}
-              </button>
-            </div>
-
-          </div>
-        </div>
-      )}
 
     </div>
   );

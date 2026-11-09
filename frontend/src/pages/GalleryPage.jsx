@@ -4,10 +4,11 @@ import { zenitekRealGallery } from '../data/zenitekRealGalleryData';
 import { brochures } from '../data/brochuresData';
 import { fetchPublicGallery } from '../utils/api';
 import {
-  MapPin, ArrowRight, ZoomIn, Loader, FileText, Download, MessageSquareQuote, Images, PlayCircle
+  MapPin, ArrowRight, ZoomIn, Loader, FileText, MessageSquareQuote, Images, PlayCircle
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
+import BrochureCards from '../components/BrochureCards';
 import { PhotoGrid, MediaViewer, VideoGrid, photoItems } from '../components/MediaGallery';
 import { CATALOG, productPhotos, nodeTitle } from '../data/productCatalog';
 import { PRODUCT_PHOTOS, PRODUCT_VIDEOS } from '../data/productMedia';
@@ -271,7 +272,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
               {activeTab === 'brochures' ? t('media_tabBrochures') : t('media_tabSites')}
             </h2>
             <p className="text-base sm:text-lg text-slate-600">
-              {activeTab === 'brochures' ? t('gallery_brochuresIntro') : t('gallery_gridSubtitle')}
+              {activeTab === 'brochures' ? t('media_brochuresIntro') : t('gallery_gridSubtitle')}
             </p>
           </div>
 
@@ -325,53 +326,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
           </>)}
 
           {activeTab === 'brochures' ? (
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
-                {brochures.map((b) => (
-                  <div
-                    key={b.id}
-                    className="group bg-white rounded-3xl overflow-hidden border border-[#123B92]/20 shadow-sm hover:shadow-xl hover:border-[#002DC2] transition-all duration-300 flex flex-col"
-                  >
-                    <Link to={`/brochures/${b.id}`} className="relative block aspect-[4/3] overflow-hidden bg-slate-100">
-                      <img
-                        src={b.cover}
-                        alt={b.coverAlt || b.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <span className="absolute top-3 left-3 inline-flex items-center gap-1 bg-[#123B92]/90 text-white text-2xs font-black px-2.5 py-1 rounded-lg shadow-sm">
-                        <FileText className="w-3.5 h-3.5" /> PDF
-                      </span>
-                    </Link>
-                    <div className="p-5 flex flex-col gap-3 flex-1">
-                      <div className="flex items-center justify-between gap-2 text-xs">
-                        <span className={`font-bold px-2 py-0.5 rounded-md border ${b.badgeColor}`}>{tf(`gallery_brochureBadge_${b.id}`, b.badge)}</span>
-                        <span className="text-slate-500 font-semibold">{t('gallery_pagesCount', { count: b.pageCount })} · {b.size}</span>
-                      </div>
-                      <h3 className="text-lg font-black text-[#123B92] leading-snug">{b.title}</h3>
-                      <p className="text-sm text-slate-500 leading-relaxed">{b.subtitle}</p>
-                      <div className="mt-auto pt-3 border-t border-slate-100 flex items-center gap-2">
-                        <Link
-                          to={`/brochures/${b.id}`}
-                          className="flex-1 py-2.5 text-center text-xs font-bold text-white bg-[#002DC2] hover:bg-[#123B92] rounded-xl transition-colors"
-                        >
-                          {t('sections_viewBrochure')}
-                        </Link>
-                        <a
-                          href={b.url}
-                          download={b.downloadName}
-                          title={t('gallery_downloadPdf')}
-                          aria-label={t('gallery_downloadPdf')}
-                          className="p-2.5 text-[#1A822B] bg-[#23AC39]/10 hover:bg-[#23AC39] hover:text-white rounded-xl transition-colors"
-                        >
-                          <Download className="w-4 h-4" />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <BrochureCards brochures={brochures} />
           ) : apiLoading ? (
             <div className="flex flex-col items-center justify-center py-20 space-y-4">
               <Loader className="w-12 h-12 text-[#002DC2] animate-spin" />

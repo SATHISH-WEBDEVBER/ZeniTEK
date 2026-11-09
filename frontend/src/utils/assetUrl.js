@@ -5,7 +5,6 @@ const LEGACY_PATHS = [
   [/^\/real-photos\/zenitek_photo_/, '/images/gallery/photo-'],
   [/^\/projects\/(project-)/, '/images/projects/$1'],
   [/^\/client-logos\//, '/images/clients/'],
-  [/^\/pdf-products\/brochure_p(\d)/, '/images/brochure-pages/brochure-page-$1'],
   [/^\/home-hero\//, '/images/home-hero/'],
   [/^\/products\/placeholder\.svg$/, '/images/products/placeholder.svg'],
   [/^\/(logo|emblem)\.webp$/, '/images/brand/$1.webp'],
