@@ -1,10 +1,11 @@
 import React from 'react';
-import MapComponent from '../components/MapComponent';
+import MapComponent from '../components/LazyMap';
 import { MapPin, ArrowRight, CalendarCheck, Map as MapIcon } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 import IconTile from '../components/IconTile';
 import { activeLocationsData } from '../data/mapLocationsData';
+import { smoothScrollTo } from '../motion/core';
 
 const STATES = new Set(activeLocationsData.map(l => l.state));
 const IN_TAMIL_NADU = activeLocationsData.filter(l => l.state === 'Tamil Nadu').length;
@@ -14,7 +15,7 @@ export default function MapPage({ onOpenQuoteModal }) {
   const { t } = useLanguage();
   const scrollToMap = (e) => {
     const el = document.getElementById('installations-map');
-    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    if (el) { e.preventDefault(); smoothScrollTo(el); }
   };
 
   return (

@@ -205,6 +205,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
         
         {/* ================= LEFT SIDE (60%): PRODUCT SHOWCASE (AUTO-SWAPPING EVERY 5S) ================= */}
         <div 
+          data-reveal="block"
           className="lg:col-span-7 bg-slate-900 rounded-2xl border border-slate-200/80 shadow-lg overflow-hidden flex flex-col justify-between relative group select-none h-[420px] sm:h-[460px] lg:h-auto lg:min-h-[500px]"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}

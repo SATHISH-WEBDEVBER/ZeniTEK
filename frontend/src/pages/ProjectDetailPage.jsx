@@ -10,6 +10,7 @@ import {
   CheckCircle2, PhoneCall, ChevronLeft, ChevronRight,
   Share2, MessageSquareQuote
 } from 'lucide-react';
+import { scrollToTop } from '../motion/core';
 
 export default function ProjectDetailPage({ onOpenQuoteModal }) {
   const { id } = useParams();
@@ -24,7 +25,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
 
   useEffect(() => {
     setActivePhoto('main');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToTop({ smooth: true });
   }, [id]);
 
   if (!project) {

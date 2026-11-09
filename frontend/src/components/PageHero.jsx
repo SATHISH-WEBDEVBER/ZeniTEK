@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { Breadcrumb } from './SiteHeader';
+import SplitWords from '../motion/SplitWords';
+import { gsap, prefersReducedMotion, richMotion, whenSiteReady } from '../motion/core';
 
 // The site's .max-w-7xl containers are full width with 80px side padding (index.css), so on desktop
 // the hero text column always runs from x = 80px to 680px.
@@ -30,6 +32,50 @@ export default function PageHero({
 }) {
   const list = (Array.isArray(images) ? images : [images]).filter(Boolean);
   const [active, setActive] = useState(0);
+  const rootRef = useRef(null);
+
+  // Entrance: the photo settles from a slight zoom, the title rises word by word, then the subtitle,
+  // buttons, facts and breadcrumb follow. On desktop the photo drifts and the text lifts as the hero
+  // scrolls away.
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root || prefersReducedMotion()) return undefined;
+    let cancelReady = () => {};
+    const mm = gsap.matchMedia();
+    const ctx = gsap.context(() => {
+      const words = root.querySelectorAll('.hero-word');
+      const fades = root.querySelectorAll('[data-hero-fade]');
+      const slides = root.querySelectorAll('.hero-slide');
+      // the highlighted (green) part of the title gets a soft underline that draws in after the words
+      const marks = root.querySelectorAll('.hero-title span:not(.hero-word)');
+      gsap.set(marks, {
+        backgroundImage: 'linear-gradient(rgba(94, 209, 111, 0.55), rgba(94, 209, 111, 0.55))',
+        backgroundRepeat: 'no-repeat', backgroundPosition: '0 96%', backgroundSize: '0% 0.09em',
+      });
+      gsap.set(words, { opacity: 0, yPercent: 65 });
+      gsap.set(fades, { opacity: 0, y: 18 });
+      gsap.set(slides, { scale: 1.1 });
+      cancelReady = whenSiteReady(() => {
+        gsap.timeline({ defaults: { ease: 'power3.out' } })
+          .to(slides, { scale: 1, duration: 1.8, ease: 'power2.out', clearProps: 'transform' }, 0)
+          .to(words, { opacity: 1, yPercent: 0, duration: 0.8, stagger: 0.045, clearProps: 'transform,opacity' }, 0.1)
+          .to(marks, { backgroundSize: '100% 0.09em', duration: 0.9, ease: 'power3.inOut' }, '-=0.35')
+          .to(fades, { opacity: 1, y: 0, duration: 0.7, stagger: 0.09, clearProps: 'transform,opacity' }, '<-0.4');
+      });
+      if (richMotion()) {
+        mm.add('(min-width: 1024px)', () => {
+          const scroll = { trigger: root, start: 'top top', end: 'bottom top', scrub: 0.5 };
+          gsap.to(root.querySelector('[data-hero-media]'), { yPercent: 12, ease: 'none', scrollTrigger: scroll });
+          gsap.to(root.querySelector('[data-hero-text]'), { y: -50, ease: 'none', scrollTrigger: { ...scroll } });
+        });
+      }
+    }, root);
+    return () => {
+      cancelReady();
+      mm.revert();
+      ctx.revert();
+    };
+  }, []);
 
   useEffect(() => {
     if (list.length < 2) return undefined;
@@ -38,16 +84,16 @@ export default function PageHero({
   }, [list.length]);
 
   return (
-    <section className="no-divider relative w-full overflow-hidden bg-neutral-900 lg:h-[680px]">
+    <section ref={rootRef} data-hero className="no-divider relative w-full overflow-hidden bg-neutral-900 lg:h-[680px]">
       {/* Media: a clear banner on phones/tablets, the whole hero from lg up */}
-      <div className={`relative h-64 sm:h-80 lg:absolute lg:inset-0 lg:h-auto overflow-hidden ${list.length > 0 ? 'bg-neutral-200' : 'bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-700'}`} aria-hidden="true">
+      <div data-hero-media className={`relative h-64 sm:h-80 lg:absolute lg:inset-0 lg:h-auto overflow-hidden ${list.length > 0 ? 'bg-neutral-200' : 'bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-700'}`} aria-hidden="true">
         {list.map((src, idx) => (
           <img
             key={src}
             src={src}
             alt=""
             fetchpriority={idx === 0 ? 'high' : undefined}
-            className={`absolute inset-y-0 left-0 h-full max-w-none object-cover [object-position:var(--pos)] transition-opacity duration-1000 w-full lg:w-[var(--hero-w)] ${idx === active ? 'opacity-100' : 'opacity-0'}`}
+            className={`hero-slide absolute inset-y-0 left-0 h-full max-w-none object-cover [object-position:var(--pos)] w-full lg:w-[var(--hero-w)] ${idx === active ? 'is-active opacity-100' : 'opacity-0'}`}
             style={{ '--hero-w': `${focus * 100}%`, '--pos': position }}
           />
         ))}
@@ -84,15 +130,15 @@ export default function PageHero({
 
       {/* Text: white, straight on the photo (desktop) or on a dark panel under the banner (phones/tablets) */}
       <div className={`relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 ${breadcrumb ? 'pb-24' : 'pb-10'} lg:pt-0 lg:pb-16 lg:h-full lg:flex lg:items-center pointer-events-none`}>
-        <div className="pointer-events-auto w-full lg:max-w-[600px] flex flex-col gap-5 text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.35)]">
-          <h1 className="hero-title text-3xl sm:text-4xl lg:text-[2.6rem] font-black tracking-tight !text-white leading-[1.12] [&_span]:!text-[#5ED16F]">
-            {title}
+        <div data-hero-text className="pointer-events-auto w-full lg:max-w-[600px] flex flex-col gap-5 text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.35)]">
+          <h1 className="hero-title text-3xl sm:text-4xl lg:text-[2.6rem] font-black tracking-tight !text-white leading-[1.12] [&_span:not(.hero-word)]:!text-[#5ED16F]">
+            <SplitWords>{title}</SplitWords>
           </h1>
           {subtitle && (
-            <p className="hero-sub text-base sm:text-lg text-white/90 font-medium leading-relaxed [&_strong]:text-white">{subtitle}</p>
+            <p data-hero-fade className="hero-sub text-base sm:text-lg text-white/90 font-medium leading-relaxed [&_strong]:text-white">{subtitle}</p>
           )}
           {actions.length > 0 && (
-            <div className="flex flex-col sm:flex-row flex-wrap gap-3 [text-shadow:none]">
+            <div data-hero-fade className="flex flex-col sm:flex-row flex-wrap gap-3 [text-shadow:none]">
               {actions.map((a, i) => <HeroButton key={i} action={a} primary={i === 0} />)}
             </div>
           )}
@@ -100,9 +146,9 @@ export default function PageHero({
             // Phones: three rows (value left, label right); from sm up: three columns split by thin lines
             <dl className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/25 border-t border-white/25 pt-1 sm:pt-5">
               {stats.map((s, i) => (
-                <div key={i} className="min-w-0 flex items-center gap-3 py-2.5 sm:py-0 sm:block sm:px-5 sm:first:pl-0 sm:last:pr-0">
+                <div key={i} data-hero-fade className="min-w-0 flex items-center gap-3 py-2.5 sm:py-0 sm:block sm:px-5 sm:first:pl-0 sm:last:pr-0">
                   <dt className="sr-only">{s.label}</dt>
-                  <dd className="max-w-[55%] sm:max-w-none text-lg sm:text-2xl font-black text-white leading-tight [overflow-wrap:anywhere]">{s.value}</dd>
+                  <StatValue value={s.value} className="max-w-[55%] sm:max-w-none text-lg sm:text-2xl font-black text-white leading-tight [overflow-wrap:anywhere] tabular-nums" />
                   <dd className="ml-auto sm:ml-0 text-right sm:text-left text-xs sm:text-sm text-white/80 font-semibold leading-snug sm:mt-1 [overflow-wrap:anywhere]">{s.label}</dd>
                 </div>
               ))}
@@ -116,14 +162,44 @@ export default function PageHero({
   );
 }
 
+// A hero fact; a plain number ("1,200+", "40%", "8") counts up from zero when the hero appears.
+// Only the text node's value changes, so React keeps managing the element.
+function StatValue({ value, className }) {
+  const ref = useRef(null);
+  useLayoutEffect(() => {
+    const node = ref.current?.firstChild;
+    const text = String(value ?? '');
+    const match = /^(\d[\d,]*(?:\.\d+)?)(\D*)$/.exec(text.trim());
+    if (!node || node.nodeType !== Node.TEXT_NODE || !match || prefersReducedMotion()) return undefined;
+    const [, raw, suffix] = match;
+    const target = parseFloat(raw.replace(/,/g, ''));
+    if (!target || (/^\d{4}$/.test(raw) && target >= 1900 && target <= 2100)) return undefined; // years stay as they are
+    const decimals = (raw.split('.')[1] || '').length;
+    const format = (n) => (raw.includes(',')
+      ? n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
+      : n.toFixed(decimals)) + suffix;
+    const counter = { n: 0 };
+    node.nodeValue = format(0);
+    const cancel = whenSiteReady(() => {
+      gsap.to(counter, { n: target, duration: 1.6, delay: 0.45, ease: 'power2.out', onUpdate: () => { node.nodeValue = format(counter.n); } });
+    });
+    return () => {
+      cancel();
+      gsap.killTweensOf(counter);
+      node.nodeValue = text;
+    };
+  }, [value]);
+  return <dd ref={ref} className={className}>{value}</dd>;
+}
+
 function HeroButton({ action, primary }) {
   const { label, to, href, onClick, icon: Icon, external, download } = action;
-  const cls = `inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-extrabold transition-colors cursor-pointer ${
+  const cls = `btn-fx inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-extrabold transition-colors cursor-pointer ${
     primary
       ? 'bg-[#23AC39] hover:bg-[#1f9632] text-white shadow-md shadow-black/20'
       : 'bg-transparent border border-white/80 hover:bg-white text-white hover:text-[#123B92]'
   }`;
-  const content = <>{Icon && <Icon className="w-5 h-5 shrink-0" />}<span>{label}</span></>;
+  const content = <>{Icon && <Icon className="w-5 h-5 shrink-0" />}<span>{label}</span>{primary && <ArrowRight className="w-4 h-4 shrink-0" />}</>;
   if (to) return <Link to={to} className={cls}>{content}</Link>;
   if (href) {
     return (

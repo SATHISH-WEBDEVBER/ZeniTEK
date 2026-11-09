@@ -4,6 +4,7 @@ import { ArrowRight, Search, Users, Ship, Sprout, Wheat, Fish, Factory, Nut, Lea
 import IconTile from '../components/IconTile';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
+import { smoothScrollTo } from '../motion/core';
 
 export default function ApplicationsPage({ onOpenQuoteModal }) {
   const [activeTab, setActiveTab] = useState('agri');
@@ -36,7 +37,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
 
   const scrollToMatrix = (e) => {
     const el = document.getElementById('crop-matrix');
-    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    if (el) { e.preventDefault(); smoothScrollTo(el); }
   };
 
   return (

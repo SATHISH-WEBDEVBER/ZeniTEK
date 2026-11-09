@@ -6,6 +6,7 @@ import {
 import { useLanguage } from '../context/LanguageContext';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import PageHero from '../components/PageHero';
+import { smoothScrollTo } from '../motion/core';
 
 // Renders a translated string that carries light inline markup so word order can change per language:
 // <b>bold</b>, <hl>highlighted</hl> and <br> (line break). Class names are supplied by the caller.
@@ -41,7 +42,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
       const el = document.getElementById('rnd');
       if (el) {
         setTimeout(() => {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          smoothScrollTo(el, { block: 'center' });
         }, 150);
       }
     }

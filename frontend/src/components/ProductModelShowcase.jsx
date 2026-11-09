@@ -158,7 +158,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
       </div>
 
       {/* STAGE WITH GENEROUS SPACING BETWEEN CARDS */}
-      <div className="relative w-full overflow-hidden px-3 sm:px-6 lg:px-8 py-2">
+      <div data-reveal="block" className="relative w-full overflow-hidden px-3 sm:px-6 lg:px-8 py-2">
         <div className="flex items-center justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 w-full">
           
           {/* ================= LEFT PEEK CARD (PREVIOUS PRODUCT) ================= */}

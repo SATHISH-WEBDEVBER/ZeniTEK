@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ROICalculator from '../components/ROICalculator';
 import ProductModelShowcase from '../components/ProductModelShowcase';
-import MapComponent from '../components/MapComponent';
+import MapComponent from '../components/LazyMap';
 import { sampleReviews } from '../data/sampleData';
 import { useLanguage } from '../context/LanguageContext';
 import {

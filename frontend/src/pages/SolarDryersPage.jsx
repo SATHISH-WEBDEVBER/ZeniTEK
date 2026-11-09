@@ -11,7 +11,7 @@ import BrochureCards from '../components/BrochureCards';
 import { zenitekRealGallery } from '../data/zenitekRealGalleryData';
 import { fetchPublicProducts } from '../utils/api';
 import { useLanguage } from '../context/LanguageContext';
-import MapComponent from '../components/MapComponent';
+import MapComponent from '../components/LazyMap';
 import PageHero from '../components/PageHero';
 import { ProductGrid } from '../components/ProductCards';
 import { VideoGrid } from '../components/MediaGallery';
@@ -20,6 +20,7 @@ import { PRODUCT_VIDEOS } from '../data/productMedia';
 import {
   MapPin, Calendar, Search, Filter, Sparkles, ArrowRight, ShieldCheck, CheckCircle2, X, PhoneCall, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, SlidersHorizontal, Eye, LayoutGrid, Sun, Wind, Droplets, Cpu, Shield, Zap, Maximize2, Download, Layers, Grid, FileText, Camera, Image as ImageIcon, ChevronDown, ChevronUp, Loader, Package, Ruler, BookOpen, Timer, Images, Factory, Map as MapIcon, MessageSquareQuote
 } from 'lucide-react';
+import { smoothScrollTo } from '../motion/core';
 
 export default function SolarDryersPage({ onOpenQuoteModal }) {
   const { t, tf } = useLanguage();
@@ -106,7 +107,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
       setCurrentPage(newPage);
       const gridElem = document.getElementById('dryers-grid');
       if (gridElem) {
-        gridElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        smoothScrollTo(gridElem);
       }
     }
   };
@@ -122,7 +123,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      smoothScrollTo(el);
     }
   };
 

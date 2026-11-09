@@ -274,8 +274,10 @@ function ScrollWheelGuard({ onBlockedWheel }) {
   useEffect(() => {
     const el = map.getContainer();
     map.scrollWheelZoom.disable();
-    const enable = () => { if (!map.scrollWheelZoom.enabled()) map.scrollWheelZoom.enable(); };
-    const disable = () => { if (map.scrollWheelZoom.enabled()) map.scrollWheelZoom.disable(); };
+    // data-wheel-zoom tells the page's smooth scrolling whether the wheel belongs to the map right now
+    el.dataset.wheelZoom = 'off';
+    const enable = () => { if (!map.scrollWheelZoom.enabled()) map.scrollWheelZoom.enable(); el.dataset.wheelZoom = 'on'; };
+    const disable = () => { if (map.scrollWheelZoom.enabled()) map.scrollWheelZoom.disable(); el.dataset.wheelZoom = 'off'; };
     const onWheel = () => { if (!map.scrollWheelZoom.enabled()) onBlockedWheel(); };
     map.on('mousedown focus', enable);
     el.addEventListener('mouseleave', disable);

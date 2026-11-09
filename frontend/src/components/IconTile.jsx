@@ -15,7 +15,7 @@ const SIZES = {
 // Shared square tile that frames a lucide icon, so every feature card uses the same icon size and shape.
 export default function IconTile({ icon: Icon, tone = 'blue', size = 'lg', className = '' }) {
   return (
-    <span className={`inline-flex items-center justify-center shrink-0 ${SIZES[size]} ${TONES[tone]} ${className}`} aria-hidden="true">
+    <span className={`icon-tile inline-flex items-center justify-center shrink-0 ${SIZES[size]} ${TONES[tone]} ${className}`} aria-hidden="true">
       <Icon className={size === 'lg' ? 'w-8 h-8' : 'w-6 h-6'} />
     </span>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { m, AnimatePresence, LazyMotion } from 'framer-motion';
 import {
   Menu, X, ArrowRight, ChevronDown, ChevronRight, FileText, Images, PlayCircle, Play, MapPin, LayoutGrid, CheckCircle2
 } from 'lucide-react';
@@ -11,6 +12,10 @@ import { nodeTitle, nodeShortTitle, productImage, productThumb, DRYER_GROUPS, dr
 import { PRODUCT_PHOTOS, PRODUCT_VIDEOS } from '../data/productMedia';
 import { zenitekRealGallery } from '../data/zenitekRealGalleryData';
 import { brochures } from '../data/brochuresData';
+import { scrollToTop } from '../motion/core';
+
+// Framer Motion's animation code loads in its own small file after the first paint
+const loadMotionFeatures = () => import('../motion/framerFeatures').then(mod => mod.default);
 
 const PRODUCT_PHOTO_COUNT = Object.values(PRODUCT_PHOTOS).reduce((n, list) => n + list.length, 0);
 
@@ -18,7 +23,7 @@ const PRODUCT_PHOTO_COUNT = Object.values(PRODUCT_PHOTOS).reduce((n, list) => n 
 function GalleryMenuPreview({ item, onNavigate }) {
   const { t } = useLanguage();
   return (
-    <Link to={item.path} onClick={onNavigate} className="group flex-1 min-w-0 flex flex-col gap-2">
+    <Link to={item.path} onClick={onNavigate} className="menu-in group flex-1 min-w-0 flex flex-col gap-2">
       {item.id === 'brochures' ? (
         // the brochures as three PDF covers (real product photos), fanned out
         <span className="relative flex-1 min-h-[250px] rounded-2xl overflow-hidden bg-gradient-to-br from-[#F0F4FD] to-[#EAF7EC] ring-1 ring-slate-200 group-hover:ring-2 group-hover:ring-[#23AC39] transition-shadow">
@@ -54,13 +59,39 @@ function GalleryMenuPreview({ item, onNavigate }) {
   );
 }
 
+const MENU_EASE = [0.22, 1, 0.36, 1];
+// Menus open with a short fade + lift and close a little faster
+const menuMotion = {
+  initial: { opacity: 0, y: -8, scale: 0.985 },
+  animate: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.28, ease: MENU_EASE } },
+  exit: { opacity: 0, y: -6, scale: 0.985, transition: { duration: 0.16, ease: 'easeIn' } },
+};
+// Mobile menu and its sections fold open and closed
+const foldMotion = {
+  initial: { height: 0, opacity: 0 },
+  animate: { height: 'auto', opacity: 1, transition: { duration: 0.32, ease: MENU_EASE } },
+  exit: { height: 0, opacity: 0, transition: { duration: 0.22, ease: 'easeInOut' } },
+};
+
+// The highlight behind the hovered (or current) desktop menu item; it glides from item to item
+function NavPill() {
+  return (
+    <m.span
+      layoutId="nav-pill"
+      aria-hidden="true"
+      className="absolute inset-0 -z-10 rounded-[inherit] bg-[#F0F4FD] ring-1 ring-[#002DC2]/20 shadow-sm"
+      transition={{ type: 'spring', stiffness: 520, damping: 40, mass: 0.6 }}
+    />
+  );
+}
+
 // Sub-products of a product area for the menus: its products and their own sub-products, in order
 const menuChildren = (product) => (product.children || []).flatMap(c => [{ node: c, depth: 0 }, ...(c.children || []).map(g => ({ node: g, depth: 1 }))]);
 
 // One product in the Products menu: its photo, and its name below it in blue (green on hover)
-function MenuTile({ node, label, large = false, compact = false, onNavigate }) {
+function MenuTile({ node, label, large = false, compact = false, index = 0, onNavigate }) {
   return (
-    <Link to={node.path} onClick={onNavigate} className="group min-h-0 min-w-0 flex flex-col gap-1.5">
+    <Link to={node.path} onClick={onNavigate} style={{ '--i': index }} className="menu-in group min-h-0 min-w-0 flex flex-col gap-1.5">
       <span className="relative flex-1 min-h-0 rounded-xl overflow-hidden bg-slate-100 ring-1 ring-slate-200 group-hover:ring-2 group-hover:ring-[#23AC39] transition-shadow">
         <img
           src={large ? productImage(node) : productThumb(node)}
@@ -94,7 +125,7 @@ function ProductMenuPanel({ product, onNavigate }) {
         <div key={group.id} className="flex-1 min-h-0 flex flex-col gap-1.5">
           <p className="text-2xs xl:text-xs font-black uppercase tracking-wider text-[#1A822B]">{t(group.titleKey)}</p>
           <div className={`flex-1 min-h-0 grid grid-rows-1 gap-3 ${models.length > 3 ? 'grid-cols-5' : 'grid-cols-3'}`}>
-            {models.map(model => <MenuTile key={model.id} node={model} label={nodeShortTitle(model, t)} compact onNavigate={onNavigate} />)}
+            {models.map((model, i) => <MenuTile key={model.id} node={model} label={nodeShortTitle(model, t)} compact index={i + (group.id === 'tunnel' ? 3 : 0)} onNavigate={onNavigate} />)}
           </div>
         </div>
       );
@@ -107,7 +138,7 @@ function ProductMenuPanel({ product, onNavigate }) {
     const ProductIcon = product.icon;
     content = (
       <div className={`flex-1 min-h-0 grid gap-3 ${cols} ${rows === 2 ? 'grid-rows-2' : 'grid-rows-1'}`}>
-        {nodes.map(node => <MenuTile key={node.id} node={node} label={nodeTitle(node, t)} large={rows === 1} onNavigate={onNavigate} />)}
+        {nodes.map((node, i) => <MenuTile key={node.id} node={node} label={nodeTitle(node, t)} large={rows === 1} index={i} onNavigate={onNavigate} />)}
         {rows === 2 && nodes.length % 3 !== 0 && (
           <Link
             to={product.path}
@@ -177,12 +208,38 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const menuProduct = PRODUCTS.find(p => p.id === menuProductId) || PRODUCTS[0];
   // Gallery section previewed on the right of the Gallery menu (follows the hovered entry)
   const [galleryItemId, setGalleryItemId] = useState('products');
+  // Desktop menu item under the pointer (the highlight follows it)
+  const [navHover, setNavHover] = useState(null);
 
   const navigate = useNavigate();
   const productsRef = useRef(null);
   const galleryRef = useRef(null);
   const timeoutRef = useRef(null);
   const productsPanelRef = useRef(null);
+  const headerRef = useRef(null);
+  const progressRef = useRef(null);
+
+  // Once the page scrolls the bar gets a stronger shadow; the line along its bottom shows how far
+  // down the page the visitor is. Written straight to the DOM, so scrolling causes no re-renders.
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const y = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (headerRef.current) headerRef.current.dataset.scrolled = y > 8 ? 'true' : 'false';
+      if (progressRef.current) progressRef.current.style.transform = `scaleX(${max > 0 ? Math.min(1, y / max) : 0})`;
+    };
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
   const location = useLocation();
   const { t, lang } = useLanguage();
 
@@ -320,9 +377,21 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const isGalleryActive = location.pathname.startsWith('/gallery');
   const isAboutActive = location.pathname === '/about';
   const isContactActive = location.pathname === '/contact';
+  const currentItem = location.pathname === '/' ? 'home' : isProductsActive ? 'products' : isGalleryActive ? 'gallery'
+    : isSubsidiesActive ? 'subsidies' : isAboutActive ? 'about' : isContactActive ? 'contact' : null;
+  const pillItem = navHover || (productsDropdownOpen ? 'products' : galleryDropdownOpen ? 'gallery' : currentItem);
+  const itemCls = (key) => `${navItemCls} relative z-0 font-bold transition-colors duration-200 whitespace-nowrap ${
+    pillItem === key ? 'text-[#002DC2]' : 'text-slate-700 hover:text-[#002DC2]'
+  }`;
+  const hoverProps = (key) => ({
+    onMouseEnter: () => setNavHover(key),
+    onFocus: () => setNavHover(key),
+    onBlur: () => setNavHover(null),
+  });
 
   return (
-    <header className="sticky top-0 z-40 relative bg-white/95 backdrop-blur-md shadow-sm w-full transition-colors duration-500 border-b border-slate-100">
+    <LazyMotion features={loadMotionFeatures}>
+    <header ref={headerRef} data-scrolled="false" className="sticky top-0 z-40 relative bg-white/95 backdrop-blur-md shadow-sm w-full border-b border-slate-100">
       
       {/* MAIN NAVBAR CONTAINER */}
       <div className={`w-full px-5 sm:px-8 ${density === 0 ? 'md:px-[60px]' : 'lg:px-6'}`}>
@@ -335,7 +404,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             onClick={() => {
               // Already on Home: the route doesn't change, so jump back to the top
               setMobileMenuOpen(false);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              scrollToTop({ smooth: true });
             }}
             className={`flex items-center shrink-0 transition-[opacity,transform] duration-700 ease-out transform ${
               animStage >= 1
@@ -353,6 +422,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
 
           {/* Desktop Nav Items - Stage 2 Animation */}
           <nav
+            onMouseLeave={() => setNavHover(null)}
             className={`hidden lg:flex relative z-40 items-center ${twoRow ? 'order-last w-full justify-center flex-wrap gap-y-1 mt-2 pt-2 border-t border-slate-100 space-x-1' : density === 0 ? 'space-x-1 xl:space-x-2 2xl:space-x-3' : 'space-x-0.5'} transition-[opacity,transform] duration-700 ease-out transform ${
               animStage >= 2
                 ? 'opacity-100 translate-y-0 scale-100'
@@ -360,14 +430,8 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             }`}
           >
             {/* 1. HOME */}
-            <Link
-              to="/"
-              className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap ${
-                location.pathname === '/'
-                  ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'
-                  : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
-              }`}
-            >
+            <Link to="/" {...hoverProps('home')} className={itemCls('home')}>
+              {pillItem === 'home' && <NavPill />}
               {t('navHome')}
             </Link>
 
@@ -381,12 +445,11 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               <button
                 type="button"
                 onClick={() => openMenuOrPage('/products', productsDropdownOpen, setProductsDropdownOpen, setGalleryDropdownOpen)}
-                className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap flex items-center space-x-1.5 cursor-pointer ${
-                  isProductsActive || productsDropdownOpen
-                    ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'
-                    : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
-                }`}
+                {...hoverProps('products')}
+                aria-expanded={productsDropdownOpen}
+                className={`${itemCls('products')} flex items-center space-x-1.5 cursor-pointer`}
               >
+                {pillItem === 'products' && <NavPill />}
                 <span>{t('navbar_products')}</span>
                 <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${productsDropdownOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
               </button>
@@ -403,20 +466,23 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               <button
                 type="button"
                 onClick={() => openMenuOrPage('/gallery', galleryDropdownOpen, setGalleryDropdownOpen, setProductsDropdownOpen)}
-                className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap flex items-center space-x-1.5 cursor-pointer ${
-                  isGalleryActive || galleryDropdownOpen
-                    ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'
-                    : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
-                }`}
+                {...hoverProps('gallery')}
+                aria-expanded={galleryDropdownOpen}
+                className={`${itemCls('gallery')} flex items-center space-x-1.5 cursor-pointer`}
               >
+                {pillItem === 'gallery' && <NavPill />}
                 <span>{t('navGallery')}</span>
                 <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${galleryDropdownOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
               </button>
 
               {/* GALLERY MENU: the four Gallery sections (name + size) on the left; a large preview of the
                   hovered section on the right */}
+              <AnimatePresence>
               {galleryDropdownOpen && (
-                <div
+                <m.div
+                  key="gallery-menu"
+                  {...menuMotion}
+                  style={{ transformOrigin: 'top left' }}
                   className="absolute top-full left-0 mt-2 w-[620px] bg-white rounded-3xl shadow-2xl border border-slate-200 p-4 z-50 flex gap-4"
                   onMouseEnter={handleGalleryEnter}
                   onMouseLeave={handleGalleryLeave}
@@ -449,44 +515,27 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                       );
                     })}
                   </ul>
-                  <GalleryMenuPreview item={galleryPreview} onNavigate={() => setGalleryDropdownOpen(false)} />
-                </div>
+                  <GalleryMenuPreview key={galleryPreview.id} item={galleryPreview} onNavigate={() => setGalleryDropdownOpen(false)} />
+                </m.div>
               )}
+              </AnimatePresence>
             </div>
 
             {/* 4. SUBSIDIES */}
-            <Link
-              to="/subsidies"
-              className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap flex items-center space-x-1 ${
-                isSubsidiesActive
-                  ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'
-                  : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
-              }`}
-            >
+            <Link to="/subsidies" {...hoverProps('subsidies')} className={`${itemCls('subsidies')} flex items-center space-x-1`}>
+              {pillItem === 'subsidies' && <NavPill />}
               <span>{t('navbar_subsidies')}</span>
             </Link>
 
             {/* 5. ABOUT US */}
-            <Link
-              to="/about"
-              className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap ${
-                isAboutActive
-                  ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'
-                  : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
-              }`}
-            >
+            <Link to="/about" {...hoverProps('about')} className={`${itemCls('about')}`}>
+              {pillItem === 'about' && <NavPill />}
               {t('navAbout')}
             </Link>
 
             {/* 6. CONTACT US */}
-            <Link
-              to="/contact"
-              className={`${navItemCls} font-bold transition-colors duration-200 whitespace-nowrap ${
-                isContactActive
-                  ? 'text-[#002DC2] bg-[#F0F4FD] border border-[#002DC2]/20 shadow-sm'
-                  : 'text-slate-700 hover:text-[#002DC2] hover:bg-slate-100'
-              }`}
-            >
+            <Link to="/contact" {...hoverProps('contact')} className={`${itemCls('contact')}`}>
+              {pillItem === 'contact' && <NavPill />}
               {t('navContact')}
             </Link>
 
@@ -517,10 +566,22 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {/* Mobile Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-expanded={mobileMenuOpen}
               className={`lg:hidden p-2 rounded-xl text-[#123B92] hover:bg-[#F0F4FD] border border-[#123B92]/20 shrink-0 transition-colors cursor-pointer`}
               aria-label={t('navbar_toggleMenu')}
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <AnimatePresence mode="wait" initial={false}>
+                <m.span
+                  key={mobileMenuOpen ? 'close' : 'open'}
+                  className="block"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.18 }}
+                >
+                  {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                </m.span>
+              </AnimatePresence>
             </button>
           </div>
 
@@ -529,8 +590,13 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
 
       {/* Dimmed backdrop below the navbar while a menu is open (positioned against the header, so it
           starts under it even when the menu wraps onto a second row and never covers the menu buttons) */}
+      <AnimatePresence>
       {(productsDropdownOpen || galleryDropdownOpen) && (
-        <div
+        <m.div
+          key="menu-backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { duration: 0.25 } }}
+          exit={{ opacity: 0, transition: { duration: 0.2 } }}
           className="hidden lg:block absolute inset-x-0 top-full h-screen bg-black/40 backdrop-blur-[1px] z-30"
           onClick={() => {
             setProductsDropdownOpen(false);
@@ -538,12 +604,17 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
           }}
         />
       )}
+      </AnimatePresence>
 
       {/* PRODUCTS MENU: centred under the navbar, 80% of the screen width and 70% of its height. The four
           product areas on the left; the hovered area's products as photo tiles, each named below. */}
+      <AnimatePresence>
       {productsDropdownOpen && (
-        <div
+        <m.div
+          key="products-menu"
           ref={productsPanelRef}
+          {...menuMotion}
+          style={{ transformOrigin: 'top center' }}
           className="hidden lg:block absolute inset-x-0 top-full mx-auto mt-2 w-[80vw] h-[70vh] min-h-[440px] bg-white rounded-3xl border border-slate-200 shadow-2xl z-50 overflow-hidden"
           onMouseEnter={handleProductsEnter}
           onMouseLeave={handleProductsLeave}
@@ -584,15 +655,18 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               </Link>
             </div>
             <div className="flex-1 min-w-0 border-l border-slate-100 pl-5 xl:pl-7">
-              <ProductMenuPanel product={menuProduct} onNavigate={() => setProductsDropdownOpen(false)} />
+              <ProductMenuPanel key={menuProduct.id} product={menuProduct} onNavigate={() => setProductsDropdownOpen(false)} />
             </div>
           </div>
-        </div>
+        </m.div>
       )}
+      </AnimatePresence>
 
       {/* MOBILE MENU ACCORDION DRAWER */}
+      <AnimatePresence>
       {mobileMenuOpen && (
-        <div className={`lg:hidden bg-white border-t border-slate-200 p-4 space-y-1 shadow-2xl max-h-[85vh] overflow-y-auto animate-fade-in w-full`}>
+        <m.div key="mobile-menu" {...foldMotion} className="lg:hidden bg-white border-t border-slate-200 shadow-2xl w-full overflow-hidden">
+        <div className="menu-stagger p-4 space-y-1 max-h-[85vh] overflow-y-auto overscroll-contain">
           
           {/* Mobile: 1. Home */}
           <Link
@@ -618,7 +692,9 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${mobileProductsOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
             </button>
 
+            <AnimatePresence initial={false}>
             {mobileProductsOpen && (
+              <m.div key="m-products" {...foldMotion} className="overflow-hidden">
               <div className="pl-2 pr-2 py-2 space-y-1.5 bg-slate-50/80 rounded-xl mb-1 border border-slate-100">
                 <Link
                   to="/products"
@@ -669,7 +745,9 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                   );
                 })}
               </div>
+              </m.div>
             )}
+            </AnimatePresence>
           </div>
 
           {/* Mobile: 3. Gallery Accordion */}
@@ -683,7 +761,9 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${mobileGalleryOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
             </button>
 
+            <AnimatePresence initial={false}>
             {mobileGalleryOpen && (
+              <m.div key="m-gallery" {...foldMotion} className="overflow-hidden">
               <div className="pl-4 pr-2 py-1 space-y-1 bg-slate-50 rounded-xl mb-1">
                 {galleryDropdownItems.map((item) => (
                   <Link
@@ -696,7 +776,9 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                   </Link>
                 ))}
               </div>
+              </m.div>
             )}
+            </AnimatePresence>
           </div>
 
           {/* Mobile: 4. Subsidies */}
@@ -758,8 +840,13 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
           </div>
 
         </div>
+        </m.div>
       )}
+      </AnimatePresence>
 
+      {/* Reading progress */}
+      <div ref={progressRef} className="scroll-progress" aria-hidden="true" />
     </header>
+    </LazyMotion>
   );
 }

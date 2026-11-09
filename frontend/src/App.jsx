@@ -6,16 +6,32 @@ import Footer from './components/Footer';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import SectionDividers from './components/SectionDividers';
 import SiteHeader, { PageTitleProvider } from './components/SiteHeader';
+import SmoothScroll from './motion/SmoothScroll';
+import RevealEngine from './motion/RevealEngine';
+import { markSiteReady, scrollToTop, prefersReducedMotion } from './motion/core';
 
 import HomePage from './pages/HomePage';
-import AboutUsPage from './pages/AboutUsPage';
-import SolarDryersPage from './pages/SolarDryersPage';
-import ProjectDetailPage from './pages/ProjectDetailPage';
-import ApplicationsPage from './pages/ApplicationsPage';
-import GalleryPage from './pages/GalleryPage';
-import GalleryDetailPage from './pages/GalleryDetailPage';
-import ContactUsPage from './pages/ContactUsPage';
-import SubsidiesPage from './pages/SubsidiesPage';
+// Pages other than Home load on demand (each in its own small file), so the first visit only
+// downloads what it shows; Quote and Not Found stay in the main bundle because other pages use them.
+const AboutUsPage = React.lazy(() => import('./pages/AboutUsPage'));
+const SolarDryersPage = React.lazy(() => import('./pages/SolarDryersPage'));
+const ProjectDetailPage = React.lazy(() => import('./pages/ProjectDetailPage'));
+const ApplicationsPage = React.lazy(() => import('./pages/ApplicationsPage'));
+const GalleryPage = React.lazy(() => import('./pages/GalleryPage'));
+const GalleryDetailPage = React.lazy(() => import('./pages/GalleryDetailPage'));
+const ContactUsPage = React.lazy(() => import('./pages/ContactUsPage'));
+const SubsidiesPage = React.lazy(() => import('./pages/SubsidiesPage'));
+const SolarThermalPage = React.lazy(() => import('./pages/SolarThermalPage'));
+const ResearchPage = React.lazy(() => import('./pages/ResearchPage'));
+const DryerModelPage = React.lazy(() => import('./pages/DryerModelPage'));
+const InstallationPage = React.lazy(() => import('./pages/InstallationPage'));
+const BrochurePage = React.lazy(() => import('./pages/BrochurePage'));
+const LegalPage = React.lazy(() => import('./pages/LegalPage'));
+const ProductsPage = React.lazy(() => import('./pages/ProductsPage'));
+const CatalogPage = React.lazy(() => import('./pages/CatalogPage'));
+const MapPage = React.lazy(() => import('./pages/MapPage'));
+const FarmerStoriesPage = React.lazy(() => import('./pages/FarmerStoriesPage'));
+const SitemapPage = React.lazy(() => import('./pages/SitemapPage'));
 // Admin dashboards load on demand, so public visitors never download them
 const ClientAdminApp = React.lazy(() => import('./pages/admin/ClientAdminApp'));
 const AdminLoginChooser = React.lazy(() => import('./pages/bugs/AdminLoginChooser'));
@@ -24,19 +40,8 @@ const TesterApp = React.lazy(() => import('./pages/bugs/TesterApp'));
 import BugReportButton from './components/BugReportButton';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import SolarThermalPage from './pages/SolarThermalPage';
-import ResearchPage from './pages/ResearchPage';
 import QuotePage, { buildQuoteUrl } from './pages/QuotePage';
-import DryerModelPage from './pages/DryerModelPage';
-import InstallationPage from './pages/InstallationPage';
-import BrochurePage from './pages/BrochurePage';
-import LegalPage from './pages/LegalPage';
-import ProductsPage from './pages/ProductsPage';
-import CatalogPage from './pages/CatalogPage';
 import { CATALOG_PAGES } from './data/productCatalog';
-import MapPage from './pages/MapPage';
-import FarmerStoriesPage from './pages/FarmerStoriesPage';
-import SitemapPage from './pages/SitemapPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // Old /dryers/:id links keep working by forwarding to the project page
@@ -48,9 +53,30 @@ function LegacyProjectRedirect() {
 function ScrollToTop() {
   const { pathname } = useLocation();
   React.useEffect(() => {
-    window.scrollTo(0, 0);
+    scrollToTop();
   }, [pathname]);
   return null;
+}
+
+// A soft fade when moving to another page (opacity only: a transform here would shift fixed pop-ups)
+function usePageFade(ref) {
+  const { pathname } = useLocation();
+  const first = React.useRef(true);
+  React.useLayoutEffect(() => {
+    if (first.current) { first.current = false; return; }
+    if (!ref.current?.animate || prefersReducedMotion()) return;
+    ref.current.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 380, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+  }, [pathname, ref]);
+}
+
+// Shown while a page's file loads: keeps the footer below the fold; a small spinner fades in only if
+// loading takes longer than a moment
+function PageLoading() {
+  return (
+    <div className="min-h-[75vh] flex items-center justify-center" aria-busy="true">
+      <span className="page-loading w-10 h-10 rounded-full border-[3px] border-[#002DC2]/15 border-t-[#002DC2]" />
+    </div>
+  );
 }
 
 // Every /admin route is a dashboard: no public navbar, footer, WhatsApp widget or reveal animation
@@ -89,12 +115,12 @@ function PublicSite() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    // Stage 1: Logo opens with animation (at 400ms)
-    const t1 = setTimeout(() => setAnimStage(1), 400);
-    // Stage 2: Nav items open with animation (at 1200ms)
-    const t2 = setTimeout(() => setAnimStage(2), 1200);
-    // Stage 3: Full website becomes visible with smooth transition (at 1900ms)
-    const t3 = setTimeout(() => setAnimStage(3), 1900);
+    // A short sequence, so the page is readable within a moment: logo, then menu, then the page.
+    // Page animations (hero, scroll reveals) start once the page is visible (markSiteReady).
+    const quick = prefersReducedMotion();
+    const t1 = setTimeout(() => setAnimStage(1), quick ? 0 : 120);
+    const t2 = setTimeout(() => setAnimStage(2), quick ? 0 : 360);
+    const t3 = setTimeout(() => setAnimStage(3), quick ? 0 : 600);
 
     return () => {
       clearTimeout(t1);
@@ -102,6 +128,17 @@ function PublicSite() {
       clearTimeout(t3);
     };
   }, []);
+
+  // Page animations start once the page has actually been painted visible (two frames after stage 3)
+  React.useEffect(() => {
+    if (animStage < 3) return undefined;
+    let second = 0;
+    const first = requestAnimationFrame(() => { second = requestAnimationFrame(markSiteReady); });
+    return () => { cancelAnimationFrame(first); cancelAnimationFrame(second); };
+  }, [animStage]);
+
+  const mainRef = React.useRef(null);
+  usePageFade(mainRef);
 
   // Every quote button across the site opens the /quote page (prefilled via the URL)
   // instead of a popup, so it has its own address and the browser Back button works.
@@ -120,6 +157,9 @@ function PublicSite() {
       {/* Scroll to Top on route change */}
       <ScrollToTop />
       <SectionDividers />
+      {/* Motion system: smooth scrolling and scroll reveals for every page (src/motion) */}
+      <SmoothScroll />
+      <RevealEngine />
 
       <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-[#002DC2] selection:text-white">
         
@@ -130,16 +170,17 @@ function PublicSite() {
             Once revealed it must have no transform: a transform here would make every
             position:fixed pop-up (lightboxes, viewers) position against the page instead of the screen. */}
         <div
-          className={`flex-1 flex flex-col transition-all duration-1000 ease-out ${
+          className={`flex-1 flex flex-col transition-all duration-700 ease-out ${
             animStage >= 3
               ? 'opacity-100 transform-none'
               : 'opacity-0 translate-y-4 pointer-events-none'
           }`}
         >
           {/* Main Page Routing */}
-          <main className="flex-1">
+          <main ref={mainRef} className="flex-1">
             {/* Simple page header (breadcrumb + Back) on every page except Home */}
             <SiteHeader />
+            <React.Suspense fallback={<PageLoading />}>
             <Routes>
               <Route path="/" element={<HomePage onOpenQuoteModal={handleOpenQuoteModal} onOpenDetailModal={handleOpenDetailModal} />} />
               <Route path="/about" element={<AboutUsPage onOpenQuoteModal={handleOpenQuoteModal} />} />
@@ -184,6 +225,7 @@ function PublicSite() {
               <Route path="/sitemap" element={<SitemapPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
+            </React.Suspense>
           </main>
 
           {/* Footer */}

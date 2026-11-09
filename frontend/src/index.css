@@ -652,3 +652,190 @@ main section.divider-full:not(section section):not([class*="rounded"]):not(.no-d
     font-size: 1rem;
   }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════
+   MOTION SYSTEM - hover and press micro-interactions (scroll reveals: src/motion/RevealEngine.jsx)
+   One easing curve and a small set of durations for the whole site:
+     fast 0.15-0.3s (press, arrows, buttons) · base 0.45-0.6s (cards, icons) · slow 0.9s+ (photos)
+   Hover effects only run with a mouse; everything calms down for prefers-reduced-motion.
+   ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+:root {
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-lift: 0 26px 50px -24px rgba(15, 35, 95, 0.4), 0 10px 20px -12px rgba(15, 35, 95, 0.18);
+  --shadow-button: 0 12px 24px -12px rgba(0, 45, 194, 0.5);
+}
+
+/* Page hero photos: cross-fade between photos, and a slow zoom while a photo is showing */
+.hero-slide {
+  transition: opacity 1s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-slide {
+    transition: opacity 1.2s ease, scale 9s linear;
+  }
+  .hero-slide.is-active {
+    scale: 1.06;
+  }
+}
+
+/* Cards (marked data-card by the reveal engine): lift, deeper shadow, photo zoom, icon nudge.
+   The tilt itself is set from JavaScript (inline transform) and eases through this transition. */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  [data-card][data-card] {
+    transition:
+      translate 0.55s var(--ease-premium),
+      transform 0.6s var(--ease-premium),
+      box-shadow 0.45s var(--ease-premium),
+      border-color 0.3s ease,
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+  [data-card]:hover {
+    translate: 0 -6px;
+    box-shadow: var(--shadow-lift);
+  }
+  [data-card] img {
+    transition: scale 0.9s var(--ease-premium), transform 0.7s var(--ease-premium), opacity 0.5s ease;
+  }
+  [data-card]:hover .overflow-hidden > img:not([class*="scale-"]),
+  [data-card].overflow-hidden:hover > img:not([class*="scale-"]) {
+    scale: 1.06;
+  }
+  [data-card] .icon-tile {
+    transition: rotate 0.45s var(--ease-premium), scale 0.45s var(--ease-premium);
+  }
+  [data-card]:hover .icon-tile {
+    rotate: -8deg;
+    scale: 1.08;
+  }
+}
+
+/* Buttons: the hero buttons (.btn-fx) and every solid brand-colour link/button lift a little on hover
+   and press in on click */
+@media (prefers-reduced-motion: no-preference) {
+  .btn-fx,
+  :is(a, button):is([class*="bg-[#23AC39]"], [class*="bg-[#002DC2]"], [class*="bg-[#123B92]"], [class*="bg-[#1A822B]"]) {
+    transition:
+      translate 0.3s var(--ease-premium),
+      scale 0.15s ease,
+      box-shadow 0.3s ease,
+      background-color 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease,
+      opacity 0.25s ease;
+  }
+  :is(.btn-fx, :is(a, button):is([class*="bg-[#23AC39]"], [class*="bg-[#002DC2]"], [class*="bg-[#123B92]"], [class*="bg-[#1A822B]"])):active:not(:disabled) {
+    scale: 0.97;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  :is(.btn-fx, :is(a, button):is([class*="bg-[#23AC39]"], [class*="bg-[#002DC2]"], [class*="bg-[#123B92]"], [class*="bg-[#1A822B]"])):hover:not(:disabled) {
+    translate: 0 -2px;
+    box-shadow: var(--shadow-button);
+  }
+}
+
+/* Arrows inside links and buttons slide in the direction they point */
+@media (prefers-reduced-motion: no-preference) {
+  :is(a, button) svg:is(.lucide-arrow-right, .lucide-chevron-right, .lucide-arrow-up-right, .lucide-external-link):not([class*="translate"]) {
+    transition: translate 0.3s var(--ease-premium);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  :is(a, button):hover svg:is(.lucide-arrow-right, .lucide-chevron-right):not([class*="translate"]) {
+    translate: 3px 0;
+  }
+  :is(a, button):hover svg:is(.lucide-arrow-up-right, .lucide-external-link):not([class*="translate"]) {
+    translate: 2px -2px;
+  }
+}
+
+/* Keyboard focus: a clear ring on links and buttons that have no focus style of their own */
+:is(a, button, [role="button"], summary):focus-visible {
+  outline: 3px solid rgba(0, 45, 194, 0.45);
+  outline-offset: 2px;
+}
+
+/* Navbar: a stronger shadow once the page has scrolled; the reading-progress line along its bottom */
+header[data-scrolled] {
+  transition: box-shadow 0.35s ease, background-color 0.35s ease;
+}
+
+header[data-scrolled="true"] {
+  background-color: rgba(255, 255, 255, 0.985);
+  box-shadow: 0 12px 30px -20px rgba(15, 35, 95, 0.45);
+}
+
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, #23AC39, #002DC2);
+  pointer-events: none;
+}
+
+/* Menu contents: items arrive one after another when a menu or menu section opens */
+@keyframes menuItemIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .menu-in {
+    animation: menuItemIn 0.45s var(--ease-premium) both;
+    animation-delay: calc(var(--i, 0) * 35ms);
+  }
+  /* the direct items of a list (mobile menu) */
+  .menu-stagger > * {
+    animation: menuItemIn 0.45s var(--ease-premium) both;
+  }
+  .menu-stagger > :nth-child(2) { animation-delay: 35ms; }
+  .menu-stagger > :nth-child(3) { animation-delay: 70ms; }
+  .menu-stagger > :nth-child(4) { animation-delay: 105ms; }
+  .menu-stagger > :nth-child(5) { animation-delay: 140ms; }
+  .menu-stagger > :nth-child(6) { animation-delay: 175ms; }
+  .menu-stagger > :nth-child(7) { animation-delay: 210ms; }
+  .menu-stagger > :nth-child(8) { animation-delay: 245ms; }
+  .menu-stagger > :nth-child(9) { animation-delay: 280ms; }
+  .menu-stagger > :nth-child(10) { animation-delay: 315ms; }
+  .menu-stagger > :nth-child(11) { animation-delay: 350ms; }
+}
+
+/* Page loading spinner (App.jsx PageLoading): fades in after a short delay, so fast loads show nothing */
+@keyframes pageLoadingIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pageLoadingSpin {
+  to { transform: rotate(360deg); }
+}
+
+.page-loading {
+  opacity: 0;
+  animation: pageLoadingIn 0.3s ease 0.35s forwards, pageLoadingSpin 0.8s linear infinite;
+}
+
+/* Reduced motion: no smooth scrolling, no continuous or decorative movement */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

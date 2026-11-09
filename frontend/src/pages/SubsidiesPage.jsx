@@ -7,6 +7,7 @@ import {
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 import IconTile from '../components/IconTile';
+import { smoothScrollTo } from '../motion/core';
 
 const PHOTO = (n) => `/images/gallery/photo-${String(n).padStart(2, '0')}.webp`;
 const WHATSAPP = `https://wa.me/918098613422?text=${encodeURIComponent('Hello ZeniTEK team, I would like help with the government subsidy for a solar dryer.')}`;
@@ -101,7 +102,7 @@ function Question({ n, label, children }) {
 
 const scrollTo = (id) => (e) => {
   const el = document.getElementById(id);
-  if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  if (el) { e.preventDefault(); smoothScrollTo(el); }
 };
 
 export default function SubsidiesPage({ onOpenQuoteModal }) {
