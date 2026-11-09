@@ -12,22 +12,25 @@ import { nodeTitle, nodeShortTitle, productImage, productThumb, DRYER_GROUPS, dr
 // Sub-products of a product area for the menus: its products and their own sub-products, in order
 const menuChildren = (product) => (product.children || []).flatMap(c => [{ node: c, depth: 0 }, ...(c.children || []).map(g => ({ node: g, depth: 1 }))]);
 
-// One product in the Products menu: its photo filling the tile, its name on the photo
+// One product in the Products menu: its photo, and its name below it in blue (green on hover)
 function MenuTile({ node, label, large = false, compact = false, onNavigate }) {
   return (
-    <Link
-      to={node.path}
-      onClick={onNavigate}
-      className="group relative block min-h-0 min-w-0 rounded-2xl overflow-hidden bg-slate-200 ring-1 ring-slate-200 hover:ring-4 hover:ring-[#002DC2]/70 transition-shadow"
-    >
-      <img
-        src={large ? productImage(node) : productThumb(node)}
-        alt=""
-        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-      />
-      <span className={`absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 bg-gradient-to-t from-black/85 via-black/45 to-transparent pt-12 pb-3 ${compact ? 'px-3' : 'px-4'}`}>
-        <span className={`font-extrabold text-white leading-snug drop-shadow ${large ? 'text-lg xl:text-xl' : 'text-sm xl:text-base'} ${compact ? 'whitespace-nowrap' : ''}`}>{label}</span>
-        {!compact && <ArrowRight className="w-5 h-5 text-white shrink-0 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />}
+    <Link to={node.path} onClick={onNavigate} className="group min-h-0 min-w-0 flex flex-col gap-1.5">
+      <span className="relative flex-1 min-h-0 rounded-xl overflow-hidden bg-slate-100 ring-1 ring-slate-200 group-hover:ring-2 group-hover:ring-[#23AC39] transition-shadow">
+        <img
+          src={large ? productImage(node) : productThumb(node)}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+      </span>
+      <span
+        className={`shrink-0 font-bold text-[#002DC2] group-hover:text-[#1A822B] transition-colors ${
+          compact ? 'text-xs xl:text-sm text-center whitespace-nowrap'
+            : large ? 'text-sm xl:text-base leading-6'
+            : 'text-xs leading-5 h-10 xl:text-sm xl:leading-6 xl:h-12 line-clamp-2'
+        }`}
+      >
+        {label}
       </span>
     </Link>
   );
@@ -43,8 +46,8 @@ function ProductMenuPanel({ product, onNavigate }) {
     content = DRYER_GROUPS.map(group => {
       const models = dryerModels(group.id);
       return (
-        <div key={group.id} className="flex-1 min-h-0 flex flex-col gap-2">
-          <p className="text-xs font-black uppercase tracking-wider text-slate-500">{t(group.titleKey)}</p>
+        <div key={group.id} className="flex-1 min-h-0 flex flex-col gap-1.5">
+          <p className="text-2xs xl:text-xs font-black uppercase tracking-wider text-[#1A822B]">{t(group.titleKey)}</p>
           <div className={`flex-1 min-h-0 grid grid-rows-1 gap-3 ${models.length > 3 ? 'grid-cols-5' : 'grid-cols-3'}`}>
             {models.map(model => <MenuTile key={model.id} node={model} label={nodeShortTitle(model, t)} compact onNavigate={onNavigate} />)}
           </div>
@@ -64,10 +67,10 @@ function ProductMenuPanel({ product, onNavigate }) {
           <Link
             to={product.path}
             onClick={onNavigate}
-            className="group min-h-0 rounded-2xl border-2 border-dashed border-[#002DC2]/25 bg-[#F0F4FD] hover:bg-[#E3EAFC] flex flex-col items-center justify-center gap-3 p-4 text-center transition-colors"
+            className="group min-h-0 rounded-xl border-2 border-dashed border-[#002DC2]/25 bg-[#F0F4FD] hover:bg-[#E3EAFC] flex flex-col items-center justify-center gap-2 p-3 text-center transition-colors"
           >
-            <span className="w-14 h-14 rounded-2xl bg-[#002DC2] text-white flex items-center justify-center"><ProductIcon className="w-8 h-8" /></span>
-            <span className="text-base font-extrabold text-[#123B92]">{t(product.key)}</span>
+            <span className="w-11 h-11 rounded-xl bg-[#002DC2] text-white flex items-center justify-center"><ProductIcon className="w-6 h-6" /></span>
+            <span className="text-sm font-extrabold text-[#123B92]">{t(product.key)}</span>
             <span className="inline-flex items-center gap-1.5 text-sm font-bold text-[#002DC2]">
               {t('prod_explore')} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </span>
@@ -80,13 +83,13 @@ function ProductMenuPanel({ product, onNavigate }) {
     content = (
       <div className="flex-1 min-h-0 grid grid-cols-2 grid-rows-1 gap-6">
         <MenuTile node={product} label={t(product.key)} large onNavigate={onNavigate} />
-        <div className="flex flex-col justify-center gap-4">
-          <p className="text-lg text-slate-600 leading-relaxed">{t(product.shortKey)}</p>
+        <div className="flex flex-col justify-center gap-3">
+          <p className="text-base text-slate-600 leading-relaxed">{t(product.shortKey)}</p>
           {product.points && (
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {product.points.map(key => (
-                <li key={key} className="flex items-start gap-3 text-base font-bold text-[#123B92]">
-                  <CheckCircle2 className="w-6 h-6 text-[#23AC39] shrink-0" />
+                <li key={key} className="flex items-start gap-2.5 text-sm font-bold text-[#123B92]">
+                  <CheckCircle2 className="w-5 h-5 text-[#23AC39] shrink-0" />
                   <span>{t(key)}</span>
                 </li>
               ))}
@@ -104,11 +107,11 @@ function ProductMenuPanel({ product, onNavigate }) {
     );
   }
   return (
-    <div className="h-full flex flex-col gap-4">
+    <div className="h-full flex flex-col gap-3">
       <Link
         to={product.path}
         onClick={onNavigate}
-        className="group self-start inline-flex items-center gap-2 text-xl xl:text-2xl font-black text-[#123B92] hover:text-[#002DC2] transition-colors"
+        className="group self-start inline-flex items-center gap-2 text-lg xl:text-xl font-black text-[#123B92] hover:text-[#002DC2] transition-colors"
       >
         {t(product.key)}
         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -472,18 +475,18 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
         />
       )}
 
-      {/* PRODUCTS MENU: full width under the navbar, 75% of the screen height. The four product areas on
-          the left; the hovered area's products as large photo tiles on the right. */}
+      {/* PRODUCTS MENU: centred under the navbar, 80% of the screen width and 60% of its height. The four
+          product areas on the left; the hovered area's products as photo tiles, each named below. */}
       {productsDropdownOpen && (
         <div
           ref={productsPanelRef}
-          className="hidden lg:block absolute inset-x-0 top-full h-[75vh] min-h-[460px] bg-white border-t border-slate-200 shadow-2xl z-50 animate-fade-in"
+          className="hidden lg:block absolute inset-x-0 top-full mx-auto mt-2 w-[80vw] h-[60vh] min-h-[400px] bg-white rounded-3xl border border-slate-200 shadow-2xl z-50 overflow-hidden"
           onMouseEnter={handleProductsEnter}
           onMouseLeave={handleProductsLeave}
         >
-          <div className="h-full max-w-[1600px] mx-auto px-6 xl:px-10 py-6 flex gap-6 xl:gap-10">
-            <div className="w-60 xl:w-72 shrink-0 flex flex-col gap-2">
-              <ul className="space-y-1.5">
+          <div className="h-full px-5 xl:px-7 py-5 flex gap-5 xl:gap-7">
+            <div className="w-52 xl:w-60 shrink-0 flex flex-col gap-2">
+              <ul className="space-y-1">
                 {PRODUCTS.map((product) => {
                   const active = product.id === menuProduct.id;
                   const Icon = product.icon;
@@ -494,11 +497,11 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                         onMouseEnter={() => setMenuProductId(product.id)}
                         onFocus={() => setMenuProductId(product.id)}
                         onClick={() => setProductsDropdownOpen(false)}
-                        className={`flex items-center gap-3 px-3 py-3 rounded-2xl text-base font-bold transition-colors ${
+                        className={`flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-sm xl:text-base font-bold transition-colors ${
                           active ? 'bg-[#F0F4FD] text-[#002DC2] ring-1 ring-[#002DC2]/20' : 'text-slate-700 hover:bg-slate-50 hover:text-[#002DC2]'
                         }`}
                       >
-                        <span className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors ${active ? 'bg-[#002DC2] text-white' : 'bg-slate-100 text-[#002DC2]'}`}>
+                        <span className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 transition-colors ${active ? 'bg-[#002DC2] text-white' : 'bg-slate-100 text-[#002DC2]'}`}>
                           <Icon className="w-5 h-5" />
                         </span>
                         <span className="flex-1 leading-snug">{t(product.key)}</span>
@@ -511,12 +514,12 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               <Link
                 to="/products"
                 onClick={() => setProductsDropdownOpen(false)}
-                className="mt-auto flex items-center justify-center gap-2 px-4 py-3 rounded-2xl border border-[#002DC2]/25 text-sm font-bold text-[#002DC2] hover:bg-[#F0F4FD] transition-colors"
+                className="mt-auto flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-[#002DC2]/25 text-sm font-bold text-[#002DC2] hover:bg-[#F0F4FD] transition-colors"
               >
                 <LayoutGrid className="w-4 h-4" /> {t('site_viewAllProducts')}
               </Link>
             </div>
-            <div className="flex-1 min-w-0 border-l border-slate-100 pl-6 xl:pl-10">
+            <div className="flex-1 min-w-0 border-l border-slate-100 pl-5 xl:pl-7">
               <ProductMenuPanel product={menuProduct} onNavigate={() => setProductsDropdownOpen(false)} />
             </div>
           </div>
