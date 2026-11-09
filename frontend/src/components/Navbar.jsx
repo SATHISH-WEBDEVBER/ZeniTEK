@@ -1,25 +1,85 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
-  Menu, X, ArrowRight, ChevronDown, FileText, Image as ImageIcon, LayoutGrid
+  Menu, X, ArrowRight, ChevronDown, ChevronRight, FileText, Images, PlayCircle, MapPin, LayoutGrid
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import LanguageWidget from './LanguageWidget';
-import SolarThermalArt from './SolarThermalArt';
 import { PRODUCTS } from '../data/siteMap';
-import { nodeTitle } from '../data/productCatalog';
+import { nodeTitle, nodeShortTitle, productThumb, DRYER_GROUPS, dryerModels } from '../data/productCatalog';
 
-// Product thumbnail: the product's real photo, or its drawing when there is no photo
-const ProductThumb = ({ product, className }) => (
-  <div className={`overflow-hidden shrink-0 border border-slate-200 bg-[#F0F4FD] ${className}`}>
-    {product.image ? (
-      <img src={product.image} alt="" className="w-full h-full object-cover" />
-    ) : (
-      <SolarThermalArt type={product.art} className="w-full h-full" />
-    )}
-  </div>
-);
+// Sub-products of a product area for the menus: its products and their own sub-products, in order
+const menuChildren = (product) => (product.children || []).flatMap(c => [{ node: c, depth: 0 }, ...(c.children || []).map(g => ({ node: g, depth: 1 }))]);
+
+// Products menu, right-hand panel: what the hovered product area contains.
+// Solar Dryer Models shows its models as photo tiles - the three sq.ft box dryers in the first row,
+// then the five tunnel dryers; the other areas list their products by name.
+function ProductMenuPanel({ product, onNavigate }) {
+  const { t } = useLanguage();
+  const items = menuChildren(product);
+  return (
+    <div className="space-y-3">
+      <Link
+        to={product.path}
+        onClick={onNavigate}
+        className="group inline-flex items-center gap-1.5 text-base font-black text-[#123B92] hover:text-[#002DC2] transition-colors"
+      >
+        {t(product.key)}
+        <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+      </Link>
+
+      {product.id === 'solar-dryer' ? (
+        DRYER_GROUPS.map(group => (
+          <div key={group.id}>
+            <p className="text-2xs font-black uppercase tracking-wider text-slate-400 mb-1 px-1">{t(group.titleKey)}</p>
+            <div className="grid grid-cols-3 gap-1">
+              {dryerModels(group.id).map(model => (
+                <Link
+                  key={model.id}
+                  to={model.path}
+                  onClick={onNavigate}
+                  className="group block rounded-xl p-1 hover:bg-[#F0F4FD] transition-colors"
+                >
+                  <span className="block aspect-[3/2] rounded-lg overflow-hidden bg-slate-100 border border-slate-200">
+                    <img src={productThumb(model)} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  </span>
+                  <span className="block mt-1 text-xs font-bold text-center text-slate-700 group-hover:text-[#002DC2] whitespace-nowrap">
+                    {nodeShortTitle(model, t)}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        ))
+      ) : items.length > 0 ? (
+        <ul className="space-y-0.5">
+          {items.map(({ node, depth }) => (
+            <li key={node.id}>
+              <Link
+                to={node.path}
+                onClick={onNavigate}
+                className={`group flex items-center gap-3 rounded-xl p-1.5 hover:bg-[#F0F4FD] transition-colors ${depth ? 'ml-6' : ''}`}
+              >
+                <img src={productThumb(node)} alt="" loading="lazy" className={`${depth ? 'w-11 h-8' : 'w-14 h-10'} rounded-md object-cover bg-slate-100 border border-slate-200 shrink-0`} />
+                <span className={`${depth ? 'text-xs' : 'text-sm'} font-bold text-slate-700 group-hover:text-[#002DC2] leading-snug`}>{nodeTitle(node, t)}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <Link to={product.path} onClick={onNavigate} className="group block">
+          <span className="block aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+            <img src={productThumb(product)} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+          </span>
+          <span className="mt-2 inline-flex items-center gap-1.5 text-sm font-bold text-[#002DC2]">
+            {t('cat_viewProduct')} <ArrowRight className="w-4 h-4" />
+          </span>
+        </Link>
+      )}
+    </div>
+  );
+}
 
 export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -27,6 +87,9 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const [galleryDropdownOpen, setGalleryDropdownOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [mobileGalleryOpen, setMobileGalleryOpen] = useState(false);
+  // Product area shown in the right-hand panel of the Products menu (follows the hovered area)
+  const [menuProductId, setMenuProductId] = useState(PRODUCTS[0].id);
+  const menuProduct = PRODUCTS.find(p => p.id === menuProductId) || PRODUCTS[0];
 
   const navigate = useNavigate();
   const productsRef = useRef(null);
@@ -151,23 +214,12 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
     }, 180);
   };
 
+  // Gallery menu: one entry per Gallery tab
   const galleryDropdownItems = [
-    {
-      name: "Brochure",
-      nameKey: "navbar_brochure",
-      descKey: "navbar_brochureDesc",
-      path: "/gallery?cat=brochure",
-      icon: FileText,
-      desc: "Official Technical PDF Pages"
-    },
-    {
-      name: "Images",
-      nameKey: "navbar_images",
-      descKey: "navbar_imagesDesc",
-      path: "/gallery?cat=all",
-      icon: ImageIcon,
-      desc: "Authentic Real Field Photos"
-    }
+    { nameKey: 'media_tabProducts', path: '/gallery?tab=products', icon: Images },
+    { nameKey: 'media_tabVideos', path: '/gallery?tab=videos', icon: PlayCircle },
+    { nameKey: 'media_tabSites', path: '/gallery?tab=sites', icon: MapPin },
+    { nameKey: 'media_tabBrochures', path: '/gallery?tab=brochures', icon: FileText },
   ];
 
   const productRoutes = ['/products', '/dryers', ...PRODUCTS.map(p => p.path)];
@@ -201,7 +253,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             }`}
           >
             <img
-              src="/logo.webp"
+              src="/images/brand/logo.webp"
               onLoad={() => setFontTick(n => n + 1)}
               alt="ZeniTEK - Towards Sustainable Future"
               className="h-9 xs:h-10 sm:h-11 md:h-12 lg:h-[52px] xl:h-14 w-auto object-contain py-0.5"
@@ -248,77 +300,47 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                 <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${productsDropdownOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
               </button>
 
-              {/* PRODUCTS DROPDOWN: the four product areas, each with links to its sub-products */}
+              {/* PRODUCTS DROPDOWN: the four product areas on the left; the hovered area's products on the right */}
               {productsDropdownOpen && (
                 <div
-                  className={`absolute top-full ${twoRow ? 'left-0' : 'left-1/2 -translate-x-1/2'} mt-2 w-[540px] bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-3 z-50 animate-fade-in space-y-2`}
+                  className={`absolute top-full ${twoRow ? 'left-0' : 'left-1/2 -translate-x-1/2'} mt-2 w-[620px] bg-white rounded-2xl shadow-2xl border border-slate-200/90 z-50 animate-fade-in flex overflow-hidden`}
                   onMouseEnter={handleProductsEnter}
                   onMouseLeave={handleProductsLeave}
                 >
-                  <div className="flex items-center justify-between pb-2 border-b border-slate-100 px-2 pt-1">
-                    <span className="text-xs font-black uppercase tracking-wider text-[#002DC2]">
-                      {t('site_productsBadge')}
-                    </span>
+                  <div className="w-[230px] shrink-0 bg-slate-50 border-r border-slate-100 p-2 flex flex-col gap-2">
+                    <ul className="space-y-1">
+                      {PRODUCTS.map((product) => {
+                        const active = product.id === menuProduct.id;
+                        const Icon = product.icon;
+                        return (
+                          <li key={product.id}>
+                            <Link
+                              to={product.path}
+                              onMouseEnter={() => setMenuProductId(product.id)}
+                              onFocus={() => setMenuProductId(product.id)}
+                              onClick={() => setProductsDropdownOpen(false)}
+                              className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-bold transition-colors ${
+                                active ? 'bg-white text-[#002DC2] shadow-sm ring-1 ring-[#002DC2]/15' : 'text-slate-700 hover:text-[#002DC2]'
+                              }`}
+                            >
+                              <Icon className="w-5 h-5 shrink-0" />
+                              <span className="flex-1 leading-snug">{t(product.key)}</span>
+                              {product.children && <ChevronRight className={`w-4 h-4 shrink-0 ${active ? 'text-[#002DC2]' : 'text-slate-400'}`} />}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
                     <Link
                       to="/products"
                       onClick={() => setProductsDropdownOpen(false)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#002DC2]/25 text-sm font-bold text-[#002DC2] hover:bg-[#F0F4FD] transition-colors shrink-0"
+                      className="mt-auto flex items-center gap-2 px-3 py-2.5 rounded-xl border-t border-slate-200 text-sm font-bold text-[#002DC2] hover:bg-white transition-colors"
                     >
                       <LayoutGrid className="w-4 h-4" /> {t('site_viewAllProducts')}
                     </Link>
                   </div>
-
-                  {PRODUCTS.map((product) => (
-                    <div key={product.path} className="rounded-xl hover:bg-[#F0F4FD] transition-colors border border-transparent hover:border-[#002DC2]/20">
-                      <Link
-                        to={product.path}
-                        onClick={() => setProductsDropdownOpen(false)}
-                        className="flex items-center gap-3.5 p-2.5 group"
-                      >
-                        <ProductThumb product={product} className="w-[72px] h-14 rounded-lg" />
-                        <div className="min-w-0 flex-1">
-                          <div className="text-base font-bold text-[#123B92] group-hover:text-[#002DC2] transition-colors leading-snug">
-                            {t(product.key)}
-                          </div>
-                          <div className="text-sm text-slate-500 font-medium leading-snug mt-0.5">
-                            {t(product.shortKey)}
-                          </div>
-                        </div>
-                        <ArrowRight className="w-5 h-5 text-[#002DC2] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all shrink-0" />
-                      </Link>
-                      {product.children && (
-                        <div className="flex flex-wrap gap-1.5 pl-[98px] pr-2.5 pb-2.5 -mt-1">
-                          {product.children.map(child => (
-                            <Link
-                              key={child.id}
-                              to={child.path}
-                              onClick={() => setProductsDropdownOpen(false)}
-                              className="px-2.5 py-1 rounded-md bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:border-[#002DC2] hover:text-[#002DC2] transition-colors"
-                            >
-                              {nodeTitle(child, t)}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-
-                  {/* Quote shortcut */}
-                  <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-gradient-to-r from-emerald-50 to-green-50 border border-[#23AC39]/30">
-                    <div className="min-w-0">
-                      <div className="text-sm font-black text-[#1A822B]">{t('navbar_customDpr')}</div>
-                      <div className="text-xs text-[#1A822B] font-medium">{t('navbar_customDprDesc')}</div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setProductsDropdownOpen(false);
-                        if (onOpenQuoteModal) onOpenQuoteModal();
-                      }}
-                      className="px-3 py-1.5 bg-[#23AC39] hover:bg-[#1f9632] text-white text-xs font-extrabold rounded-lg shadow-sm cursor-pointer shrink-0 transition-transform active:scale-95"
-                    >
-                      {t('getQuote')}
-                    </button>
+                  <div className="flex-1 min-w-0 p-4">
+                    <ProductMenuPanel product={menuProduct} onNavigate={() => setProductsDropdownOpen(false)} />
                   </div>
                 </div>
               )}
@@ -347,7 +369,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               {/* Gallery Dropdown Card */}
               {galleryDropdownOpen && (
                 <div 
-                  className="absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-2 z-50 animate-fade-in space-y-1"
+                  className="absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-2 z-50 animate-fade-in space-y-0.5"
                   onMouseEnter={handleGalleryEnter}
                   onMouseLeave={handleGalleryLeave}
                 >
@@ -355,22 +377,13 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                     const ItemIcon = item.icon;
                     return (
                       <Link
-                        key={t(item.nameKey)}
+                        key={item.nameKey}
                         to={item.path}
                         onClick={() => setGalleryDropdownOpen(false)}
-                        className="flex items-start space-x-3 p-2.5 rounded-xl hover:bg-[#F0F4FD] transition-colors group"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-slate-700 hover:text-[#002DC2] hover:bg-[#F0F4FD] transition-colors"
                       >
-                        <div className="w-8 h-8 rounded-lg bg-[#F0F4FD] group-hover:bg-[#002DC2] text-[#002DC2] group-hover:text-white flex items-center justify-center shrink-0 transition-colors mt-0.5">
-                          <ItemIcon className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <div className="text-sm font-bold text-[#123B92] group-hover:text-[#002DC2] transition-colors">
-                            {t(item.nameKey)}
-                          </div>
-                          <div className="text-xs text-slate-500 font-medium leading-tight">
-                            {t(item.descKey)}
-                          </div>
-                        </div>
+                        <ItemIcon className="w-5 h-5 text-[#002DC2] shrink-0" />
+                        <span>{t(item.nameKey)}</span>
                       </Link>
                     );
                   })}
@@ -499,39 +512,47 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                 >
                   <LayoutGrid className="w-5 h-5" /> {t('site_viewAllProducts')}
                 </Link>
-                {PRODUCTS.map((product) => (
-                  <div key={product.path} className="rounded-lg bg-white border border-slate-200/60">
-                  <Link
-                    to={product.path}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 p-2 rounded-lg hover:border-[#002DC2]/30 text-slate-800 hover:text-[#002DC2] transition-colors"
-                  >
-                    <ProductThumb product={product} className="w-12 h-12 rounded-md" />
-                    <div className="min-w-0 flex-1">
-                      <div className="text-sm font-bold text-[#123B92] leading-tight">
-                        {t(product.key)}
-                      </div>
-                      <div className="text-xs text-slate-500 font-medium mt-0.5">
-                        {t(product.shortKey)}
-                      </div>
+                {PRODUCTS.map((product) => {
+                  const Icon = product.icon;
+                  const chip = 'px-2.5 py-1.5 rounded-md bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 hover:border-[#002DC2] hover:text-[#002DC2] transition-colors';
+                  return (
+                    <div key={product.path} className="rounded-lg bg-white border border-slate-200/60">
+                      <Link
+                        to={product.path}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-2.5 px-3 py-2.5 text-sm font-bold text-[#123B92] hover:text-[#002DC2] transition-colors"
+                      >
+                        <Icon className="w-5 h-5 text-[#002DC2] shrink-0" />
+                        <span className="flex-1">{t(product.key)}</span>
+                        <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
+                      </Link>
+                      {product.id === 'solar-dryer' ? (
+                        <div className="px-3 pb-3 space-y-2">
+                          {DRYER_GROUPS.map(group => (
+                            <div key={group.id}>
+                              <p className="text-2xs font-black uppercase tracking-wider text-slate-400 mb-1">{t(group.titleKey)}</p>
+                              <div className="flex flex-wrap gap-1.5">
+                                {dryerModels(group.id).map(model => (
+                                  <Link key={model.id} to={model.path} onClick={() => setMobileMenuOpen(false)} className={chip}>
+                                    {nodeShortTitle(model, t)}
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : product.children && (
+                        <div className="flex flex-wrap gap-1.5 px-3 pb-3">
+                          {menuChildren(product).map(({ node }) => (
+                            <Link key={node.id} to={node.path} onClick={() => setMobileMenuOpen(false)} className={chip}>
+                              {nodeTitle(node, t)}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                  </Link>
-                  {product.children && (
-                    <div className="flex flex-wrap gap-1.5 px-2 pb-2">
-                      {product.children.map(child => (
-                        <Link
-                          key={child.id}
-                          to={child.path}
-                          onClick={() => setMobileMenuOpen(false)}
-                          className="px-2.5 py-1.5 rounded-md bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 hover:border-[#002DC2] hover:text-[#002DC2] transition-colors"
-                        >
-                          {nodeTitle(child, t)}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
@@ -551,7 +572,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
               <div className="pl-4 pr-2 py-1 space-y-1 bg-slate-50 rounded-xl mb-1">
                 {galleryDropdownItems.map((item) => (
                   <Link
-                    key={t(item.nameKey)}
+                    key={item.nameKey}
                     to={item.path}
                     onClick={() => setMobileMenuOpen(false)}
                     className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#002DC2] hover:bg-white"

@@ -162,6 +162,8 @@ function PublicSite() {
               <Route path="/crop-preservation-guide" element={<Navigate to="/applications" replace />} />
               <Route path="/technical-spec-sheets" element={<Navigate to="/solar-dryer-models" replace />} />
               <Route path="/dryers" element={<Navigate to="/solar-dryer-models" replace />} />
+              {/* the tunnel dryer models are listed on the Solar Dryer Models page itself */}
+              <Route path="/solar-dryer-models/tunnel-dryers" element={<Navigate to="/solar-dryer-models" replace />} />
               <Route path="/dryers/:id" element={<LegacyProjectRedirect />} />
               <Route path="/map" element={<Navigate to="/installations" replace />} />
 
