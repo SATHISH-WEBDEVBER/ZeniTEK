@@ -93,7 +93,7 @@ export const defaultSections = [
     title: 'Solar Dryer Models',
     subtitle: 'Commercial Walk-In Tunnels, Industrial Multi-Unit Plants & Micro Box Dryers',
     thumbnail: {
-      url: '/real-photos/zenitek_photo_18.webp',
+      url: '/images/gallery/photo-18.webp',
       publicId: '',
       alt: 'Solar Dryer Models'
     },
@@ -117,7 +117,7 @@ Whether you need a compact portable stainless-steel box dryer for micro-scale pr
     title: 'Solar Thermal System',
     subtitle: 'High-Efficiency Thermal Collectors with Patented Aerodynamic Air Circulation',
     thumbnail: {
-      url: '/real-photos/zenitek_photo_23.webp',
+      url: '/images/gallery/photo-23.webp',
       publicId: '',
       alt: 'Solar Thermal System'
     },
@@ -141,7 +141,7 @@ Integrated automated dampers vent humid saturated air precisely when threshold h
     title: 'Agri-Solar Innovation',
     subtitle: 'Pioneering Decentralized Solar Drying Solutions for Farmers and FPOs',
     thumbnail: {
-      url: '/real-photos/zenitek_photo_21.webp',
+      url: '/images/gallery/photo-21.webp',
       publicId: '',
       alt: 'Agri-Solar Innovation'
     },
@@ -165,7 +165,7 @@ Our engineering team works closely with agricultural research universities and F
     title: 'Photovoltaic Solutions',
     subtitle: 'Hybrid Solar PV & DC Micro-Grid Systems for 24/7 Uninterrupted Operation',
     thumbnail: {
-      url: '/real-photos/zenitek_photo_26.webp',
+      url: '/images/gallery/photo-26.webp',
       publicId: '',
       alt: 'Photovoltaic Solutions'
     },
@@ -189,7 +189,7 @@ This hybrid integration guarantees unbroken dehumidification even through cloud 
     title: 'Government Subsidies',
     subtitle: '40% to 60% Capital Subsidy Assistance Under Central & State Agri Schemes',
     thumbnail: {
-      url: '/real-photos/zenitek_photo_07.webp',
+      url: '/images/gallery/photo-07.webp',
       publicId: '',
       alt: 'Government Subsidies'
     },
@@ -218,7 +218,7 @@ Our dedicated liaison desk assists you through every milestone:
     title: 'Crop Preservation Guide',
     subtitle: 'Optimal Temperature, Moisture Targets & Drying Protocols for 50+ Agricultural Commodities',
     thumbnail: {
-      url: '/real-photos/zenitek_photo_03.webp',
+      url: '/images/gallery/photo-03.webp',
       publicId: '',
       alt: 'Crop Preservation Guide'
     },
@@ -246,7 +246,7 @@ Consult this guide to optimize batch turnaround times and maximize product grade
     title: 'Technical Spec Sheets',
     subtitle: 'Engineering CAD Blueprints, Electrical Ratings & Material Certifications',
     thumbnail: {
-      url: '/real-photos/zenitek_photo_12.webp',
+      url: '/images/gallery/photo-12.webp',
       publicId: '',
       alt: 'Technical Spec Sheets'
     },

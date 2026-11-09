@@ -1,4 +1,14 @@
 {
+  "redirects": [
+    { "source": "/real-photos/zenitek_photo_:n.webp", "destination": "/images/gallery/photo-:n.webp", "permanent": true },
+    { "source": "/projects/:file(project-.*)", "destination": "/images/projects/:file", "permanent": true },
+    { "source": "/client-logos/:file", "destination": "/images/clients/:file", "permanent": true },
+    { "source": "/pdf-products/brochure_p:n.webp", "destination": "/images/brochure-pages/brochure-page-:n.webp", "permanent": true },
+    { "source": "/home-hero/:file", "destination": "/images/home-hero/:file", "permanent": true },
+    { "source": "/products/placeholder.svg", "destination": "/images/products/placeholder.svg", "permanent": true },
+    { "source": "/logo.webp", "destination": "/images/brand/logo.webp", "permanent": true },
+    { "source": "/emblem.webp", "destination": "/images/brand/emblem.webp", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
