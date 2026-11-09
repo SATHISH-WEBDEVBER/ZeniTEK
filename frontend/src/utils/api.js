@@ -3,6 +3,8 @@
  * Centralised API base URL and authenticated request helper
  */
 
+import { withCurrentAssetPaths } from './assetUrl';
+
 export const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 
 // ─── Client Admin Auth Helpers ───────────────────────────────────────────────
@@ -75,7 +77,8 @@ export async function apiFetch(path, options = {}) {
     throw new Error(message);
   }
 
-  return data;
+  // image paths stored before /public/images was reorganised -> current locations
+  return withCurrentAssetPaths(data);
 }
 
 // ─── Products API ────────────────────────────────────────────────────────────

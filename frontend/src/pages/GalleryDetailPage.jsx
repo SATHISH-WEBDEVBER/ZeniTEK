@@ -24,7 +24,7 @@ const createCustomIcon = () => {
         <div class="zenitek-pin-pulse"></div>
         <div class="zenitek-pin-body">
           <div class="zenitek-pin-emblem-wrap">
-            <img src="/emblem.webp" alt="ZeniTEK" class="zenitek-pin-emblem-img" />
+            <img src="/images/brand/emblem.webp" alt="ZeniTEK" class="zenitek-pin-emblem-img" />
           </div>
         </div>
         <div class="zenitek-pin-tip"></div>

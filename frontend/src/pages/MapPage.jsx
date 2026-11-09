@@ -20,7 +20,7 @@ export default function MapPage({ onOpenQuoteModal }) {
   return (
     <div className="text-black min-h-screen bg-white">
       <PageHero
-        images="/real-photos/zenitek_photo_21.webp"
+        images="/images/gallery/photo-21.webp"
         title={<>{t('mapTitle1')} <span className="text-[#002DC2]">{t('mapTitle2')}</span></>}
         subtitle={t('mapSubtitle')}
         actions={[

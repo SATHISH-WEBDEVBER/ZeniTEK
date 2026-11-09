@@ -17,7 +17,7 @@ export default function NotFoundPage({ title, description }) {
   return (
     <div className="bg-white">
       <PageHero
-        images="/real-photos/zenitek_photo_45.webp"
+        images="/images/gallery/photo-45.webp"
         title={title || t('notFoundTitle')}
         subtitle={description || t('notFoundDesc')}
         actions={[

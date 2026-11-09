@@ -8,6 +8,7 @@ import {
 import { activeLocationsData } from '../data/mapLocationsData';
 import { useLanguage } from '../context/LanguageContext';
 import { API_BASE } from '../utils/api';
+import { withCurrentAssetPaths } from '../utils/assetUrl';
 import { Link } from 'react-router-dom';
 
 // Official India Geographic Bounding Box (Southwest to Northeast)
@@ -94,7 +95,7 @@ const buildPinIcon = (isSelected) => L.divIcon({
       <div class="zenitek-pin-pulse"></div>
       <div class="zenitek-pin-body">
         <div class="zenitek-pin-emblem-wrap">
-          <img src="/emblem.webp" alt="" class="zenitek-pin-emblem-img" draggable="false" />
+          <img src="/images/brand/emblem.webp" alt="" class="zenitek-pin-emblem-img" draggable="false" />
         </div>
       </div>
       <div class="zenitek-pin-tip"></div>
@@ -402,7 +403,7 @@ export default function MapComponent({ onSelectProjectQuote }) { // eslint-disab
     async function fetchProjects() {
       try {
         const res = await fetch(`${API_BASE}/projects`);
-        const data = await res.json();
+        const data = withCurrentAssetPaths(await res.json());
         if (data.success && Array.isArray(data.projects) && data.projects.length >= 35) {
           setProjects(data.projects);
         } else {

@@ -57,7 +57,7 @@ export function ProductCard({ node }) {
   );
 }
 
-// Grid of product cards (2 or 3 cards use the full width; 4+ wrap in rows of 3-4)
+// Grid of product cards (2 or 4 cards in rows of 2 or 4; otherwise rows of 3)
 export function ProductGrid({ nodes }) {
   const cols = nodes.length === 2 ? 'md:grid-cols-2' : nodes.length === 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-2 lg:grid-cols-3';
   return (

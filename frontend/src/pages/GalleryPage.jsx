@@ -3,40 +3,81 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { zenitekRealGallery } from '../data/zenitekRealGalleryData';
 import { brochures } from '../data/brochuresData';
 import { fetchPublicGallery } from '../utils/api';
-import { 
-  Camera, Filter, MapPin, X, ArrowRight, Sun, ZoomIn, ShieldCheck, 
-  Layers, Sparkles, CheckCircle2, SlidersHorizontal, Info, Tag, ExternalLink, Loader, FileText, Download, MessageSquareQuote
+import {
+  MapPin, ArrowRight, ZoomIn, Loader, FileText, Download, MessageSquareQuote, Images, PlayCircle
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
+import { PhotoGrid, MediaViewer, VideoGrid, photoItems } from '../components/MediaGallery';
+import { CATALOG, productPhotos, nodeTitle } from '../data/productCatalog';
+import { PRODUCT_PHOTOS, PRODUCT_VIDEOS } from '../data/productMedia';
 
-const CATEGORY_IDS = ['all', 'tunnel_external', 'tunnel_internal', 'box_dryers', 'trays_produce', 'engineering', 'brochure'];
-// 'brochure' lists the PDF brochures as document cards (real product photo as cover), not as gallery photos.
-// Navbar / legacy aliases -> gallery filter.
-const CATEGORY_ALIASES = { brochures: 'brochure', specs: 'brochure' };
+// The gallery has four tabs (?tab=...): product photos (grouped by product), videos,
+// installation photos (filtered with ?cat=...) and the PDF brochures.
+const TABS = [
+  { id: 'products', labelKey: 'media_tabProducts', icon: Images },
+  { id: 'videos', labelKey: 'media_tabVideos', icon: PlayCircle },
+  { id: 'sites', labelKey: 'media_tabSites', icon: MapPin },
+  { id: 'brochures', labelKey: 'media_tabBrochures', icon: FileText },
+];
+const TAB_IDS = TABS.map(tab => tab.id);
+const CATEGORY_IDS = ['all', 'tunnel_external', 'tunnel_internal', 'box_dryers', 'trays_produce', 'engineering'];
+// Older links: /gallery?cat=brochure (or brochures / specs) opened the brochures
+const BROCHURE_ALIASES = ['brochure', 'brochures', 'specs'];
 
-const resolveCategory = (cat) => {
-  if (!cat) return 'all';
-  const id = CATEGORY_ALIASES[cat] || cat;
-  return CATEGORY_IDS.includes(id) ? id : 'all';
+const resolveView = (params) => {
+  const cat = params.get('cat');
+  if (cat && BROCHURE_ALIASES.includes(cat)) return { tab: 'brochures', category: 'all' };
+  if (cat) return { tab: 'sites', category: CATEGORY_IDS.includes(cat) ? cat : 'all' };
+  const tab = params.get('tab');
+  return { tab: TAB_IDS.includes(tab) ? tab : 'products', category: 'all' };
 };
+
+// Products that have photos, in catalogue order, under their product area
+const walk = (node, out = []) => {
+  if (productPhotos(node).length) out.push(node);
+  (node.children || []).forEach(child => walk(child, out));
+  return out;
+};
+const PHOTO_AREAS = CATALOG.map(area => ({ area, products: walk(area) })).filter(a => a.products.length);
+const PRODUCT_PHOTO_COUNT = Object.values(PRODUCT_PHOTOS).reduce((n, list) => n + list.length, 0);
+
+// One product's photos on the Products tab: name, count, link to the product, photo grid
+function ProductPhotoGroup({ node, onOpen }) {
+  const { t } = useLanguage();
+  const items = photoItems(node, t);
+  return (
+    <section className="bg-white rounded-3xl border border-slate-200 shadow-sm p-4 sm:p-6 space-y-4">
+      <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-1">
+        <div>
+          <h3 className="text-lg sm:text-xl font-black text-[#123B92] leading-snug">{nodeTitle(node, t)}</h3>
+          <p className="text-sm text-slate-500 font-medium">{items.length === 1 ? t('media_onePhoto') : t('media_photos', { count: items.length })}</p>
+        </div>
+        <Link to={node.path} className="inline-flex items-center gap-1.5 text-sm font-bold text-[#002DC2] hover:underline">
+          {t('cat_viewProduct')} <ArrowRight className="w-4 h-4" />
+        </Link>
+      </div>
+      <PhotoGrid items={items} limit={8} onOpen={(i) => onOpen(items, i)} />
+    </section>
+  );
+}
 
 export default function GalleryPage({ onOpenQuoteModal }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const catParam = searchParams.get('cat');
-  const [activeCategory, setActiveCategory] = useState(() => resolveCategory(catParam));
+  const { tab: activeTab, category: activeCategory } = resolveView(searchParams);
+  const areaParam = searchParams.get('area');
+  const activeArea = PHOTO_AREAS.some(a => a.area.id === areaParam) ? areaParam : 'all';
+  // Full-screen viewer for the Products tab: the photos of one product
+  const [viewer, setViewer] = useState({ items: [], index: null });
 
-  // Follow navbar links (/gallery?cat=...) while already on the page
-  useEffect(() => {
-    setActiveCategory(resolveCategory(catParam));
-  }, [catParam]);
-
-  const changeCategory = (id) => {
-    setActiveCategory(id);
-    const next = new URLSearchParams(searchParams);
-    if (id === 'all') next.delete('cat'); else next.set('cat', id);
+  const setParams = (entries) => {
+    const next = new URLSearchParams();
+    Object.entries(entries).forEach(([k, v]) => { if (v) next.set(k, v); });
     setSearchParams(next, { replace: true });
   };
+  const changeTab = (id) => setParams({ tab: id === 'products' ? null : id });
+  const changeCategory = (id) => (id === 'all' ? setParams({ tab: 'sites' }) : setParams({ cat: id }));
+  const changeArea = (id) => setParams({ area: id === 'all' ? null : id });
 
   const [searchQuery, setSearchQuery] = useState('');
   const [apiItems, setApiItems] = useState([]);
@@ -102,43 +143,139 @@ export default function GalleryPage({ onOpenQuoteModal }) {
   const categories = CATEGORY_IDS.map(id => ({
     id,
     label: t(`gallery_filter_${id}`),
-    count: id === 'all' ? masterGalleryItems.length
-      : id === 'brochure' ? brochures.length
-      : masterGalleryItems.filter(i => i.category === id).length
+    count: id === 'all' ? masterGalleryItems.length : masterGalleryItems.filter(i => i.category === id).length
   }));
-  const showBrochures = activeCategory === 'brochure';
+  const tabCounts = {
+    products: PRODUCT_PHOTO_COUNT,
+    videos: PRODUCT_VIDEOS.length,
+    sites: masterGalleryItems.length,
+    brochures: brochures.length,
+  };
+  const areaChips = [
+    { id: 'all', label: t('media_allProducts'), count: PRODUCT_PHOTO_COUNT },
+    ...PHOTO_AREAS.map(({ area, products }) => ({
+      id: area.id,
+      label: t(area.titleKey),
+      count: products.reduce((n, node) => n + productPhotos(node).length, 0),
+    })),
+  ];
+  const shownAreas = PHOTO_AREAS.filter(a => activeArea === 'all' || a.area.id === activeArea);
+  const chipCls = (active) => `px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+    active ? 'bg-[#002DC2] text-white shadow-md' : 'bg-white text-[#123B92] hover:text-[#002DC2] hover:bg-[#F0F4FD] border border-[#123B92]/20'
+  }`;
+  const countCls = (active) => `text-2xs px-1.5 py-0.5 rounded-full font-bold ${active ? 'bg-white/20 text-white' : 'bg-[#F0F4FD] text-[#123B92]'}`;
 
   return (
     <div className="text-black min-h-screen bg-white">
       
       {/* SECTION 1: HERO (background photo, left-aligned heading) */}
       <PageHero
-        images="/real-photos/zenitek_photo_43.webp"
+        images="/images/gallery/photo-43.webp"
         title={<>{t('gallery_heroTitle1')} <span className="text-[#002DC2]">{t('gallery_heroTitle2')}</span></>}
         subtitle={t('hero_gallerySub')}
         actions={[
           { label: t('getQuote'), onClick: () => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: 'Complete Turnkey Dryer Project' }), icon: MessageSquareQuote },
-          { label: t('hero_viewBrochures'), to: '/gallery?cat=brochure', icon: FileText },
+          { label: t('hero_viewBrochures'), to: '/gallery?tab=brochures', icon: FileText },
         ]}
         stats={[
-          { value: String(zenitekRealGallery.length), label: t('hero_galPhotos') },
+          { value: String(PRODUCT_PHOTO_COUNT + zenitekRealGallery.length), label: t('media_heroPhotos') },
+          { value: String(PRODUCT_VIDEOS.length), label: t('media_tabVideos') },
           { value: String(brochures.length), label: t('hero_galBrochures') },
-          { value: String(CATEGORY_IDS.filter(id => id !== 'all' && id !== 'brochure').length), label: t('hero_galCategories') },
         ]}
       />
 
-      {/* SECTION 2: GALLERY GRID (EVEN: LIGHT TINT, FULLY RESPONSIVE CARDS) */}
+      {/* Gallery tabs */}
+      <nav aria-label={t('media_galleryAria')} className="w-full bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-4 gap-1 sm:flex sm:justify-center sm:gap-2 py-2">
+            {TABS.map(({ id, labelKey, icon: Icon }) => {
+              const active = activeTab === id;
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => changeTab(id)}
+                  aria-current={active ? 'page' : undefined}
+                  className={`flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-1.5 sm:px-4 py-2 rounded-xl text-2xs sm:text-sm font-bold transition-colors cursor-pointer ${
+                    active ? 'bg-[#002DC2] text-white shadow-md' : 'text-slate-600 hover:text-[#002DC2] hover:bg-[#F0F4FD]'
+                  }`}
+                >
+                  <Icon className="w-5 h-5 shrink-0" />
+                  <span className="text-center leading-tight">{t(labelKey)}</span>
+                  <span className={`hidden sm:inline ${countCls(active)}`}>{tabCounts[id]}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </nav>
+
+      {/* PRODUCT PHOTOS: every product's photos, grouped by product area */}
+      {activeTab === 'products' && (
+        <section className="w-full section-even py-12 sm:py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div className="text-center max-w-3xl mx-auto space-y-3">
+              <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('media_productsTitle')}</h2>
+              <p className="text-base sm:text-lg text-slate-600">{t('media_productsSub')}</p>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
+              {areaChips.map(chip => (
+                <button key={chip.id} type="button" onClick={() => changeArea(chip.id)} aria-pressed={activeArea === chip.id} className={chipCls(activeArea === chip.id)}>
+                  <span>{chip.label}</span>
+                  <span className={countCls(activeArea === chip.id)}>{chip.count}</span>
+                </button>
+              ))}
+            </div>
+            {shownAreas.map(({ area, products }) => (
+              <div key={area.id} className="space-y-4">
+                {activeArea === 'all' && (
+                  <h2 className="flex items-center gap-3 text-2xl sm:text-3xl font-black text-[#123B92] pt-4">
+                    <span className="w-1.5 h-8 rounded-full bg-[#23AC39]" aria-hidden="true" />
+                    {t(area.titleKey)}
+                  </h2>
+                )}
+                {products.map(node => (
+                  <ProductPhotoGroup key={node.id} node={node} onOpen={(items, index) => setViewer({ items, index })} />
+                ))}
+              </div>
+            ))}
+          </div>
+          <MediaViewer
+            items={viewer.items}
+            index={viewer.index}
+            onIndex={(index) => setViewer(v => ({ ...v, index }))}
+            onClose={() => setViewer(v => ({ ...v, index: null }))}
+          />
+        </section>
+      )}
+
+      {/* VIDEOS */}
+      {activeTab === 'videos' && (
+        <section className="w-full section-even py-12 sm:py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div className="text-center max-w-3xl mx-auto space-y-3">
+              <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('media_tabVideos')}</h2>
+              <p className="text-base sm:text-lg text-slate-600">{t('media_videosSub')}</p>
+            </div>
+            <VideoGrid videos={PRODUCT_VIDEOS} />
+          </div>
+        </section>
+      )}
+
+      {/* INSTALLATION PHOTOS (search + category chips) and BROCHURES */}
+      {(activeTab === 'sites' || activeTab === 'brochures') && (
       <section className="w-full section-even py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">
-              {t('gallery_gridTitle')}
+              {activeTab === 'brochures' ? t('media_tabBrochures') : t('media_tabSites')}
             </h2>
             <p className="text-base sm:text-lg text-slate-600">
-              {t('gallery_gridSubtitle')}
+              {activeTab === 'brochures' ? t('gallery_brochuresIntro') : t('gallery_gridSubtitle')}
             </p>
           </div>
 
+          {activeTab === 'sites' && (<>
           {/* Search */}
           <div className="max-w-md mx-auto mb-5">
             <div className="relative">
@@ -185,10 +322,10 @@ export default function GalleryPage({ onOpenQuoteModal }) {
               </button>
             ))}
           </div>
+          </>)}
 
-          {showBrochures ? (
+          {activeTab === 'brochures' ? (
             <div className="space-y-6">
-              <p className="text-center text-sm sm:text-base text-slate-600 max-w-2xl mx-auto">{t('gallery_brochuresIntro')}</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
                 {brochures.map((b) => (
                   <div
@@ -340,6 +477,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
           )}
         </div>
       </section>
+      )}
 
       {/* SECTION 3: SUBSIDY ASSISTANCE CTA BANNER (ODD: WHITE) */}
       <section className="w-full section-odd py-12 sm:py-16">

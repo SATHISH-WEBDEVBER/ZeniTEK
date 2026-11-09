@@ -14,7 +14,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
   const productSlides = [
     {
       id: 'p1',
-      image: '/real-photos/zenitek_photo_04.webp',
+      image: '/images/gallery/photo-04.webp',
       title: 'SOLDRY 1210 Polyhouse Tunnel Dryer',
       subtitle: 'Commercial Agricultural Installation • 150–500 kg / batch',
       tag: 'Commercial Tunnel',
@@ -45,7 +45,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
     },
     {
       id: 'p2',
-      image: '/real-photos/zenitek_photo_18.webp',
+      image: '/images/gallery/photo-18.webp',
       title: 'SOLDRY 1709 Parabolic Arch Tunnel',
       subtitle: 'Continuous Aerodynamic Airflow • 400–1,200 kg / batch',
       tag: 'Industrial Scale',
@@ -76,7 +76,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
     },
     {
       id: 'p3',
-      image: '/real-photos/zenitek_photo_24.webp',
+      image: '/images/gallery/photo-24.webp',
       title: 'Precision Red Chilli Dehydration Unit',
       subtitle: 'Uniform Solar Moisture Extraction • Grade-1 Quality',
       tag: 'Quality Spices',
@@ -107,7 +107,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
     },
     {
       id: 'p4',
-      image: '/real-photos/zenitek_photo_27.webp',
+      image: '/images/gallery/photo-27.webp',
       title: 'SUNDRY 50 Clean Multi-Tier Box Dryer',
       subtitle: '8-Tray Food-Grade Multi-Tier System • 20–100 kg / batch',
       tag: 'Pharma & Superfood',
@@ -138,7 +138,7 @@ export default function ROICalculator({ onSelectModelQuote }) {
     },
     {
       id: 'p5',
-      image: '/real-photos/zenitek_photo_02.webp',
+      image: '/images/gallery/photo-02.webp',
       title: 'Walk-In Polyhouse Tunnel Interior',
       subtitle: 'Multi-Tier Ergonomic Trolley Architecture',
       tag: 'Coastal & Multi-Crop',

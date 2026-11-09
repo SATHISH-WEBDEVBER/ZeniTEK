@@ -646,7 +646,7 @@ export function SectionForm({ section, onSave, onCancel, toast }) {
                 if (e.target.value) setThumbPreview(e.target.value);
               }}
               className="w-full border border-slate-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#002DC2]"
-              placeholder="e.g. /real-photos/zenitek_photo_21.webp"
+              placeholder="e.g. /images/gallery/photo-21.webp"
             />
           </div>
         </div>
@@ -765,7 +765,7 @@ export function SectionForm({ section, onSave, onCancel, toast }) {
             type="text"
             value={newImageUrl}
             onChange={e => setNewImageUrl(e.target.value)}
-            placeholder="or add image URL (e.g. /real-photos/...)"
+            placeholder="or add image URL (e.g. /images/gallery/...)"
             className="flex-1 min-w-[200px] border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#002DC2]"
           />
         </div>

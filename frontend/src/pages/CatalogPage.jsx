@@ -6,19 +6,11 @@ import PageHero from '../components/PageHero';
 import BoldText from '../components/BoldText';
 import { usePageTitle } from '../components/SiteHeader';
 import { ProductImage, ProductGrid } from '../components/ProductCards';
+import { ProductMediaSection } from '../components/MediaGallery';
 import { findNodeByPath, productImage, nodeTitle } from '../data/productCatalog';
-import { findDryerModel } from './DryerModelPage';
 import NotFoundPage from './NotFoundPage';
 
 const WHATSAPP = (name) => `https://wa.me/918098613422?text=${encodeURIComponent(`Hello ZeniTEK team, I would like to enquire about: ${name}`)}`;
-
-// "2.5 kg to 12.5 kg per batch (…)" -> "2.5–12.5 kg"
-const shortCapacity = (text = '') => {
-  const m = /([\d.,]+\+?)\s*kg\s*to\s*([\d.,]+\+?)\s*kg/i.exec(text);
-  return m ? `${m[1]}–${m[2]} kg` : (text || '—');
-};
-// "36 Nos. (SS304 …)" -> "36"; descriptive values stay as they are
-const shortTrays = (text = '') => (/^(\d+)\s*Nos?\b/i.exec(text)?.[1] || text || '—');
 
 function SectionTitle({ title }) {
   return (
@@ -29,8 +21,8 @@ function SectionTitle({ title }) {
 }
 
 // Shared page for every catalogue product without a page of its own (productCatalog.js, page: 'catalog'):
-// Tunnel Solar Dryers, Parabolic Trough Collector, Scheffler Dish, Solar Water Heater, PV Laboratory,
-// its three test setups and the Wood Log Splitter.
+// Parabolic Trough Collector, Scheffler Dish, Solar Water Heater, PV Laboratory, its three test setups
+// and the Wood Log Splitter.
 export default function CatalogPage({ onOpenQuoteModal }) {
   const { pathname } = useLocation();
   const { t } = useLanguage();
@@ -43,7 +35,6 @@ export default function CatalogPage({ onOpenQuoteModal }) {
   if (!node) return <NotFoundPage />;
 
   const quote = () => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: title });
-  const models = (node.children || []).filter(c => c.modelId).map(c => ({ node: c, model: findDryerModel(c.modelId) })).filter(m => m.model);
   const siblings = parent ? parent.children.filter(c => c.id !== node.id) : [];
 
   return (
@@ -85,40 +76,12 @@ export default function CatalogPage({ onOpenQuoteModal }) {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionTitle title={t('cat_inThis')} />
             <ProductGrid nodes={node.children} />
-
-            {/* Dryer models side by side */}
-            {models.length > 1 && (
-              <div className="mt-12">
-                <h3 className="text-2xl font-black text-[#123B92] text-center mb-6">{t('cat_compareTitle')}</h3>
-                <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
-                  <table className="w-full min-w-[560px] text-left text-sm">
-                    <thead>
-                      <tr className="bg-[#123B92] text-white text-xs uppercase tracking-wider">
-                        <th className="p-4 font-bold">{t('cat_colModel')}</th>
-                        <th className="p-4 font-bold">{t('cat_colFloor')}</th>
-                        <th className="p-4 font-bold">{t('cat_colCapacity')}</th>
-                        <th className="p-4 font-bold">{t('cat_colTrays')}</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                      {models.map(({ node: m, model }) => (
-                        <tr key={m.id} className="hover:bg-[#F0F4FD] transition-colors">
-                          <td className="p-4 font-bold">
-                            <Link to={m.path} className="text-[#002DC2] hover:underline whitespace-nowrap">{m.code || t(m.titleKey)}</Link>
-                          </td>
-                          <td className="p-4 text-slate-700">{model.floorArea}</td>
-                          <td className="p-4 text-slate-700 whitespace-nowrap">{shortCapacity(model.capacityRange)}</td>
-                          <td className="p-4 text-slate-700">{shortTrays(model.trayCount)}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
           </div>
         </section>
       )}
+
+      {/* All photos of the product, and its videos */}
+      <ProductMediaSection node={node} />
 
       {/* Other products in the same family */}
       {siblings.length > 0 && (

@@ -61,7 +61,7 @@ function SidebarContent({ roleTitle, RoleIcon, nav, username, onLogout, homeTo, 
     <div className="flex flex-col h-full">
       <div className="px-5 pt-5 pb-4 border-b border-slate-100">
         <Link to={homeTo} onClick={onNavigate} className="block">
-          <img src="/logo.webp" alt="ZeniTEK" className="h-9 w-auto object-contain" />
+          <img src="/images/brand/logo.webp" alt="ZeniTEK" className="h-9 w-auto object-contain" />
         </Link>
         <p className="mt-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-[#123B92]">
           <RoleIcon className="w-4 h-4" /> {roleTitle}
@@ -125,7 +125,7 @@ export default function AdminLayout({
             <Menu className="w-6 h-6" />
           </button>
           <Link to={homeTo} className="flex items-center gap-2 min-w-0">
-            <img src="/logo.webp" alt="ZeniTEK" className="h-7 w-auto object-contain shrink-0" />
+            <img src="/images/brand/logo.webp" alt="ZeniTEK" className="h-7 w-auto object-contain shrink-0" />
             <span className="text-sm font-bold text-[#123B92] truncate">{roleTitle}</span>
           </Link>
         </div>
@@ -221,7 +221,7 @@ export function AdminLoginCard({ roleTitle, subtitle, Icon, onLogin, notice }) {
       <div className="w-full max-w-sm">
         <div className={`${adminCard} p-6 sm:p-8 space-y-6`}>
           <div className="text-center space-y-3">
-            <img src="/logo.webp" alt="ZeniTEK" className="h-10 mx-auto object-contain" />
+            <img src="/images/brand/logo.webp" alt="ZeniTEK" className="h-10 mx-auto object-contain" />
             <div className="space-y-1">
               <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-[#002DC2]">
                 <Icon className="w-4 h-4" /> {roleTitle}

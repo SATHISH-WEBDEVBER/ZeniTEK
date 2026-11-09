@@ -16,8 +16,8 @@ import { CATALOG, nodeTitle } from '../data/productCatalog';
 const RND = CATALOG.find(n => n.id === 'research-and-development');
 const PV_LAB = RND.children.find(n => n.id === 'pv-laboratory');
 
-const PHOTO = (n) => `/real-photos/zenitek_photo_${String(n).padStart(2, '0')}.webp`;
-const HUB_PHOTO = '/projects/project-24.webp';
+const PHOTO = (n) => `/images/gallery/photo-${String(n).padStart(2, '0')}.webp`;
+const HUB_PHOTO = '/images/projects/project-24.webp';
 const WHATSAPP = `https://wa.me/918098613422?text=${encodeURIComponent('Hello ZeniTEK team, I would like to discuss a research & development collaboration.')}`;
 
 // What the R&D team builds. Titles from the About page R&D card, descriptions from src/i18n/products.js.
@@ -46,12 +46,12 @@ const PROTOTYPES = [
 
 // Academic partners (names and logos as on the About page; notes are about_a<N>Branch / Tag)
 const PARTNERS = [
-  { name: 'IIT Bhubaneswar', logo: '/client-logos/iit-bhubaneswar.webp' },
-  { name: 'Anna University Chennai', logo: '/client-logos/anna-university.webp' },
-  { name: 'SRM University', logo: '/client-logos/srm-ist.webp' },
-  { name: 'Sree Sankara College', logo: '/client-logos/sree-sankara-college.webp' },
-  { name: 'Gandhigram University', logo: '/client-logos/gandhigram-rural-institute.webp' },
-  { name: 'College of Fisheries', logo: '/client-logos/tnjfu-fisheries.webp' },
+  { name: 'IIT Bhubaneswar', logo: '/images/clients/iit-bhubaneswar.webp' },
+  { name: 'Anna University Chennai', logo: '/images/clients/anna-university.webp' },
+  { name: 'SRM University', logo: '/images/clients/srm-ist.webp' },
+  { name: 'Sree Sankara College', logo: '/images/clients/sree-sankara-college.webp' },
+  { name: 'Gandhigram University', logo: '/images/clients/gandhigram-rural-institute.webp' },
+  { name: 'College of Fisheries', logo: '/images/clients/tnjfu-fisheries.webp' },
 ];
 
 function SectionTitle({ title, subtitle }) {
@@ -185,7 +185,7 @@ export default function ResearchPage({ onOpenQuoteModal }) {
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('prod_rdPvTitle')}</h2>
             <p className="text-base sm:text-lg text-slate-700 leading-relaxed"><BoldText text={t('prod_rdPvBody')} /></p>
             <div className="inline-flex items-center gap-3 p-3 pr-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
-              <img src="/client-logos/mitsui-chemicals.webp" alt="Mitsui Chemicals" className="w-14 h-14 object-contain" />
+              <img src="/images/clients/mitsui-chemicals.webp" alt="Mitsui Chemicals" className="w-14 h-14 object-contain" />
               <div className="text-sm">
                 <div className="font-bold text-slate-900">Mitsui Chemicals Group</div>
                 <div className="text-slate-500">{t('about_i1Detail')}</div>
@@ -240,7 +240,7 @@ export default function ResearchPage({ onOpenQuoteModal }) {
             ))}
           </div>
           <div className="mt-6 flex items-center justify-center gap-4 p-4 rounded-2xl bg-white border border-[#002DC2]/15 max-w-xl mx-auto">
-            <img src="/client-logos/nise.webp" alt="NISE — National Institute of Solar Energy" loading="lazy" className="w-16 h-16 object-contain shrink-0" />
+            <img src="/images/clients/nise.webp" alt="NISE — National Institute of Solar Energy" loading="lazy" className="w-16 h-16 object-contain shrink-0" />
             <div>
               <div className="font-bold text-[#123B92]">Pro-Target & NISE</div>
               <div className="text-sm text-slate-600">{t('about_i4Detail')}</div>

@@ -95,6 +95,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const productsRef = useRef(null);
   const galleryRef = useRef(null);
   const timeoutRef = useRef(null);
+  const headerRef = useRef(null);
   const location = useLocation();
   const { t, lang } = useLanguage();
 
@@ -231,7 +232,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const isContactActive = location.pathname === '/contact';
 
   return (
-    <header className="sticky top-0 z-40 relative bg-white/95 backdrop-blur-md shadow-sm w-full transition-colors duration-500 border-b border-slate-100">
+    <header ref={headerRef} className="sticky top-0 z-40 relative bg-white/95 backdrop-blur-md shadow-sm w-full transition-colors duration-500 border-b border-slate-100">
       
       {/* MAIN NAVBAR CONTAINER */}
       <div className={`w-full px-5 sm:px-8 ${density === 0 ? 'md:px-[60px]' : 'lg:px-6'}`}>
@@ -464,10 +465,12 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
         </div>
       </div>
 
-      {/* Dimmed backdrop overlay when dropdown is open */}
+      {/* Dimmed backdrop overlay when dropdown is open. It starts below the navbar (taller when its
+          menu wraps onto a second row), so it never covers the menu buttons and closes the menu. */}
       {(productsDropdownOpen || galleryDropdownOpen) && (
-        <div 
-          className="hidden lg:block fixed inset-0 top-[56px] sm:top-[64px] lg:top-[68px] bg-black/35 backdrop-blur-[1px] z-30 transition-opacity duration-300"
+        <div
+          style={{ top: headerRef.current?.offsetHeight ?? 68 }}
+          className="hidden lg:block fixed inset-x-0 bottom-0 bg-black/35 backdrop-blur-[1px] z-30 transition-opacity duration-300"
           onClick={() => {
             setProductsDropdownOpen(false);
             setGalleryDropdownOpen(false);

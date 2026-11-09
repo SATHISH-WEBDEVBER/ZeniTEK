@@ -14,10 +14,9 @@ import { useLanguage } from '../context/LanguageContext';
 import MapComponent from '../components/MapComponent';
 import PageHero from '../components/PageHero';
 import { ProductGrid } from '../components/ProductCards';
-import { CATALOG } from '../data/productCatalog';
-
-// 6, 12 and 50 sq.ft box dryers + Tunnel Solar Dryers (which lists its five models)
-const DRYER_PRODUCTS = CATALOG.find(n => n.id === 'solar-dryer').children;
+import { VideoGrid } from '../components/MediaGallery';
+import { DRYER_GROUPS, dryerModels } from '../data/productCatalog';
+import { PRODUCT_VIDEOS } from '../data/productMedia';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import {
   MapPin, Calendar, Search, Filter, Sparkles, ArrowRight, ShieldCheck, CheckCircle2, X, PhoneCall, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, SlidersHorizontal, Eye, LayoutGrid, Sun, Wind, Droplets, Cpu, Shield, Zap, Maximize2, Download, Layers, Grid, FileText, Camera, Image as ImageIcon, ChevronDown, ChevronUp, Loader, Package, Ruler, BookOpen, Timer, Images, Factory, Map as MapIcon, MessageSquareQuote
@@ -158,7 +157,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
       
       {/* SECTION 1: HERO HEADER (background photo, left-aligned heading) */}
       <PageHero
-        images="/real-photos/zenitek_photo_44.webp"
+        images="/images/gallery/photo-44.webp"
         title={<>{t('dryers_heroTitle1')} <span className="text-[#002DC2]">{t('dryers_heroTitle2')}</span></>}
         subtitle={t('hero_dryersSub')}
         actions={[
@@ -295,8 +294,8 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         </section>
       )}
 
-      {/* SECTION 2: OUR SOLAR DRYERS - 6, 12 and 50 sq.ft box dryers and the tunnel dryers (5 models),
-          each card opening that product's own page (product list in src/data/productCatalog.js) */}
+      {/* SECTION 2: OUR SOLAR DRYERS - first row: the 6, 12 and 50 sq.ft box dryers; next rows: the five
+          tunnel dryer models. Each card opens that model's own page (src/data/productCatalog.js) */}
       <section className="w-full section-even py-14 sm:py-20" id="models-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
@@ -307,7 +306,28 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
               {t('dryers_modelsSubtitle')}
             </p>
           </div>
-          <ProductGrid nodes={DRYER_PRODUCTS} />
+          <div className="space-y-10">
+            {DRYER_GROUPS.map(group => (
+              <div key={group.id} className="space-y-5">
+                <h3 className="flex items-center gap-3 text-xl sm:text-2xl font-black text-[#123B92]">
+                  <span className="w-1.5 h-7 rounded-full bg-[#23AC39]" aria-hidden="true" />
+                  {t(group.titleKey)}
+                </h3>
+                <ProductGrid nodes={dryerModels(group.id)} />
+              </div>
+            ))}
+          </div>
+
+          {/* Videos of the dryers at work (src/data/productMedia.js) */}
+          {PRODUCT_VIDEOS.length > 0 && (
+            <div className="mt-14 space-y-6" id="videos-section">
+              <div className="text-center max-w-3xl mx-auto space-y-2">
+                <h3 className="text-2xl sm:text-3xl font-black text-[#123B92] tracking-tight">{t('media_watchTitle')}</h3>
+                <p className="text-base text-slate-600">{t('media_videosSub')}</p>
+              </div>
+              <VideoGrid videos={PRODUCT_VIDEOS} />
+            </div>
+          )}
         </div>
       </section>
 

@@ -62,7 +62,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
 
       {/* Hero Header — full-bleed photo with left-aligned heading (matches Home hero) */}
       <PageHero
-        images="/real-photos/zenitek_photo_04.webp"
+        images="/images/gallery/photo-04.webp"
         title={<>{t('contactTitle1')} <span className="text-[#002DC2]">{t('contactTitle2')}</span></>}
         subtitle={t('contactSubtitle')}
         actions={[

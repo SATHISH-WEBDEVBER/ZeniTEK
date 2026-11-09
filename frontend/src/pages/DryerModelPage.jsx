@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { CheckCircle2, ShieldCheck, ArrowRight, Sun, Zap, Layers, Wind, Grid, Check, Ruler, MessageSquareQuote, LayoutGrid } from 'lucide-react';
 import { officialDryerModels } from '../data/zenitekBrochureData';
@@ -8,6 +8,7 @@ import NotFoundPage from './NotFoundPage';
 import { buildQuoteUrl } from './QuotePage';
 import { useLanguage } from '../context/LanguageContext';
 import { ProductGrid } from '../components/ProductCards';
+import { MediaViewer, ProductMediaSection, photoItems } from '../components/MediaGallery';
 import { findNodeByModelId, productImage, isPlaceholder, nodeTitle } from '../data/productCatalog';
 
 // "2.5 kg to 12.5 kg per batch (…)" -> "2.5–12.5 kg" for the hero fact
@@ -42,17 +43,23 @@ export default function DryerModelPage() {
   const name = entry ? nodeTitle(entry.node, t) : model?.name;
   usePageTitle(name);
   const [selectedImg, setSelectedImg] = useState(0);
+  const [viewerIndex, setViewerIndex] = useState(null);
+  // a different model page keeps this component mounted: start again from its first photo
+  useEffect(() => { setSelectedImg(0); setViewerIndex(null); }, [modelId]);
 
   if (!model) {
     return <NotFoundPage title={t('sections_modelNotFound')} description={t('sections_modelNotFoundDesc')} />;
   }
 
   const productPhoto = entry ? productImage(entry.node) : (model.realProductPhoto || model.imageUrl);
-  const images = [productPhoto];
+  // the model's photos (src/data/productMedia.js); a model without photos shows its single image
+  const photos = entry ? photoItems(entry.node, t) : [];
+  const images = photos.length ? photos.map(p => p.src) : [productPhoto];
+  const thumbs = photos.length ? photos.map(p => p.thumb) : images;
   const quoteUrl = buildQuoteUrl({ capacityNeeded: name });
-  // other models in the same family (tunnel models list each other; box dryers list each other)
+  // the Solar Dryer Models family, and the other models of the same kind (box dryers / tunnel dryers)
   const family = entry?.parent;
-  const siblings = family ? family.children.filter(c => c.id !== entry.node.id) : [];
+  const siblings = family ? family.children.filter(c => c.id !== entry.node.id && c.group === entry.node.group) : [];
 
   const specs = [
     { icon: Grid, label: t('sections_specFloorTray'), main: t('sections_floor', { value: model.floorArea || t('sections_defCustom') }), sub: t('sections_trayArea', { value: model.totalTrayArea || model.trays || t('sections_defFoodTrays') }) },
@@ -84,9 +91,20 @@ export default function DryerModelPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <div className="space-y-3">
-              <div className="rounded-2xl overflow-hidden border border-[#123B92]/20 shadow-md bg-[#F0F4FD] aspect-[4/3]">
-                <img src={images[selectedImg] || productPhoto} alt={isPlaceholder(images[selectedImg]) ? '' : name} className="w-full h-full object-cover" />
-              </div>
+              {photos.length ? (
+                <button
+                  type="button"
+                  onClick={() => setViewerIndex(selectedImg)}
+                  aria-label={t('media_open', { n: selectedImg + 1 })}
+                  className="block w-full rounded-2xl overflow-hidden border border-[#123B92]/20 shadow-md bg-[#F0F4FD] aspect-[4/3] cursor-zoom-in"
+                >
+                  <img src={images[selectedImg] || productPhoto} alt={name} className="w-full h-full object-cover" />
+                </button>
+              ) : (
+                <div className="rounded-2xl overflow-hidden border border-[#123B92]/20 shadow-md bg-[#F0F4FD] aspect-[4/3]">
+                  <img src={images[selectedImg] || productPhoto} alt={isPlaceholder(images[selectedImg]) ? '' : name} className="w-full h-full object-cover" />
+                </div>
+              )}
               {images.length > 1 && (
                 <div className="flex flex-wrap gap-2">
                   {images.map((img, idx) => (
@@ -97,11 +115,12 @@ export default function DryerModelPage() {
                       aria-label={t('sections_showImage', { n: idx + 1 })}
                       className={`w-20 h-16 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${selectedImg === idx ? 'border-[#002DC2] ring-2 ring-[#23AC39]' : 'border-[#123B92]/20 opacity-70 hover:opacity-100'}`}
                     >
-                      <img src={img} alt="" className="w-full h-full object-cover" />
+                      <img src={thumbs[idx]} alt="" loading="lazy" className="w-full h-full object-cover" />
                     </button>
                   ))}
                 </div>
               )}
+              <MediaViewer items={photos.map(p => ({ ...p, link: null }))} index={viewerIndex} onIndex={(i) => { setViewerIndex(i); setSelectedImg(i); }} onClose={() => setViewerIndex(null)} />
             </div>
 
             <div className="space-y-5">
@@ -201,11 +220,14 @@ export default function DryerModelPage() {
         </section>
       )}
 
+      {/* Videos of this model */}
+      {entry && <ProductMediaSection node={entry.node} photos={false} />}
+
       {siblings.length > 0 && (
         <section className="w-full py-10 sm:py-14 bg-slate-50 border-t border-slate-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div className="text-center max-w-3xl mx-auto">
-              <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('cat_moreIn', { name: nodeTitle(family, t) })}</h2>
+              <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('cat_moreIn', { name: t(entry.node.group === 'tunnel' ? 'cat_tunnel' : 'cat_boxGroup') })}</h2>
             </div>
             <ProductGrid nodes={siblings} />
           </div>

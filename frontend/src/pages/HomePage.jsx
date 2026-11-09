@@ -15,17 +15,17 @@ import PageHero from '../components/PageHero';
 // the hero text) and the dryer on the right, so on desktop they fill the hero as they are (focus 1).
 // Phones and tablets show them as a banner above the text.
 const heroSlides = [
-  { image: '/home-hero/slide-1.webp', alt: 'ZeniTEK solar tunnel dryer with roof-mounted solar panel on a concrete platform' },
-  { image: '/home-hero/slide-2.webp', alt: 'Long ZeniTEK polyhouse tunnel dryer on a brick plinth in an open field' },
-  { image: '/home-hero/slide-3.webp', alt: 'Large ZeniTEK solar tunnel dryer with exhaust vents beside a coconut grove' },
-  { image: '/home-hero/slide-4.webp', alt: 'ZeniTEK solar tunnel dryer with control panel and solar panel near palm trees' },
-  { image: '/home-hero/slide-5.webp', alt: 'ZeniTEK solar dryer with front doors and steps on a raised concrete base' },
+  { image: '/images/home-hero/slide-1.webp', alt: 'ZeniTEK solar tunnel dryer with roof-mounted solar panel on a concrete platform' },
+  { image: '/images/home-hero/slide-2.webp', alt: 'Long ZeniTEK polyhouse tunnel dryer on a brick plinth in an open field' },
+  { image: '/images/home-hero/slide-3.webp', alt: 'Large ZeniTEK solar tunnel dryer with exhaust vents beside a coconut grove' },
+  { image: '/images/home-hero/slide-4.webp', alt: 'ZeniTEK solar tunnel dryer with control panel and solar panel near palm trees' },
+  { image: '/images/home-hero/slide-5.webp', alt: 'ZeniTEK solar dryer with front doors and steps on a raised concrete base' },
 ];
 
 const crops = [
-  { titleKey: 'cropSpices', descKey: 'homeSpicesDesc', image: '/real-photos/zenitek_photo_23.webp', alt: 'Red chillies drying on trays inside a ZeniTEK tunnel dryer' },
-  { titleKey: 'homeHerbsTitle', descKey: 'homeHerbsDesc', image: '/real-photos/zenitek_photo_35.webp', alt: 'Butterfly-pea flowers on trays of a ZeniTEK cabinet dryer' },
-  { titleKey: 'cropFish', descKey: 'homeFishDesc', image: '/real-photos/zenitek_photo_27.webp', alt: 'Dried shrimp on trays of a ZeniTEK cabinet dryer' },
+  { titleKey: 'cropSpices', descKey: 'homeSpicesDesc', image: '/images/gallery/photo-23.webp', alt: 'Red chillies drying on trays inside a ZeniTEK tunnel dryer' },
+  { titleKey: 'homeHerbsTitle', descKey: 'homeHerbsDesc', image: '/images/gallery/photo-35.webp', alt: 'Butterfly-pea flowers on trays of a ZeniTEK cabinet dryer' },
+  { titleKey: 'cropFish', descKey: 'homeFishDesc', image: '/images/gallery/photo-27.webp', alt: 'Dried shrimp on trays of a ZeniTEK cabinet dryer' },
 ];
 
 const pillars = [
@@ -36,14 +36,14 @@ const pillars = [
 ];
 
 const clientPartners = [
-  { name: 'IIT Bhubaneswar', logo: '/client-logos/iit-bhubaneswar.webp' },
-  { name: 'Anna University', logo: '/client-logos/anna-university.webp' },
-  { name: 'SRM University', logo: '/client-logos/srm-ist.webp' },
-  { name: 'Mitsui Chemicals', logo: '/client-logos/mitsui-chemicals.webp' },
-  { name: 'Indo-MIM', logo: '/client-logos/indo-mim.webp' },
-  { name: 'SELCO Foundation', logo: '/client-logos/selco-foundation.webp' },
-  { name: 'TNJFU Fisheries Univ', logo: '/client-logos/tnjfu-fisheries.webp' },
-  { name: 'Gandhigram Rural Inst.', logo: '/client-logos/gandhigram-rural-institute.webp' },
+  { name: 'IIT Bhubaneswar', logo: '/images/clients/iit-bhubaneswar.webp' },
+  { name: 'Anna University', logo: '/images/clients/anna-university.webp' },
+  { name: 'SRM University', logo: '/images/clients/srm-ist.webp' },
+  { name: 'Mitsui Chemicals', logo: '/images/clients/mitsui-chemicals.webp' },
+  { name: 'Indo-MIM', logo: '/images/clients/indo-mim.webp' },
+  { name: 'SELCO Foundation', logo: '/images/clients/selco-foundation.webp' },
+  { name: 'TNJFU Fisheries Univ', logo: '/images/clients/tnjfu-fisheries.webp' },
+  { name: 'Gandhigram Rural Inst.', logo: '/images/clients/gandhigram-rural-institute.webp' },
 ];
 
 const inputClass = 'w-full bg-[#F0F4FD] border border-[#123B92]/30 text-black rounded-xl px-4 py-3 text-base placeholder-black/50 font-medium focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2]';
@@ -213,13 +213,13 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
 
             <div className="grid grid-cols-2 gap-4">
               <img
-                src="/real-photos/zenitek_photo_02.webp"
+                src="/images/gallery/photo-02.webp"
                 alt="Farmers spreading chillies on racks inside a ZeniTEK tunnel dryer"
                 loading="lazy"
                 className="w-full h-64 sm:h-80 object-cover rounded-2xl shadow-md"
               />
               <img
-                src="/real-photos/zenitek_photo_19.webp"
+                src="/images/gallery/photo-19.webp"
                 alt="ZeniTEK solar tunnel dryer among palm trees"
                 loading="lazy"
                 className="w-full h-64 sm:h-80 object-cover rounded-2xl shadow-md mt-8"

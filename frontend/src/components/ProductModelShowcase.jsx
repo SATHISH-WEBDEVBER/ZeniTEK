@@ -12,12 +12,12 @@ export const teslaDryerProducts = [
     leaseInfo: "Govt Subsidy Assistance 40% – 60%",
     quoteCategory: "100 to 500 kg (Commercial)",
     images: [
-      "/real-photos/zenitek_photo_04.webp",
-      "/real-photos/zenitek_photo_12.webp",
-      "/real-photos/zenitek_photo_34.webp",
-      "/real-photos/zenitek_photo_10.webp",
-      "/real-photos/zenitek_photo_02.webp",
-      "/real-photos/zenitek_photo_38.webp"
+      "/images/gallery/photo-04.webp",
+      "/images/gallery/photo-12.webp",
+      "/images/gallery/photo-34.webp",
+      "/images/gallery/photo-10.webp",
+      "/images/gallery/photo-02.webp",
+      "/images/gallery/photo-38.webp"
     ]
   },
   {
@@ -29,12 +29,12 @@ export const teslaDryerProducts = [
     leaseInfo: "Govt Subsidy Assistance 50%",
     quoteCategory: "100 to 500 kg (Commercial)",
     images: [
-      "/real-photos/zenitek_photo_43.webp",
-      "/real-photos/zenitek_photo_44.webp",
-      "/real-photos/zenitek_photo_19.webp",
-      "/real-photos/zenitek_photo_20.webp",
-      "/real-photos/zenitek_photo_23.webp",
-      "/real-photos/zenitek_photo_33.webp"
+      "/images/gallery/photo-43.webp",
+      "/images/gallery/photo-44.webp",
+      "/images/gallery/photo-19.webp",
+      "/images/gallery/photo-20.webp",
+      "/images/gallery/photo-23.webp",
+      "/images/gallery/photo-33.webp"
     ]
   },
   {
@@ -46,13 +46,13 @@ export const teslaDryerProducts = [
     leaseInfo: "Govt Subsidy Assistance 40% – 50%",
     quoteCategory: "100 to 500 kg (Commercial)",
     images: [
-      "/real-photos/zenitek_photo_27.webp",
-      "/real-photos/zenitek_photo_01.webp",
-      "/real-photos/zenitek_photo_26.webp",
-      "/real-photos/zenitek_photo_31.webp",
-      "/real-photos/zenitek_photo_35.webp",
-      "/real-photos/zenitek_photo_36.webp",
-      "/real-photos/zenitek_photo_28.webp"
+      "/images/gallery/photo-27.webp",
+      "/images/gallery/photo-01.webp",
+      "/images/gallery/photo-26.webp",
+      "/images/gallery/photo-31.webp",
+      "/images/gallery/photo-35.webp",
+      "/images/gallery/photo-36.webp",
+      "/images/gallery/photo-28.webp"
     ]
   },
   {
@@ -64,12 +64,12 @@ export const teslaDryerProducts = [
     leaseInfo: "Govt Subsidy Assistance 50% – 60%",
     quoteCategory: "1 Ton+ (Industrial)",
     images: [
-      "/real-photos/zenitek_photo_45.webp",
-      "/real-photos/zenitek_photo_39.webp",
-      "/real-photos/zenitek_photo_42.webp",
-      "/real-photos/zenitek_photo_32.webp",
-      "/real-photos/zenitek_photo_40.webp",
-      "/real-photos/zenitek_photo_41.webp"
+      "/images/gallery/photo-45.webp",
+      "/images/gallery/photo-39.webp",
+      "/images/gallery/photo-42.webp",
+      "/images/gallery/photo-32.webp",
+      "/images/gallery/photo-40.webp",
+      "/images/gallery/photo-41.webp"
     ]
   },
   {
@@ -81,12 +81,12 @@ export const teslaDryerProducts = [
     leaseInfo: "Micro-Enterprise Grant Eligible",
     quoteCategory: "Under 50 kg (Portable)",
     images: [
-      "/real-photos/zenitek_photo_25.webp",
-      "/real-photos/zenitek_photo_09.webp",
-      "/real-photos/zenitek_photo_13.webp",
-      "/real-photos/zenitek_photo_15.webp",
-      "/real-photos/zenitek_photo_16.webp",
-      "/real-photos/zenitek_photo_14.webp"
+      "/images/gallery/photo-25.webp",
+      "/images/gallery/photo-09.webp",
+      "/images/gallery/photo-13.webp",
+      "/images/gallery/photo-15.webp",
+      "/images/gallery/photo-16.webp",
+      "/images/gallery/photo-14.webp"
     ]
   },
   {
@@ -98,12 +98,12 @@ export const teslaDryerProducts = [
     leaseInfo: "Home & Kitchen Enterprise",
     quoteCategory: "Under 50 kg (Portable)",
     images: [
-      "/real-photos/zenitek_photo_22.webp",
-      "/real-photos/zenitek_photo_05.webp",
-      "/real-photos/zenitek_photo_06.webp",
-      "/real-photos/zenitek_photo_37.webp",
-      "/real-photos/zenitek_photo_29.webp",
-      "/real-photos/zenitek_photo_30.webp"
+      "/images/gallery/photo-22.webp",
+      "/images/gallery/photo-05.webp",
+      "/images/gallery/photo-06.webp",
+      "/images/gallery/photo-37.webp",
+      "/images/gallery/photo-29.webp",
+      "/images/gallery/photo-30.webp"
     ]
   }
 ];

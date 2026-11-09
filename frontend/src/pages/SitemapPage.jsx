@@ -22,7 +22,7 @@ export default function SitemapPage() {
   return (
     <div className="text-black min-h-screen bg-white">
       <PageHero
-        images="/real-photos/zenitek_photo_10.webp"
+        images="/images/gallery/photo-10.webp"
         title={t('site_sitemapTitle')}
         subtitle={t('site_sitemapSubtitle')}
         actions={[

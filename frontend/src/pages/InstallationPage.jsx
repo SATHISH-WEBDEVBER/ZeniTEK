@@ -8,6 +8,7 @@ import NotFoundPage from './NotFoundPage';
 import { buildQuoteUrl } from './QuotePage';
 import { useLanguage } from '../context/LanguageContext';
 import { API_BASE } from '../utils/api';
+import { withCurrentAssetPaths } from '../utils/assetUrl';
 
 // "250 kg Batch Setup" -> "250 kg" for the hero fact
 const shortKg = (text = '') => {
@@ -34,7 +35,7 @@ export default function InstallationPage() {
     setLoading(true);
     fetch(`${API_BASE}/projects/${encodeURIComponent(id)}`)
       .then(r => (r.ok ? r.json() : null))
-      .then(data => { if (!cancelled) setProject(data?.project || data?.data || null); })
+      .then(data => { if (!cancelled) setProject(withCurrentAssetPaths(data?.project || data?.data || null)); })
       .catch(() => { if (!cancelled) setProject(null); })
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
@@ -50,7 +51,7 @@ export default function InstallationPage() {
     return <NotFoundPage title={t('gallery_instNotFound')} description={t('gallery_instNotFoundDesc')} />;
   }
 
-  const photos = project.photos && project.photos.length > 0 ? project.photos : [project.imageUrl || '/real-photos/zenitek_photo_12.webp'];
+  const photos = project.photos && project.photos.length > 0 ? project.photos : [project.imageUrl || '/images/gallery/photo-12.webp'];
   const stats = project.dryingStats || null;
   const quoteUrl = buildQuoteUrl({ cropType: project.cropDrying, capacityNeeded: project.capacity, district: project.locationName });
   const heroStats = [

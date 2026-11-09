@@ -41,7 +41,7 @@ export default function Footer({ onOpenQuoteModal }) {
           <div className="lg:col-span-3 space-y-4">
             <div className="flex items-center">
               <img
-                src="/logo.webp"
+                src="/images/brand/logo.webp"
                 alt="ZeniTEK - Towards Sustainable Future"
                 className="h-12 sm:h-14 w-auto object-contain"
               />

@@ -43,7 +43,7 @@ export default function QuotePage() {
   return (
     <div className="bg-white">
       <PageHero
-        images="/real-photos/zenitek_photo_17.webp"
+        images="/images/gallery/photo-17.webp"
         title={t('sections_quoteTitle')}
         subtitle={t('quickFormDesc')}
         actions={[

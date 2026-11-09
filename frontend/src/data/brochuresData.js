@@ -3,7 +3,7 @@
 export const brochures = [
   {
     id: 'solar-dryer',
-    cover: '/real-photos/zenitek_photo_34.webp',
+    cover: '/images/gallery/photo-34.webp',
     coverAlt: 'ZeniTEK commercial polycarbonate tunnel solar dryer with solar panel in green fields',
     title: 'Solar Dryer Technical Brochure',
     subtitle: 'Commercial Polyhouse (10 Pages)',
@@ -17,7 +17,7 @@ export const brochures = [
   },
   {
     id: 'household-box',
-    cover: '/real-photos/zenitek_photo_16.webp',
+    cover: '/images/gallery/photo-16.webp',
     coverAlt: 'ZeniTEK household box solar dryer on a stand with solar panel',
     title: 'Household Solar Box Dryer',
     subtitle: 'Sundry Mini (Kitchen & Balcony)',
@@ -31,7 +31,7 @@ export const brochures = [
   },
   {
     id: 'entrepreneur-box',
-    cover: '/real-photos/zenitek_photo_35.webp',
+    cover: '/images/gallery/photo-35.webp',
     coverAlt: 'ZeniTEK entrepreneur box solar dryer with door open showing loaded SS304 trays',
     title: 'Entrepreneur Box Dryer',
     subtitle: 'Commercial 4 & 8-Tray SS304 Model',

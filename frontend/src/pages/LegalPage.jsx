@@ -10,7 +10,7 @@ export default function LegalPage({ type }) {
 
   const hero = isPrivacy
     ? {
-        images: '/real-photos/zenitek_photo_20.webp',
+        images: '/images/gallery/photo-20.webp',
         title: t('footerPrivacy'),
         subtitle: t('hero_privacySub'),
         actions: [
@@ -24,7 +24,7 @@ export default function LegalPage({ type }) {
         ],
       }
     : {
-        images: '/real-photos/zenitek_photo_38.webp',
+        images: '/images/gallery/photo-38.webp',
         title: t('footerTerms'),
         subtitle: t('hero_termsSub'),
         actions: [

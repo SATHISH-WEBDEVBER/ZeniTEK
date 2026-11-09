@@ -10,8 +10,9 @@ import products from './products';
 import subsidies from './subsidies';
 import hero from './hero';
 import catalog from './catalog';
+import media from './media';
 
-const modules = [about, dryers, gallery, sections, common, navbar, site, products, subsidies, hero, catalog];
+const modules = [about, dryers, gallery, sections, common, navbar, site, products, subsidies, hero, catalog, media];
 
 export const LANGS = ['en', 'ta', 'hi', 'ml', 'te', 'kn'];
 

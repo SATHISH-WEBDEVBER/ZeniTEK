@@ -32,7 +32,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
       
       {/* SECTION 1: HERO (the impact figures live here) */}
       <PageHero
-        images="/real-photos/zenitek_photo_02.webp"
+        images="/images/gallery/photo-02.webp"
         title={<>{t('storiesTitle1')} <span className="text-[#002DC2]">{t('storiesTitle2')}</span></>}
         subtitle={t('storiesSubtitle')}
         actions={[
@@ -92,7 +92,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
 
           <div className="bg-[#F0F4FD] p-6 sm:p-8 rounded-3xl border border-[#123B92]/20 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-4">
-              <img src="/real-photos/zenitek_photo_02.webp" alt={t('gallery_caseStudyAlt')} className="w-full h-56 object-cover rounded-2xl border border-[#123B92]/20" />
+              <img src="/images/gallery/photo-02.webp" alt={t('gallery_caseStudyAlt')} className="w-full h-56 object-cover rounded-2xl border border-[#123B92]/20" />
             </div>
             <div className="lg:col-span-8 space-y-3">
               <span className="text-2xs font-bold text-[#123B92] bg-white border border-[#123B92]/20 px-2.5 py-0.5 rounded uppercase inline-block">

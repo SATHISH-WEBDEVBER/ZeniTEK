@@ -15,7 +15,7 @@ export default function AdminLoginChooser() {
     <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-3xl space-y-8">
         <div className="text-center space-y-3">
-          <img src="/logo.webp" alt="ZeniTEK" className="h-10 mx-auto object-contain" />
+          <img src="/images/brand/logo.webp" alt="ZeniTEK" className="h-10 mx-auto object-contain" />
           <div>
             <h1 className="text-2xl font-black text-[#123B92]">Admin sign in</h1>
             <p className="text-sm text-slate-500">Choose where you want to sign in.</p>

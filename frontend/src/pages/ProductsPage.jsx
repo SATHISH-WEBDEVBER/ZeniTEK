@@ -6,7 +6,7 @@ import PageHero from '../components/PageHero';
 import IconTile from '../components/IconTile';
 import { ProductImage } from '../components/ProductCards';
 import { PRODUCTS } from '../data/siteMap';
-import { nodeTitle } from '../data/productCatalog';
+import { nodeTitle, nodeShortTitle, DRYER_GROUPS, dryerModels } from '../data/productCatalog';
 
 // Products overview: the four product areas, each listing everything inside it (sub-products and
 // models link to their own pages), so the whole range is visible on one page.
@@ -16,7 +16,7 @@ export default function ProductsPage() {
   return (
     <div className="text-black min-h-screen bg-white">
       <PageHero
-        images="/real-photos/zenitek_photo_18.webp"
+        images="/images/gallery/photo-18.webp"
         title={<>{t('site_productsTitle1')} <span className="text-[#002DC2]">{t('site_productsTitle2')}</span></>}
         subtitle={t('cat_hubSubtitle')}
         actions={[
@@ -55,6 +55,26 @@ export default function ProductsPage() {
                     // Everything inside this product area, each with its own page
                     <div className="flex-1 pt-1">
                       <div className="text-xs font-bold uppercase tracking-wider text-[#1A822B] mb-2">{t('cat_inside')}</div>
+                      {product.id === 'solar-dryer' ? (
+                        // Solar dryer models: the box dryers by size, then the tunnel dryers by model code
+                        <ul className="divide-y divide-slate-100 border-y border-slate-100">
+                          {DRYER_GROUPS.map(group => (
+                            <li key={group.id} className="py-2">
+                              <span className="flex items-center gap-2 text-sm font-bold text-slate-800">
+                                <ChevronRight className="w-4 h-4 text-[#23AC39] shrink-0" />
+                                <span>{t(group.titleKey)}</span>
+                              </span>
+                              <div className="flex flex-wrap gap-1.5 mt-2 pl-6">
+                                {dryerModels(group.id).map(model => (
+                                  <Link key={model.id} to={model.path} className="px-2.5 py-1 rounded-md bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 hover:border-[#002DC2] hover:text-[#002DC2] transition-colors">
+                                    {nodeShortTitle(model, t)}
+                                  </Link>
+                                ))}
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
                       <ul className="divide-y divide-slate-100 border-y border-slate-100">
                         {product.children.map(child => (
                           <li key={child.id} className="py-2">
@@ -74,6 +94,7 @@ export default function ProductsPage() {
                           </li>
                         ))}
                       </ul>
+                      )}
                     </div>
                   ) : (
                     <ul className="space-y-2 flex-1 pt-1">

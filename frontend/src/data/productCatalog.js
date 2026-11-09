@@ -3,43 +3,24 @@
 // breadcrumbs and the Site Map, so a product only has to be added here once.
 //
 // Text: keys from src/i18n (cat_ keys are in src/i18n/catalog.js).
-// Model pages (6/12/50 sq.ft box dryers and the tunnel models) are the existing
+// Model pages (6/12/50 sq.ft box dryers and the five tunnel models) are the existing
 // /solar-dryer-models/:modelId pages; `modelId` links a node to its record in zenitekBrochureData.js.
 import {
   Sun, Box, Warehouse, ThermometerSun, SatelliteDish, ShowerHead, Microscope, FlaskConical,
   Spline, ScanSearch, Compass, Axe
 } from 'lucide-react';
+import { PRODUCT_PHOTOS, PRODUCT_VIDEOS } from './productMedia';
 
-// Temporary image used until a product's real photo is added.
-export const PLACEHOLDER_IMAGE = '/products/placeholder.svg';
+// Shown for a product that has no photo yet.
+export const PLACEHOLDER_IMAGE = '/images/products/placeholder.svg';
 
-// ONE IMAGE PER PRODUCT. To show a real photo, put the file in /public/products and replace
-// PLACEHOLDER_IMAGE on that product's line, e.g. 'dryer-6': '/products/dryer-6.webp'.
-export const PRODUCT_IMAGES = {
-  // Solar Dryer
-  'solar-dryer': '/real-photos/zenitek_photo_04.webp',
-  'dryer-6': PLACEHOLDER_IMAGE,
-  'dryer-12': PLACEHOLDER_IMAGE,
-  'dryer-50': PLACEHOLDER_IMAGE,
-  'tunnel-dryers': PLACEHOLDER_IMAGE,
-  'tunnel-d1210-150': PLACEHOLDER_IMAGE,
-  'tunnel-d1210-300': PLACEHOLDER_IMAGE,
-  'tunnel-h2008-250': PLACEHOLDER_IMAGE,
-  'tunnel-h2008-1000': PLACEHOLDER_IMAGE,
-  'tunnel-p1709-200': PLACEHOLDER_IMAGE,
-  // Solar Thermal
-  'solar-thermal': PLACEHOLDER_IMAGE,
-  'parabolic-trough': PLACEHOLDER_IMAGE,
-  'scheffler-dish': PLACEHOLDER_IMAGE,
-  // Solar Water Heater
-  'solar-water-heater': PLACEHOLDER_IMAGE,
-  // Research & Development
-  'research-and-development': '/projects/project-24.webp',
-  'pv-laboratory': PLACEHOLDER_IMAGE,
-  'pv-bending-test': PLACEHOLDER_IMAGE,
-  'pv-visual-inspection': PLACEHOLDER_IMAGE,
-  'shadow-dial': PLACEHOLDER_IMAGE,
-  'log-splitter': PLACEHOLDER_IMAGE,
+// A product's main image is the first of its photos in productMedia.js. These product areas use
+// a chosen photo instead (their own products' photos are shown on their pages).
+const COVER_IMAGES = {
+  'solar-dryer': '/images/gallery/photo-04.webp',
+  'solar-thermal': '/images/products/solar-thermal/parabolic-trough/parabolic-trough-01.webp',
+  'research-and-development': '/images/projects/project-24.webp',
+  'pv-laboratory': '/images/products/research-and-development/pv-visual-inspection/pv-visual-inspection-01.webp',
 };
 
 export const isPlaceholder = (src) => !src || src === PLACEHOLDER_IMAGE;
@@ -47,13 +28,24 @@ export const isPlaceholder = (src) => !src || src === PLACEHOLDER_IMAGE;
 // Node fields:
 //   id, path, icon, titleKey, shortKey (one line), descKey (card paragraph)
 //   code      : model code shown as the title (tunnel dryers), with titleKey as its type label
+//   size      : short name of a box dryer model in menus ("6 sq.ft")
+//   group     : 'box' | 'tunnel' - which row of the Solar Dryer Models list a dryer model is in
 //   modelId   : record in zenitekBrochureData.js (dryer model pages)
 //   bodyKey   : overview paragraph on the product's own page; points: three key facts
 //   children  : sub-products
 //   page      : 'catalog' = uses the shared product page (CatalogPage); otherwise an existing page
-const tunnel = (id, code, modelId, shortKey) => ({
-  id, code, modelId, shortKey, titleKey: 'cat_tunnelModel', icon: Warehouse, path: `/solar-dryer-models/${modelId}`
+const box = (id, size, modelId, titleKey) => ({
+  id, size, modelId, titleKey, shortKey: `${titleKey}Short`, group: 'box', icon: Box, path: `/solar-dryer-models/${modelId}`
 });
+const tunnel = (id, code, modelId, shortKey) => ({
+  id, code, modelId, shortKey, titleKey: 'cat_tunnelModel', group: 'tunnel', icon: Warehouse, path: `/solar-dryer-models/${modelId}`
+});
+
+// Groups of dryer models, in the order they are listed (menus, Solar Dryer Models page)
+export const DRYER_GROUPS = [
+  { id: 'box', titleKey: 'cat_boxGroup' },
+  { id: 'tunnel', titleKey: 'cat_tunnel' },
+];
 
 export const CATALOG = [
   {
@@ -61,21 +53,14 @@ export const CATALOG = [
     titleKey: 'prod_dryersTitle', shortKey: 'prod_dryersShort', descKey: 'prod_dryersDesc',
     points: ['prod_dryersPoint1', 'prod_dryersPoint2', 'prod_dryersPoint3'],
     children: [
-      { id: 'dryer-6', path: '/solar-dryer-models/sundry-6', modelId: 'sundry-6', icon: Box, titleKey: 'cat_dryer6', shortKey: 'cat_dryer6Short' },
-      { id: 'dryer-12', path: '/solar-dryer-models/sundry-12', modelId: 'sundry-12', icon: Box, titleKey: 'cat_dryer12', shortKey: 'cat_dryer12Short' },
-      { id: 'dryer-50', path: '/solar-dryer-models/sundry-50', modelId: 'sundry-50', icon: Box, titleKey: 'cat_dryer50', shortKey: 'cat_dryer50Short' },
-      {
-        id: 'tunnel-dryers', path: '/solar-dryer-models/tunnel-dryers', page: 'catalog', icon: Warehouse,
-        titleKey: 'cat_tunnel', shortKey: 'cat_tunnelShort', bodyKey: 'cat_tunnelBody',
-        points: ['cat_tunnelPoint1', 'cat_tunnelPoint2', 'cat_tunnelPoint3'],
-        children: [
-          tunnel('tunnel-d1210-150', 'D1210 – 150', 'soldry-1210-150', 'cat_d1210_150Short'),
-          tunnel('tunnel-d1210-300', 'D1210 – 300', 'soldry-1210-300', 'cat_d1210_300Short'),
-          tunnel('tunnel-h2008-250', 'H2008 – 250', 'soldry-2008-250', 'cat_h2008_250Short'),
-          tunnel('tunnel-h2008-1000', 'H2008 – 1000', 'soldry-modular-1000', 'cat_h2008_1000Short'),
-          tunnel('tunnel-p1709-200', 'P1709 – 200', 'soldry-1709-200', 'cat_p1709_200Short'),
-        ]
-      }
+      box('dryer-6', '6 sq.ft', 'sundry-6', 'cat_dryer6'),
+      box('dryer-12', '12 sq.ft', 'sundry-12', 'cat_dryer12'),
+      box('dryer-50', '50 sq.ft', 'sundry-50', 'cat_dryer50'),
+      tunnel('tunnel-d1210-150', 'D1210 – 150', 'soldry-1210-150', 'cat_d1210_150Short'),
+      tunnel('tunnel-d1210-300', 'D1210 – 300', 'soldry-1210-300', 'cat_d1210_300Short'),
+      tunnel('tunnel-h2008-250', 'H2008 – 250', 'soldry-2008-250', 'cat_h2008_250Short'),
+      tunnel('tunnel-h2008-1000', 'H2008 – 1000', 'soldry-modular-1000', 'cat_h2008_1000Short'),
+      tunnel('tunnel-p1709-200', 'P1709 – 200', 'soldry-1709-200', 'cat_p1709_200Short'),
     ]
   },
   {
@@ -148,7 +133,18 @@ function walk(nodes, parent = null, out = []) {
 }
 export const CATALOG_ENTRIES = walk(CATALOG);
 
-export const productImage = (node) => (node && PRODUCT_IMAGES[node.id]) || PLACEHOLDER_IMAGE;
+// All photos of a product (empty when there are none yet) and its videos
+export const productPhotos = (node) => (node && PRODUCT_PHOTOS[node.id]) || [];
+export const productVideos = (node) => (node ? PRODUCT_VIDEOS.filter(v => v.product === node.id) : []);
+
+export const productImage = (node) =>
+  (node && (COVER_IMAGES[node.id] || productPhotos(node)[0]?.src)) || PLACEHOLDER_IMAGE;
+
+// Smaller copy of the main image for menus and thumbnails
+export const productThumb = (node) => {
+  const src = productImage(node);
+  return productPhotos(node).find(p => p.src === src)?.thumb || src;
+};
 
 export const findNodeByPath = (path) => CATALOG_ENTRIES.find(e => e.node.path === path) || null;
 
@@ -156,6 +152,12 @@ export const findNodeByModelId = (modelId) => CATALOG_ENTRIES.find(e => e.node.m
 
 // Display name for a node: tunnel models show their code ("D1210 – 150 Tunnel Solar Dryer")
 export const nodeTitle = (node, t) => (node.code ? `${node.code} ${t(node.titleKey)}` : t(node.titleKey));
+
+// Short name for menus: the model code or size ("D1210 – 150", "6 sq.ft"), otherwise the full name
+export const nodeShortTitle = (node, t) => node.code || node.size || t(node.titleKey);
+
+// The dryer models of one group ('box' | 'tunnel')
+export const dryerModels = (group) => CATALOG.find(n => n.id === 'solar-dryer').children.filter(c => c.group === group);
 
 // Pages rendered by the shared CatalogPage (one route each)
 export const CATALOG_PAGES = CATALOG_ENTRIES.filter(e => e.node.page === 'catalog').map(e => e.node.path);
