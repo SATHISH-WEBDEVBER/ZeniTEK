@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { Breadcrumb } from './SiteHeader';
 import SplitWords from '../motion/SplitWords';
-import { gsap, prefersReducedMotion, richMotion, whenSiteReady } from '../motion/core';
+import { prefersReducedMotion } from '../motion/core';
 
 // The site's .max-w-7xl containers are full width with 80px side padding (index.css), so on desktop
 // the hero text column always runs from x = 80px to 680px.
@@ -32,51 +32,8 @@ export default function PageHero({
 }) {
   const list = (Array.isArray(images) ? images : [images]).filter(Boolean);
   const [active, setActive] = useState(0);
-  const rootRef = useRef(null);
-
-  // Entrance: the photo settles from a slight zoom, the title rises word by word, then the subtitle,
-  // buttons, facts and breadcrumb follow. On desktop the photo drifts and the text lifts as the hero
-  // scrolls away.
-  useLayoutEffect(() => {
-    const root = rootRef.current;
-    if (!root || prefersReducedMotion()) return undefined;
-    let cancelReady = () => {};
-    const mm = gsap.matchMedia();
-    const ctx = gsap.context(() => {
-      const words = root.querySelectorAll('.hero-word');
-      const fades = root.querySelectorAll('[data-hero-fade]');
-      const slides = root.querySelectorAll('.hero-slide');
-      // the highlighted (green) part of the title gets a soft underline that draws in after the words
-      const marks = root.querySelectorAll('.hero-title span:not(.hero-word)');
-      gsap.set(marks, {
-        backgroundImage: 'linear-gradient(rgba(94, 209, 111, 0.55), rgba(94, 209, 111, 0.55))',
-        backgroundRepeat: 'no-repeat', backgroundPosition: '0 96%', backgroundSize: '0% 0.09em',
-      });
-      gsap.set(words, { opacity: 0, yPercent: 65 });
-      gsap.set(fades, { opacity: 0, y: 18 });
-      gsap.set(slides, { scale: 1.1 });
-      cancelReady = whenSiteReady(() => {
-        gsap.timeline({ defaults: { ease: 'power3.out' } })
-          .to(slides, { scale: 1, duration: 1.8, ease: 'power2.out', clearProps: 'transform' }, 0)
-          .to(words, { opacity: 1, yPercent: 0, duration: 0.8, stagger: 0.045, clearProps: 'transform,opacity' }, 0.1)
-          .to(marks, { backgroundSize: '100% 0.09em', duration: 0.9, ease: 'power3.inOut' }, '-=0.35')
-          .to(fades, { opacity: 1, y: 0, duration: 0.7, stagger: 0.09, clearProps: 'transform,opacity' }, '<-0.4');
-      });
-      if (richMotion()) {
-        mm.add('(min-width: 1024px)', () => {
-          const scroll = { trigger: root, start: 'top top', end: 'bottom top', scrub: 0.5 };
-          gsap.to(root.querySelector('[data-hero-media]'), { yPercent: 12, ease: 'none', scrollTrigger: scroll });
-          gsap.to(root.querySelector('[data-hero-text]'), { y: -50, ease: 'none', scrollTrigger: { ...scroll } });
-        });
-      }
-    }, root);
-    return () => {
-      cancelReady();
-      mm.revert();
-      ctx.revert();
-    };
-  }, []);
-
+  // Entrance (CSS, index.css "Page hero entrance"): the photo settles from a slight zoom, the title
+  // rises word by word with its highlight underlined, then the subtitle, buttons and facts follow.
   useEffect(() => {
     if (list.length < 2) return undefined;
     const timer = setInterval(() => setActive(i => (i + 1) % list.length), 5000);
@@ -84,7 +41,7 @@ export default function PageHero({
   }, [list.length]);
 
   return (
-    <section ref={rootRef} data-hero className="no-divider relative w-full overflow-hidden bg-neutral-900 lg:h-[680px]">
+    <section data-hero className="no-divider relative w-full overflow-hidden bg-neutral-900 lg:h-[680px]">
       {/* Media: a clear banner on phones/tablets, the whole hero from lg up */}
       <div data-hero-media className={`relative h-64 sm:h-80 lg:absolute lg:inset-0 lg:h-auto overflow-hidden ${list.length > 0 ? 'bg-neutral-200' : 'bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-700'}`} aria-hidden="true">
         {list.map((src, idx) => (
@@ -135,10 +92,10 @@ export default function PageHero({
             <SplitWords>{title}</SplitWords>
           </h1>
           {subtitle && (
-            <p data-hero-fade className="hero-sub text-base sm:text-lg text-white/90 font-medium leading-relaxed [&_strong]:text-white">{subtitle}</p>
+            <p data-hero-fade style={{ '--d': 0 }} className="hero-sub text-base sm:text-lg text-white/90 font-medium leading-relaxed [&_strong]:text-white">{subtitle}</p>
           )}
           {actions.length > 0 && (
-            <div data-hero-fade className="flex flex-col sm:flex-row flex-wrap gap-3 [text-shadow:none]">
+            <div data-hero-fade style={{ '--d': 1 }} className="flex flex-col sm:flex-row flex-wrap gap-3 [text-shadow:none]">
               {actions.map((a, i) => <HeroButton key={i} action={a} primary={i === 0} />)}
             </div>
           )}
@@ -146,7 +103,7 @@ export default function PageHero({
             // Phones: three rows (value left, label right); from sm up: three columns split by thin lines
             <dl className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/25 border-t border-white/25 pt-1 sm:pt-5">
               {stats.map((s, i) => (
-                <div key={i} data-hero-fade className="min-w-0 flex items-center gap-3 py-2.5 sm:py-0 sm:block sm:px-5 sm:first:pl-0 sm:last:pr-0">
+                <div key={i} data-hero-fade style={{ '--d': 2 + i }} className="min-w-0 flex items-center gap-3 py-2.5 sm:py-0 sm:block sm:px-5 sm:first:pl-0 sm:last:pr-0">
                   <dt className="sr-only">{s.label}</dt>
                   <StatValue value={s.value} className="max-w-[55%] sm:max-w-none text-lg sm:text-2xl font-black text-white leading-tight [overflow-wrap:anywhere] tabular-nums" />
                   <dd className="ml-auto sm:ml-0 text-right sm:text-left text-xs sm:text-sm text-white/80 font-semibold leading-snug sm:mt-1 [overflow-wrap:anywhere]">{s.label}</dd>
@@ -162,7 +119,7 @@ export default function PageHero({
   );
 }
 
-// A hero fact; a plain number ("1,200+", "40%", "8") counts up from zero when the hero appears.
+// A hero fact; a plain number ("1,200+", "40%", "8") counts up from zero as the facts appear.
 // Only the text node's value changes, so React keeps managing the element.
 function StatValue({ value, className }) {
   const ref = useRef(null);
@@ -178,14 +135,20 @@ function StatValue({ value, className }) {
     const format = (n) => (raw.includes(',')
       ? n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
       : n.toFixed(decimals)) + suffix;
-    const counter = { n: 0 };
+    const DELAY = 650;
+    const DURATION = 1400;
+    let frame = 0;
+    let start = 0;
     node.nodeValue = format(0);
-    const cancel = whenSiteReady(() => {
-      gsap.to(counter, { n: target, duration: 1.6, delay: 0.45, ease: 'power2.out', onUpdate: () => { node.nodeValue = format(counter.n); } });
-    });
+    const tick = (now) => {
+      if (!start) start = now + DELAY;
+      const t = Math.min(1, Math.max(0, (now - start) / DURATION));
+      node.nodeValue = format(target * (1 - Math.pow(1 - t, 3)));
+      if (t < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
     return () => {
-      cancel();
-      gsap.killTweensOf(counter);
+      cancelAnimationFrame(frame);
       node.nodeValue = text;
     };
   }, [value]);

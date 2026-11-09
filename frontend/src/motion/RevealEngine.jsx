@@ -1,377 +1,256 @@
 import { useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import {
-  gsap, ScrollTrigger, DURATION, EASE, STAGGER,
-  prefersReducedMotion, richMotion, isDesktop, whenSiteReady
-} from './core';
+import { prefersReducedMotion } from './core';
 
-// Scroll reveals for every public page, applied automatically to the existing markup (no per-page code):
+// Scroll reveals for every public page, applied to the existing markup (no per-page code):
+// section headings, grid items (cards), and the remaining content blocks of each section fade and
+// rise into place as they come into view, items of a group one after another.
 //
-//   section headings  - the heading block (badge, title, subtitle) fades up line by line
-//   grids             - each grid's items rise in one after another (cards also get hover lift + tilt)
-//   images            - large photos unmask from the bottom; on desktop they drift slightly on scroll
-//   other blocks      - forms, banners, tables and text blocks fade up
+// Performance: the page is read once per section (one layout pass), then elements only get a
+// data-rv attribute. An IntersectionObserver adds .rv-in when an element comes into view and the
+// CSS transition (opacity + translate, run by the compositor) does the rest; the attribute is removed
+// when it has finished. Nothing animates frame by frame; the only scroll work is one check after
+// scrolling stops.
 //
-// Content is only hidden once JavaScript has registered it, and it is revealed when it scrolls into view
-// (or gets keyboard focus), so nothing stays hidden. Opt out with data-reveal="off" on an element (it and
-// everything inside it), or data-reveal="block" to reveal an element as one piece (e.g. a carousel).
-// Everything is skipped when the visitor prefers reduced motion.
+// Opt out with data-reveal="off" (an element and everything in it), or data-reveal="block" to reveal
+// an element as one piece (carousels). Skipped entirely for prefers-reduced-motion.
 
 const ROOTS = 'main, footer';
-// Elements (and their contents) the engine never touches
 const SKIP_SELF = '[data-hero], [data-reveal="off"], [role="dialog"], .leaflet-container, .client-marquee-container, [class*="animate-marquee"]';
-// Content inside these is left alone (horizontal scrollers, already-animated or one-piece areas)
-const SKIP_INSIDE = `${SKIP_SELF}, [data-reveal="block"], [class*="overflow-x-auto"], [class*="snap-x"]`;
-
-const CARD_ROUNDED = /\brounded-(?:xl|2xl|3xl|\[[^\]]+\])(?:\s|$)/;
+const SKIP_INSIDE = `${SKIP_SELF}, [data-reveal="block"], .overflow-x-auto, [class*="snap-x"]`;
+const OUT_OF_FLOW = /(?:^|\s)(?:absolute|fixed|sticky)(?:\s|$)/;
+const CARD_ROUNDED = /(?:^|\s)rounded-(?:xl|2xl|3xl|\[[^\]]+\])(?:\s|$)/;
 const CARD_EDGE = /(?:^|\s)(?:border|shadow|bg-white)(?:[\s-]|$)/;
+const DURATION_MS = 650;   // longest reveal transition in index.css
+const STAGGER_MS = 55;
+const MAX_DELAY_MS = 330;
 
+const classOf = (el) => (typeof el.className === 'string' ? el.className : '');
 const skipped = (el) => !!el.closest(SKIP_SELF) || !!el.parentElement?.closest(SKIP_INSIDE);
-const className = (el) => (typeof el.className === 'string' ? el.className : '');
-const domOrder = (a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1);
+const visible = (el) => el.offsetParent !== null && el.offsetHeight > 0;
 
-function shown(el, style = getComputedStyle(el)) {
-  if (style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) return false;
-  const r = el.getBoundingClientRect();
-  return r.width > 0 && r.height > 0;
-}
-
-// A grid item that looks like a card: rounded with a border/shadow/white panel, or an <article>
 function isCardLike(el) {
-  if (!el || el.matches('form, fieldset, section') || el.querySelector('input, select, textarea, iframe, video')) return false;
-  const r = el.getBoundingClientRect();
-  if (r.width < 120 || r.width > 720 || r.height > 900) return false;
+  if (!el || el.tagName === 'SECTION' || el.tagName === 'FORM' || el.querySelector('input, select, textarea, iframe, video')) return false;
+  const w = el.offsetWidth;
+  if (w < 120 || w > 720 || el.offsetHeight > 900) return false;
   if (el.tagName === 'ARTICLE') return true;
-  const c = className(el);
+  const c = classOf(el);
   return CARD_ROUNDED.test(c) && CARD_EDGE.test(c);
 }
 
 function createEngine() {
-  const mobile = !isDesktop();
-  const distance = mobile ? 0.6 : 1;
-  const FROM = {
-    card: { opacity: 0, y: 40 * distance, scale: 0.97 },
-    item: { opacity: 0, y: 34 * distance },
-    head: { opacity: 0, y: 26 * distance },
-    block: { opacity: 0, y: 30 * distance },
+  const seen = new WeakSet();      // registered once per page, never again (no re-hiding)
+  const pending = new Set();
+  const timers = new Set();
+
+  const finish = (els) => {
+    const timer = setTimeout(() => {
+      timers.delete(timer);
+      els.forEach((el) => {
+        el.removeAttribute('data-rv');
+        el.classList.remove('rv-in');
+        el.style.removeProperty('--rv-delay');
+      });
+    }, DURATION_MS + MAX_DELAY_MS + 80);
+    timers.add(timer);
   };
 
-  const registered = new Set();
-  const triggers = [];
-  // What the observer watches for each element: a masked photo reports no visible area while it is
-  // masked, so photos are watched through their frame (parent) instead
-  const watched = new Map();
-  const queue = [];
-  let started = false;
-  let flushScheduled = false;
-
-  const done = (el) => {
-    el.dataset.rv = 'done';
-    gsap.set(el, { clearProps: el.dataset.rvKind === 'img' ? 'clipPath,willChange' : 'transform,opacity,transition,willChange' });
-  };
-
-  const reveal = (items) => {
-    const sorted = items.filter(el => el.isConnected && el.dataset.rv === 'pending').sort(domOrder);
-    const step = Math.min(STAGGER, 0.6 / Math.max(1, sorted.length));
-    sorted.forEach((el, i) => {
-      el.dataset.rv = 'running';
-      const delay = i * step;
-      if (el.dataset.rvKind === 'img') {
-        gsap.to(el, {
-          clipPath: el.dataset.rvClipEnd, duration: DURATION.slow, delay, ease: 'power3.inOut', willChange: 'clip-path',
-          onComplete: () => done(el)
-        });
-        if (el.dataset.rvZoom) gsap.to(el, { scale: 1, duration: DURATION.slow + 0.4, delay, ease: 'power2.out' });
-      } else {
-        gsap.to(el, {
-          opacity: 1, y: 0, scale: 1, duration: DURATION.base, delay, ease: EASE, willChange: 'transform, opacity',
-          onComplete: () => done(el)
-        });
-      }
+  // Reveal a group that came into view together, in reading order
+  const reveal = (els) => {
+    const list = els.filter(el => pending.has(el)).sort((a, b) =>
+      (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
+    if (!list.length) return;
+    list.forEach((el, i) => {
+      pending.delete(el);
+      io.unobserve(el);
+      if (i) el.style.setProperty('--rv-delay', `${Math.min(i * STAGGER_MS, MAX_DELAY_MS)}ms`);
+      el.classList.add('rv-in');
     });
+    finish(list);
   };
 
-  const flush = () => {
-    flushScheduled = false;
-    reveal(queue.splice(0));
-  };
-
-  const schedule = () => {
-    if (queue.length && !flushScheduled) {
-      flushScheduled = true;
-      requestAnimationFrame(flush);
-    }
-  };
-
-  // Content the visitor has already scrolled past (fast scrolling, slow loading) is shown at once
+  // Already scrolled past (fast scrolling, links to the middle of a page): show at once
   const showNow = (els) => els.forEach((el) => {
-    if (el.dataset.rv !== 'pending') return;
-    gsap.killTweensOf(el);
-    if (el.dataset.rvZoom) gsap.set(el, { scale: 1 });
-    done(el);
+    pending.delete(el);
+    io.unobserve(el);
+    el.removeAttribute('data-rv');
   });
-
-  const take = (target) => {
-    io.unobserve(target);
-    const els = watched.get(target) || [];
-    watched.delete(target);
-    return els;
-  };
 
   const io = new IntersectionObserver((entries) => {
+    const entering = [];
+    const passed = [];
     entries.forEach((entry) => {
-      if (entry.isIntersecting) queue.push(...take(entry.target));
-      else if (entry.boundingClientRect.bottom <= 0) showNow(take(entry.target));
+      if (entry.isIntersecting) entering.push(entry.target);
+      else if (entry.boundingClientRect.bottom <= 0) passed.push(entry.target);
     });
-    schedule();
-  }, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
+    if (passed.length) showNow(passed);
+    if (entering.length) reveal(entering);
+  }, { threshold: 0 });   // starts as soon as it enters, so even the last line of a page reveals
 
-  const watch = (el) => {
-    const target = el.dataset.rvKind === 'img' ? el.parentElement : el;
-    if (!watched.has(target)) {
-      watched.set(target, []);
-      io.observe(target);
-    }
-    watched.get(target).push(el);
-  };
-
-  // Safety net, checked while scrolling: anything on screen that the observer has not reported
-  // (the very end of the page, items moved sideways in carousels) is revealed too
-  let sweepTimer = 0;
-  const sweep = () => {
-    sweepTimer = 0;
+  // When scrolling stops, one check of what is still waiting: a very fast scroll on a busy page can
+  // carry an element past the screen between two frames, and the observer never reports it.
+  let idleTimer = 0;
+  const settle = () => {
+    idleTimer = 0;
     const vh = window.innerHeight;
-    [...watched.keys()].forEach((target) => {
-      const r = target.getBoundingClientRect();
-      if (r.bottom <= 0) showNow(take(target));
-      else if (r.top < vh) queue.push(...take(target));
+    const passed = [];
+    const onScreen = [];
+    pending.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.bottom <= 0) passed.push(el);
+      else if (r.top < vh) onScreen.push(el);
     });
-    schedule();
+    if (passed.length) showNow(passed);
+    if (onScreen.length) reveal(onScreen);
   };
-  const onScroll = () => { if (!sweepTimer) sweepTimer = setTimeout(sweep, 250); };
-
-  // Hidden until revealed: keyboard users reach the content straight away
-  const onFocus = (e) => {
-    const target = e.target?.closest?.('[data-rv="pending"]');
-    if (!target) return;
-    const chain = [];
-    for (let el = target; el; el = el.parentElement?.closest('[data-rv="pending"]')) chain.push(el);
-    reveal(chain);
-  };
-  const onPrint = () => reveal([...registered]);
-
-  const register = (el, kind) => {
-    // React-controlled inline transforms/opacity are left alone
-    if (el.dataset.rv || el.style.transform || el.style.opacity) return;
-    el.dataset.rv = 'pending';
-    el.dataset.rvKind = kind;
-    gsap.set(el, { ...FROM[kind], transition: 'none' });
-    registered.add(el);
-    if (started) watch(el);
+  const onScroll = () => {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(settle, 180);
   };
 
-  // Inside something that is still waiting to be revealed (cards reveal as a whole)
-  const insidePending = (el) => {
-    const owner = el.parentElement?.closest('[data-rv]');
-    return !!owner && (owner.dataset.rv === 'pending' || owner.dataset.rv === 'running' || owner.dataset.rvKind === 'card');
-  };
+  // Read the section first (one layout pass), then mark what should reveal
+  function collect(section) {
+    const found = new Map();            // element -> kind
+    const holders = new Set();          // ancestors of found elements
+    const insideFound = (el) => {
+      for (let p = el.parentElement; p && p !== section; p = p.parentElement) if (found.has(p)) return true;
+      return false;
+    };
+    const add = (el, kind) => {
+      if (seen.has(el) || found.has(el) || insideFound(el)) return;
+      found.set(el, kind);
+      for (let p = el.parentElement; p && p !== section && !holders.has(p); p = p.parentElement) holders.add(p);
+    };
+    const cards = [];
 
-  const markCard = (el) => {
-    if (el.hasAttribute('data-card') || el.hasAttribute('data-no-card')) return;
-    el.setAttribute('data-card', '');
-  };
-
-  function scanGrids(root) {
-    root.querySelectorAll('[class*="grid"]').forEach((grid) => {
-      if (grid.dataset.rvGrid || skipped(grid)) return;
-      const style = getComputedStyle(grid);
-      if (!style.display.includes('grid')) return;
-      const items = [...grid.children].filter(el => shown(el));
+    // grids of cards: the cards rise one after another (and get the hover lift);
+    // other grids (layout columns, facts, form fields) reveal as one piece
+    section.querySelectorAll('.grid, [class*="grid-cols-"]').forEach((grid) => {
+      if (skipped(grid) || seen.has(grid) || insideFound(grid)) return;
+      const items = [...grid.children].filter(visible);
       if (items.length < 2) return;
-      grid.dataset.rvGrid = '1';
-      const pending = insidePending(grid);
-      items.forEach((item) => {
-        const card = isCardLike(item) ? item
-          : (item.children.length === 1 && isCardLike(item.firstElementChild) ? item.firstElementChild : null);
-        if (card && !card.closest('[data-reveal="block"]')) markCard(card);
-        if (!pending) register(item, card === item ? 'card' : 'item');
-      });
+      const cardOf = (item) => (isCardLike(item) ? item
+        : (item.children.length === 1 && isCardLike(item.firstElementChild) ? item.firstElementChild : null));
+      const itemCards = items.map(cardOf);
+      if (itemCards.some(Boolean)) {
+        items.forEach((item, i) => {
+          if (itemCards[i]) cards.push(itemCards[i]);
+          add(item, 'card');
+        });
+      } else if (grid.offsetHeight < window.innerHeight * 1.2) {
+        add(grid, 'block');
+      }
     });
-    root.querySelectorAll('article').forEach((el) => { if (!skipped(el) && isCardLike(el)) markCard(el); });
-  }
+    section.querySelectorAll('article').forEach((el) => { if (!skipped(el) && isCardLike(el)) cards.push(el); });
 
-  function scanHeadings(root) {
-    root.querySelectorAll('h2').forEach((h2) => {
-      if (h2.dataset.rv || skipped(h2) || insidePending(h2) || h2.closest('[data-card]') || !shown(h2)) return;
+    // headings: the heading with its subtitle (or its small heading group)
+    section.querySelectorAll('h2').forEach((h2) => {
+      if (skipped(h2) || !visible(h2) || insideFound(h2)) return;
       const parent = h2.parentElement;
       const siblings = [...parent.children];
-      const compact = siblings.length <= 4 && parent.tagName !== 'SECTION' && !getComputedStyle(parent).display.includes('grid')
-        && siblings.every(el => el.getBoundingClientRect().height < 320);
+      const compact = parent !== section && siblings.length <= 4 && !/(?:^|\s)grid(?:\s|$)/.test(classOf(parent))
+        && siblings.every(el => el.offsetHeight < 320);
       const group = compact ? siblings : [h2, h2.nextElementSibling?.tagName === 'P' ? h2.nextElementSibling : null];
-      group.filter(Boolean).forEach(el => { if (shown(el)) register(el, 'head'); });
+      group.forEach(el => { if (el && visible(el)) add(el, 'head'); });
     });
-  }
 
-  function scanImages(root) {
-    const rich = richMotion();
-    root.querySelectorAll('img').forEach((img) => {
-      if (img.dataset.rv || skipped(img) || img.closest('[data-card], a, button')) return;
-      const r = img.getBoundingClientRect();
-      if (r.width < 260 || r.height < 160) return;
-      const parent = img.parentElement;
-      const parentStyle = getComputedStyle(parent);
-      const clipped = parentStyle.overflow === 'hidden' || parentStyle.overflowY === 'hidden' || parentStyle.overflow === 'clip';
-      const style = getComputedStyle(img);
-      if (style.display === 'none' || Number(style.opacity) === 0 || img.style.transform) return;
-      const cover = style.objectFit === 'cover';
-      const radius = parseFloat(style.borderTopLeftRadius) || 0;
-      const zoomable = !/(?:^|\s|:)scale-/.test(className(img));
-      img.dataset.rv = 'pending';
-      img.dataset.rvKind = 'img';
-      img.dataset.rvClipEnd = `inset(0% 0% 0% 0% round ${radius}px)`;
-      const from = { clipPath: `inset(100% 0% 0% 0% round ${radius}px)` };
-      // desktop drift: the photo moves a little slower than the page inside its frame
-      const parallax = rich && clipped && cover && zoomable && r.width >= 360;
-      if (parallax) {
-        const tween = gsap.fromTo(img, { yPercent: -5, scale: 1.12 }, {
-          yPercent: 5, scale: 1.12, ease: 'none',
-          scrollTrigger: { trigger: parent, start: 'top bottom', end: 'bottom top', scrub: 0.6 }
-        });
-        triggers.push(tween);
-      } else if (clipped && zoomable) {
-        img.dataset.rvZoom = '1';
-        from.scale = 1.12;
-      }
-      gsap.set(img, from);
-      registered.add(img);
-      if (started) watch(img);
-    });
-  }
-
-  // Remaining content blocks of each page section (and the footer): fade up as one piece each
-  function scanBlocks(root) {
-    const sections = root.tagName === 'FOOTER' ? [root]
-      : [...root.querySelectorAll('section')].filter(s => !s.parentElement.closest('section'));
+    // everything else: the section's remaining blocks, each as one piece
     const walk = (container, depth) => {
       [...container.children].forEach((child) => {
-        if (child.dataset.rv || skipped(child)) return;
-        if (child.dataset.reveal === 'block') { if (shown(child)) register(child, 'block'); return; }
-        if (child.querySelector('[data-rv], [data-reveal="block"]')) {
-          if (depth < 5) walk(child, depth + 1);
-          return;
-        }
-        const style = getComputedStyle(child);
-        if (!shown(child, style) || ['absolute', 'fixed', 'sticky'].includes(style.position)) return;
-        if (!/block|flex|grid|table|list-item/.test(style.display)) return;
-        if (child.getBoundingClientRect().height < 16 || insidePending(child)) return;
-        register(child, 'block');
+        if (found.has(child) || seen.has(child) || skipped(child)) return;
+        if (child.dataset.reveal === 'block') { if (visible(child)) add(child, 'block'); return; }
+        if (holders.has(child)) { if (depth < 4) walk(child, depth + 1); return; }
+        if (!visible(child) || OUT_OF_FLOW.test(classOf(child)) || child.offsetHeight < 16) return;
+        if (child.tagName === 'SCRIPT' || child.tagName === 'STYLE') return;
+        add(child, 'block');
       });
     };
-    sections.forEach((section) => {
-      if (section.matches(SKIP_SELF) || section.closest(SKIP_SELF)) return;
-      walk(section, 0);
+    walk(section, 0);
+    return { found, cards };
+  }
+
+  function mark({ found, cards }) {
+    cards.forEach(el => el.setAttribute('data-card', ''));
+    found.forEach((kind, el) => {
+      seen.add(el);
+      // React-controlled inline transforms/opacity (carousels, sliders) are left alone
+      if (el.style.transform || el.style.opacity) return;
+      el.setAttribute('data-rv', kind);
+      pending.add(el);
+      io.observe(el);
     });
   }
 
-  const scan = () => {
-    document.querySelectorAll(ROOTS).forEach((root) => {
-      if (root.closest('[role="dialog"]')) return;
-      scanGrids(root);
-      scanHeadings(root);
-      scanImages(root);
-      scanBlocks(root);
-    });
+  const sectionsOf = (root) => (root.tagName === 'FOOTER' ? [root]
+    : [...root.querySelectorAll('section')].filter(s => !s.parentElement.closest('section') && !s.matches(SKIP_SELF)));
+
+  const scanSections = (sections) => {
+    const results = sections.map(collect);   // all reads first...
+    results.forEach(mark);                  // ...then all writes
   };
 
-  // New content (tabs, filters, data from the server) is picked up before it is painted
-  let rescanScheduled = false;
+  // Content added later (tabs, filters, data from the server): only its own section is read again,
+  // before it is painted
+  let changed = new Set();
+  let frame = 0;
+  const topSection = (section) => {
+    let top = section;
+    while (top.parentElement?.closest('section')) top = top.parentElement.closest('section');
+    return top;
+  };
   const mo = new MutationObserver((records) => {
-    if (rescanScheduled || !records.some(r => r.addedNodes.length)) return;
-    rescanScheduled = true;
-    requestAnimationFrame(() => {
-      rescanScheduled = false;
-      scan();
+    records.forEach((r) => {
+      if (!r.addedNodes.length || !(r.target instanceof Element) || r.target.closest(SKIP_INSIDE)) return;
+      r.addedNodes.forEach((node) => {
+        if (node.nodeType !== 1 || !node.isConnected) return;
+        const host = node.closest('footer') || node.closest('main section');
+        if (host) { changed.add(host.tagName === 'FOOTER' ? host : topSection(host)); return; }
+        // a newly loaded page: its sections
+        node.querySelectorAll('section').forEach((sec) => {
+          if (!sec.parentElement.closest('section') && !sec.matches(SKIP_SELF)) changed.add(sec);
+        });
+      });
     });
+    if (changed.size && !frame) {
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const list = [...changed].filter(s => s.isConnected);
+        changed = new Set();
+        scanSections(list);
+      });
+    }
   });
 
-  // Parallax positions follow the page height (images, data and fonts load late)
-  let refreshTimer = null;
-  const ro = new ResizeObserver(() => {
-    clearTimeout(refreshTimer);
-    refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
-  });
+  // Keyboard users reach hidden content straight away
+  const onFocus = (e) => {
+    const el = e.target?.closest?.('[data-rv]');
+    if (el && pending.has(el)) showNow([el]);
+  };
+  const onPrint = () => showNow([...pending]);
 
   return {
-    scan,
     start() {
-      started = true;
-      registered.forEach(el => { if (el.dataset.rv === 'pending') watch(el); });
-      window.addEventListener('scroll', onScroll, { passive: true });
-      sweepTimer = setTimeout(sweep, 400);
+      scanSections([...document.querySelectorAll(ROOTS)].flatMap(sectionsOf));
       document.querySelectorAll(ROOTS).forEach(root => mo.observe(root, { childList: true, subtree: true }));
-      ro.observe(document.body);
       document.addEventListener('focusin', onFocus);
       window.addEventListener('beforeprint', onPrint);
+      window.addEventListener('scroll', onScroll, { passive: true });
     },
     destroy() {
       io.disconnect();
-      watched.clear();
-      clearTimeout(sweepTimer);
-      window.removeEventListener('scroll', onScroll);
       mo.disconnect();
-      ro.disconnect();
-      clearTimeout(refreshTimer);
+      cancelAnimationFrame(frame);
+      timers.forEach(clearTimeout);
+      clearTimeout(idleTimer);
+      window.removeEventListener('scroll', onScroll);
       document.removeEventListener('focusin', onFocus);
       window.removeEventListener('beforeprint', onPrint);
-      triggers.forEach(t => { t.scrollTrigger?.kill(); t.kill(); });
-      registered.forEach((el) => {
-        gsap.killTweensOf(el);
-        // only the properties the engine set: React keeps its own inline styles
-        gsap.set(el, { clearProps: 'transform,opacity,transition,clipPath,willChange' });
-        delete el.dataset.rv;
-        delete el.dataset.rvKind;
-        delete el.dataset.rvClipEnd;
-        delete el.dataset.rvZoom;
+      document.querySelectorAll('[data-rv]').forEach((el) => {
+        el.removeAttribute('data-rv');
+        el.classList.remove('rv-in');
+        el.style.removeProperty('--rv-delay');
       });
-      document.querySelectorAll('[data-rv-grid]').forEach(el => delete el.dataset.rvGrid);
     },
-  };
-}
-
-// Card tilt: the hovered card leans slightly towards the pointer (mouse, capable devices only)
-function installTilt() {
-  let active = null;
-  let frame = 0;
-  let last = null;
-  const reset = (card) => { if (card) card.style.transform = ''; };
-  const update = () => {
-    frame = 0;
-    if (!active || !last || active.dataset.rv === 'pending' || active.dataset.rv === 'running') return;
-    const r = active.getBoundingClientRect();
-    const x = (last.clientX - r.left) / r.width - 0.5;
-    const y = (last.clientY - r.top) / r.height - 0.5;
-    const max = r.width > 420 ? 3 : 5;
-    active.style.transform = `perspective(1000px) rotateX(${(-y * max).toFixed(2)}deg) rotateY(${(x * max).toFixed(2)}deg)`;
-  };
-  const onMove = (e) => {
-    if (e.pointerType && e.pointerType !== 'mouse') return;
-    const card = e.target?.closest?.('[data-card]') || null;
-    if (card !== active) {
-      reset(active);
-      // cards with their own transform classes keep them
-      active = card && getComputedStyle(card).transform === 'none' ? card : null;
-    }
-    last = e;
-    if (active && !frame) frame = requestAnimationFrame(update);
-  };
-  const onLeave = () => { reset(active); active = null; };
-  document.addEventListener('pointermove', onMove, { passive: true });
-  document.documentElement.addEventListener('mouseleave', onLeave);
-  return () => {
-    cancelAnimationFrame(frame);
-    reset(active);
-    document.removeEventListener('pointermove', onMove);
-    document.documentElement.removeEventListener('mouseleave', onLeave);
   };
 }
 
@@ -381,15 +260,9 @@ export default function RevealEngine() {
   useLayoutEffect(() => {
     if (prefersReducedMotion() || !('IntersectionObserver' in window)) return undefined;
     const engine = createEngine();
-    engine.scan();
-    const cancel = whenSiteReady(() => engine.start());
-    return () => {
-      cancel();
-      engine.destroy();
-    };
+    engine.start();
+    return () => engine.destroy();
   }, [pathname]);
-
-  useLayoutEffect(() => (richMotion() ? installTilt() : undefined), []);
 
   return null;
 }

@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { getLenis } from '../motion/core';
 
 // Shared lock count so nested overlays (e.g. a lightbox opened from the mobile menu)
 // only release the page scroll when the last one closes.
@@ -18,7 +17,6 @@ export default function useScrollLock(active) {
       savedStyles = { overflow: body.style.overflow, paddingRight: body.style.paddingRight };
       body.style.overflow = 'hidden';
       if (scrollbarWidth > 0) body.style.paddingRight = `${scrollbarWidth}px`;
-      getLenis()?.stop(); // smooth scrolling would otherwise still move the page behind
     }
     lockCount += 1;
 
@@ -28,7 +26,6 @@ export default function useScrollLock(active) {
         document.body.style.overflow = savedStyles.overflow;
         document.body.style.paddingRight = savedStyles.paddingRight;
         savedStyles = null;
-        getLenis()?.start();
       }
     };
   }, [active]);

@@ -217,27 +217,31 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const timeoutRef = useRef(null);
   const productsPanelRef = useRef(null);
   const headerRef = useRef(null);
-  const progressRef = useRef(null);
 
-  // Once the page scrolls the bar gets a stronger shadow; the line along its bottom shows how far
-  // down the page the visitor is. Written straight to the DOM, so scrolling causes no re-renders.
+  // Once the page scrolls the bar gets a stronger shadow. Only the crossing of the threshold is
+  // written to the DOM, so scrolling itself does no work here. (The reading-progress line along the
+  // bar's bottom is driven by CSS alone - index.css .scroll-progress.)
+  // While the page is scrolling, html gets .is-scrolling (card hover effects wait until it stops).
   useEffect(() => {
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const y = window.scrollY;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (headerRef.current) headerRef.current.dataset.scrolled = y > 8 ? 'true' : 'false';
-      if (progressRef.current) progressRef.current.style.transform = `scaleX(${max > 0 ? Math.min(1, y / max) : 0})`;
+    let scrolled = null;
+    let scrolling = false;
+    let idleTimer = 0;
+    const root = document.documentElement;
+    const onScroll = () => {
+      if (!scrolling) { scrolling = true; root.classList.add('is-scrolling'); }
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => { scrolling = false; root.classList.remove('is-scrolling'); }, 160);
+      const now = window.scrollY > 8;
+      if (now === scrolled || !headerRef.current) return;
+      scrolled = now;
+      headerRef.current.dataset.scrolled = now ? 'true' : 'false';
     };
-    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
-    update();
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
     return () => {
-      cancelAnimationFrame(frame);
+      clearTimeout(idleTimer);
+      root.classList.remove('is-scrolling');
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
     };
   }, []);
   const location = useLocation();
@@ -391,11 +395,11 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
 
   return (
     <LazyMotion features={loadMotionFeatures}>
-    <header ref={headerRef} data-scrolled="false" className="sticky top-0 z-40 relative bg-white/95 backdrop-blur-md shadow-sm w-full border-b border-slate-100">
+    <header ref={headerRef} data-scrolled="false" className="sticky top-0 z-40 relative bg-white shadow-sm w-full border-b border-slate-100">
       
       {/* MAIN NAVBAR CONTAINER */}
       <div className={`w-full px-5 sm:px-8 ${density === 0 ? 'md:px-[60px]' : 'lg:px-6'}`}>
-        <div ref={rowRef} className={`flex flex-wrap items-center justify-between w-full h-14 sm:h-16 ${twoRow ? 'lg:h-auto lg:py-2' : 'lg:h-[68px]'}`}>
+        <div ref={rowRef} className={`nav-intro flex flex-wrap items-center justify-between w-full h-14 sm:h-16 ${twoRow ? 'lg:h-auto lg:py-2' : 'lg:h-[68px]'}`}>
           
           {/* Logo - Stage 1 Animation */}
           <Link
@@ -597,7 +601,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { duration: 0.25 } }}
           exit={{ opacity: 0, transition: { duration: 0.2 } }}
-          className="hidden lg:block absolute inset-x-0 top-full h-screen bg-black/40 backdrop-blur-[1px] z-30"
+          className="hidden lg:block absolute inset-x-0 top-full h-screen bg-black/40 z-30"
           onClick={() => {
             setProductsDropdownOpen(false);
             setGalleryDropdownOpen(false);
@@ -845,7 +849,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
       </AnimatePresence>
 
       {/* Reading progress */}
-      <div ref={progressRef} className="scroll-progress" aria-hidden="true" />
+      <div className="scroll-progress" aria-hidden="true" />
     </header>
     </LazyMotion>
   );

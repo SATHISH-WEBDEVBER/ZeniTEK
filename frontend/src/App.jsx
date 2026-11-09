@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
@@ -6,9 +6,8 @@ import Footer from './components/Footer';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import SectionDividers from './components/SectionDividers';
 import SiteHeader, { PageTitleProvider } from './components/SiteHeader';
-import SmoothScroll from './motion/SmoothScroll';
 import RevealEngine from './motion/RevealEngine';
-import { markSiteReady, scrollToTop, prefersReducedMotion } from './motion/core';
+import { scrollToTop } from './motion/core';
 
 import HomePage from './pages/HomePage';
 // Pages other than Home load on demand (each in its own small file), so the first visit only
@@ -58,22 +57,12 @@ function ScrollToTop() {
   return null;
 }
 
-// A soft fade when moving to another page (opacity only: a transform here would shift fixed pop-ups)
-function usePageFade(ref) {
-  const { pathname } = useLocation();
-  const first = React.useRef(true);
-  React.useLayoutEffect(() => {
-    if (first.current) { first.current = false; return; }
-    if (!ref.current?.animate || prefersReducedMotion()) return;
-    ref.current.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 380, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
-  }, [pathname, ref]);
-}
-
-// Shown while a page's file loads: keeps the footer below the fold; a small spinner fades in only if
+// Shown while a page's file loads: a full screen tall, so the footer stays out of view and nothing
+// jumps when the page arrives; a small spinner fades in only if
 // loading takes longer than a moment
 function PageLoading() {
   return (
-    <div className="min-h-[75vh] flex items-center justify-center" aria-busy="true">
+    <div className="min-h-screen flex items-center justify-center" aria-busy="true">
       <span className="page-loading w-10 h-10 rounded-full border-[3px] border-[#002DC2]/15 border-t-[#002DC2]" />
     </div>
   );
@@ -105,40 +94,7 @@ export default function App() {
 }
 
 function PublicSite() {
-  // Opening animation stages:
-  // 0 = Initial: Empty navbar bar visible, full website hidden, logo & navitems hidden
-  // 1 = Logo opens with animation
-  // 2 = Nav items open with animation
-  // 3 = Full website smoothly reveals
-  const [animStage, setAnimStage] = useState(0);
-
   const navigate = useNavigate();
-
-  React.useEffect(() => {
-    // A short sequence, so the page is readable within a moment: logo, then menu, then the page.
-    // Page animations (hero, scroll reveals) start once the page is visible (markSiteReady).
-    const quick = prefersReducedMotion();
-    const t1 = setTimeout(() => setAnimStage(1), quick ? 0 : 120);
-    const t2 = setTimeout(() => setAnimStage(2), quick ? 0 : 360);
-    const t3 = setTimeout(() => setAnimStage(3), quick ? 0 : 600);
-
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-    };
-  }, []);
-
-  // Page animations start once the page has actually been painted visible (two frames after stage 3)
-  React.useEffect(() => {
-    if (animStage < 3) return undefined;
-    let second = 0;
-    const first = requestAnimationFrame(() => { second = requestAnimationFrame(markSiteReady); });
-    return () => { cancelAnimationFrame(first); cancelAnimationFrame(second); };
-  }, [animStage]);
-
-  const mainRef = React.useRef(null);
-  usePageFade(mainRef);
 
   // Every quote button across the site opens the /quote page (prefilled via the URL)
   // instead of a popup, so it has its own address and the browser Back button works.
@@ -157,27 +113,19 @@ function PublicSite() {
       {/* Scroll to Top on route change */}
       <ScrollToTop />
       <SectionDividers />
-      {/* Motion system: smooth scrolling and scroll reveals for every page (src/motion) */}
-      <SmoothScroll />
+      {/* Scroll reveals for every page (src/motion) */}
       <RevealEngine />
 
       <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-[#002DC2] selection:text-white">
         
-        {/* Navigation Header with Opening Reveal Animation */}
-        <Navbar onOpenQuoteModal={() => handleOpenQuoteModal()} animStage={animStage} />
+        {/* Navigation header (its logo, menu and buttons slide in once on the first visit - CSS) */}
+        <Navbar onOpenQuoteModal={() => handleOpenQuoteModal()} />
 
-        {/* Full Website Content - Hidden Initially, Reveals at Stage 3.
-            Once revealed it must have no transform: a transform here would make every
-            position:fixed pop-up (lightboxes, viewers) position against the page instead of the screen. */}
-        <div
-          className={`flex-1 flex flex-col transition-all duration-700 ease-out ${
-            animStage >= 3
-              ? 'opacity-100 transform-none'
-              : 'opacity-0 translate-y-4 pointer-events-none'
-          }`}
-        >
+        {/* The page is shown straight away; the hero and the scroll reveals animate its content.
+            No transform here: it would make every position:fixed pop-up position against the page. */}
+        <div className="flex-1 flex flex-col">
           {/* Main Page Routing */}
-          <main ref={mainRef} className="flex-1">
+          <main className="flex-1">
             {/* Simple page header (breadcrumb + Back) on every page except Home */}
             <SiteHeader />
             <React.Suspense fallback={<PageLoading />}>
@@ -233,10 +181,10 @@ function PublicSite() {
         </div>
 
         {/* Global Floating Bottom-Right WhatsApp Quick Contact */}
-        {animStage >= 3 && <WhatsAppWidget />}
+        <WhatsAppWidget />
 
         {/* Tester-only floating "Report a bug" button (hidden for normal visitors) */}
-        {animStage >= 3 && <BugReportButton />}
+        <BugReportButton />
 
       </div>
       </PageTitleProvider>
