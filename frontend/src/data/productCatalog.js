@@ -20,7 +20,7 @@ const COVER_IMAGES = {
   'solar-dryer': '/images/gallery/photo-04.webp',
   'solar-thermal': '/images/products/solar-thermal/parabolic-trough/parabolic-trough-01.webp',
   'research-and-development': '/images/projects/project-24.webp',
-  'pv-laboratory': '/images/products/research-and-development/pv-visual-inspection/pv-visual-inspection-01.webp',
+  'pv-laboratory': '/images/products/research-and-development/pv-bending-test/pv-bending-test-02.webp',
 };
 
 export const isPlaceholder = (src) => !src || src === PLACEHOLDER_IMAGE;

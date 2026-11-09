@@ -1,82 +1,119 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
-  Menu, X, ArrowRight, ChevronDown, ChevronRight, FileText, Images, PlayCircle, MapPin, LayoutGrid
+  Menu, X, ArrowRight, ChevronDown, ChevronRight, FileText, Images, PlayCircle, MapPin, LayoutGrid, CheckCircle2
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
 import LanguageWidget from './LanguageWidget';
 import { PRODUCTS } from '../data/siteMap';
-import { nodeTitle, nodeShortTitle, productThumb, DRYER_GROUPS, dryerModels } from '../data/productCatalog';
+import { nodeTitle, nodeShortTitle, productImage, productThumb, DRYER_GROUPS, dryerModels } from '../data/productCatalog';
 
 // Sub-products of a product area for the menus: its products and their own sub-products, in order
 const menuChildren = (product) => (product.children || []).flatMap(c => [{ node: c, depth: 0 }, ...(c.children || []).map(g => ({ node: g, depth: 1 }))]);
 
-// Products menu, right-hand panel: what the hovered product area contains.
-// Solar Dryer Models shows its models as photo tiles - the three sq.ft box dryers in the first row,
-// then the five tunnel dryers; the other areas list their products by name.
+// One product in the Products menu: its photo filling the tile, its name on the photo
+function MenuTile({ node, label, large = false, compact = false, onNavigate }) {
+  return (
+    <Link
+      to={node.path}
+      onClick={onNavigate}
+      className="group relative block min-h-0 min-w-0 rounded-2xl overflow-hidden bg-slate-200 ring-1 ring-slate-200 hover:ring-4 hover:ring-[#002DC2]/70 transition-shadow"
+    >
+      <img
+        src={large ? productImage(node) : productThumb(node)}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      />
+      <span className={`absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 bg-gradient-to-t from-black/85 via-black/45 to-transparent pt-12 pb-3 ${compact ? 'px-3' : 'px-4'}`}>
+        <span className={`font-extrabold text-white leading-snug drop-shadow ${large ? 'text-lg xl:text-xl' : 'text-sm xl:text-base'} ${compact ? 'whitespace-nowrap' : ''}`}>{label}</span>
+        {!compact && <ArrowRight className="w-5 h-5 text-white shrink-0 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />}
+      </span>
+    </Link>
+  );
+}
+
+// Products menu, right-hand side: the hovered product area's products as large photo tiles that
+// share the menu's height. Solar Dryer Models: the three sq.ft box dryers in the first row, the
+// five tunnel dryers in the second.
 function ProductMenuPanel({ product, onNavigate }) {
   const { t } = useLanguage();
-  const items = menuChildren(product);
+  let content;
+  if (product.id === 'solar-dryer') {
+    content = DRYER_GROUPS.map(group => {
+      const models = dryerModels(group.id);
+      return (
+        <div key={group.id} className="flex-1 min-h-0 flex flex-col gap-2">
+          <p className="text-xs font-black uppercase tracking-wider text-slate-500">{t(group.titleKey)}</p>
+          <div className={`flex-1 min-h-0 grid grid-rows-1 gap-3 ${models.length > 3 ? 'grid-cols-5' : 'grid-cols-3'}`}>
+            {models.map(model => <MenuTile key={model.id} node={model} label={nodeShortTitle(model, t)} compact onNavigate={onNavigate} />)}
+          </div>
+        </div>
+      );
+    });
+  } else if (product.children) {
+    // every product and sub-product of the area, plus a tile for the area's own page
+    const nodes = menuChildren(product).map(({ node }) => node);
+    const rows = nodes.length > 3 ? 2 : 1;
+    const cols = rows === 2 ? 'grid-cols-3' : nodes.length === 3 ? 'grid-cols-3' : 'grid-cols-2';
+    const ProductIcon = product.icon;
+    content = (
+      <div className={`flex-1 min-h-0 grid gap-3 ${cols} ${rows === 2 ? 'grid-rows-2' : 'grid-rows-1'}`}>
+        {nodes.map(node => <MenuTile key={node.id} node={node} label={nodeTitle(node, t)} large={rows === 1} onNavigate={onNavigate} />)}
+        {rows === 2 && nodes.length % 3 !== 0 && (
+          <Link
+            to={product.path}
+            onClick={onNavigate}
+            className="group min-h-0 rounded-2xl border-2 border-dashed border-[#002DC2]/25 bg-[#F0F4FD] hover:bg-[#E3EAFC] flex flex-col items-center justify-center gap-3 p-4 text-center transition-colors"
+          >
+            <span className="w-14 h-14 rounded-2xl bg-[#002DC2] text-white flex items-center justify-center"><ProductIcon className="w-8 h-8" /></span>
+            <span className="text-base font-extrabold text-[#123B92]">{t(product.key)}</span>
+            <span className="inline-flex items-center gap-1.5 text-sm font-bold text-[#002DC2]">
+              {t('prod_explore')} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </span>
+          </Link>
+        )}
+      </div>
+    );
+  } else {
+    // a product without sub-products (Solar Water Heater): its photo and its key facts
+    content = (
+      <div className="flex-1 min-h-0 grid grid-cols-2 grid-rows-1 gap-6">
+        <MenuTile node={product} label={t(product.key)} large onNavigate={onNavigate} />
+        <div className="flex flex-col justify-center gap-4">
+          <p className="text-lg text-slate-600 leading-relaxed">{t(product.shortKey)}</p>
+          {product.points && (
+            <ul className="space-y-3">
+              {product.points.map(key => (
+                <li key={key} className="flex items-start gap-3 text-base font-bold text-[#123B92]">
+                  <CheckCircle2 className="w-6 h-6 text-[#23AC39] shrink-0" />
+                  <span>{t(key)}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+          <Link
+            to={product.path}
+            onClick={onNavigate}
+            className="self-start inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#002DC2] hover:bg-[#123B92] text-white text-sm font-extrabold transition-colors"
+          >
+            {t('cat_viewProduct')} <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+    );
+  }
   return (
-    <div className="space-y-3">
+    <div className="h-full flex flex-col gap-4">
       <Link
         to={product.path}
         onClick={onNavigate}
-        className="group inline-flex items-center gap-1.5 text-base font-black text-[#123B92] hover:text-[#002DC2] transition-colors"
+        className="group self-start inline-flex items-center gap-2 text-xl xl:text-2xl font-black text-[#123B92] hover:text-[#002DC2] transition-colors"
       >
         {t(product.key)}
-        <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
       </Link>
-
-      {product.id === 'solar-dryer' ? (
-        DRYER_GROUPS.map(group => (
-          <div key={group.id}>
-            <p className="text-2xs font-black uppercase tracking-wider text-slate-400 mb-1 px-1">{t(group.titleKey)}</p>
-            <div className="grid grid-cols-3 gap-1">
-              {dryerModels(group.id).map(model => (
-                <Link
-                  key={model.id}
-                  to={model.path}
-                  onClick={onNavigate}
-                  className="group block rounded-xl p-1 hover:bg-[#F0F4FD] transition-colors"
-                >
-                  <span className="block aspect-[3/2] rounded-lg overflow-hidden bg-slate-100 border border-slate-200">
-                    <img src={productThumb(model)} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                  </span>
-                  <span className="block mt-1 text-xs font-bold text-center text-slate-700 group-hover:text-[#002DC2] whitespace-nowrap">
-                    {nodeShortTitle(model, t)}
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        ))
-      ) : items.length > 0 ? (
-        <ul className="space-y-0.5">
-          {items.map(({ node, depth }) => (
-            <li key={node.id}>
-              <Link
-                to={node.path}
-                onClick={onNavigate}
-                className={`group flex items-center gap-3 rounded-xl p-1.5 hover:bg-[#F0F4FD] transition-colors ${depth ? 'ml-6' : ''}`}
-              >
-                <img src={productThumb(node)} alt="" loading="lazy" className={`${depth ? 'w-11 h-8' : 'w-14 h-10'} rounded-md object-cover bg-slate-100 border border-slate-200 shrink-0`} />
-                <span className={`${depth ? 'text-xs' : 'text-sm'} font-bold text-slate-700 group-hover:text-[#002DC2] leading-snug`}>{nodeTitle(node, t)}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <Link to={product.path} onClick={onNavigate} className="group block">
-          <span className="block aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
-            <img src={productThumb(product)} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-          </span>
-          <span className="mt-2 inline-flex items-center gap-1.5 text-sm font-bold text-[#002DC2]">
-            {t('cat_viewProduct')} <ArrowRight className="w-4 h-4" />
-          </span>
-        </Link>
-      )}
+      {content}
     </div>
   );
 }
@@ -95,7 +132,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const productsRef = useRef(null);
   const galleryRef = useRef(null);
   const timeoutRef = useRef(null);
-  const headerRef = useRef(null);
+  const productsPanelRef = useRef(null);
   const location = useLocation();
   const { t, lang } = useLanguage();
 
@@ -150,6 +187,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   // Freeze the page behind the open mobile menu; Esc closes it
   useScrollLock(mobileMenuOpen);
   useEscapeKey(mobileMenuOpen, () => setMobileMenuOpen(false));
+  useEscapeKey(productsDropdownOpen || galleryDropdownOpen, () => { setProductsDropdownOpen(false); setGalleryDropdownOpen(false); });
 
   // Close menus on route change
   useEffect(() => {
@@ -162,7 +200,8 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (productsRef.current && !productsRef.current.contains(e.target)) {
+      const inProducts = [productsRef.current, productsPanelRef.current].some(el => el && el.contains(e.target));
+      if (!inProducts) {
         setProductsDropdownOpen(false);
       }
       if (galleryRef.current && !galleryRef.current.contains(e.target)) {
@@ -232,7 +271,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
   const isContactActive = location.pathname === '/contact';
 
   return (
-    <header ref={headerRef} className="sticky top-0 z-40 relative bg-white/95 backdrop-blur-md shadow-sm w-full transition-colors duration-500 border-b border-slate-100">
+    <header className="sticky top-0 z-40 relative bg-white/95 backdrop-blur-md shadow-sm w-full transition-colors duration-500 border-b border-slate-100">
       
       {/* MAIN NAVBAR CONTAINER */}
       <div className={`w-full px-5 sm:px-8 ${density === 0 ? 'md:px-[60px]' : 'lg:px-6'}`}>
@@ -301,50 +340,6 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                 <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${productsDropdownOpen ? 'rotate-180 text-[#002DC2]' : 'text-slate-500'}`} />
               </button>
 
-              {/* PRODUCTS DROPDOWN: the four product areas on the left; the hovered area's products on the right */}
-              {productsDropdownOpen && (
-                <div
-                  className={`absolute top-full ${twoRow ? 'left-0' : 'left-1/2 -translate-x-1/2'} mt-2 w-[620px] bg-white rounded-2xl shadow-2xl border border-slate-200/90 z-50 animate-fade-in flex overflow-hidden`}
-                  onMouseEnter={handleProductsEnter}
-                  onMouseLeave={handleProductsLeave}
-                >
-                  <div className="w-[230px] shrink-0 bg-slate-50 border-r border-slate-100 p-2 flex flex-col gap-2">
-                    <ul className="space-y-1">
-                      {PRODUCTS.map((product) => {
-                        const active = product.id === menuProduct.id;
-                        const Icon = product.icon;
-                        return (
-                          <li key={product.id}>
-                            <Link
-                              to={product.path}
-                              onMouseEnter={() => setMenuProductId(product.id)}
-                              onFocus={() => setMenuProductId(product.id)}
-                              onClick={() => setProductsDropdownOpen(false)}
-                              className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-bold transition-colors ${
-                                active ? 'bg-white text-[#002DC2] shadow-sm ring-1 ring-[#002DC2]/15' : 'text-slate-700 hover:text-[#002DC2]'
-                              }`}
-                            >
-                              <Icon className="w-5 h-5 shrink-0" />
-                              <span className="flex-1 leading-snug">{t(product.key)}</span>
-                              {product.children && <ChevronRight className={`w-4 h-4 shrink-0 ${active ? 'text-[#002DC2]' : 'text-slate-400'}`} />}
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                    <Link
-                      to="/products"
-                      onClick={() => setProductsDropdownOpen(false)}
-                      className="mt-auto flex items-center gap-2 px-3 py-2.5 rounded-xl border-t border-slate-200 text-sm font-bold text-[#002DC2] hover:bg-white transition-colors"
-                    >
-                      <LayoutGrid className="w-4 h-4" /> {t('site_viewAllProducts')}
-                    </Link>
-                  </div>
-                  <div className="flex-1 min-w-0 p-4">
-                    <ProductMenuPanel product={menuProduct} onNavigate={() => setProductsDropdownOpen(false)} />
-                  </div>
-                </div>
-              )}
             </div>
 
             {/* 3. GALLERY (DROPDOWN MENU) */}
@@ -465,17 +460,67 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
         </div>
       </div>
 
-      {/* Dimmed backdrop overlay when dropdown is open. It starts below the navbar (taller when its
-          menu wraps onto a second row), so it never covers the menu buttons and closes the menu. */}
+      {/* Dimmed backdrop below the navbar while a menu is open (positioned against the header, so it
+          starts under it even when the menu wraps onto a second row and never covers the menu buttons) */}
       {(productsDropdownOpen || galleryDropdownOpen) && (
         <div
-          style={{ top: headerRef.current?.offsetHeight ?? 68 }}
-          className="hidden lg:block fixed inset-x-0 bottom-0 bg-black/35 backdrop-blur-[1px] z-30 transition-opacity duration-300"
+          className="hidden lg:block absolute inset-x-0 top-full h-screen bg-black/40 backdrop-blur-[1px] z-30"
           onClick={() => {
             setProductsDropdownOpen(false);
             setGalleryDropdownOpen(false);
           }}
         />
+      )}
+
+      {/* PRODUCTS MENU: full width under the navbar, 75% of the screen height. The four product areas on
+          the left; the hovered area's products as large photo tiles on the right. */}
+      {productsDropdownOpen && (
+        <div
+          ref={productsPanelRef}
+          className="hidden lg:block absolute inset-x-0 top-full h-[75vh] min-h-[460px] bg-white border-t border-slate-200 shadow-2xl z-50 animate-fade-in"
+          onMouseEnter={handleProductsEnter}
+          onMouseLeave={handleProductsLeave}
+        >
+          <div className="h-full max-w-[1600px] mx-auto px-6 xl:px-10 py-6 flex gap-6 xl:gap-10">
+            <div className="w-60 xl:w-72 shrink-0 flex flex-col gap-2">
+              <ul className="space-y-1.5">
+                {PRODUCTS.map((product) => {
+                  const active = product.id === menuProduct.id;
+                  const Icon = product.icon;
+                  return (
+                    <li key={product.id}>
+                      <Link
+                        to={product.path}
+                        onMouseEnter={() => setMenuProductId(product.id)}
+                        onFocus={() => setMenuProductId(product.id)}
+                        onClick={() => setProductsDropdownOpen(false)}
+                        className={`flex items-center gap-3 px-3 py-3 rounded-2xl text-base font-bold transition-colors ${
+                          active ? 'bg-[#F0F4FD] text-[#002DC2] ring-1 ring-[#002DC2]/20' : 'text-slate-700 hover:bg-slate-50 hover:text-[#002DC2]'
+                        }`}
+                      >
+                        <span className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors ${active ? 'bg-[#002DC2] text-white' : 'bg-slate-100 text-[#002DC2]'}`}>
+                          <Icon className="w-5 h-5" />
+                        </span>
+                        <span className="flex-1 leading-snug">{t(product.key)}</span>
+                        <ChevronRight className={`w-5 h-5 shrink-0 ${active ? 'text-[#002DC2]' : 'text-slate-300'}`} />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+              <Link
+                to="/products"
+                onClick={() => setProductsDropdownOpen(false)}
+                className="mt-auto flex items-center justify-center gap-2 px-4 py-3 rounded-2xl border border-[#002DC2]/25 text-sm font-bold text-[#002DC2] hover:bg-[#F0F4FD] transition-colors"
+              >
+                <LayoutGrid className="w-4 h-4" /> {t('site_viewAllProducts')}
+              </Link>
+            </div>
+            <div className="flex-1 min-w-0 border-l border-slate-100 pl-6 xl:pl-10">
+              <ProductMenuPanel product={menuProduct} onNavigate={() => setProductsDropdownOpen(false)} />
+            </div>
+          </div>
+        </div>
       )}
 
       {/* MOBILE MENU ACCORDION DRAWER */}

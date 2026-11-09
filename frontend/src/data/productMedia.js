@@ -79,7 +79,7 @@ export const PRODUCT_PHOTOS = {
     { src: '/images/products/solar-thermal/parabolic-trough/parabolic-trough-13.webp', thumb: '/images/products/solar-thermal/parabolic-trough/parabolic-trough-13-sm.webp', w: 1600, h: 1200 },
   ],
   'scheffler-dish': [
-    { src: '/images/products/solar-thermal/scheffler-dish/scheffler-dish-01.webp', thumb: '/images/products/solar-thermal/scheffler-dish/scheffler-dish-01-sm.webp', w: 1600, h: 1200, place: "Indo-MIM, Bengaluru, Karnataka" },
+    { src: '/images/products/solar-thermal/scheffler-dish/scheffler-dish-01.webp', thumb: '/images/products/solar-thermal/scheffler-dish/scheffler-dish-01-sm.webp', w: 1600, h: 1080, place: "Indo-MIM, Bengaluru, Karnataka" },
     { src: '/images/products/solar-thermal/scheffler-dish/scheffler-dish-02.webp', thumb: '/images/products/solar-thermal/scheffler-dish/scheffler-dish-02-sm.webp', w: 1600, h: 1200, place: "SRM Institute of Science and Technology, Chennai" },
     { src: '/images/products/solar-thermal/scheffler-dish/scheffler-dish-03.webp', thumb: '/images/products/solar-thermal/scheffler-dish/scheffler-dish-03-sm.webp', w: 1600, h: 1200, place: "SRM Institute of Science and Technology, Chennai" },
     { src: '/images/products/solar-thermal/scheffler-dish/scheffler-dish-04.webp', thumb: '/images/products/solar-thermal/scheffler-dish/scheffler-dish-04-sm.webp', w: 1200, h: 1600, place: "SRM Institute of Science and Technology, Chennai" },
