@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Breadcrumb } from './SiteHeader';
 import SplitWords from '../motion/SplitWords';
 import { prefersReducedMotion } from '../motion/core';
@@ -26,35 +26,53 @@ const DESKTOP_SHADE = 'linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0, rgba(0, 0, 0
 // position: CSS object-position for the original photo (phones, and the fallback)
 // actions : exactly two { label, to | href | onClick, icon?, external?, download? } - the first is the primary button
 // stats   : exactly three { value, label }
+// slides  : instead of the above, several slides that each bring their own photo and text (Home: one
+//           per service) - [{ image, position?, focus?, label, eyebrow?, icon?, title, subtitle,
+//           actions, stats? | points? (three short texts) }]. They change every 7 s (paused while the
+//           pointer or keyboard focus is in the hero; not at all for reduced motion).
+// slidesLabel: accessible name of the slide group (e.g. "Our services")
 export default function PageHero({
   images, art, focus = 1.25, position = '50% 50%',
-  title, subtitle, actions = [], stats = [], breadcrumb = true
+  title, subtitle, actions = [], stats = [], breadcrumb = true, slides, slidesLabel
 }) {
-  const list = (Array.isArray(images) ? images : [images]).filter(Boolean);
+  const media = slides
+    ? slides.map(sl => ({ src: sl.image, position: sl.position || position, focus: sl.focus || focus, label: sl.label }))
+    : (Array.isArray(images) ? images : [images]).filter(Boolean).map(src => ({ src, position, focus }));
+  const texts = slides || [{ title, subtitle, actions, stats }];
   const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const interval = slides ? 7000 : 5000;
+  const autoplay = media.length > 1 && !(slides && prefersReducedMotion());
   // Entrance (CSS, index.css "Page hero entrance"): the photo settles from a slight zoom, the title
   // rises word by word with its highlight underlined, then the subtitle, buttons and facts follow.
+  // A slide's text replays that entrance each time the slide comes round.
   useEffect(() => {
-    if (list.length < 2) return undefined;
-    const timer = setInterval(() => setActive(i => (i + 1) % list.length), 5000);
-    return () => clearInterval(timer);
-  }, [list.length]);
+    if (!autoplay || paused) return undefined;
+    const timer = setTimeout(() => setActive(i => (i + 1) % media.length), interval);
+    return () => clearTimeout(timer);
+  }, [active, paused, autoplay, media.length, interval]);
+  const pauseProps = slides ? {
+    onMouseEnter: () => setPaused(true),
+    onMouseLeave: () => setPaused(false),
+    onFocus: () => setPaused(true),
+    onBlur: (e) => { if (!e.currentTarget.contains(e.relatedTarget)) setPaused(false); },
+  } : {};
 
   return (
-    <section data-hero className="no-divider relative w-full overflow-hidden bg-neutral-900 lg:h-[680px]">
+    <section data-hero {...pauseProps} className="no-divider relative w-full overflow-hidden bg-neutral-900 lg:h-[680px]">
       {/* Media: a clear banner on phones/tablets, the whole hero from lg up */}
-      <div data-hero-media className={`relative h-64 sm:h-80 lg:absolute lg:inset-0 lg:h-auto overflow-hidden ${list.length > 0 ? 'bg-neutral-200' : 'bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-700'}`} aria-hidden="true">
-        {list.map((src, idx) => (
+      <div data-hero-media className={`relative h-64 sm:h-80 lg:absolute lg:inset-0 lg:h-auto overflow-hidden ${media.length > 0 ? 'bg-neutral-200' : 'bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-700'}`} aria-hidden="true">
+        {media.map((m, idx) => (
           <img
-            key={src}
-            src={src}
+            key={m.src}
+            src={m.src}
             alt=""
             fetchpriority={idx === 0 ? 'high' : undefined}
             className={`hero-slide absolute inset-y-0 left-0 h-full max-w-none object-cover [object-position:var(--pos)] w-full lg:w-[var(--hero-w)] ${idx === active ? 'is-active opacity-100' : 'opacity-0'}`}
-            style={{ '--hero-w': `${focus * 100}%`, '--pos': position }}
+            style={{ '--hero-w': `${m.focus * 100}%`, '--pos': m.position }}
           />
         ))}
-        {list.length === 0 && art && (
+        {media.length === 0 && art && (
           <div className="absolute inset-0 flex items-center justify-end p-4 lg:pr-20 lg:pl-[50%]">
             <div className="w-full h-full max-w-2xl flex items-center">{art}</div>
           </div>
@@ -65,21 +83,33 @@ export default function PageHero({
         <div className="hidden lg:block absolute inset-0" style={{ backgroundImage: DESKTOP_SHADE }} />
       </div>
 
-      {list.length > 1 && (
-        <div className="absolute right-3 top-3 lg:top-auto lg:right-20 lg:bottom-6 z-20 flex items-center gap-2 bg-white rounded-full px-2 py-1.5 shadow-md">
-          <button type="button" aria-label="Previous slide" onClick={() => setActive(i => (i - 1 + list.length) % list.length)} className="w-8 h-8 rounded-full flex items-center justify-center text-[#123B92] hover:bg-[#F0F4FD] cursor-pointer">
+      {media.length > 1 && (
+        // Slide controls on desktop only; on phones and tablets the slides simply change on their own.
+        // The current dot fills up over the time the slide is shown.
+        <div className="hidden lg:flex absolute right-20 bottom-6 z-20 items-center gap-2 bg-white rounded-full px-2 py-1.5 shadow-md">
+          <button type="button" aria-label="Previous slide" onClick={() => setActive(i => (i - 1 + media.length) % media.length)} className="w-8 h-8 rounded-full flex items-center justify-center text-[#123B92] hover:bg-[#F0F4FD] cursor-pointer">
             <ChevronLeft className="w-5 h-5" />
           </button>
-          {list.map((src, idx) => (
+          {media.map((m, idx) => (
             <button
-              key={src}
+              key={m.src}
               type="button"
-              aria-label={`Go to slide ${idx + 1}`}
+              aria-label={m.label || `Go to slide ${idx + 1}`}
+              title={m.label}
+              aria-current={idx === active ? 'true' : undefined}
               onClick={() => setActive(idx)}
-              className={`h-2.5 rounded-full transition-all cursor-pointer ${idx === active ? 'w-7 bg-[#123B92]' : 'w-2.5 bg-slate-300 hover:bg-slate-400'}`}
-            />
+              className={`relative h-2.5 rounded-full overflow-hidden transition-all cursor-pointer ${idx === active ? 'w-9 bg-[#123B92]/25' : 'w-2.5 bg-slate-300 hover:bg-slate-400'}`}
+            >
+              {idx === active && (
+                <span
+                  key={`${active}-${paused}`}
+                  className={`absolute inset-0 rounded-full bg-[#123B92] ${autoplay && !paused ? 'hero-progress' : ''}`}
+                  style={{ '--hero-interval': `${interval}ms` }}
+                />
+              )}
+            </button>
           ))}
-          <button type="button" aria-label="Next slide" onClick={() => setActive(i => (i + 1) % list.length)} className="w-8 h-8 rounded-full flex items-center justify-center text-[#123B92] hover:bg-[#F0F4FD] cursor-pointer">
+          <button type="button" aria-label="Next slide" onClick={() => setActive(i => (i + 1) % media.length)} className="w-8 h-8 rounded-full flex items-center justify-center text-[#123B92] hover:bg-[#F0F4FD] cursor-pointer">
             <ChevronRight className="w-5 h-5" />
           </button>
         </div>
@@ -87,30 +117,68 @@ export default function PageHero({
 
       {/* Text: white, straight on the photo (desktop) or on a dark panel under the banner (phones/tablets) */}
       <div className={`relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 ${breadcrumb ? 'pb-24' : 'pb-10'} lg:pt-0 lg:pb-16 lg:h-full lg:flex lg:items-center pointer-events-none`}>
-        <div data-hero-text className="pointer-events-auto w-full lg:max-w-[600px] flex flex-col gap-5 text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.35)]">
-          <h1 className="hero-title text-3xl sm:text-4xl lg:text-[2.6rem] font-black tracking-tight !text-white leading-[1.12] [&_span:not(.hero-word)]:!text-[#5ED16F]">
-            <SplitWords>{title}</SplitWords>
-          </h1>
-          {subtitle && (
-            <p data-hero-fade style={{ '--d': 0 }} className="hero-sub text-base sm:text-lg text-white/90 font-medium leading-relaxed [&_strong]:text-white">{subtitle}</p>
-          )}
-          {actions.length > 0 && (
-            <div data-hero-fade style={{ '--d': 1 }} className="flex flex-col sm:flex-row flex-wrap gap-3 [text-shadow:none]">
-              {actions.map((a, i) => <HeroButton key={i} action={a} primary={i === 0} />)}
-            </div>
-          )}
-          {stats.length > 0 && (
-            // Phones: three rows (value left, label right); from sm up: three columns split by thin lines
-            <dl className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/25 border-t border-white/25 pt-1 sm:pt-5">
-              {stats.map((s, i) => (
-                <div key={i} data-hero-fade style={{ '--d': 2 + i }} className="min-w-0 flex items-center gap-3 py-2.5 sm:py-0 sm:block sm:px-5 sm:first:pl-0 sm:last:pr-0">
-                  <dt className="sr-only">{s.label}</dt>
-                  <StatValue value={s.value} className="max-w-[55%] sm:max-w-none text-lg sm:text-2xl font-black text-white leading-tight [overflow-wrap:anywhere] tabular-nums" />
-                  <dd className="ml-auto sm:ml-0 text-right sm:text-left text-xs sm:text-sm text-white/80 font-semibold leading-snug sm:mt-1 [overflow-wrap:anywhere]">{s.label}</dd>
-                </div>
-              ))}
-            </dl>
-          )}
+        {/* every slide's text sits in the same grid cell, so the hero keeps the height of the longest
+            one (nothing below moves when the slide changes); only the current one is visible */}
+        <div
+          data-hero-text
+          className="pointer-events-auto w-full lg:max-w-[600px] grid"
+          role={slides ? 'region' : undefined}
+          aria-roledescription={slides ? 'carousel' : undefined}
+          aria-label={slides ? slidesLabel : undefined}
+        >
+          {texts.map((item, i) => {
+            const on = i === (slides ? active : 0);
+            const Heading = i === 0 ? 'h1' : 'h2';
+            const Icon = item.icon;
+            return (
+              <div
+                key={`${on ? 'on' : 'off'}-${i}`}
+                aria-hidden={on ? undefined : true}
+                className={`[grid-area:1/1] self-start lg:self-center flex flex-col gap-5 text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.35)] ${on ? '' : 'invisible'}`}
+              >
+                {item.eyebrow && (
+                  <p className="hero-eyebrow self-start inline-flex items-center gap-2 rounded-full bg-white/15 ring-1 ring-white/30 px-3 py-1 text-xs sm:text-sm font-bold uppercase tracking-wider text-white [text-shadow:none]">
+                    {Icon && <Icon className="w-4 h-4 text-[#5ED16F]" />}
+                    {item.eyebrow}
+                  </p>
+                )}
+                <Heading className="hero-title text-3xl sm:text-4xl lg:text-[2.6rem] font-black tracking-tight !text-white leading-[1.12] [&_span:not(.hero-word)]:!text-[#5ED16F]">
+                  <SplitWords>{item.title}</SplitWords>
+                </Heading>
+                {item.subtitle && (
+                  <p data-hero-fade style={{ '--d': 0 }} className="hero-sub text-base sm:text-lg text-white/90 font-medium leading-relaxed [&_strong]:text-white">{item.subtitle}</p>
+                )}
+                {item.actions?.length > 0 && (
+                  <div data-hero-fade style={{ '--d': 1 }} className="flex flex-col sm:flex-row flex-wrap gap-3 [text-shadow:none]">
+                    {item.actions.map((a, j) => <HeroButton key={j} action={a} primary={j === 0} />)}
+                  </div>
+                )}
+                {item.stats?.length > 0 && (
+                  // Phones: three rows (value left, label right); from sm up: three columns split by thin lines
+                  <dl className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/25 border-t border-white/25 pt-1 sm:pt-5">
+                    {item.stats.map((st, j) => (
+                      <div key={j} data-hero-fade style={{ '--d': 2 + j }} className="min-w-0 flex items-center gap-3 py-2.5 sm:py-0 sm:block sm:px-5 sm:first:pl-0 sm:last:pr-0">
+                        <dt className="sr-only">{st.label}</dt>
+                        <StatValue value={st.value} className="max-w-[55%] sm:max-w-none text-lg sm:text-2xl font-black text-white leading-tight [overflow-wrap:anywhere] tabular-nums" />
+                        <dd className="ml-auto sm:ml-0 text-right sm:text-left text-xs sm:text-sm text-white/80 font-semibold leading-snug sm:mt-1 [overflow-wrap:anywhere]">{st.label}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
+                {item.points?.length > 0 && (
+                  // Key points of a service, in the place of the facts
+                  <ul className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-5 border-t border-white/25 pt-3 sm:pt-5">
+                    {item.points.map((pt, j) => (
+                      <li key={j} data-hero-fade style={{ '--d': 2 + j }} className="flex items-start gap-2 text-sm font-bold text-white leading-snug">
+                        <CheckCircle2 className="w-5 h-5 text-[#5ED16F] shrink-0" />
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
 

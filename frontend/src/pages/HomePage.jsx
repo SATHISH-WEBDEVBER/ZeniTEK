@@ -10,16 +10,32 @@ import {
 } from 'lucide-react';
 import IconTile from '../components/IconTile';
 import PageHero from '../components/PageHero';
+import { CATALOG } from '../data/productCatalog';
 
-// Home hero backgrounds: five ZeniTEK solar tunnel dryers, each with clear sky on the left (behind
-// the hero text) and the dryer on the right, so on desktop they fill the hero as they are (focus 1).
-// Phones and tablets show them as a banner above the text.
-const heroSlides = [
-  { image: '/images/home-hero/slide-1.webp', alt: 'ZeniTEK solar tunnel dryer with roof-mounted solar panel on a concrete platform' },
-  { image: '/images/home-hero/slide-2.webp', alt: 'Long ZeniTEK polyhouse tunnel dryer on a brick plinth in an open field' },
-  { image: '/images/home-hero/slide-3.webp', alt: 'Large ZeniTEK solar tunnel dryer with exhaust vents beside a coconut grove' },
-  { image: '/images/home-hero/slide-4.webp', alt: 'ZeniTEK solar tunnel dryer with control panel and solar panel near palm trees' },
-  { image: '/images/home-hero/slide-5.webp', alt: 'ZeniTEK solar dryer with front doors and steps on a raised concrete base' },
+// Home hero: one slide per service, in this order. Each has its own background (composed 2:1 with the
+// subject on the right, behind which the text stays readable) and its own title, subtitle and button;
+// the dryer slide keeps the Home page's headline and facts, the others show their three key points.
+// Names, icons, links and points come from the product catalogue.
+const HERO_SERVICES = [
+  {
+    id: 'solar-dryer', image: '/images/home-hero/slide-2.webp', position: '78% 50%',
+    titleKeys: ['heroTitle1', 'heroTitle2'], subtitleKey: 'heroSubtitle', ctaKey: 'exploreModels',
+    stats: [['1,200+', 'dryersInstalled'], ['500+ MT', 'foodSaved'], ['40-60%', 'subsidyHelp']],
+  },
+  {
+    // parabolic trough collector, IIT Bhubaneswar, Odisha
+    id: 'solar-thermal', image: '/images/home-hero/service-solar-thermal.webp', position: '82% 50%',
+    titleKeys: ['hero_svcThermalTitle1', 'hero_svcThermalTitle2'], subtitleKey: 'hero_svcThermalSub', ctaKey: 'hero_svcThermalCta',
+  },
+  {
+    // wood log splitter for tribal communities in Sikkim
+    id: 'research-and-development', image: '/images/home-hero/service-research.webp', position: '72% 50%',
+    titleKeys: ['hero_svcRndTitle1', 'hero_svcRndTitle2'], subtitleKey: 'hero_svcRndSub', ctaKey: 'hero_svcRndCta',
+  },
+  {
+    id: 'solar-water-heater', image: '/images/home-hero/service-water-heater.webp', position: '82% 50%',
+    titleKeys: ['hero_svcSwhTitle1', 'hero_svcSwhTitle2'], subtitleKey: 'hero_svcSwhSub', ctaKey: 'hero_svcSwhCta',
+  },
 ];
 
 const crops = [
@@ -68,23 +84,29 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
   return (
     <div className="bg-slate-50 text-slate-900 w-full max-w-full overflow-x-hidden">
 
-      {/* SECTION 1: HERO (standard page hero with three cross-fading photos; no breadcrumb on Home) */}
+      {/* SECTION 1: HERO - a slide for each service (no breadcrumb on Home) */}
       <PageHero
-        images={heroSlides.map(s => s.image)}
         breadcrumb={false}
-        position="78% 50%"
         focus={1}
-        title={<>{t('heroTitle1')} <span className="text-[#002DC2]">{t('heroTitle2')}</span></>}
-        subtitle={t('heroSubtitle')}
-        actions={[
-          { label: t('getQuote'), onClick: () => onOpenQuoteModal(), icon: MessageSquareQuote },
-          { label: t('exploreModels'), to: '/solar-dryer-models', icon: ChevronRight },
-        ]}
-        stats={[
-          { value: '1,200+', label: t('dryersInstalled') },
-          { value: '500+ MT', label: t('foodSaved') },
-          { value: '40-60%', label: t('subsidyHelp') },
-        ]}
+        slidesLabel={t('hero_servicesLabel')}
+        slides={HERO_SERVICES.map((svc) => {
+          const node = CATALOG.find(n => n.id === svc.id);
+          return {
+            image: svc.image,
+            position: svc.position,
+            label: t(node.titleKey),
+            eyebrow: t(node.titleKey),
+            icon: node.icon,
+            title: <>{t(svc.titleKeys[0])} <span className="text-[#002DC2]">{t(svc.titleKeys[1])}</span></>,
+            subtitle: t(svc.subtitleKey),
+            actions: [
+              { label: t('getQuote'), onClick: () => onOpenQuoteModal(), icon: MessageSquareQuote },
+              { label: t(svc.ctaKey), to: node.path, icon: ChevronRight },
+            ],
+            stats: svc.stats?.map(([value, labelKey]) => ({ value, label: t(labelKey) })),
+            points: svc.stats ? undefined : node.points.map(key => t(key)),
+          };
+        })}
       />
 
 

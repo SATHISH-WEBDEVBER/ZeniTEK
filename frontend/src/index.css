@@ -715,13 +715,34 @@ main section.divider-full:not(section section):not([class*="rounded"]):not(.no-d
   transition: opacity 1.1s var(--ease-soft);
 }
 
+/* Slideshow heroes (Home): the current dot fills up while its slide is shown */
+@keyframes heroProgress {
+  from { scale: 0 1; }
+  to { scale: 1 1; }
+}
+
+.hero-progress {
+  transform-origin: 0 50%;
+  animation: heroProgress var(--hero-interval, 7s) linear both;
+}
+
 .hero-title span:not(.hero-word) {
   background: linear-gradient(rgba(94, 209, 111, 0.55), rgba(94, 209, 111, 0.55)) no-repeat 0 96% / 100% 0.09em;
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* the first photo settles in as the page opens; each later slide settles as it fades in */
   .hero-slide {
-    animation: heroPhotoIn 1.6s var(--ease-premium) both;
+    scale: 1.04;
+    transition: opacity 1.1s var(--ease-soft), scale 1.8s var(--ease-premium);
+    animation: heroPhotoIn 1.6s var(--ease-premium) backwards;
+  }
+  .hero-slide.is-active {
+    scale: none;
+  }
+  .hero-eyebrow {
+    animation: heroFadeIn 0.7s var(--ease-premium) both;
+    animation-delay: 40ms;
   }
   .hero-word {
     animation: heroWordIn 0.9s var(--ease-premium) both;
