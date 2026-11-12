@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import ROICalculator from '../components/ROICalculator';
 import ProductModelShowcase from '../components/ProductModelShowcase';
 import MapComponent from '../components/LazyMap';
 import { sampleReviews } from '../data/sampleData';
@@ -129,24 +128,8 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
       </section>
 
 
-      {/* SECTION 3: ROI CALCULATOR */}
-      <section className="w-full section-odd py-12 sm:py-16" id="roi-calculator">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('roiTitle')}</h2>
-            <p className="text-base sm:text-lg text-slate-600">{t('roiSubtitle')}</p>
-          </div>
-          <ROICalculator onSelectModelQuote={(modelKey, kg, crop, fullModel) => onOpenQuoteModal({
-            capacityNeeded: modelKey,
-            cropType: crop,
-            message: `Inquiry for ${fullModel || modelKey} (${kg} kg/batch of ${crop})`
-          })} />
-        </div>
-      </section>
-
-
-      {/* SECTION 4: PRODUCT MODEL SHOWCASE */}
-      <section className="w-full section-even py-8 sm:py-12 px-0 mx-0 overflow-x-hidden">
+      {/* SECTION 3: DRYER MODEL SHOWCASE (every model, one at a time) */}
+      <section className="w-full section-even py-10 sm:py-14 px-0 mx-0 overflow-x-hidden">
         <ProductModelShowcase
           onOpenQuoteModal={onOpenQuoteModal}
           onOpenDetailModal={onOpenDetailModal}

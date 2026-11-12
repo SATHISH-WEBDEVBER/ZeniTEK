@@ -1,371 +1,204 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { ChevronLeft, ChevronRight, ArrowRight, MessageSquareQuote } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import pageTranslations from '../i18n';
+import {
+  DRYER_GROUPS, dryerModels, nodeTitle, showcasePhotos, dryerRecord, shortCapacity
+} from '../data/productCatalog';
+import useAutoplay from '../motion/useAutoplay';
 
-export const teslaDryerProducts = [
-  {
-    id: "soldry-1210",
-    modelCode: "SOLDRY 1210",
-    name: "SOLDRY 1210",
-    category: "Commercial Polyhouse Tunnel",
-    capacity: "Capacity: 150 – 500 kg / batch",
-    leaseInfo: "Govt Subsidy Assistance 40% – 60%",
-    quoteCategory: "100 to 500 kg (Commercial)",
-    images: [
-      "/images/gallery/photo-04.webp",
-      "/images/gallery/photo-12.webp",
-      "/images/gallery/photo-34.webp",
-      "/images/gallery/photo-10.webp",
-      "/images/gallery/photo-02.webp",
-      "/images/gallery/photo-38.webp"
-    ]
-  },
-  {
-    id: "soldry-1709",
-    modelCode: "SOLDRY 1709",
-    name: "SOLDRY 1709",
-    category: "Inverted Parabolic Tunnel",
-    capacity: "Capacity: 400 – 1,200 kg / batch",
-    leaseInfo: "Govt Subsidy Assistance 50%",
-    quoteCategory: "100 to 500 kg (Commercial)",
-    images: [
-      "/images/gallery/photo-43.webp",
-      "/images/gallery/photo-44.webp",
-      "/images/gallery/photo-19.webp",
-      "/images/gallery/photo-20.webp",
-      "/images/gallery/photo-23.webp",
-      "/images/gallery/photo-33.webp"
-    ]
-  },
-  {
-    id: "sundry-50",
-    modelCode: "SUNDRY 50",
-    name: "SUNDRY 50",
-    category: "Commercial Box Dryer",
-    capacity: "Capacity: 20 – 100 kg / batch",
-    leaseInfo: "Govt Subsidy Assistance 40% – 50%",
-    quoteCategory: "100 to 500 kg (Commercial)",
-    images: [
-      "/images/gallery/photo-27.webp",
-      "/images/gallery/photo-01.webp",
-      "/images/gallery/photo-26.webp",
-      "/images/gallery/photo-31.webp",
-      "/images/gallery/photo-35.webp",
-      "/images/gallery/photo-36.webp",
-      "/images/gallery/photo-28.webp"
-    ]
-  },
-  {
-    id: "soldry-300",
-    modelCode: "SOLDRY 1210 - 300",
-    name: "SOLDRY 300",
-    category: "Industrial Polyhouse Tunnel",
-    capacity: "Capacity: 300 – 1,000 kg / batch",
-    leaseInfo: "Govt Subsidy Assistance 50% – 60%",
-    quoteCategory: "1 Ton+ (Industrial)",
-    images: [
-      "/images/gallery/photo-45.webp",
-      "/images/gallery/photo-39.webp",
-      "/images/gallery/photo-42.webp",
-      "/images/gallery/photo-32.webp",
-      "/images/gallery/photo-40.webp",
-      "/images/gallery/photo-41.webp"
-    ]
-  },
-  {
-    id: "sundry-12",
-    modelCode: "SUNDRY 12",
-    name: "SUNDRY 12",
-    category: "Compact Dual-Tier Box Dryer",
-    capacity: "Capacity: 5 – 25 kg / batch",
-    leaseInfo: "Micro-Enterprise Grant Eligible",
-    quoteCategory: "Under 50 kg (Portable)",
-    images: [
-      "/images/gallery/photo-25.webp",
-      "/images/gallery/photo-09.webp",
-      "/images/gallery/photo-13.webp",
-      "/images/gallery/photo-15.webp",
-      "/images/gallery/photo-16.webp",
-      "/images/gallery/photo-14.webp"
-    ]
-  },
-  {
-    id: "sundry-6",
-    modelCode: "SUNDRY 6",
-    name: "SUNDRY 6",
-    category: "Household Solar Box Dryer",
-    capacity: "Capacity: 2.5 – 12.5 kg / batch",
-    leaseInfo: "Home & Kitchen Enterprise",
-    quoteCategory: "Under 50 kg (Portable)",
-    images: [
-      "/images/gallery/photo-22.webp",
-      "/images/gallery/photo-05.webp",
-      "/images/gallery/photo-06.webp",
-      "/images/gallery/photo-37.webp",
-      "/images/gallery/photo-29.webp",
-      "/images/gallery/photo-30.webp"
-    ]
-  }
-];
+// Home: "Choose the perfect solar thermal dryer for your need" - every dryer model in the catalogue
+// (the box dryers by size, then the tunnel dryers), one large card at a time, laid out like the page
+// hero: the model's photo behind, its type, name and summary, three facts and two buttons. The previous
+// and next models peek in at the sides. Moves on every 6 s while on screen (paused on hover / focus).
+const MODELS = DRYER_GROUPS.flatMap(group => dryerModels(group.id).map(node => ({
+  node,
+  group,
+  photo: showcasePhotos(node)[0],
+  spec: dryerRecord(node),
+})));
+const INTERVAL = 6000;
+const en = (key) => pageTranslations.en[key] ?? key;
 
 export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailModal }) {
   const { t } = useLanguage();
-  // Category / subsidy lines are translated by product id (src/i18n/common.js); the capacity
-  // line reuses the numbers from the data, e.g. "Capacity: 150 – 500 kg / batch" -> {range} = "150 – 500".
-  const category = (p) => t(`common_showcase_${p.id}_category`);
-  const capacity = (p) => t('common_showcase_capacity', {
-    range: p.capacity.replace(/^Capacity:\s*/, '').replace(/\s*kg \/ batch$/, '')
-  });
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const total = MODELS.length;
+  const [active, setActive] = useState(0);
+  const go = (i) => setActive((i + total) % total);
+  const { ref, running, pauseProps } = useAutoplay(active, () => setActive(i => (i + 1) % total), { interval: INTERVAL });
 
-  const totalProducts = teslaDryerProducts.length;
-  const currentProduct = teslaDryerProducts[activeIndex];
-  const prevIndex = (activeIndex - 1 + totalProducts) % totalProducts;
-  const nextIndex = (activeIndex + 1) % totalProducts;
+  const prevIndex = (active - 1 + total) % total;
+  const nextIndex = (active + 1) % total;
+  const current = MODELS[active];
+  const name = nodeTitle(current.node, t);
+  const GroupIcon = current.node.icon;
+  const facts = [
+    { value: shortCapacity(current.spec?.capacityRange), label: t('hero_perBatch') },
+    { value: current.spec?.floorArea || '—', label: t('hero_floorArea') },
+    { value: current.spec?.paybackPeriod || '—', label: t('sections_payback') },
+  ];
 
-  const prevProduct = teslaDryerProducts[prevIndex];
-  const nextProduct = teslaDryerProducts[nextIndex];
-
-  // Auto-swap active product images every 5 seconds
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveImageIndex((prev) => (prev + 1) % currentProduct.images.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [currentProduct.images.length, activeIndex]);
-
-  const handlePrev = () => {
-    setActiveIndex(prevIndex);
-    setActiveImageIndex(0);
+  // The cards beside the active one (tablet and up): photo, type and short name; a click brings it forward
+  const peek = (index, side) => {
+    const m = MODELS[index];
+    const Arrow = side === 'prev' ? ChevronLeft : ChevronRight;
+    return (
+      <div
+        onClick={() => go(index)}
+        className="hidden md:block relative w-[13%] lg:w-[15%] xl:w-[16%] h-[400px] lg:h-[500px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group shrink-0 opacity-90 hover:opacity-100 shadow-xl transition-[opacity,transform] duration-500 hover:scale-[1.02] bg-slate-800"
+      >
+        <img
+          src={m.photo.src}
+          alt=""
+          loading="lazy"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          style={{ objectPosition: m.photo.position || '50% 50%' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 pointer-events-none" />
+        <div className="absolute top-5 inset-x-4 text-xs font-bold text-white drop-shadow leading-snug">
+          {t(m.group.titleKey)}
+        </div>
+        <div className="absolute bottom-6 inset-x-4 text-lg lg:text-xl font-black text-white drop-shadow leading-tight">
+          {m.node.code || m.node.size}
+        </div>
+        <button
+          type="button"
+          onClick={(e) => { e.stopPropagation(); go(index); }}
+          aria-label={side === 'prev' ? t('common_prevProduct') : t('common_nextProduct')}
+          className={`absolute ${side === 'prev' ? 'right-4 lg:right-5' : 'left-4 lg:left-5'} top-1/2 -translate-y-1/2 z-30 w-11 h-11 lg:w-12 lg:h-12 rounded-xl bg-white hover:bg-slate-100 text-slate-900 shadow-2xl flex items-center justify-center transition-transform active:scale-90 cursor-pointer`}
+        >
+          <Arrow className="w-6 h-6" />
+        </button>
+      </div>
+    );
   };
-
-  const handleNext = () => {
-    setActiveIndex(nextIndex);
-    setActiveImageIndex(0);
-  };
-
-  const currentImage = currentProduct.images[activeImageIndex % currentProduct.images.length];
 
   return (
     <div className="w-full select-none px-0 mx-0 overflow-x-hidden">
-      
-      {/* SECTION HEADING: CLEAN TITLE */}
+
       <div className="text-center px-4 mb-6 sm:mb-8">
         <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight leading-tight break-words text-balance">
           {t('modelsHeading')}
         </h2>
       </div>
 
-      {/* STAGE WITH GENEROUS SPACING BETWEEN CARDS */}
-      <div data-reveal="block" className="relative w-full overflow-hidden px-3 sm:px-6 lg:px-8 py-2">
+      <div ref={ref} {...pauseProps} data-reveal="block" className="relative w-full overflow-hidden px-3 sm:px-6 lg:px-8 py-2">
         <div className="flex items-center justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 w-full">
-          
-          {/* ================= LEFT PEEK CARD (PREVIOUS PRODUCT) ================= */}
-          <div 
-            onClick={handlePrev}
-            className="hidden md:block relative w-[13%] lg:w-[15%] xl:w-[16%] h-[380px] sm:h-[440px] lg:h-[500px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group shrink-0 opacity-90 hover:opacity-100 shadow-xl transition-all duration-500 hover:scale-[1.02]"
+
+          {peek(prevIndex, 'prev')}
+
+          {/* The active model */}
+          <div
+            className="relative w-full md:w-[64%] lg:w-[60%] xl:w-[58%] max-w-[1040px] h-[560px] sm:h-[520px] lg:h-[560px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shrink-0 ring-1 ring-black/5 bg-slate-900"
+            role="group"
+            aria-roledescription="slide"
+            aria-label={t('common_showcase_counter', { n: active + 1, total })}
           >
-            <img 
-              src={prevProduct.images[0]} 
-              alt={prevProduct.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-            />
-            {/* Subtle Gradient for Text Contrast */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+            {/* the active model's photo; its neighbours' photos wait underneath, so a change is a cross-fade */}
+            {MODELS.map((m, i) => (i === active || i === prevIndex || i === nextIndex) && (
+              <img
+                key={m.node.id}
+                src={m.photo.src}
+                alt={i === active ? name : ''}
+                aria-hidden={i === active ? undefined : true}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === active ? 'opacity-100' : 'opacity-0'}`}
+                style={{ objectPosition: m.photo.position || '50% 50%' }}
+              />
+            ))}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20 pointer-events-none" />
 
-            {/* Top Tag */}
-            <div className="absolute top-5 left-5 text-xs font-bold text-white drop-shadow">
-              {category(prevProduct)}
-            </div>
-
-            {/* Bottom Title Preview */}
-            <div className="absolute bottom-6 left-5 text-white">
-              <div className="text-xl lg:text-2xl font-black drop-shadow">
-                {prevProduct.name}
-              </div>
-            </div>
-
-            {/* Left Arrow Button centered vertically on the left peek card */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handlePrev();
-              }}
-              aria-label={t('common_prevProduct')}
-              className="absolute right-4 lg:right-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 lg:w-12 lg:h-12 rounded-xl bg-white hover:bg-slate-100 text-slate-900 shadow-2xl flex items-center justify-center transition-all active:scale-90 cursor-pointer"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-          </div>
-
-
-          {/* ================= CENTER ACTIVE CARD ================= */}
-          <div className="relative w-full md:w-[64%] lg:w-[60%] xl:w-[58%] max-w-[1040px] h-[440px] sm:h-[500px] lg:h-[550px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shrink-0 group opacity-100 ring-1 ring-black/5">
-            
-            {/* Active Image with 5-Second Smooth Cross-Fade - Full HD, Zero Blur */}
-            <img
-              key={currentImage}
-              src={currentImage}
-              alt={currentProduct.name}
-              className="w-full h-full object-cover object-center transform group-hover:scale-[1.02] transition-transform duration-700 animate-fade-in"
-            />
-
-            {/* Dark Bottom Gradient for Clean Text Readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/10 pointer-events-none" />
-
-            {/* TOP-LEFT CATEGORY */}
-            {/* Mobile: category stacks above the counter pill; sm+: side by side */}
-            <div className="absolute top-5 inset-x-5 sm:top-7 sm:inset-x-8 z-10 flex flex-col items-start gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4 pointer-events-none">
-              <span className="text-white text-xs sm:text-sm font-bold tracking-wide leading-snug drop-shadow-md sm:max-w-[60%]">
-                {category(currentProduct)}
+            {/* top: the model's type and its place in the line-up */}
+            <div className="absolute top-5 inset-x-5 sm:top-7 sm:inset-x-8 z-10 flex items-start justify-between gap-3 pointer-events-none">
+              <span key={`type-${active}`} className="animate-calm-fade inline-flex items-center gap-2 rounded-full bg-white/15 ring-1 ring-white/30 px-3 py-1 text-xs sm:text-sm font-bold uppercase tracking-wider text-white">
+                <GroupIcon className="w-4 h-4 text-[#5ED16F] shrink-0" />
+                {t(current.group.titleKey)}
               </span>
-
-              {/* TOP-RIGHT IMAGE COUNTER & AUTO-TIMER INDICATOR */}
-              <div className="flex items-center space-x-2 shrink-0">
-                <span className="w-2 h-2 rounded-full bg-[#23AC39] animate-pulse" />
-                <span className="text-xs font-bold text-white bg-black/60 px-3 py-1 rounded-full border border-white/30 whitespace-nowrap">
-                  {t('common_showcase_counter', { n: activeIndex + 1, total: totalProducts })}
-                </span>
-              </div>
+              <span className="shrink-0 text-xs font-bold text-white bg-black/60 px-3 py-1 rounded-full border border-white/30 whitespace-nowrap">
+                <span className="sm:hidden">{active + 1} / {total}</span>
+                <span className="hidden sm:inline">{t('common_showcase_counter', { n: active + 1, total })}</span>
+              </span>
             </div>
 
-            {/* MOBILE ONLY: IN-CARD LEFT & RIGHT ARROWS */}
-            <button
-              onClick={handlePrev}
-              aria-label={t('common_prevProduct')}
-              className="md:hidden absolute left-3 top-[40%] -translate-y-1/2 z-20 w-10 h-10 rounded-xl bg-white text-slate-900 shadow-xl flex items-center justify-center cursor-pointer"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={handleNext}
-              aria-label={t('common_nextProduct')}
-              className="md:hidden absolute right-3 top-[40%] -translate-y-1/2 z-20 w-10 h-10 rounded-xl bg-white text-slate-900 shadow-xl flex items-center justify-center cursor-pointer"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
-            {/* BOTTOM-LEFT CONTENT (Tesla Style: Title, Subtitle, Order Now & Learn More) */}
-            <div className="absolute bottom-7 inset-x-5 sm:bottom-9 sm:left-9 sm:right-9 z-10 max-w-xl text-white space-y-2.5">
-              
-              {/* Product Title */}
-              <h3 className="text-2xl font-black text-white tracking-tight drop-shadow-lg">
-                {currentProduct.name}
-              </h3>
-
-              {/* Subheading / Capacity */}
-              <div className="text-xs sm:text-sm lg:text-base text-white font-medium pb-2 drop-shadow-md flex flex-col items-start gap-1.5 sm:block">
-                <span className="underline underline-offset-4 font-bold">
-                  {capacity(currentProduct)}
-                </span>
-                <span className="hidden sm:inline mx-2">•</span>
-                <span className="text-[#23AC39] font-bold whitespace-nowrap">
-                  {t(`common_showcase_${currentProduct.id}_lease`)}
-                </span>
-              </div>
-
-              {/* Two Tesla-Style Action Buttons */}
-              <div className="flex items-center space-x-3 sm:space-x-4 pt-1">
-                
-                {/* Primary Button: Get Quote */}
+            {/* bottom: name, summary, facts and buttons */}
+            <div key={active} className="animate-calm-fade absolute bottom-6 inset-x-5 sm:bottom-8 sm:inset-x-9 z-10 max-w-2xl flex flex-col gap-3 sm:gap-4 text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.35)]">
+              <h3 className="text-2xl sm:text-3xl font-black tracking-tight !text-white leading-tight">{name}</h3>
+              <p className="text-sm sm:text-base text-white/90 font-medium leading-relaxed">{t(current.node.shortKey)}</p>
+              <dl className="grid grid-cols-3 divide-x divide-white/25 border-t border-white/25 pt-3 sm:pt-4">
+                {facts.map((f, j) => (
+                  <div key={j} className="min-w-0 flex flex-col px-2.5 sm:px-4 first:pl-0 last:pr-0">
+                    <dt className="order-2 mt-0.5 text-2xs sm:text-xs font-semibold text-white/80 leading-snug">{f.label}</dt>
+                    <dd className="order-1 text-sm sm:text-xl font-black text-white leading-tight [overflow-wrap:anywhere]">{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-3 pt-1 [text-shadow:none]">
                 <button
                   type="button"
-                  onClick={() => onOpenQuoteModal && onOpenQuoteModal({ 
-                    capacityNeeded: currentProduct.quoteCategory,
-                    message: `Inquiry for ${currentProduct.name} (${currentProduct.capacity})`
-                  })}
-                  className="px-4 xs:px-5 py-3 sm:px-9 sm:py-3.5 leading-snug text-center bg-[#002DC2] hover:bg-[#123B92] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xl transition-all active:scale-95 cursor-pointer flex items-center justify-center"
+                  onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: nodeTitle(current.node, en) })}
+                  className="btn-fx inline-flex items-center justify-center gap-2 px-3 py-3 sm:px-7 sm:py-3.5 bg-[#002DC2] hover:bg-[#123B92] text-white font-bold text-sm leading-snug text-center rounded-xl shadow-xl cursor-pointer"
                 >
+                  <MessageSquareQuote className="hidden sm:block w-5 h-5 shrink-0" />
                   {t('common_showcase_getQuote')}
                 </button>
-
-                {/* Secondary Button: Learn More */}
                 <button
                   type="button"
-                  onClick={() => onOpenDetailModal && onOpenDetailModal(currentProduct)}
-                  className="px-4 xs:px-5 py-3 sm:px-9 sm:py-3.5 leading-snug text-center bg-white hover:bg-slate-100 text-[#123B92] font-bold text-xs sm:text-sm rounded-xl shadow-xl transition-all active:scale-95 cursor-pointer flex items-center justify-center"
+                  onClick={() => onOpenDetailModal && onOpenDetailModal({ id: current.node.modelId })}
+                  className="btn-fx inline-flex items-center justify-center gap-2 px-3 py-3 sm:px-7 sm:py-3.5 bg-white hover:bg-slate-100 text-[#123B92] font-bold text-sm leading-snug text-center rounded-xl shadow-xl cursor-pointer"
                 >
                   {t('common_showcase_learnMore')}
+                  <ArrowRight className="w-4 h-4" />
                 </button>
-
-              </div>
-
-            </div>
-
-            {/* Bottom 5-second Progress Bar inside Active Card */}
-            <div className="absolute bottom-0 inset-x-0 h-1.5 bg-white/20 z-20 overflow-hidden">
-              <div 
-                key={`${activeIndex}-${activeImageIndex}`}
-                className="h-full bg-gradient-to-r from-blue-400 to-[#23AC39] animate-progress-5s"
-                style={{ animationDuration: '5000ms' }}
-              />
-            </div>
-
-          </div>
-
-
-          {/* ================= RIGHT PEEK CARD (NEXT PRODUCT) ================= */}
-          <div 
-            onClick={handleNext}
-            className="hidden md:block relative w-[13%] lg:w-[15%] xl:w-[16%] h-[380px] sm:h-[440px] lg:h-[500px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group shrink-0 opacity-90 hover:opacity-100 shadow-xl transition-all duration-500 hover:scale-[1.02]"
-          >
-            <img 
-              src={nextProduct.images[0]} 
-              alt={nextProduct.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-            />
-            {/* Subtle Gradient for Text Contrast */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-
-            {/* Top Tag */}
-            <div className="absolute top-5 left-5 text-xs font-bold text-white drop-shadow">
-              {category(nextProduct)}
-            </div>
-
-            {/* Bottom Title Preview */}
-            <div className="absolute bottom-6 left-5 text-white">
-              <div className="text-xl lg:text-2xl font-black drop-shadow">
-                {nextProduct.name}
               </div>
             </div>
 
-            {/* Right Arrow Button centered vertically on the right peek card */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleNext();
-              }}
-              aria-label={t('common_nextProduct')}
-              className="absolute left-4 lg:left-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 lg:w-12 lg:h-12 rounded-xl bg-white hover:bg-slate-100 text-slate-900 shadow-2xl flex items-center justify-center transition-all active:scale-90 cursor-pointer"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
+            {/* time left on this model */}
+            {running && (
+              <div className="absolute bottom-0 inset-x-0 h-1.5 bg-white/20 z-20 overflow-hidden">
+                <div
+                  key={active}
+                  className="hero-progress h-full bg-gradient-to-r from-blue-400 to-[#23AC39]"
+                  style={{ '--hero-interval': `${INTERVAL}ms` }}
+                />
+              </div>
+            )}
           </div>
+
+          {peek(nextIndex, 'next')}
 
         </div>
 
-        {/* BOTTOM PAGINATION DOTS (Tesla Style) */}
-        <div className="flex items-center justify-center space-x-2 pt-5">
-          {teslaDryerProducts.map((p, idx) => (
+        {/* one dot per model; on phones (no side cards) with the arrows beside them */}
+        <div className="flex items-center justify-center gap-2 pt-5">
+          <button
+            type="button"
+            onClick={() => go(active - 1)}
+            aria-label={t('common_prevProduct')}
+            className="md:hidden mr-2 w-10 h-10 rounded-xl bg-white border border-slate-200 text-slate-900 shadow-md flex items-center justify-center cursor-pointer"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          {MODELS.map((m, idx) => (
             <button
-              key={p.id}
-              onClick={() => {
-                setActiveIndex(idx);
-                setActiveImageIndex(0);
-              }}
-              aria-label={t('common_goTo', { name: p.name })}
-              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                activeIndex === idx
-                  ? 'w-8 bg-slate-900 shadow-sm'
-                  : 'w-2 bg-slate-300 hover:bg-slate-500'
+              key={m.node.id}
+              type="button"
+              onClick={() => go(idx)}
+              aria-label={t('common_goTo', { name: nodeTitle(m.node, t) })}
+              aria-current={active === idx ? 'true' : undefined}
+              className={`h-2 rounded-full transition-colors duration-300 cursor-pointer ${
+                active === idx ? 'w-8 bg-slate-900' : 'w-2 bg-slate-300 hover:bg-slate-500'
               }`}
             />
           ))}
+          <button
+            type="button"
+            onClick={() => go(active + 1)}
+            aria-label={t('common_nextProduct')}
+            className="md:hidden ml-2 w-10 h-10 rounded-xl bg-white border border-slate-200 text-slate-900 shadow-md flex items-center justify-center cursor-pointer"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
-
       </div>
-
     </div>
   );
 }

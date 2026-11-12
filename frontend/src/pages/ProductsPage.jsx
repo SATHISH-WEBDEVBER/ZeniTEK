@@ -5,6 +5,7 @@ import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 import IconTile from '../components/IconTile';
 import { ProductImage } from '../components/ProductCards';
+import ProductExplorer from '../components/ProductExplorer';
 import { PRODUCTS } from '../data/siteMap';
 import { nodeTitle, nodeShortTitle, DRYER_GROUPS, dryerModels } from '../data/productCatalog';
 
@@ -117,8 +118,19 @@ export default function ProductsPage() {
         </div>
       </section>
 
+      {/* Every product up close: photos, key specifications / points, quote (moved here from Home) */}
+      <section className="w-full py-12 sm:py-16 bg-slate-50 border-y border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-8">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight">{t('prod_explorerTitle')}</h2>
+            <p className="text-base sm:text-lg text-slate-600">{t('prod_explorerSub')}</p>
+          </div>
+          <ProductExplorer />
+        </div>
+      </section>
+
       {/* Help choosing */}
-      <section className="w-full pb-16">
+      <section className="w-full py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl bg-gradient-to-br from-[#001b69] to-[#002DC2] text-white p-6 sm:p-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div className="max-w-2xl space-y-2">

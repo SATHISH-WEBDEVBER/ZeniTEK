@@ -10,6 +10,7 @@ import {
   Spline, ScanSearch, Compass, Axe
 } from 'lucide-react';
 import { PRODUCT_PHOTOS, PRODUCT_VIDEOS } from './productMedia';
+import { officialDryerModels } from './zenitekBrochureData';
 
 // Shown for a product that has no photo yet.
 export const PLACEHOLDER_IMAGE = '/images/products/placeholder.svg';
@@ -139,6 +140,44 @@ export const productVideos = (node) => (node ? PRODUCT_VIDEOS.filter(v => v.prod
 
 export const productImage = (node) =>
   (node && (COVER_IMAGES[node.id] || productPhotos(node)[0]?.src)) || PLACEHOLDER_IMAGE;
+
+// The photos shown for a product in the Home dryer carousel and the Products page explorer: its best
+// wide photos, by file number in productMedia.js (-01, -02 ...), the first one leading. The water
+// heater's only photo is upright, so it uses its wide home-hero copy (heater on the right).
+const SHOWCASE_PHOTOS = {
+  'dryer-6': [1, 5, 4, 2],
+  'dryer-12': [1, 3, 2],
+  'dryer-50': [1, 5, 8, 7],
+  'tunnel-d1210-150': [1, 6, 3, 7],
+  'tunnel-d1210-300': [1, 5, 2, 3],
+  'tunnel-h2008-250': [1, 2],
+  'tunnel-h2008-1000': [1, 5, 4, 2],
+  'tunnel-p1709-200': [1],
+  'parabolic-trough': [12, 7, 9, 4],
+  'scheffler-dish': [1, 2, 3, 5],
+  'solar-water-heater': [{ src: '/images/home-hero/service-water-heater.webp', w: 1600, h: 800, position: '80% 50%' }],
+  'pv-bending-test': [1, 2],
+  'pv-visual-inspection': [1, 2],
+  'shadow-dial': [2, 1],
+  'log-splitter': [1, 2, 3],
+};
+export const showcasePhotos = (node) => {
+  const all = productPhotos(node);
+  const pick = node && SHOWCASE_PHOTOS[node.id];
+  if (!pick) return all.slice(0, 4);
+  return pick
+    .map(p => (typeof p === 'object' ? { thumb: p.src, ...p } : all.find(ph => ph.src.endsWith(`-${String(p).padStart(2, '0')}.webp`))))
+    .filter(Boolean);
+};
+
+// A dryer model's record in the brochure data (capacity, areas, power, subsidy ...)
+export const dryerRecord = (node) => (node?.modelId ? officialDryerModels.find(m => m.id === node.modelId) || null : null);
+
+// "2.5 kg to 12.5 kg per batch (…)" -> "2.5–12.5 kg"
+export const shortCapacity = (text = '') => {
+  const m = /([\d.,]+\+?)\s*kg\s*to\s*([\d.,]+\+?)\s*kg/i.exec(text);
+  return m ? `${m[1]}–${m[2]} kg` : (text || '—');
+};
 
 // Smaller copy of the main image for menus and thumbnails
 export const productThumb = (node) => {

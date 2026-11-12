@@ -9,13 +9,7 @@ import { buildQuoteUrl } from './QuotePage';
 import { useLanguage } from '../context/LanguageContext';
 import { ProductGrid } from '../components/ProductCards';
 import { MediaViewer, ProductMediaSection, photoItems } from '../components/MediaGallery';
-import { findNodeByModelId, productImage, isPlaceholder, nodeTitle } from '../data/productCatalog';
-
-// "2.5 kg to 12.5 kg per batch (…)" -> "2.5–12.5 kg" for the hero fact
-const shortCapacity = (text = '') => {
-  const m = /([\d.,]+\+?)\s*kg\s*to\s*([\d.,]+\+?)\s*kg/i.exec(text);
-  return m ? `${m[1]}–${m[2]} kg` : (text || '—');
-};
+import { findNodeByModelId, productImage, isPlaceholder, nodeTitle, shortCapacity } from '../data/productCatalog';
 
 // Home-page showcase ids that differ from the brochure model ids
 const MODEL_ALIASES = {
