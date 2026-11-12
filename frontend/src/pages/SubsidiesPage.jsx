@@ -305,14 +305,14 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
                 </dl>
 
                 <div className="rounded-2xl bg-[#F0F4FD] border border-[#002DC2]/15 p-4">
-                  <div className="text-xs font-bold uppercase tracking-wider text-slate-500">{t('sub_yourShare')}</div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-slate-600">{t('sub_yourShare')}</div>
                   <div className="text-3xl sm:text-4xl font-black text-[#002DC2] tabular-nums leading-tight">{inr(result.share)}</div>
                   {/* how the total splits: subsidy (green) and your share (blue) */}
                   <div className="mt-3 h-2.5 rounded-full bg-[#002DC2]/80 overflow-hidden flex" aria-hidden="true">
                     <span className="h-full bg-[#23AC39]" style={{ width: `${subsidyShare}%` }} />
                   </div>
                   <div className="mt-1.5 flex justify-between text-xs font-semibold">
-                    <span className="text-[#1A822B]">{t('sub_govSubsidy', { percent: subsidyShare })}</span>
+                    <span className="text-[#166A26]">{t('sub_govSubsidy', { percent: subsidyShare })}</span>
                     <span className="text-[#002DC2]">{t('sub_yourShare')} {100 - subsidyShare}%</span>
                   </div>
                 </div>

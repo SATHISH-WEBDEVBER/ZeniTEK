@@ -10,6 +10,36 @@
   --zenitek-white: #FFFFFF;
 }
 
+/* Stand-ins for the web fonts while they download: Arial resized to the same width and line height as
+   Inter / Outfit (measured from the font files), so text does not re-wrap and push the page about when
+   the real fonts arrive. Devices without Arial use their normal system font, as before. */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial'), local('ArialMT');
+  font-weight: 100 600;
+  size-adjust: 106.88%;
+  ascent-override: 90.64%;
+  descent-override: 22.57%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  font-weight: 700 900;
+  size-adjust: 103.02%;
+  ascent-override: 94.03%;
+  descent-override: 23.41%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Outfit Fallback';
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  size-adjust: 97.57%;
+  ascent-override: 102.5%;
+  descent-override: 26.65%;
+  line-gap-override: 0%;
+}
+
 @layer base {
 
   /* Root type size: 16px browser default on every screen (1rem = 16px).
@@ -30,7 +60,7 @@
   body {
     background-color: #FFFFFF;
     color: #000000;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', 'Inter Fallback', sans-serif;
     font-size: 1rem;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -43,7 +73,7 @@
   h4,
   h5,
   h6 {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Outfit', 'Outfit Fallback', sans-serif;
     letter-spacing: -0.015em;
     color: #123B92;
     /* even line lengths, no single-word last line */

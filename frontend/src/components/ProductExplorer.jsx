@@ -306,6 +306,7 @@ export default function ProductExplorer() {
                     className="btn-fx flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-[#002DC2]/30 text-[#002DC2] hover:bg-[#F0F4FD] text-sm font-bold"
                   >
                     {t('common_showcase_learnMore')}
+                    <span className="sr-only">: {nodeTitle(it.node, t)}</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>

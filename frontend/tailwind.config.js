@@ -44,7 +44,7 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'Inter Fallback', 'system-ui', 'sans-serif'],
       },
       // Type scale (1rem = 16px). Small UI steps grow gently; headings step by ~1.2-1.25.
       // Floor is 12px for legibility; body copy is 16px with ~1.6 line height.
