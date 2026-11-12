@@ -4,7 +4,7 @@ import {
   ChevronLeft, ChevronRight, CheckCircle2, MessageSquareQuote, ArrowRight, MapPin, Weight, Grid, Sun, Zap
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import pageTranslations from '../i18n';
+import { EN } from '../i18n/load';
 import {
   CATALOG, CATALOG_ENTRIES, nodeTitle, nodeShortTitle, showcasePhotos, dryerRecord, shortCapacity
 } from '../data/productCatalog';
@@ -18,7 +18,7 @@ import useAutoplay from '../motion/useAutoplay';
 // until the visitor picks something (and never for reduced motion).
 
 const INTERVAL = 6000;
-const en = (key) => pageTranslations.en[key] ?? key;
+const en = (key) => EN[key] ?? key;
 
 // The products of an area: its models / products, with the PV Laboratory's three setups listed
 // instead of the laboratory itself
@@ -141,7 +141,7 @@ export default function ProductExplorer() {
               aria-pressed={i === index}
               onClick={() => pick(i)}
               className={`inline-flex items-center gap-2 pl-1 pr-3.5 py-1 rounded-full border text-sm font-semibold whitespace-nowrap transition-colors cursor-pointer ${
-                i === index ? 'border-[#23AC39] bg-[#23AC39]/10 text-[#1A822B]' : 'border-slate-200 bg-white text-slate-700 hover:border-[#002DC2] hover:text-[#002DC2]'
+                i === index ? 'border-[#23AC39] bg-[#23AC39]/10 text-[#166A26]' : 'border-slate-200 bg-white text-slate-700 hover:border-[#002DC2] hover:text-[#002DC2]'
               }`}
             >
               <img src={it.photos[0]?.thumb} alt="" loading="lazy" className="w-7 h-7 rounded-full object-cover bg-slate-100" />
@@ -166,6 +166,8 @@ export default function ProductExplorer() {
               )}
               <img
                 src={ph.src}
+                srcSet={ph.md ? `${ph.md} 960w, ${ph.src} 1600w` : undefined}
+                sizes="(max-width: 1023px) 100vw, 58vw"
                 alt={on ? name : ''}
                 className={`absolute inset-0 w-full h-full ${isTall(ph) ? 'object-contain' : 'object-cover'}`}
                 style={{ objectPosition: ph.position || '50% 50%' }}
@@ -294,7 +296,7 @@ export default function ProductExplorer() {
                 <div className="flex flex-col sm:flex-row gap-2.5">
                   <Link
                     to={buildQuoteUrl({ capacityNeeded: nodeTitle(it.node, en) })}
-                    className="btn-fx flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#23AC39] hover:bg-[#1f9632] text-white text-sm font-extrabold"
+                    className="btn-fx flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#1A822B] hover:bg-[#166A26] text-white text-sm font-extrabold"
                   >
                     <MessageSquareQuote className="w-5 h-5 shrink-0" />
                     {t('common_showcase_getQuote')}

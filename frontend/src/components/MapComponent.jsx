@@ -608,7 +608,7 @@ export default function MapComponent({ onSelectProjectQuote }) { // eslint-disab
                       <h4 className={`text-lg font-black transition-colors line-clamp-1 leading-snug ${ isSelected ? 'text-[#002DC2]' : 'text-[#123B92] group-hover:text-[#002DC2]' }`}>
                         {proj.title}
                       </h4>
-                      <span className="text-xs sm:text-sm font-black text-white bg-[#23AC39] px-2.5 py-1 rounded-md border border-[#23AC39] shrink-0">
+                      <span className="text-xs sm:text-sm font-black text-white bg-[#1A822B] px-2.5 py-1 rounded-md border border-[#23AC39] shrink-0">
                         {proj.capacity}
                       </span>
                     </div>
@@ -718,6 +718,8 @@ export default function MapComponent({ onSelectProjectQuote }) { // eslint-disab
                   key={key}
                   position={[p.latitude, p.longitude]}
                   icon={isSelected ? PIN_ICON_SELECTED : PIN_ICON}
+                  title={p.title || p.locationName}
+                  alt={p.title || p.locationName}
                   riseOnHover
                   ref={(el) => {
                     if (el) markerRefs.current[key] = el;
@@ -778,7 +780,7 @@ export default function MapComponent({ onSelectProjectQuote }) { // eslint-disab
                       <div className="pt-2 border-t border-slate-100">
                         <Link
                           to={`/installations/${encodeURIComponent(key)}`}
-                          className="zenitek-popup-cta w-full min-h-[44px] text-sm font-black text-white bg-[#23AC39] hover:bg-[#1A822B] py-2.5 px-3 rounded-lg shadow-sm text-center flex items-center justify-center gap-1.5 transition-colors active:scale-[0.98]"
+                          className="zenitek-popup-cta w-full min-h-[44px] text-sm font-black text-white bg-[#1A822B] hover:bg-[#1A822B] py-2.5 px-3 rounded-lg shadow-sm text-center flex items-center justify-center gap-1.5 transition-colors active:scale-[0.98]"
                         >
                           <Eye className="w-4 h-4 shrink-0" />
                           <span>{t('common_map_viewDetails')}</span>

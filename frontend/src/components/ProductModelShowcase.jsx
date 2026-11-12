@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, ArrowRight, MessageSquareQuote } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import pageTranslations from '../i18n';
+import { EN } from '../i18n/load';
 import {
   DRYER_GROUPS, dryerModels, nodeTitle, showcasePhotos, dryerRecord, shortCapacity
 } from '../data/productCatalog';
@@ -18,7 +18,7 @@ const MODELS = DRYER_GROUPS.flatMap(group => dryerModels(group.id).map(node => (
   spec: dryerRecord(node),
 })));
 const INTERVAL = 6000;
-const en = (key) => pageTranslations.en[key] ?? key;
+const en = (key) => EN[key] ?? key;
 
 export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailModal }) {
   const { t } = useLanguage();
@@ -48,7 +48,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
         className="hidden md:block relative w-[13%] lg:w-[15%] xl:w-[16%] h-[400px] lg:h-[500px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group shrink-0 opacity-90 hover:opacity-100 shadow-xl transition-[opacity,transform] duration-500 hover:scale-[1.02] bg-slate-800"
       >
         <img
-          src={m.photo.src}
+          src={m.photo.md || m.photo.src}
           alt=""
           loading="lazy"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
@@ -99,6 +99,8 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
               <img
                 key={m.node.id}
                 src={m.photo.src}
+                srcSet={m.photo.md ? `${m.photo.md} 960w, ${m.photo.src} 1600w` : undefined}
+                sizes="(max-width: 767px) 100vw, 60vw"
                 alt={i === active ? name : ''}
                 aria-hidden={i === active ? undefined : true}
                 className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === active ? 'opacity-100' : 'opacity-0'}`}
@@ -168,7 +170,7 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
         </div>
 
         {/* one dot per model; on phones (no side cards) with the arrows beside them */}
-        <div className="flex items-center justify-center gap-2 pt-5">
+        <div className="flex items-center justify-center gap-0.5 sm:gap-1 pt-5">
           <button
             type="button"
             onClick={() => go(active - 1)}
@@ -178,16 +180,19 @@ export default function ProductModelShowcase({ onOpenQuoteModal, onOpenDetailMod
             <ChevronLeft className="w-5 h-5" />
           </button>
           {MODELS.map((m, idx) => (
+            // a 24 px tap area around the small dot
             <button
               key={m.node.id}
               type="button"
               onClick={() => go(idx)}
               aria-label={t('common_goTo', { name: nodeTitle(m.node, t) })}
               aria-current={active === idx ? 'true' : undefined}
-              className={`h-2 rounded-full transition-colors duration-300 cursor-pointer ${
-                active === idx ? 'w-8 bg-slate-900' : 'w-2 bg-slate-300 hover:bg-slate-500'
-              }`}
-            />
+              className="group h-6 min-w-6 px-0.5 flex items-center justify-center cursor-pointer"
+            >
+              <span className={`block h-2 rounded-full transition-colors duration-300 ${
+                active === idx ? 'w-8 bg-slate-900' : 'w-2 bg-slate-300 group-hover:bg-slate-500'
+              }`} />
+            </button>
           ))}
           <button
             type="button"

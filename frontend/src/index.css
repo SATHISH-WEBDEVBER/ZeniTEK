@@ -258,6 +258,12 @@ main section.divider-full:not(section section):not([class*="rounded"]):not(.no-d
 }
 
 /* Leaflet Map Custom Fixes & Z-Index Scope */
+/* map credits: darker link colour, underlined, so the links stand out from the text around them */
+.leaflet-control-attribution a {
+  color: #005a87;
+  text-decoration: underline;
+}
+
 .leaflet-container {
   width: 100%;
   height: 100%;

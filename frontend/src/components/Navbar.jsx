@@ -561,7 +561,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
             {/* Quote CTA Button */}
             <button
               onClick={onOpenQuoteModal}
-              className={`px-3.5 py-1.5 sm:px-4 sm:py-2 ${density >= 2 ? 'lg:px-3' : 'lg:px-[18px]'} lg:py-2 text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white bg-[#23AC39] hover:bg-[#1f9632] rounded-xl shadow-md shadow-[#23AC39]/20 transition-[background-color,box-shadow,transform] flex items-center shrink-0 cursor-pointer hover:shadow-lg active:scale-95`}
+              className={`px-3.5 py-1.5 sm:px-4 sm:py-2 ${density >= 2 ? 'lg:px-3' : 'lg:px-[18px]'} lg:py-2 text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white bg-[#1A822B] hover:bg-[#166A26] rounded-xl shadow-md shadow-[#23AC39]/20 transition-[background-color,box-shadow,transform] flex items-center shrink-0 cursor-pointer hover:shadow-lg active:scale-95`}
             >
               <span className="whitespace-nowrap">{t('getQuote')}</span>
               {density < 2 && <ArrowRight className="w-4 h-4 ml-1.5 shrink-0" />}
@@ -725,7 +725,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                         <div className="px-3 pb-3 space-y-2">
                           {DRYER_GROUPS.map(group => (
                             <div key={group.id}>
-                              <p className="text-2xs font-black uppercase tracking-wider text-slate-400 mb-1">{t(group.titleKey)}</p>
+                              <p className="text-2xs font-black uppercase tracking-wider text-slate-500 mb-1">{t(group.titleKey)}</p>
                               <div className="flex flex-wrap gap-1.5">
                                 {dryerModels(group.id).map(model => (
                                   <Link key={model.id} to={model.path} onClick={() => setMobileMenuOpen(false)} className={chip}>
@@ -836,7 +836,7 @@ export default function Navbar({ onOpenQuoteModal, animStage = 3 }) {
                 setMobileMenuOpen(false);
                 onOpenQuoteModal();
               }}
-              className="w-full py-3.5 text-center text-xs font-black uppercase tracking-wider text-white bg-[#23AC39] hover:bg-[#1f9632] rounded-xl shadow cursor-pointer transition-all flex items-center justify-center space-x-2"
+              className="w-full py-3.5 text-center text-xs font-black uppercase tracking-wider text-white bg-[#1A822B] hover:bg-[#166A26] rounded-xl shadow cursor-pointer transition-all flex items-center justify-center space-x-2"
             >
               <span>{t('getQuote')}</span>
               <ArrowRight className="w-4 h-4" />

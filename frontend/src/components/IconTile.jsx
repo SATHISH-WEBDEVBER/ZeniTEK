@@ -3,7 +3,7 @@ import React from 'react';
 const TONES = {
   blue: 'bg-[#F0F4FD] text-[#002DC2]',
   navy: 'bg-[#F0F4FD] text-[#123B92]',
-  green: 'bg-[#EAF7EC] text-[#1A822B]',
+  green: 'bg-[#EAF7EC] text-[#166A26]',
   solid: 'bg-[#002DC2] text-white'
 };
 

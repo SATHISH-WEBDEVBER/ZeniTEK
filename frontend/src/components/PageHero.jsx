@@ -41,6 +41,16 @@ export default function PageHero({
   const texts = slides || [{ title, subtitle, actions, stats }];
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  // Slide photos: only the first loads with the page; each next one is added a few seconds before it
+  // is shown (and kept), so the first photo is not competing with the others for bandwidth.
+  const [shown, setShown] = useState(() => new Set([0]));
+  useEffect(() => {
+    if (media.length < 2) return undefined;
+    const next = (active + 1) % media.length;
+    if (shown.has(next)) return undefined;
+    const timer = setTimeout(() => setShown(prev => new Set(prev).add(next)), active === 0 ? 2500 : 0);
+    return () => clearTimeout(timer);
+  }, [active, media.length, shown]);
   const interval = slides ? 7000 : 5000;
   const autoplay = media.length > 1 && !(slides && prefersReducedMotion());
   // Entrance (CSS, index.css "Page hero entrance"): the photo settles from a slight zoom, the title
@@ -62,12 +72,13 @@ export default function PageHero({
     <section data-hero {...pauseProps} className="no-divider relative w-full overflow-hidden bg-neutral-900 lg:h-[680px]">
       {/* Media: a clear banner on phones/tablets, the whole hero from lg up */}
       <div data-hero-media className={`relative h-64 sm:h-80 lg:absolute lg:inset-0 lg:h-auto overflow-hidden ${media.length > 0 ? 'bg-neutral-200' : 'bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-700'}`} aria-hidden="true">
-        {media.map((m, idx) => (
+        {media.map((m, idx) => (shown.has(idx) || idx === active) && (
           <img
             key={m.src}
             src={m.src}
             alt=""
-            fetchpriority={idx === 0 ? 'high' : undefined}
+            decoding="async"
+            fetchpriority={idx === 0 ? 'high' : 'low'}
             className={`hero-slide absolute inset-y-0 left-0 h-full max-w-none object-cover [object-position:var(--pos)] w-full lg:w-[var(--hero-w)] ${idx === active ? 'is-active opacity-100' : 'opacity-0'}`}
             style={{ '--hero-w': `${m.focus * 100}%`, '--pos': m.position }}
           />
@@ -227,7 +238,7 @@ function HeroButton({ action, primary }) {
   const { label, to, href, onClick, icon: Icon, external, download } = action;
   const cls = `btn-fx inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-extrabold transition-colors cursor-pointer ${
     primary
-      ? 'bg-[#23AC39] hover:bg-[#1f9632] text-white shadow-md shadow-black/20'
+      ? 'bg-[#1A822B] hover:bg-[#166A26] text-white shadow-md shadow-black/20'
       : 'bg-transparent border border-white/80 hover:bg-white text-white hover:text-[#123B92]'
   }`;
   const content = <>{Icon && <Icon className="w-5 h-5 shrink-0" />}<span>{label}</span>{primary && <ArrowRight className="w-4 h-4 shrink-0" />}</>;

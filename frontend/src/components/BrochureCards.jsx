@@ -50,7 +50,7 @@ export default function BrochureCards({ brochures }) {
                 download={b.downloadName}
                 title={t('gallery_downloadPdf')}
                 aria-label={t('gallery_downloadPdf')}
-                className="p-2.5 text-[#1A822B] bg-[#23AC39]/10 hover:bg-[#23AC39] hover:text-white rounded-xl transition-colors"
+                className="p-2.5 text-[#166A26] bg-[#23AC39]/10 hover:bg-[#23AC39] hover:text-white rounded-xl transition-colors"
               >
                 <Download className="w-4 h-4" />
               </a>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Sun, Phone, Mail, MapPin, Download, ShieldCheck, ExternalLink, ArrowRight, Building2, X, FileText, Lock, Eye, Share2, BadgeCheck
+  Phone, Mail, MapPin, Download, ArrowRight, Building2, FileText, Eye, BadgeCheck
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { CATALOG } from '../data/productCatalog';
@@ -61,7 +61,7 @@ export default function Footer({ onOpenQuoteModal }) {
 
           {/* Col 2: Dryer Models (2 cols on desktop) */}
           <div className="lg:col-span-2">
-            <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4">{t('navbar_products')}</h4>
+            <h2 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4">{t('navbar_products')}</h2>
             {/* the product areas and their sub-products, from src/data/productCatalog.js */}
             <ul className="space-y-2.5 text-xs font-medium">
               {CATALOG.map(product => (
@@ -77,10 +77,10 @@ export default function Footer({ onOpenQuoteModal }) {
 
           {/* Col 3: Product Brochures & Downloads (3 cols on desktop) */}
           <div className="lg:col-span-3">
-            <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4 flex items-center gap-1.5">
+            <h2 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-4 flex items-center gap-1.5">
               <FileText className="w-4 h-4 text-[#002DC2]" />
               <span>{t('common_footer_brochures')}</span>
-            </h4>
+            </h2>
             <div className="space-y-2.5">
               {brochures.map((b) => {
                 // Brochure text is data; translated by id when a translation exists
@@ -138,7 +138,7 @@ export default function Footer({ onOpenQuoteModal }) {
 
           {/* Col 4: Registered & Operations Hubs, Direct Contacts (4 cols on desktop) */}
           <div className="lg:col-span-4 space-y-4">
-            <h4 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-3">{t('footerOffices') || t('footerCoimbatoreFactory')}</h4>
+            <h2 className="text-xs font-bold text-[#123B92] uppercase tracking-wider mb-3">{t('footerOffices') || t('footerCoimbatoreFactory')}</h2>
             <div className="space-y-3 text-xs">
               
               <div className="flex items-start space-x-2.5">
@@ -161,15 +161,15 @@ export default function Footer({ onOpenQuoteModal }) {
                 <div className="flex items-center space-x-2">
                   <Phone className="w-4 h-4 text-[#002DC2] shrink-0" />
                   <div className="text-xs">
-                    <a href="tel:+918903852623" className="hover:text-[#002DC2] font-bold text-[#123B92] block">+91-8903852623</a>
-                    <a href="tel:+918098613422" className="hover:text-[#002DC2] font-bold text-[#123B92] block">+91 80986 13422</a>
+                    <a href="tel:+918903852623" className="hover:text-[#002DC2] font-bold text-[#123B92] block py-1">+91-8903852623</a>
+                    <a href="tel:+918098613422" className="hover:text-[#002DC2] font-bold text-[#123B92] block py-1">+91 80986 13422</a>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-2">
                   <Mail className="w-4 h-4 text-[#002DC2] shrink-0" />
                   <div className="text-xs">
-                    <a href="mailto:zenitek2k@gmail.com" className="hover:text-[#002DC2] font-bold text-[#123B92] block">zenitek2k@gmail.com</a>
+                    <a href="mailto:zenitek2k@gmail.com" className="hover:text-[#002DC2] font-bold text-[#123B92] block py-1">zenitek2k@gmail.com</a>
                   </div>
                 </div>
               </div>
@@ -178,7 +178,7 @@ export default function Footer({ onOpenQuoteModal }) {
                 <button
                   type="button"
                   onClick={onOpenQuoteModal}
-                  className="w-full py-2.5 px-4 bg-[#23AC39] hover:bg-[#002DC2] text-white rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center space-x-1.5 transition-all shadow cursor-pointer active:scale-[0.98]"
+                  className="w-full py-2.5 px-4 bg-[#1A822B] hover:bg-[#002DC2] text-white rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center space-x-1.5 transition-all shadow cursor-pointer active:scale-[0.98]"
                 >
                   <span>{t('getQuote')}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -206,15 +206,15 @@ export default function Footer({ onOpenQuoteModal }) {
           </p>
 
           <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-3 gap-y-1 text-xs text-slate-600">
-            <Link to="/privacy" className="text-black hover:text-[#002DC2] font-medium transition-colors">
+            <Link to="/privacy" className="inline-block py-1 text-black hover:text-[#002DC2] font-medium transition-colors">
               {t('footerPrivacy')}
             </Link>
             <span className="text-slate-300">•</span>
-            <Link to="/terms" className="text-black hover:text-[#002DC2] font-medium transition-colors">
+            <Link to="/terms" className="inline-block py-1 text-black hover:text-[#002DC2] font-medium transition-colors">
               {t('footerTerms')}
             </Link>
             <span className="text-slate-300">•</span>
-            <Link to="/sitemap" className="text-black hover:text-[#002DC2] font-medium transition-colors">
+            <Link to="/sitemap" className="inline-block py-1 text-black hover:text-[#002DC2] font-medium transition-colors">
               {t('site_sitemap')}
             </Link>
             <span className="text-slate-300">•</span>

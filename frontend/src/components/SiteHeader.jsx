@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronRight, Home } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { PAGES, matchPage } from '../data/siteMap';
+import { pageDescription, SITE_URL } from '../data/seo';
 
 // Lets a detail page (dryer model, installation, photo...) name itself in the page header.
 const PageTitleContext = createContext({ title: null, setTitle: () => {} });
@@ -39,13 +40,37 @@ function usePagePath() {
   return { pathname, pattern, chain, label, pageLabel, currentLabel };
 }
 
-// Keeps the browser tab title in sync with the current page (renders nothing; the visible
-// breadcrumb is part of every page's hero, see Breadcrumb below).
+// Sets a <meta> / <link> tag in the head (created if missing)
+function setHeadTag(selector, create, attr, value) {
+  let el = document.head.querySelector(selector);
+  if (!el) {
+    el = document.createElement(create.tag);
+    Object.entries(create.attrs).forEach(([k, v]) => el.setAttribute(k, v));
+    document.head.appendChild(el);
+  }
+  el.setAttribute(attr, value);
+}
+
+// Keeps the browser tab title, the search description, the canonical address and the link-preview
+// tags in sync with the current page (renders nothing; the visible breadcrumb is part of every
+// page's hero, see Breadcrumb below).
 export default function SiteHeader() {
-  const { pattern, currentLabel } = usePagePath();
+  const { pathname, pattern, currentLabel } = usePagePath();
   useEffect(() => {
-    document.title = pattern === '/' ? 'ZeniTEK | Solar Dryers & Solar Thermal Systems' : `${currentLabel} | ZeniTEK`;
-  }, [pattern, currentLabel]);
+    const title = pattern === '/' ? 'ZeniTEK | Solar Dryers & Solar Thermal Systems' : `${currentLabel} | ZeniTEK`;
+    const description = pageDescription(pathname);
+    const url = `${SITE_URL}${pathname === '/' ? '/' : pathname.replace(/\/+$/, '')}`;
+    document.title = title;
+    setHeadTag('meta[name="description"]', { tag: 'meta', attrs: { name: 'description' } }, 'content', description);
+    setHeadTag('link[rel="canonical"]', { tag: 'link', attrs: { rel: 'canonical' } }, 'href', url);
+    setHeadTag('meta[property="og:title"]', { tag: 'meta', attrs: { property: 'og:title' } }, 'content', title);
+    setHeadTag('meta[property="og:description"]', { tag: 'meta', attrs: { property: 'og:description' } }, 'content', description);
+    setHeadTag('meta[property="og:url"]', { tag: 'meta', attrs: { property: 'og:url' } }, 'content', url);
+    setHeadTag('meta[name="twitter:title"]', { tag: 'meta', attrs: { name: 'twitter:title' } }, 'content', title);
+    setHeadTag('meta[name="twitter:description"]', { tag: 'meta', attrs: { name: 'twitter:description' } }, 'content', description);
+    // pages that are not found should not be indexed
+    setHeadTag('meta[name="robots"]', { tag: 'meta', attrs: { name: 'robots' } }, 'content', pattern ? 'index, follow' : 'noindex');
+  }, [pathname, pattern, currentLabel]);
   return null;
 }
 
@@ -79,7 +104,7 @@ export function Breadcrumb() {
           {/* on phones only the parent page is shown, so the trail fits on one line */}
           {crumbs.map((p, i) => (
             <li key={p} className={`${i === crumbs.length - 1 ? 'flex' : 'hidden sm:flex'} items-center gap-1.5 shrink-0`}>
-              <Link to={p} className="inline-flex items-center gap-1.5 hover:text-[#002DC2] transition-colors whitespace-nowrap">
+              <Link to={p} className="inline-flex items-center gap-1.5 min-h-6 py-1 hover:text-[#002DC2] transition-colors whitespace-nowrap">
                 {p === '/' ? <><Home className="w-4 h-4" /><span className="sr-only sm:not-sr-only">{label('navHome')}</span></> : pageLabel(p)}
               </Link>
               <ChevronRight className="w-4 h-4 text-slate-400" />

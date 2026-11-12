@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Send, ShieldCheck, CheckCircle, Loader2, Lock } from 'lucide-react';
+import React, { useState, useEffect, useId } from 'react';
+import { Send, Loader2, Lock } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { API_BASE } from '../utils/api';
+import { sendLead, isValidPhone } from '../utils/leads';
+import LeadResult from './LeadResult';
 
 // [submitted value, English label used for prefill matching, translation key for the shown label]
 const CLIENT_TYPES = [
@@ -32,7 +33,7 @@ const DEFAULTS = {
   phone: '',
   whatsappPreference: true,
   state: 'Tamil Nadu',
-  district: 'Coimbatore',
+  district: '',
   clientType: 'Individual Farmer',
   cropType: 'Copra/Coconut',
   capacityNeeded: '100 to 500 kg (Commercial)',
@@ -70,124 +71,122 @@ const buildInitial = (prefill = {}) => {
   return data;
 };
 
-const inputClass = 'w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-base text-black';
+const inputClass = 'w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-base text-black aria-[invalid=true]:border-red-600';
+const labelClass = 'block text-xs font-bold text-[#123B92] mb-1';
 
-// Quote enquiry form (used by the /quote page). Posts to /api/leads and
-// opens the WhatsApp chat link the API returns; falls back to a direct WhatsApp link.
+// Quote enquiry form (used by the /quote page). Posts to /api/leads; success is shown only when the
+// server confirms it. If it cannot be sent, the visitor can send the same details on WhatsApp.
 export default function LeadForm({ prefill }) {
   const { t } = useLanguage();
+  const uid = useId();
+  const id = (name) => `${uid}-${name}`;
   const [formData, setFormData] = useState(() => buildInitial(prefill));
-  const [loading, setLoading] = useState(false);
-  const [successMsg, setSuccessMsg] = useState(null);
+  const [status, setStatus] = useState('idle');          // idle | sending | sent | failed
+  const [whatsappUrl, setWhatsappUrl] = useState(null);
+  const [phoneError, setPhoneError] = useState(false);
 
   useEffect(() => {
     setFormData(buildInitial(prefill));
-    setSuccessMsg(null);
+    setStatus('idle');
   }, [prefill]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    if (name === 'phone' && phoneError) setPhoneError(!isValidPhone(value));
     setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
-  };
-
-  const openWhatsAppFallback = () => {
-    const waMsg = `Hi ZeniTEK Team! 👋\nI am *${formData.name}* from *${formData.district}, ${formData.state}*.\nInterested in *${formData.capacityNeeded}* for *${formData.cropType}*.\nPhone: ${formData.phone}`;
-    window.open(`https://wa.me/918098613422?text=${encodeURIComponent(waMsg)}`, '_blank');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setSuccessMsg(null);
-
-    try {
-      const response = await fetch(`${API_BASE}/leads`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-      const data = await response.json();
-
-      if (data.success) {
-        setSuccessMsg(t('common_form_success'));
-        if (data.whatsappUrl) setTimeout(() => window.open(data.whatsappUrl, '_blank'), 800);
-      } else {
-        openWhatsAppFallback();
-      }
-    } catch (err) {
-      openWhatsAppFallback();
-    } finally {
-      setLoading(false);
+    if (status === 'sending') return;
+    if (!isValidPhone(formData.phone)) {
+      setPhoneError(true);
+      document.getElementById(id('phone'))?.focus();
+      return;
     }
+    setStatus('sending');
+    const lead = Object.fromEntries(Object.entries(formData).map(([k, v]) => [k, typeof v === 'string' ? v.trim() : v]));
+    const result = await sendLead(lead);
+    setWhatsappUrl(result.whatsappUrl || null);
+    setStatus(result.ok ? 'sent' : 'failed');
   };
+
+  const sending = status === 'sending';
+  const req = <span className="text-[#002DC2]" aria-hidden="true"> *</span>;
 
   return (
     <div className="bg-white rounded-3xl border-2 border-[#123B92] shadow-xl overflow-hidden">
-      {successMsg && (
-        <div className="m-4 sm:m-6 p-4 rounded-2xl bg-[#F0F4FD] border-2 border-[#23AC39] text-black text-sm flex items-center space-x-3">
-          <CheckCircle className="w-6 h-6 text-[#002DC2] shrink-0" />
-          <div>
-            <p className="font-bold text-[#123B92]">{successMsg}</p>
-            <p className="text-sm text-black/70">{t('common_form_openingWa')}</p>
-          </div>
+      {(status === 'sent' || status === 'failed') && (
+        <div className="m-4 sm:m-6">
+          <LeadResult
+            status={status}
+            lead={formData}
+            whatsappUrl={whatsappUrl}
+            successTitle={t('common_form_success')}
+            onRetry={() => setStatus('idle')}
+          />
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="p-5 sm:p-8 space-y-4">
+      {status !== 'sent' && (
+      <form onSubmit={handleSubmit} className="p-5 sm:p-8 space-y-4" aria-busy={sending}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold text-[#123B92] mb-1">
-              {t('yourName')} <span className="text-[#002DC2]">*</span>
-            </label>
-            <input type="text" name="name" required placeholder={t('common_form_namePh')} value={formData.name} onChange={handleChange} className={inputClass} />
+            <label htmlFor={id('name')} className={labelClass}>{t('yourName')}{req}</label>
+            <input id={id('name')} type="text" name="name" required maxLength={80} autoComplete="name" placeholder={t('common_form_namePh')} value={formData.name} onChange={handleChange} className={inputClass} />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#123B92] mb-1">
-              {t('whatsappNum')} <span className="text-[#002DC2]">*</span>
-            </label>
-            <input type="tel" name="phone" required placeholder="+91 98765 43210" value={formData.phone} onChange={handleChange} className={inputClass} />
+            <label htmlFor={id('phone')} className={labelClass}>{t('whatsappNum')}{req}</label>
+            <input
+              id={id('phone')} type="tel" name="phone" required maxLength={20} inputMode="tel" autoComplete="tel"
+              placeholder="+91 98765 43210" value={formData.phone} onChange={handleChange}
+              onBlur={() => formData.phone && setPhoneError(!isValidPhone(formData.phone))}
+              aria-invalid={phoneError} aria-describedby={phoneError ? id('phone-error') : undefined}
+              className={inputClass}
+            />
+            {phoneError && <p id={id('phone-error')} className="mt-1 text-xs font-semibold text-red-700">{t('common_form_phoneInvalid')}</p>}
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#123B92] mb-1">{t('common_form_state')} *</label>
-            <input type="text" name="state" required placeholder={t('common_form_statePh')} value={formData.state} onChange={handleChange} className={inputClass} />
+            <label htmlFor={id('state')} className={labelClass}>{t('common_form_state')}{req}</label>
+            <input id={id('state')} type="text" name="state" required maxLength={60} autoComplete="address-level1" placeholder={t('common_form_statePh')} value={formData.state} onChange={handleChange} className={inputClass} />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#123B92] mb-1">
-              {t('districtCity')} <span className="text-[#002DC2]">*</span>
-            </label>
-            <input type="text" name="district" required placeholder={t('common_form_districtPh')} value={formData.district} onChange={handleChange} className={inputClass} />
+            <label htmlFor={id('district')} className={labelClass}>{t('districtCity')}{req}</label>
+            <input id={id('district')} type="text" name="district" required maxLength={60} autoComplete="address-level2" placeholder={t('common_form_districtPh')} value={formData.district} onChange={handleChange} className={inputClass} />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#123B92] mb-1">{t('userCategory')} *</label>
-            <select name="clientType" value={formData.clientType} onChange={handleChange} className={`${inputClass} cursor-pointer`}>
+            <label htmlFor={id('clientType')} className={labelClass}>{t('userCategory')}{req}</label>
+            <select id={id('clientType')} name="clientType" value={formData.clientType} onChange={handleChange} className={`${inputClass} cursor-pointer`}>
               {CLIENT_TYPES.map(([v, , k]) => <option key={v} value={v}>{t(k)}</option>)}
             </select>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#123B92] mb-1">{t('targetCrop')} *</label>
-            <select name="cropType" value={formData.cropType} onChange={handleChange} className={`${inputClass} cursor-pointer`}>
+            <label htmlFor={id('cropType')} className={labelClass}>{t('targetCrop')}{req}</label>
+            <select id={id('cropType')} name="cropType" value={formData.cropType} onChange={handleChange} className={`${inputClass} cursor-pointer`}>
               {CROPS.map(([v, , k]) => <option key={v} value={v}>{t(k)}</option>)}
             </select>
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-[#123B92] mb-1">{t('desiredCapacity')} *</label>
-          <select name="capacityNeeded" value={formData.capacityNeeded} onChange={handleChange} className={`${inputClass} cursor-pointer`}>
+          <label htmlFor={id('capacityNeeded')} className={labelClass}>{t('desiredCapacity')}{req}</label>
+          <select id={id('capacityNeeded')} name="capacityNeeded" value={formData.capacityNeeded} onChange={handleChange} className={`${inputClass} cursor-pointer`}>
             {CAPACITIES.map(([v, , k]) => <option key={v} value={v}>{t(k)}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-[#123B92] mb-1">{t('additionalReqs')}</label>
+          <label htmlFor={id('message')} className={labelClass}>{t('additionalReqs')}</label>
           <textarea
+            id={id('message')}
             name="message"
             rows="4"
+            maxLength={1000}
             placeholder={t('common_form_messagePh')}
             value={formData.message}
             onChange={handleChange}
@@ -201,10 +200,10 @@ export default function LeadForm({ prefill }) {
           </div>
           <button
             type="submit"
-            disabled={loading}
-            className="w-full sm:w-auto py-3.5 px-7 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 disabled:opacity-50 cursor-pointer"
+            disabled={sending}
+            className="w-full sm:w-auto py-3.5 px-7 bg-[#1A822B] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 disabled:opacity-60 disabled:cursor-wait cursor-pointer"
           >
-            {loading ? (
+            {sending ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
                 <span>{t('common_form_processing')}</span>
@@ -218,6 +217,7 @@ export default function LeadForm({ prefill }) {
           </button>
         </div>
       </form>
+      )}
     </div>
   );
 }
