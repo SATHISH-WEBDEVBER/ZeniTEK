@@ -157,7 +157,7 @@ export default function InstallationPage() {
 
                 <Link
                   to={quoteUrl}
-                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md transition-all text-center"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#1A822B] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md transition-all text-center"
                 >
                   <span>{t('enquireSetup')}</span>
                   <ArrowRight className="w-5 h-5 shrink-0" />

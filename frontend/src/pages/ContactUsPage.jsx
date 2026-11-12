@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useId } from 'react';
 import {
-  MapPin, Phone, Mail, MessageCircle, ShieldCheck, ArrowRight, CheckCircle2, Building2, Send, Loader2, Receipt, Factory, Droplets, Wrench
+  MapPin, Phone, Mail, MessageCircle, Building2, Loader2, Receipt, Factory, Droplets, Wrench
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { API_BASE } from '../utils/api';
+import { sendLead, isValidPhone } from '../utils/leads';
+import LeadResult from '../components/LeadResult';
 import PageHero from '../components/PageHero';
 
 // Keep "Tamil Nadu - 638 112" style postcodes on one line
@@ -19,43 +20,39 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
     name: '',
     phone: '',
     state: 'Tamil Nadu',
-    district: 'Coimbatore',
+    district: '',
     clientType: 'Individual Farmer',
     capacityNeeded: '100 to 500 kg (Commercial)',
     cropType: 'Copra/Coconut',
     message: ''
   });
 
-  const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const uid = useId();
+  const id = (name) => `${uid}-${name}`;
+  const [status, setStatus] = useState('idle');          // idle | sending | sent | failed
+  const [whatsappUrl, setWhatsappUrl] = useState(null);
+  const [phoneError, setPhoneError] = useState(false);
+  const set = (key) => (e) => {
+    if (key === 'phone' && phoneError) setPhoneError(!isValidPhone(e.target.value));
+    setFormData({ ...formData, [key]: e.target.value });
+  };
 
+  // Shown as sent only when the server confirms it; otherwise the same details can go on WhatsApp
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
-    try {
-      const res = await fetch(`${API_BASE}/leads`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-      const data = await res.json();
-      setSubmitted(true);
-
-      if (data.whatsappUrl) {
-        setTimeout(() => {
-          window.open(data.whatsappUrl, '_blank');
-        }, 800);
-      }
-    } catch (err) {
-      console.log('Client fallback submit:', err);
-      const waMsg = `Hi ZeniTEK Team! 👋\nI am *${formData.name}* from *${formData.district}, ${formData.state}*.\nCategory: ${formData.clientType}\nCapacity: *${formData.capacityNeeded}* for *${formData.cropType}*.\nPhone: ${formData.phone}`;
-      window.open(`https://wa.me/918098613422?text=${encodeURIComponent(waMsg)}`, '_blank');
-      setSubmitted(true);
-    } finally {
-      setLoading(false);
+    if (status === 'sending') return;
+    if (!isValidPhone(formData.phone)) {
+      setPhoneError(true);
+      document.getElementById(id('phone'))?.focus();
+      return;
     }
+    setStatus('sending');
+    const lead = Object.fromEntries(Object.entries(formData).map(([k, v]) => [k, typeof v === 'string' ? v.trim() : v]));
+    const result = await sendLead(lead);
+    setWhatsappUrl(result.whatsappUrl || null);
+    setStatus(result.ok ? 'sent' : 'failed');
   };
+  const loading = status === 'sending';
 
   return (
     <div className="bg-white text-black">
@@ -187,7 +184,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 href="https://wa.me/918098613422?text=Hi%20ZeniTEK%20Team!%20I%20want%20a%20quote%20for%20a%20ZeniTEK%20Solar%20Thermal%20Dryer."
                 target="_blank"
                 rel="noreferrer"
-                className="w-full py-3.5 px-4 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow flex items-center justify-center gap-2 text-center transition-all cursor-pointer"
+                className="w-full py-3.5 px-4 bg-[#1A822B] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow flex items-center justify-center gap-2 text-center transition-all cursor-pointer"
               >
                 <MessageCircle className="w-4 h-4 fill-current shrink-0" />
                 <span className="text-balance">{t('chatWhatsapp')}</span>
@@ -202,48 +199,71 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
           <div className="h-full bg-white p-4 sm:p-8 rounded-3xl border border-[#123B92]/20 shadow-md space-y-6 flex flex-col">
             <h3 className="text-xl font-bold text-[#123B92]">{t('preQualTitle')}</h3>
 
-            {submitted ? (
-              <div className="p-6 rounded-2xl bg-[#F0F4FD] border-2 border-[#23AC39] text-center space-y-3">
-                <CheckCircle2 className="w-12 h-12 text-[#002DC2] mx-auto" />
-                <h4 className="text-lg font-bold text-[#123B92]">{t('common_contact_thanksTitle')}</h4>
-                <p className="text-sm text-black/70">
-                  {t('common_contact_thanksDesc')}
-                </p>
-              </div>
+            {status === 'sent' || status === 'failed' ? (
+              <LeadResult
+                status={status}
+                lead={formData}
+                whatsappUrl={whatsappUrl}
+                successTitle={t('common_contact_thanksTitle')}
+                successBody={t('common_contact_thanksDesc')}
+                onRetry={() => setStatus('idle')}
+              />
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4 flex-1 flex flex-col">
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-[#123B92] mb-1">{t('yourName')} *</label>
+                    <label htmlFor={id('name')} className="block text-xs font-bold text-[#123B92] mb-1">{t('yourName')} *</label>
                     <input
+                      id={id('name')}
                       type="text"
                       required
+                      maxLength={80}
+                      autoComplete="name"
                       placeholder={t('common_contact_namePh')}
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onChange={set('name')}
                       className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3 sm:px-3.5 py-2.5 text-sm text-black min-w-0"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-[#123B92] mb-1">{t('whatsappNum')} *</label>
+                    <label htmlFor={id('phone')} className="block text-xs font-bold text-[#123B92] mb-1">{t('whatsappNum')} *</label>
                     <input
+                      id={id('phone')}
                       type="tel"
                       required
+                      maxLength={20}
+                      inputMode="tel"
+                      autoComplete="tel"
                       placeholder="+91 98765 43210"
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3 sm:px-3.5 py-2.5 text-sm text-black min-w-0"
+                      onChange={set('phone')}
+                      onBlur={() => formData.phone && setPhoneError(!isValidPhone(formData.phone))}
+                      aria-invalid={phoneError}
+                      aria-describedby={phoneError ? id('phone-error') : undefined}
+                      className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3 sm:px-3.5 py-2.5 text-sm text-black min-w-0 aria-[invalid=true]:border-red-600"
                     />
+                    {phoneError && <p id={id('phone-error')} className="mt-1 text-xs font-semibold text-red-700">{t('common_form_phoneInvalid')}</p>}
+                  </div>
+
+                  <div>
+                    <label htmlFor={id('state')} className="block text-xs font-bold text-[#123B92] mb-1">{t('common_form_state')} *</label>
+                    <input id={id('state')} type="text" required maxLength={60} autoComplete="address-level1" placeholder={t('common_form_statePh')} value={formData.state} onChange={set('state')} className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3 sm:px-3.5 py-2.5 text-sm text-black min-w-0" />
+                  </div>
+
+                  <div>
+                    <label htmlFor={id('district')} className="block text-xs font-bold text-[#123B92] mb-1">{t('districtCity')} *</label>
+                    <input id={id('district')} type="text" required maxLength={60} autoComplete="address-level2" placeholder={t('common_form_districtPh')} value={formData.district} onChange={set('district')} className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3 sm:px-3.5 py-2.5 text-sm text-black min-w-0" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#123B92] mb-1">1. {t('userCategory')} *</label>
+                  <label htmlFor={id('clientType')} className="block text-xs font-bold text-[#123B92] mb-1">1. {t('userCategory')} *</label>
                   <select
+                    id={id('clientType')}
                     value={formData.clientType}
-                    onChange={(e) => setFormData({ ...formData, clientType: e.target.value })}
+                    onChange={set('clientType')}
                     className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl pl-2.5 pr-1.5 sm:px-3.5 py-2.5 text-sm text-black min-w-0 cursor-pointer"
                   >
                     <option value="Individual Farmer">{t('common_client_farmer')}</option>
@@ -255,10 +275,11 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#123B92] mb-1">2. {t('desiredCapacity')} *</label>
+                  <label htmlFor={id('capacityNeeded')} className="block text-xs font-bold text-[#123B92] mb-1">2. {t('desiredCapacity')} *</label>
                   <select
+                    id={id('capacityNeeded')}
                     value={formData.capacityNeeded}
-                    onChange={(e) => setFormData({ ...formData, capacityNeeded: e.target.value })}
+                    onChange={set('capacityNeeded')}
                     className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl pl-2.5 pr-1.5 sm:px-3.5 py-2.5 text-sm text-black min-w-0 cursor-pointer"
                   >
                     <option value="Under 50 kg (Portable)">{t('common_cap_portable')}</option>
@@ -268,10 +289,11 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#123B92] mb-1">3. {t('targetCrop')} *</label>
+                  <label htmlFor={id('cropType')} className="block text-xs font-bold text-[#123B92] mb-1">3. {t('targetCrop')} *</label>
                   <select
+                    id={id('cropType')}
                     value={formData.cropType}
-                    onChange={(e) => setFormData({ ...formData, cropType: e.target.value })}
+                    onChange={set('cropType')}
                     className="w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl pl-2.5 pr-1.5 sm:px-3.5 py-2.5 text-sm text-black min-w-0 cursor-pointer"
                   >
                     <option value="Copra/Coconut">{t('cropCopra')}</option>
@@ -284,12 +306,14 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 </div>
 
                 <div className="flex-1 flex flex-col">
-                  <label className="block text-xs font-bold text-[#123B92] mb-1">{t('additionalReqs')}</label>
+                  <label htmlFor={id('message')} className="block text-xs font-bold text-[#123B92] mb-1">{t('additionalReqs')}</label>
                   <textarea
+                    id={id('message')}
                     rows="3"
+                    maxLength={1000}
                     placeholder={t('common_contact_messagePh')}
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={set('message')}
                     className="w-full flex-1 bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] rounded-xl px-3 sm:px-3.5 py-2.5 text-sm text-black min-w-0"
                   ></textarea>
                 </div>
@@ -297,7 +321,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3.5 px-6 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow transition-all flex items-center justify-center gap-2 text-center cursor-pointer"
+                  className="w-full py-3.5 px-6 bg-[#1A822B] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow transition-all flex items-center justify-center gap-2 text-center cursor-pointer disabled:opacity-60 disabled:cursor-wait"
                 >
                   {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <span className="text-balance">{t('submitProposal')}</span>}
                 </button>
@@ -342,7 +366,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
 
         <button
           onClick={() => onOpenQuoteModal({ clientType: 'NGO / CSR Partner' })}
-          className="w-full md:w-auto py-3 px-6 bg-[#23AC39] hover:bg-[#002DC2] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow transition-all shrink-0 cursor-pointer text-center text-balance md:whitespace-nowrap"
+          className="w-full md:w-auto py-3 px-6 bg-[#1A822B] hover:bg-[#002DC2] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow transition-all shrink-0 cursor-pointer text-center text-balance md:whitespace-nowrap"
         >
           {t('csrBtn')}
         </button>

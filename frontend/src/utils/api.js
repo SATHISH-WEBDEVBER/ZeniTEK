@@ -5,7 +5,10 @@
 
 import { withCurrentAssetPaths } from './assetUrl';
 
-export const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+// Set VITE_API_BASE_URL for the deployed site (e.g. https://api.example.com/api). Without it the site
+// calls /api on its own address (in dev, vite.config.js forwards that to the local backend), never
+// the visitor's own computer.
+export const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
 
 // ─── Client Admin Auth Helpers ───────────────────────────────────────────────
 // The Client Admin (website CMS) signs in with username/password (role "client").

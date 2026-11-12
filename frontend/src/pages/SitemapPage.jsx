@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ChevronRight, Home, Phone } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { PAGES, SITEMAP_GROUPS } from '../data/siteMap';
-import { LANGS } from '../i18n';
+import { LANGS } from '../i18n/langs';
 import PageHero from '../components/PageHero';
 
 const PAGE_COUNT = SITEMAP_GROUPS.reduce((n, g) => n + g.paths.length, 0);
@@ -54,7 +54,7 @@ export default function SitemapPage() {
                         <Link to={path} className="group flex items-center gap-3 py-3 text-[#123B92] hover:text-[#002DC2] transition-colors">
                           <Icon className={`${depth ? 'w-4 h-4' : 'w-5 h-5'} text-[#002DC2]`} />
                           <span className={`flex-1 ${depth ? 'text-sm font-medium' : 'font-semibold'}`}>{page.code ? `${page.code} ${name}` : name}</span>
-                          <span className="hidden sm:inline text-sm text-slate-400 font-mono">{path}</span>
+                          <span className="hidden sm:inline text-sm text-slate-500 font-mono">{path}</span>
                           <ChevronRight className="w-5 h-5 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
                         </Link>
                       </li>

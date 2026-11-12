@@ -105,7 +105,7 @@ export default function CatalogPage({ onOpenQuoteModal }) {
             <h2 className="text-3xl sm:text-4xl font-black text-white">{t('cat_ctaTitle', { name: title })}</h2>
             <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">{t('cat_ctaBody')}</p>
             <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 pt-2">
-              <button type="button" onClick={quote} className="px-6 py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold rounded-xl transition-colors cursor-pointer inline-flex items-center justify-center gap-2">
+              <button type="button" onClick={quote} className="px-6 py-3 bg-[#1A822B] hover:bg-[#166A26] text-white font-extrabold rounded-xl transition-colors cursor-pointer inline-flex items-center justify-center gap-2">
                 <MessageSquareQuote className="w-5 h-5" /> {t('getQuote')}
               </button>
               <a href={WHATSAPP(title)} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/25 font-bold rounded-xl transition-colors inline-flex items-center justify-center gap-2">

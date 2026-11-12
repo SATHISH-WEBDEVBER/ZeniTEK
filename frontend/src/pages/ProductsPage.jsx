@@ -138,7 +138,7 @@ export default function ProductsPage() {
               <p className="text-base text-slate-200 leading-relaxed">{t('prod_helpBody')}</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-              <Link to="/quote" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold transition-colors">
+              <Link to="/quote" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#1A822B] hover:bg-[#166A26] text-white font-extrabold transition-colors">
                 <MessageSquareQuote className="w-5 h-5" /> {t('getQuote')}
               </Link>
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 text-white font-bold transition-colors">

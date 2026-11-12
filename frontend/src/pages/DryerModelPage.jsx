@@ -143,7 +143,7 @@ export default function DryerModelPage() {
 
               <Link
                 to={quoteUrl}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md transition-all text-center"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#1A822B] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md transition-all text-center"
               >
                 <span>{t('sections_quoteForModel', { name })}</span>
                 <ArrowRight className="w-5 h-5 shrink-0" />
@@ -201,7 +201,7 @@ export default function DryerModelPage() {
             <div className="text-center">
               <Link
                 to={quoteUrl}
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md transition-all"
+                className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#1A822B] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md transition-all"
               >
                 {t('sections_quoteThisModel')} <ArrowRight className="w-5 h-5" />
               </Link>

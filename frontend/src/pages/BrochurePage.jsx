@@ -60,10 +60,10 @@ export default function BrochurePage() {
               <a href={brochure.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#002DC2] hover:bg-[#123B92] text-white text-sm font-extrabold transition-colors">
                 <ExternalLink className="w-5 h-5" /> {t('media_openPdf')}
               </a>
-              <a href={brochure.url} download={brochure.downloadName} className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#23AC39] hover:bg-[#1A822B] text-white text-sm font-extrabold transition-colors">
+              <a href={brochure.url} download={brochure.downloadName} className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#1A822B] hover:bg-[#1A822B] text-white text-sm font-extrabold transition-colors">
                 <Download className="w-5 h-5" /> {t('gallery_downloadPdf')}
               </a>
-              <a href={shareUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#23AC39]/40 text-[#1A822B] hover:bg-[#23AC39]/10 text-sm font-bold transition-colors">
+              <a href={shareUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#23AC39]/40 text-[#166A26] hover:bg-[#23AC39]/10 text-sm font-bold transition-colors">
                 <Share2 className="w-5 h-5" /> {t('gallery_shareWhatsapp')}
               </a>
             </div>
@@ -78,7 +78,7 @@ export default function BrochurePage() {
             <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] tracking-tight text-center">{t('media_moreBrochures')}</h2>
             <BrochureCards brochures={others} />
             <div className="text-center pt-2">
-              <Link to="/quote" className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md">
+              <Link to="/quote" className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#1A822B] hover:bg-[#002DC2] text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-md">
                 {t('gallery_requestTechQuote')} <ArrowRight className="w-5 h-5" />
               </Link>
             </div>

@@ -12,7 +12,7 @@ const PORTALS = [
 export default function AdminLoginChooser() {
   useEffect(() => { document.title = 'Admin sign in · ZeniTEK'; }, []);
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 py-12">
+    <main className="min-h-screen bg-slate-50 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-3xl space-y-8">
         <div className="text-center space-y-3">
           <img src="/images/brand/logo.webp" alt="ZeniTEK" className="h-10 mx-auto object-contain" />
@@ -43,6 +43,6 @@ export default function AdminLoginChooser() {
           <Link to="/" className="font-bold text-slate-600 hover:underline">Back to website</Link>
         </p>
       </div>
-    </div>
+    </main>
   );
 }

@@ -104,7 +104,7 @@ export function Breadcrumb() {
           {/* on phones only the parent page is shown, so the trail fits on one line */}
           {crumbs.map((p, i) => (
             <li key={p} className={`${i === crumbs.length - 1 ? 'flex' : 'hidden sm:flex'} items-center gap-1.5 shrink-0`}>
-              <Link to={p} className="inline-flex items-center gap-1.5 min-h-6 py-1 hover:text-[#002DC2] transition-colors whitespace-nowrap">
+              <Link to={p} className="inline-flex items-center justify-center gap-1.5 min-h-6 min-w-6 py-1 hover:text-[#002DC2] transition-colors whitespace-nowrap">
                 {p === '/' ? <><Home className="w-4 h-4" /><span className="sr-only sm:not-sr-only">{label('navHome')}</span></> : pageLabel(p)}
               </Link>
               <ChevronRight className="w-4 h-4 text-slate-400" />

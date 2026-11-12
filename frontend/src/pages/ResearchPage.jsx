@@ -116,7 +116,7 @@ export default function ResearchPage({ onOpenQuoteModal }) {
             <div className="grid grid-cols-3 gap-3">
               {[[t('prod_rdRes1v'), 'prod_rdRes1'], ['75% → 8%', 'prod_rdRes2'], ['150 kg', 'prod_rdRes3']].map(([v, k]) => (
                 <div key={k} className="rounded-2xl bg-[#F0F4FD] p-3 sm:p-4">
-                  <div className="text-lg sm:text-2xl font-black text-[#23AC39] whitespace-nowrap">{v}</div>
+                  <div className="text-lg sm:text-2xl font-black text-[#1A822B] whitespace-nowrap">{v}</div>
                   <div className="text-xs text-slate-600 font-semibold leading-snug mt-0.5 [overflow-wrap:anywhere]">{t(k)}</div>
                 </div>
               ))}
@@ -165,7 +165,7 @@ export default function ResearchPage({ onOpenQuoteModal }) {
                 to={to}
                 className={`group relative block overflow-hidden rounded-2xl bg-slate-100 ${i === 0 ? 'col-span-2 row-span-2' : ''}`}
               >
-                <img src={image} alt={t(captionKey)} loading="lazy" className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ${i === 0 ? 'aspect-square lg:aspect-auto' : 'aspect-square'}`} />
+                <img src={image} alt="" loading="lazy" className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ${i === 0 ? 'aspect-square lg:aspect-auto' : 'aspect-square'}`} />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent p-3 pt-10">
                   <div className="text-xs sm:text-sm font-bold text-white leading-snug">{t(captionKey)}</div>
                   <div className="hidden sm:inline-flex text-xs font-semibold text-white/80 items-center gap-1 mt-0.5">
@@ -235,7 +235,7 @@ export default function ResearchPage({ onOpenQuoteModal }) {
                   <div className="font-bold text-[#123B92] leading-snug">{p.name}</div>
                   <div className="text-xs text-slate-600 leading-snug mt-1">{t(`about_a${i + 1}Branch`)}</div>
                 </div>
-                <span className="mt-auto text-2xs sm:text-xs font-bold uppercase tracking-wider text-[#1A822B] bg-[#EAF7EC] px-2 py-0.5 rounded">{t(`about_a${i + 1}Tag`)}</span>
+                <span className="mt-auto text-2xs sm:text-xs font-bold uppercase tracking-wider text-[#166A26] bg-[#EAF7EC] px-2 py-0.5 rounded">{t(`about_a${i + 1}Tag`)}</span>
               </div>
             ))}
           </div>
@@ -260,7 +260,7 @@ export default function ResearchPage({ onOpenQuoteModal }) {
               <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight">{t('prod_rdCtaTitle')}</h2>
               <p className="text-base text-slate-200 leading-relaxed">{t('prod_rdCtaBody')}</p>
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-1">
-                <button type="button" onClick={collaborate} className="px-6 py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold rounded-xl transition-colors cursor-pointer">
+                <button type="button" onClick={collaborate} className="px-6 py-3 bg-[#1A822B] hover:bg-[#166A26] text-white font-extrabold rounded-xl transition-colors cursor-pointer">
                   {t('prod_rdDiscuss')}
                 </button>
                 <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="px-5 py-3 bg-white/10 hover:bg-white/20 border border-white/25 font-bold rounded-xl transition-colors inline-flex items-center justify-center gap-2">

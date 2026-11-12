@@ -211,7 +211,7 @@ function downloadCsv(leads) {
     if (k === 'whatsappPreference') return esc(l.whatsappPreference === false ? 'No' : 'Yes');
     return esc(l[k]);
   }).join(','));
-  const csv = `﻿${[CSV_COLUMNS.map(([, h]) => h).join(','), ...rows].join('\r\n')}`;
+  const csv = `\uFEFF${[CSV_COLUMNS.map(([, h]) => h).join(','), ...rows].join('\r\n')}`;
   const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
   const a = document.createElement('a');
   a.href = url;

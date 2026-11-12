@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { zenitekRealGallery } from '../data/zenitekRealGalleryData';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import {
-  MapPin, CheckCircle2, ShieldCheck, Sun, Zap, Layers, Maximize2, Share2, PhoneCall, MessageCircle, ChevronRight, Calendar, Sparkles, SlidersHorizontal, Info, Award, X, BadgeCheck, CalendarCheck, Calculator, MessageSquareQuote
+  MapPin, Maximize2, Share2, MessageCircle, ChevronRight, X, BadgeCheck, CalendarCheck, Calculator, MessageSquareQuote
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { usePageTitle } from '../components/SiteHeader';
@@ -38,7 +38,6 @@ const createCustomIcon = () => {
 
 export default function GalleryDetailPage({ onOpenQuoteModal }) {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { t, tf } = useLanguage();
 
   const item = zenitekRealGallery.find((p) => p.id === id) || null;
@@ -192,7 +191,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
 
                 <button
                   onClick={openQuote}
-                  className="px-5 py-2.5 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md shrink-0 cursor-pointer whitespace-nowrap"
+                  className="px-5 py-2.5 bg-[#1A822B] hover:bg-[#166A26] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md shrink-0 cursor-pointer whitespace-nowrap"
                 >
                   {t('gallery_requestSizingQuote')}
                 </button>
@@ -211,55 +210,55 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
 
                 {/* Specifications Grid */}
                 <div className="border-t border-slate-100 pt-5 space-y-3">
-                  <h3 className="text-xs font-black text-[#123B92] uppercase tracking-wider">
+                  <h2 className="text-xs font-black text-[#123B92] uppercase tracking-wider">
                     {t('gallery_engSpecs')}
-                  </h3>
+                  </h2>
 
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                      <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specModel')}</div>
+                      <div className="text-2xs font-bold text-slate-500 uppercase">{t('gallery_specModel')}</div>
                       <div className="font-extrabold text-[#123B92] mt-0.5">{item.productModel}</div>
                     </div>
 
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                      <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specCapacity')}</div>
+                      <div className="text-2xs font-bold text-slate-500 uppercase">{t('gallery_specCapacity')}</div>
                       <div className="font-extrabold text-[#002DC2] mt-0.5">{keepParens(item.capacity)}</div>
                     </div>
 
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                      <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specFootprint')}</div>
+                      <div className="text-2xs font-bold text-slate-500 uppercase">{t('gallery_specFootprint')}</div>
                       <div className="font-extrabold text-[#123B92] mt-0.5">{keepParens(item.dimensions)}</div>
                     </div>
 
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                      <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specCrops')}</div>
+                      <div className="text-2xs font-bold text-slate-500 uppercase">{t('gallery_specCrops')}</div>
                       <div className="font-extrabold text-[#1A822B] mt-0.5 break-words">{item.crop}</div>
                     </div>
 
                     {item.dryingTime && (
                       <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specDryingTime')}</div>
+                        <div className="text-2xs font-bold text-slate-500 uppercase">{t('gallery_specDryingTime')}</div>
                         <div className="font-extrabold text-[#123B92] mt-0.5">{item.dryingTime}</div>
                       </div>
                     )}
 
                     {item.solarPV && (
                       <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specSolarPower')}</div>
+                        <div className="text-2xs font-bold text-slate-500 uppercase">{t('gallery_specSolarPower')}</div>
                         <div className="font-extrabold text-[#123B92] mt-0.5 break-words">{keepParens(item.solarPV)}</div>
                       </div>
                     )}
 
                     {item.temperatureRange && (
                       <div className="col-span-2 p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specTemp')}</div>
+                        <div className="text-2xs font-bold text-slate-500 uppercase">{t('gallery_specTemp')}</div>
                         <div className="font-extrabold text-[#123B92] mt-0.5">{item.temperatureRange}</div>
                       </div>
                     )}
 
                     {item.traySpecs && (
                       <div className="col-span-2 p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div className="text-2xs font-bold text-slate-400 uppercase">{t('gallery_specTrays')}</div>
+                        <div className="text-2xs font-bold text-slate-500 uppercase">{t('gallery_specTrays')}</div>
                         <div className="font-semibold text-slate-800 mt-0.5">{keepParens(item.traySpecs)}</div>
                       </div>
                     )}
@@ -283,7 +282,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                     href={`https://wa.me/919443729576?text=${whatsappMessage}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-sm transition-all flex items-center justify-center space-x-2 cursor-pointer"
+                    className="w-full py-3 bg-[#1A822B] hover:bg-[#166A26] text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-sm transition-all flex items-center justify-center space-x-2 cursor-pointer"
                   >
                     <MessageCircle className="w-4 h-4" />
                     <span>{t('gallery_chatWhatsapp')}</span>
@@ -332,7 +331,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <Marker position={[item.lat, item.lng]} icon={createCustomIcon()}>
+                <Marker position={[item.lat, item.lng]} icon={createCustomIcon()} title={item.title} alt={item.title}>
                   <Popup>
                     <div className="p-1 space-y-1 text-xs">
                       <div className="font-bold text-[#123B92]">{item.title}</div>
@@ -390,9 +389,9 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                           <MapPin className="w-4 h-4 mr-1 mt-px shrink-0" />
                           <span>{rel.location}, {rel.state}</span>
                         </div>
-                        <h4 className="text-lg font-extrabold text-[#123B92] group-hover:text-[#002DC2] transition-colors line-clamp-2">
+                        <h3 className="text-lg font-extrabold text-[#123B92] group-hover:text-[#002DC2] transition-colors line-clamp-2">
                           {rel.title}
-                        </h4>
+                        </h3>
                       </div>
                     </div>
 

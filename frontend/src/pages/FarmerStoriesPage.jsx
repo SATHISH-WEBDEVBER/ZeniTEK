@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Play, TrendingUp, ShieldCheck, Award, ArrowRight, CheckCircle2, Star, Ruler, Wrench, Handshake, MessageSquareQuote, MapPin
+  ArrowRight, Star, Ruler, Wrench, Handshake, MessageSquareQuote, MapPin
 } from 'lucide-react';
 import IconTile from '../components/IconTile';
 import PageHero from '../components/PageHero';
 import { sampleReviews } from '../data/sampleData';
 import { useLanguage } from '../context/LanguageContext';
 import { API_BASE } from '../utils/api';
+
+// Only real YouTube videos are embedded (from the reviews in the admin panel); anything else - an empty
+// field, another site's address - shows no video. Uses YouTube's privacy-enhanced domain.
+const youtubeEmbed = (url) => {
+  const m = /^https:\/\/(?:www\.)?(?:youtube(?:-nocookie)?\.com\/(?:embed\/|watch\?v=)|youtu\.be\/)([\w-]{11})(?:[?&#].*)?$/.exec(String(url || '').trim());
+  return m && m[1] !== 'dQw4w9WgXcQ' ? `https://www.youtube-nocookie.com/embed/${m[1]}` : null;
+};
 
 export default function FarmerStoriesPage({ onOpenQuoteModal }) {
   const { t } = useLanguage();
@@ -57,20 +64,31 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {reviews.map(rev => (
               <div key={rev._id} className="bg-white rounded-3xl overflow-hidden border border-[#123B92]/20 shadow-sm space-y-4 flex flex-col justify-between">
-                <div className="relative h-48 bg-black overflow-hidden">
-                  <iframe
-                    className="w-full h-full"
-                    src={rev.videoUrl}
-                    title={rev.name}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </div>
+                {youtubeEmbed(rev.videoUrl) ? (
+                  <div className="relative h-48 bg-black overflow-hidden">
+                    <iframe
+                      className="w-full h-full"
+                      src={youtubeEmbed(rev.videoUrl)}
+                      title={rev.name}
+                      loading="lazy"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                ) : (
+                  // no video for this review: its quote mark and the reviewer's initials instead
+                  <div className="relative h-48 bg-gradient-to-br from-[#001b69] to-[#002DC2] flex items-center justify-center" aria-hidden="true">
+                    <MessageSquareQuote className="absolute top-4 left-4 w-8 h-8 text-white/30" />
+                    <span className="w-20 h-20 rounded-full bg-white/15 ring-2 ring-white/40 text-white text-2xl font-black flex items-center justify-center">
+                      {String(rev.name || '').split(/\s+/).map(w => w.replace(/[^A-Za-z]/g, '')[0]).filter(Boolean).slice(-2).join('')}
+                    </span>
+                  </div>
+                )}
 
                 <div className="p-5 sm:p-6 space-y-3">
                   <div className="flex items-center justify-between">
                     <h3 className="text-xl font-bold text-[#123B92]">{rev.name}</h3>
-                    <span className="inline-flex items-center gap-1 text-2xs font-bold text-white bg-[#23AC39] px-2 py-0.5 rounded border border-[#23AC39]">
+                    <span className="inline-flex items-center gap-1 text-2xs font-bold text-white bg-[#1A822B] px-2 py-0.5 rounded border border-[#23AC39]">
                       <Star className="w-4 h-4 fill-current" /> {rev.rating}.0
                     </span>
                   </div>
@@ -144,7 +162,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
           <div className="pt-4">
             <button
               onClick={() => onOpenQuoteModal()}
-              className="px-8 py-3.5 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl hover:scale-105 transition-all shadow-md inline-flex items-center space-x-2 cursor-pointer"
+              className="px-8 py-3.5 bg-[#1A822B] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl hover:scale-105 transition-all shadow-md inline-flex items-center space-x-2 cursor-pointer"
             >
               <span>{t('startProsperityBtn')}</span>
               <ArrowRight className="w-4 h-4" />

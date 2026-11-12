@@ -183,7 +183,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
                   <div className={`text-5xl sm:text-6xl font-black tracking-tight ${strong ? '!text-white' : 'text-[#1A822B]'}`}>
                     {t('sub_percentSubsidy', { percent: c.percent })}
                   </div>
-                  <div className={`self-start rounded-xl px-4 py-2 text-base sm:text-lg font-black ${strong ? 'bg-white text-[#123B92]' : 'bg-[#EAF7EC] text-[#1A822B]'}`}>
+                  <div className={`self-start rounded-xl px-4 py-2 text-base sm:text-lg font-black ${strong ? 'bg-white text-[#123B92]' : 'bg-[#EAF7EC] text-[#166A26]'}`}>
                     {t('sub_upTo', { amount: inr(c.max) })}
                   </div>
                 </div>
@@ -218,7 +218,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
                           <span className="block font-bold text-[#123B92] leading-snug">{t(c.whoKey)}</span>
                           <span className="block text-xs text-slate-500 mt-1">{t('sub_upTo', { amount: inr(c.max) })}</span>
                         </span>
-                        <span className={`text-sm font-black px-2.5 py-1 rounded-lg ${on ? 'bg-[#23AC39] text-white' : 'bg-[#EAF7EC] text-[#1A822B]'}`}>{c.percent}%</span>
+                        <span className={`text-sm font-black px-2.5 py-1 rounded-lg ${on ? 'bg-[#1A822B] text-white' : 'bg-[#EAF7EC] text-[#166A26]'}`}>{c.percent}%</span>
                       </button>
                     );
                   })}
@@ -277,7 +277,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
             </div>
 
             {/* Result */}
-            <aside className="lg:col-span-5 lg:sticky lg:top-24 bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
+            <div className="lg:col-span-5 lg:sticky lg:top-24 bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
               <div className="bg-gradient-to-br from-[#001b69] to-[#002DC2] px-6 py-4 text-white">
                 <div className="text-xs font-bold uppercase tracking-wider text-white/75">{t('sub_resultTitle')}</div>
                 <div className="text-lg font-black text-white">
@@ -289,7 +289,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
                   {lines.map(l => (
                     <div key={l.label} className="flex items-baseline justify-between gap-3">
                       <dt className="min-w-0 text-slate-600">
-                        {l.label} <span className="text-xs text-slate-400 whitespace-nowrap">({l.detail})</span>
+                        {l.label} <span className="text-xs text-slate-500 whitespace-nowrap">({l.detail})</span>
                       </dt>
                       <dd className="font-bold text-[#123B92] tabular-nums whitespace-nowrap">{inr(l.value)}</dd>
                     </div>
@@ -324,12 +324,12 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
                   </p>
                 )}
 
-                <button type="button" onClick={quote} className="btn-fx w-full py-3.5 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold rounded-xl inline-flex items-center justify-center gap-2 cursor-pointer">
+                <button type="button" onClick={quote} className="btn-fx w-full py-3.5 bg-[#1A822B] hover:bg-[#166A26] text-white font-extrabold rounded-xl inline-flex items-center justify-center gap-2 cursor-pointer">
                   {t('sub_quoteThese')} <ArrowRight className="w-5 h-5" />
                 </button>
                 <p className="text-xs text-slate-500 leading-relaxed">{t('sub_note')}</p>
               </div>
-            </aside>
+            </div>
           </div>
         </div>
       </section>
@@ -355,7 +355,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
             </div>
           </div>
 
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm bg-white">
+          <div tabIndex={0} role="region" aria-label={t('sub_tablesTitle')} className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm bg-white focus-visible:ring-2 focus-visible:ring-[#002DC2]">
             <table className={`w-full text-sm ${table === 'items' ? 'min-w-[1080px]' : 'min-w-[820px]'}`}>
               <thead className="text-xs">
                 <tr className="bg-[#123B92] text-white">
@@ -471,7 +471,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
               ))}
             </ol>
           </div>
-          <aside className="lg:col-span-5 self-start rounded-3xl bg-[#FFFBEB] border border-amber-200 p-6 sm:p-7">
+          <div className="lg:col-span-5 self-start rounded-3xl bg-[#FFFBEB] border border-amber-200 p-6 sm:p-7">
             <h2 className="flex items-center gap-2 text-2xl font-black text-[#123B92]">
               <Info className="w-6 h-6 text-amber-600" /> {t('sub_notesTitle')}
             </h2>
@@ -483,7 +483,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
                 </li>
               ))}
             </ul>
-          </aside>
+          </div>
         </div>
       </section>
 
@@ -506,7 +506,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
                     <Icon className="w-6 h-6" />
                   </span>
                   <div className="pt-1">
-                    <div className="text-xs font-black text-[#23AC39] uppercase tracking-wider">0{i + 1}</div>
+                    <div className="text-xs font-black text-[#1A822B] uppercase tracking-wider">0{i + 1}</div>
                     <h3 className="text-lg font-bold text-[#123B92] leading-snug">{t(`sections_step${i + 1}_title`)}</h3>
                     <p className="text-sm text-slate-600 leading-relaxed mt-1">{t(`sections_step${i + 1}_desc`)}</p>
                   </div>
@@ -529,7 +529,7 @@ export default function SubsidiesPage({ onOpenQuoteModal }) {
                 <button
                   type="button"
                   onClick={() => onOpenQuoteModal({ capacityNeeded: 'Subsidy Consultation', message: 'I want a free telephone consultation regarding the government subsidy for a solar tunnel dryer.' })}
-                  className="px-6 py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold rounded-xl transition-colors cursor-pointer"
+                  className="px-6 py-3 bg-[#1A822B] hover:bg-[#166A26] text-white font-extrabold rounded-xl transition-colors cursor-pointer"
                 >
                   {t('sections_freeConsult')}
                 </button>

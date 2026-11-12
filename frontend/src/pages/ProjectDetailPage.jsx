@@ -144,7 +144,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
                 <div>
-                  <span className="text-2xs font-extrabold uppercase tracking-widest text-[#1A822B] bg-[#23AC39]/10 px-2.5 py-1 rounded-md border border-[#23AC39]/30 inline-block">
+                  <span className="text-2xs font-extrabold uppercase tracking-widest text-[#166A26] bg-[#23AC39]/10 px-2.5 py-1 rounded-md border border-[#23AC39]/30 inline-block">
                     {t('gallery_targetCropBadge')}
                   </span>
                   <h2 className="text-3xl sm:text-4xl font-black text-[#123B92] mt-2">
@@ -178,7 +178,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
                   <div className="text-xs font-extrabold text-[#123B92] mt-0.5">{t('gallery_hlWeatherVal')}</div>
                 </div>
                 <div className="p-3 bg-[#23AC39]/10 rounded-xl border border-[#23AC39]/30">
-                  <div className="text-2xs font-bold uppercase text-[#1A822B]">{t('gallery_hlClean')}</div>
+                  <div className="text-2xs font-bold uppercase text-[#166A26]">{t('gallery_hlClean')}</div>
                   <div className="text-xs font-extrabold text-[#123B92] mt-0.5">{t('gallery_hlCleanVal')}</div>
                 </div>
                 <div className="p-3 bg-[#F0F4FD] rounded-xl border border-[#002DC2]/20">
@@ -261,7 +261,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
               {/* Primary Call to Action Box */}
               <div className="p-5 bg-gradient-to-br from-blue-900 via-blue-800 to-green-800 text-white rounded-2xl space-y-4 shadow-md">
                 <div className="space-y-1">
-                  <div className="text-xs font-bold uppercase tracking-wider text-[#23AC39]">
+                  <div className="text-xs font-bold uppercase tracking-wider text-[#1A822B]">
                     {t('gallery_projCtaBadge')}
                   </div>
                   <div className="text-sm font-extrabold">
@@ -274,7 +274,7 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
 
                 <button
                   onClick={openQuote}
-                  className="w-full py-3.5 bg-[#23AC39] hover:bg-[#23AC39] text-[#123B92] font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 hover:scale-[1.02]"
+                  className="w-full py-3.5 bg-[#1A822B] hover:bg-[#166A26] text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 hover:scale-[1.02]"
                 >
                   <span>{t('gallery_projCtaBtn')}</span>
                   <ArrowRight className="w-4 h-4" />

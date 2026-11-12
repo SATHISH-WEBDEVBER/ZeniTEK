@@ -59,7 +59,7 @@ export default function LegalPage({ type }) {
               <h2 className="text-3xl sm:text-4xl font-black text-[#123B92]">{t('sections_termsHeading')}</h2>
               <p>{t('sections_termsP1')}</p>
               <p>{t('sections_termsP2')}</p>
-              <div className="p-4 bg-[#23AC39]/10 rounded-xl border border-[#23AC39]/30 text-[#1A822B] space-y-1">
+              <div className="p-4 bg-[#23AC39]/10 rounded-xl border border-[#23AC39]/30 text-[#166A26] space-y-1">
                 <p className="font-bold">{t('sections_corporateInfo')}</p>
                 <p>GSTIN: 33AACFZ8530G1Z5 | {t('sections_isoCert')}: ZNK-9001-2026</p>
               </div>

@@ -5,7 +5,7 @@ import MapComponent from '../components/LazyMap';
 import { sampleReviews } from '../data/sampleData';
 import { useLanguage } from '../context/LanguageContext';
 import {
-  Sun, ShieldCheck, Award, ArrowRight, Zap, ChevronRight, ChevronLeft, MapPin, Sprout, Cpu, Sparkles, Star, Microscope, ThermometerSun, PanelTop, BadgeCheck, Landmark, MessageSquareQuote
+  ShieldCheck, Award, ArrowRight, ChevronRight, MapPin, Sprout, Star, Microscope, ThermometerSun, PanelTop, BadgeCheck, MessageSquareQuote
 } from 'lucide-react';
 import IconTile from '../components/IconTile';
 import PageHero from '../components/PageHero';
@@ -268,15 +268,15 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
             {sampleReviews.map(rev => (
               <div key={rev._id} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between gap-4">
                 <div className="space-y-3">
-                  <div className="flex items-center gap-1 text-[#23AC39]" aria-label={`${rev.rating || 5}/5`}>
+                  <div className="flex items-center gap-1 text-[#23AC39]" role="img" aria-label={`${rev.rating || 5}/5`}>
                     {Array.from({ length: rev.rating || 5 }, (_, i) => <Star key={i} className="w-5 h-5 fill-current" />)}
                   </div>
                   <p className="text-sm text-slate-700 leading-relaxed italic">"{tf(`common_review_${rev._id}_comment`, rev.comment)}"</p>
                 </div>
                 <div className="pt-3 border-t border-slate-200">
-                  <h4 className="text-lg font-extrabold text-[#123B92]">{rev.name}</h4>
+                  <h3 className="text-lg font-extrabold text-[#123B92]">{rev.name}</h3>
                   <div className="text-xs font-semibold text-[#1A822B]">{tf(`common_review_${rev._id}_role`, rev.role)}</div>
-                  <div className="text-xs text-slate-400 flex items-center mt-0.5">
+                  <div className="text-xs text-slate-500 flex items-center mt-0.5">
                     <MapPin className="w-4 h-4 mr-0.5" /> {rev.location}
                   </div>
                 </div>
@@ -299,8 +299,11 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
             <form onSubmit={handleQuickSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className={labelClass}>{t('yourName')} *</label>
+                  <label htmlFor="qf-name" className={labelClass}>{t('yourName')} *</label>
                   <input
+                    id="qf-name"
+                    maxLength={80}
+                    autoComplete="name"
                     type="text"
                     required
                     value={quickForm.name}
@@ -310,8 +313,14 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                 </div>
 
                 <div>
-                  <label className={labelClass}>{t('whatsappNum')} *</label>
+                  <label htmlFor="qf-phone" className={labelClass}>{t('whatsappNum')} *</label>
                   <input
+                    id="qf-phone"
+                    maxLength={20}
+                    inputMode="tel"
+                    autoComplete="tel"
+                    pattern="(\+?91|0)?[\s\-]*([0-9][\s\-]*){10}"
+                    title={t('common_form_phoneInvalid')}
                     type="tel"
                     required
                     value={quickForm.phone}
@@ -321,8 +330,11 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                 </div>
 
                 <div>
-                  <label className={labelClass}>{t('districtCity')} *</label>
+                  <label htmlFor="qf-district" className={labelClass}>{t('districtCity')} *</label>
                   <input
+                    id="qf-district"
+                    maxLength={60}
+                    autoComplete="address-level2"
                     type="text"
                     required
                     placeholder={t('homeDistrictPh')}
@@ -333,8 +345,9 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                 </div>
 
                 <div>
-                  <label className={labelClass}>{t('dryerModel')} *</label>
+                  <label htmlFor="qf-capacity" className={labelClass}>{t('dryerModel')} *</label>
                   <select
+                    id="qf-capacity"
                     value={quickForm.capacityNeeded}
                     onChange={(e) => setQuickForm({ ...quickForm, capacityNeeded: e.target.value })}
                     className={`${inputClass} cursor-pointer`}
@@ -347,8 +360,9 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                 </div>
 
                 <div>
-                  <label className={labelClass}>{t('targetCrop')} *</label>
+                  <label htmlFor="qf-crop" className={labelClass}>{t('targetCrop')} *</label>
                   <select
+                    id="qf-crop"
                     value={quickForm.cropType}
                     onChange={(e) => setQuickForm({ ...quickForm, cropType: e.target.value })}
                     className={`${inputClass} cursor-pointer`}
@@ -363,8 +377,10 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                 </div>
 
                 <div>
-                  <label className={labelClass}>{t('descriptionReqs')}</label>
+                  <label htmlFor="qf-message" className={labelClass}>{t('descriptionReqs')}</label>
                   <input
+                    id="qf-message"
+                    maxLength={500}
                     type="text"
                     placeholder={t('homeMessagePh')}
                     value={quickForm.message}
@@ -377,7 +393,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
               <div className="pt-2 flex justify-center">
                 <button
                   type="submit"
-                  className="w-full sm:w-auto px-8 py-3.5 bg-[#23AC39] hover:bg-[#23AC39] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2"
+                  className="w-full sm:w-auto px-8 py-3.5 bg-[#1A822B] hover:bg-[#166A26] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2"
                 >
                   <span>{t('getQuote')}</span>
                   <ArrowRight className="w-4 h-4" />

@@ -93,7 +93,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
                 <IconTile icon={Nut} tone="green" />
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropCopra')}</h3>
                 <p className="text-sm text-black leading-relaxed">{t('common_apps_copraDesc')}</p>
-                <button onClick={() => onOpenQuoteModal({ cropType: 'Copra/Coconut' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
+                <button onClick={() => onOpenQuoteModal({ cropType: 'Copra/Coconut' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 min-h-6 py-1 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
@@ -102,7 +102,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
                 <IconTile icon={Leaf} tone="green" />
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropMoringa')}</h3>
                 <p className="text-sm text-black leading-relaxed">{t('common_apps_moringaDesc')}</p>
-                <button onClick={() => onOpenQuoteModal({ cropType: 'Moringa/Herbs' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
+                <button onClick={() => onOpenQuoteModal({ cropType: 'Moringa/Herbs' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 min-h-6 py-1 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
@@ -111,7 +111,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
                 <IconTile icon={Flame} tone="green" />
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropSpices')}</h3>
                 <p className="text-sm text-black leading-relaxed">{t('common_apps_spicesDesc')}</p>
-                <button onClick={() => onOpenQuoteModal({ cropType: 'Spices/Chillies' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
+                <button onClick={() => onOpenQuoteModal({ cropType: 'Spices/Chillies' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 min-h-6 py-1 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
@@ -124,7 +124,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
                 <IconTile icon={Fish} tone="blue" />
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropFish')}</h3>
                 <p className="text-sm text-black leading-relaxed">{t('common_apps_fishDesc')}</p>
-                <button onClick={() => onOpenQuoteModal({ cropType: 'Fish/Seafood' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
+                <button onClick={() => onOpenQuoteModal({ cropType: 'Fish/Seafood' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 min-h-6 py-1 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
@@ -133,7 +133,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
                 <IconTile icon={Shell} tone="blue" />
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropFish')}</h3>
                 <p className="text-sm text-black leading-relaxed">{t('common_apps_shrimpDesc')}</p>
-                <button onClick={() => onOpenQuoteModal({ cropType: 'Fish/Seafood' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
+                <button onClick={() => onOpenQuoteModal({ cropType: 'Fish/Seafood' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 min-h-6 py-1 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
@@ -146,7 +146,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
                 <IconTile icon={Factory} tone="navy" />
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropOther')}</h3>
                 <p className="text-sm text-black leading-relaxed">{t('common_apps_sludgeDesc')}</p>
-                <button onClick={() => onOpenQuoteModal({ clientType: 'Industrial/Sludge Processor' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
+                <button onClick={() => onOpenQuoteModal({ clientType: 'Industrial/Sludge Processor' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 min-h-6 py-1 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
@@ -155,7 +155,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
                 <IconTile icon={Trees} tone="navy" />
                 <h3 className="text-xl font-bold text-[#123B92]">{t('cropOther')}</h3>
                 <p className="text-sm text-black leading-relaxed">{t('common_apps_timberDesc')}</p>
-                <button onClick={() => onOpenQuoteModal({ clientType: 'Industrial/Sludge Processor' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 cursor-pointer">
+                <button onClick={() => onOpenQuoteModal({ clientType: 'Industrial/Sludge Processor' })} className="text-xs font-bold text-[#002DC2] hover:underline flex items-center pt-2 min-h-6 py-1 cursor-pointer">
                   {t('enquireSetup')} <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
@@ -188,7 +188,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
           <p className="sm:hidden text-sm font-semibold text-slate-500 mb-2">
             → {t('common_apps_swipeHint')}
           </p>
-          <div className="bg-white rounded-3xl overflow-x-auto border border-[#123B92]/20 shadow-md">
+          <div tabIndex={0} role="region" aria-label={t('thTargetProduce')} className="bg-white rounded-3xl overflow-x-auto border border-[#123B92]/20 shadow-md focus-visible:ring-2 focus-visible:ring-[#002DC2]">
             <table className="w-full min-w-[1000px] text-left border-collapse">
               <thead>
                 <tr className="bg-[#123B92] text-white text-xs uppercase font-bold tracking-wider">
@@ -229,7 +229,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
               <IconTile icon={Users} />
               <h3 className="text-xl font-bold text-[#123B92]">{t('personaFpoTitle')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('personaFpoDesc')}</p>
-              <button onClick={() => onOpenQuoteModal({ clientType: 'FPO / Cooperative Group' })} className="text-xs font-bold text-[#002DC2] hover:underline cursor-pointer">
+              <button onClick={() => onOpenQuoteModal({ clientType: 'FPO / Cooperative Group' })} className="text-xs font-bold text-[#002DC2] hover:underline min-h-6 py-1 cursor-pointer">
                 {t('personaFpoBtn')}
               </button>
             </div>
@@ -238,7 +238,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
               <IconTile icon={Ship} tone="navy" />
               <h3 className="text-xl font-bold text-[#123B92]">{t('personaExpTitle')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('personaExpDesc')}</p>
-              <button onClick={() => onOpenQuoteModal({ clientType: 'Food Processor & Exporter' })} className="text-xs font-bold text-[#002DC2] hover:underline cursor-pointer">
+              <button onClick={() => onOpenQuoteModal({ clientType: 'Food Processor & Exporter' })} className="text-xs font-bold text-[#002DC2] hover:underline min-h-6 py-1 cursor-pointer">
                 {t('personaExpBtn')}
               </button>
             </div>
@@ -247,7 +247,7 @@ export default function ApplicationsPage({ onOpenQuoteModal }) {
               <IconTile icon={Sprout} tone="green" />
               <h3 className="text-xl font-bold text-[#123B92]">{t('personaFarmerTitle')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('personaFarmerDesc')}</p>
-              <button onClick={() => onOpenQuoteModal({ clientType: 'Individual Farmer' })} className="text-xs font-bold text-[#002DC2] hover:underline cursor-pointer">
+              <button onClick={() => onOpenQuoteModal({ clientType: 'Individual Farmer' })} className="text-xs font-bold text-[#002DC2] hover:underline min-h-6 py-1 cursor-pointer">
                 {t('personaFarmerBtn')}
               </button>
             </div>

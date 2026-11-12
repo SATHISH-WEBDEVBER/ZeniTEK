@@ -397,7 +397,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                           {item.capacity && (
                             <span
                               title={item.capacity}
-                              className="max-w-full truncate text-2xs text-white bg-[#1E8A30] px-2 py-0.5 rounded border border-[#1E8A30] font-bold"
+                              className="max-w-full truncate text-2xs text-white bg-[#1A822B] px-2 py-0.5 rounded border border-[#1A822B] font-bold"
                             >
                               {item.capacity}
                             </span>
@@ -405,9 +405,9 @@ export default function GalleryPage({ onOpenQuoteModal }) {
                         </div>
                       </div>
 
-                      <h4 className="text-lg font-extrabold text-[#123B92] leading-6 group-hover:text-[#002DC2] transition-colors line-clamp-2 min-h-12">
+                      <h3 className="text-lg font-extrabold text-[#123B92] leading-6 group-hover:text-[#002DC2] transition-colors line-clamp-2 min-h-12">
                         {item.title}
-                      </h4>
+                      </h3>
 
                       <p className="text-sm text-slate-600 line-clamp-2 leading-6 font-medium min-h-12">
                         {item.description}
@@ -450,7 +450,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
             <div className="flex items-center justify-center">
               <button
                 onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: 'Complete Turnkey Dryer Project' })}
-                className="py-3.5 px-6 bg-[#23AC39] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all hover:scale-105 cursor-pointer"
+                className="py-3.5 px-6 bg-[#1A822B] hover:bg-[#002DC2] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all hover:scale-105 cursor-pointer"
               >
                 {t('gallery_ctaBtn')}
               </button>

@@ -137,7 +137,7 @@ export default function SolarThermalPage({ onOpenQuoteModal }) {
             {PROJECTS.map(p => (
               <article key={p.titleKey} className="flex flex-col bg-white rounded-2xl border border-slate-200 shadow-sm p-6 gap-3">
                 <span className="self-start text-xs font-bold uppercase tracking-wider text-[#002DC2] bg-[#F0F4FD] px-2.5 py-1 rounded-md">{t(p.badgeKey)}</span>
-                <div className="text-3xl font-black text-[#23AC39] tracking-tight">{p.metric}</div>
+                <div className="text-3xl font-black text-[#1A822B] tracking-tight">{p.metric}</div>
                 <h3 className="text-lg font-bold text-[#123B92] leading-snug">{t(p.titleKey)}</h3>
                 <p className="text-sm text-slate-600 leading-relaxed flex-1">{t(p.descKey)}</p>
                 <div className="pt-3 border-t border-slate-100 space-y-1 text-sm">
@@ -198,7 +198,7 @@ export default function SolarThermalPage({ onOpenQuoteModal }) {
             <h2 className="text-3xl sm:text-4xl font-black text-white">{t('prod_thCtaTitle')}</h2>
             <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">{t('prod_thCtaBody')}</p>
             <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 pt-2">
-              <button type="button" onClick={quote} className="px-6 py-3 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold rounded-xl transition-colors cursor-pointer">
+              <button type="button" onClick={quote} className="px-6 py-3 bg-[#1A822B] hover:bg-[#166A26] text-white font-extrabold rounded-xl transition-colors cursor-pointer">
                 {t('getQuote')}
               </button>
               <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/25 font-bold rounded-xl transition-colors inline-flex items-center justify-center gap-2">

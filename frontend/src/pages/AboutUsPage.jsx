@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  Award, Zap, Sprout, Cpu, Microscope, ShieldCheck, CheckCircle2, MapPin, Phone, Mail, ArrowRight, ExternalLink, ChevronRight, ChevronLeft, Sparkles, Building2, Factory, GraduationCap, X, Layers, Maximize2, Check, Receipt, MessageSquareQuote
+  Award, Zap, Sprout, Cpu, Microscope, MapPin, Phone, ArrowRight, Factory, GraduationCap, X, Maximize2, Check, Receipt, MessageSquareQuote
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import useScrollLock, { useEscapeKey } from '../hooks/useScrollLock';
@@ -342,7 +342,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
               <div className="pt-2">
                 <button
                   onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: "About Us Consultation" })}
-                  className="w-full sm:w-auto max-w-full px-6 sm:px-7 py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-sm uppercase tracking-wide sm:tracking-wider rounded-2xl shadow-md hover:shadow-lg transition-all inline-flex items-center justify-center gap-2.5 text-center cursor-pointer hover:scale-[1.02]"
+                  className="w-full sm:w-auto max-w-full px-6 sm:px-7 py-4 bg-[#1A822B] hover:bg-[#166A26] text-white font-extrabold text-sm uppercase tracking-wide sm:tracking-wider rounded-2xl shadow-md hover:shadow-lg transition-all inline-flex items-center justify-center gap-2.5 text-center cursor-pointer hover:scale-[1.02]"
                 >
                   <span className="text-balance">{t('about_connectTeam')}</span>
                   <ArrowRight className="w-5 h-5" />
@@ -371,9 +371,9 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
 
                 {/* Floating Project Pill */}
                 <div className="absolute bottom-4 inset-x-4 sm:bottom-5 sm:inset-x-5 bg-slate-950/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-white border border-white/10 shadow-2xl">
-                  <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 text-xs sm:text-sm font-bold text-[#23AC39] pb-2">
+                  <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 text-xs sm:text-sm font-bold text-[#1A822B] pb-2">
                     <span className="whitespace-nowrap">{t('about_fieldVerified')}</span>
-                    <span className="bg-[#23AC39]/20 text-[#23AC39] px-3 py-1 rounded-full text-xs font-black whitespace-nowrap">
+                    <span className="bg-[#23AC39]/20 text-[#1A822B] px-3 py-1 rounded-full text-xs font-black whitespace-nowrap">
                       {t('about_patented')}
                     </span>
                   </div>
@@ -733,7 +733,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <span className="text-xs sm:text-sm font-bold text-[#23AC39] uppercase tracking-wider bg-[#23AC39]/10 px-2.5 py-0.5 rounded-full inline-block truncate">
+                        <span className="text-xs sm:text-sm font-bold text-[#166A26] uppercase tracking-wider bg-[#23AC39]/10 px-2.5 py-0.5 rounded-full inline-block truncate">
                           {t(`about_i${idx + 1}Tag`)}
                         </span>
                         <div className="text-lg sm:text-xl font-black text-[#123B92] truncate mt-1.5">
@@ -763,7 +763,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <span className="text-xs sm:text-sm font-bold text-[#23AC39] uppercase tracking-wider bg-[#23AC39]/10 px-2.5 py-0.5 rounded-full inline-block truncate">
+                        <span className="text-xs sm:text-sm font-bold text-[#166A26] uppercase tracking-wider bg-[#23AC39]/10 px-2.5 py-0.5 rounded-full inline-block truncate">
                           {t(`about_i${idx + 1}Tag`)}
                         </span>
                         <div className="text-lg sm:text-xl font-black text-[#123B92] truncate mt-1.5">
@@ -866,7 +866,7 @@ export default function AboutUsPage({ onOpenQuoteModal }) {
               <div className="max-w-3xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-3">
                 <button
                   onClick={() => onOpenQuoteModal && onOpenQuoteModal({ capacityNeeded: "About Us Consultation" })}
-                  className="w-full px-6 py-4 bg-[#23AC39] hover:bg-[#1f9632] text-white font-extrabold text-sm sm:text-base uppercase tracking-wide sm:tracking-wider rounded-2xl shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all flex items-center justify-center gap-2.5 text-center cursor-pointer"
+                  className="w-full px-6 py-4 bg-[#1A822B] hover:bg-[#166A26] text-white font-extrabold text-sm sm:text-base uppercase tracking-wide sm:tracking-wider rounded-2xl shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all flex items-center justify-center gap-2.5 text-center cursor-pointer"
                 >
                   <span className="text-balance">{t('about_ctaQuote')}</span>
                   <ArrowRight className="w-5 h-5" />
