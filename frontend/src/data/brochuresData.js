@@ -25,7 +25,7 @@ export const brochures = [
     size: '1.0 MB',
     pageCount: 3,
     badge: 'Domestic',
-    badgeColor: 'bg-[#23AC39]/10 text-[#1A822B] border-[#23AC39]/30'
+    badgeColor: 'bg-[#23AC39]/10 text-[#166A26] border-[#23AC39]/30'
   },
   {
     id: 'entrepreneur-box',

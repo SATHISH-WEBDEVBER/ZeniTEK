@@ -167,7 +167,9 @@ export const showcasePhotos = (node) => {
   if (!pick) return all.slice(0, 4);
   return pick
     .map(p => (typeof p === 'object' ? { thumb: p.src, ...p } : all.find(ph => ph.src.endsWith(`-${String(p).padStart(2, '0')}.webp`))))
-    .filter(Boolean);
+    .filter(Boolean)
+    // a 960 px copy (-md.webp) exists for each of these photos: phones and small cards load that
+    .map(ph => (ph.w > 960 && !ph.md && ph.src.startsWith('/images/products/') ? { ...ph, md: ph.src.replace(/\.webp$/, '-md.webp') } : ph));
 };
 
 // A dryer model's record in the brochure data (capacity, areas, power ...)

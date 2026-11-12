@@ -1,24 +1,12 @@
-// Collects every page's translation file into one dictionary per language.
-import about from './about';
-import dryers from './dryers';
-import gallery from './gallery';
-import sections from './sections';
-import common from './common';
-import navbar from './navbar';
-import site from './site';
-import products from './products';
-import subsidies from './subsidies';
-import hero from './hero';
-import catalog from './catalog';
-import media from './media';
+// The site's translation files, in merge order: when two page files define the same key, the later
+// one wins; base.js (site-wide text) wins over all of them.
+//
+// The browser never loads this file. The i18n build step in vite.config.js reads these files and
+// serves one dictionary per language ("virtual:i18n/<lang>"), so a visitor downloads only English
+// (the fallback) and the language they chose - see src/i18n/load.js.
+export const MODULE_FILES = [
+  'about', 'dryers', 'gallery', 'sections', 'common', 'navbar', 'site', 'products', 'subsidies', 'hero', 'catalog', 'media',
+  'base',
+];
 
-const modules = [about, dryers, gallery, sections, common, navbar, site, products, subsidies, hero, catalog, media];
-
-export const LANGS = ['en', 'ta', 'hi', 'ml', 'te', 'kn'];
-
-const pageTranslations = LANGS.reduce((acc, lang) => {
-  acc[lang] = Object.assign({}, ...modules.map(m => m[lang] || {}));
-  return acc;
-}, {});
-
-export default pageTranslations;
+export { LANGS } from './langs.js';

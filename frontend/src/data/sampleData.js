@@ -13,7 +13,7 @@ export const sampleReviews = [
     location: "Pollachi, Tamil Nadu",
     rating: 5,
     comment: "Installing ZeniTEK's 500kg Polyhouse Dryer doubled our copra margin. We sell Grade-1 White Copra directly to oil mills at a 25% price premium without worrying about rain!",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    videoUrl: "",
     approved: true
   },
   {
@@ -23,7 +23,7 @@ export const sampleReviews = [
     location: "Wayanad, Kerala",
     rating: 5,
     comment: "The essential oil retention in our pepper dried inside ZeniTEK solar dryer is unmatched. Our European buyers gave 100% lab approval on the very first shipment.",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    videoUrl: "",
     approved: true
   },
   {
@@ -33,7 +33,7 @@ export const sampleReviews = [
     location: "Nashik, Maharashtra",
     rating: 5,
     comment: "ZeniTEK handled everything end-to-end, from design to installation. The ROI was fully recovered within 8 months of operation!",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    videoUrl: "",
     approved: true
   }
 ];
