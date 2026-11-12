@@ -53,7 +53,7 @@ export default function QuotePage() {
         stats={[
           { value: 'MNRE', label: t('hero_quoteMnre') },
           { value: '30 sec', label: t('hero_quoteTime') },
-          { value: '40–60%', label: t('subsidyHelp') },
+          { value: '1,200+', label: t('dryersInstalled') },
         ]}
       />
 

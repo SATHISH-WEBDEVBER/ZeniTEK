@@ -142,7 +142,7 @@ export default function SolarDryersPage({ onOpenQuoteModal }) {
         stats={[
           { value: '40%', label: t('dryers_tileFaster') },
           { value: 'SS304', label: t('dryers_tileTrays') },
-          { value: '40–60%', label: t('dryers_tileSubsidy') },
+          { value: '8', label: t('prod_glanceModels') },
         ]}
       />
 

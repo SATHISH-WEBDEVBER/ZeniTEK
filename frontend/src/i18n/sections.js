@@ -17,20 +17,20 @@ export default {
 
     // Legal pages
     sections_privacyHeading: "Privacy & Data Protection Notice",
-    sections_privacyP1: "ZeniTEK Solar Thermal Solutions respects your privacy. All contact and farm specifications submitted through our inquiry and quotation forms are used strictly for generating custom solar dryer technical proposals and subsidy estimations.",
+    sections_privacyP1: "ZeniTEK Solar Thermal Solutions respects your privacy. All contact and farm specifications submitted through our inquiry and quotation forms are used strictly for generating custom solar dryer technical proposals and price quotations.",
     sections_privacyP2: "We never sell, rent, or trade your contact information or harvest data with third-party advertising brokers.",
     sections_privacyContact: "Contact Privacy Officer:",
     sections_email: "Email",
     sections_phone: "Phone",
     sections_termsHeading: "Terms of Service & Equipment Guarantee",
     sections_termsP1: "All solar thermal polyhouse dryers, cabinet dryers, and custom dehydration plants supplied by ZeniTEK are manufactured under ISO 9001:2015 quality standards and MNRE specifications.",
-    sections_termsP2: "Performance metrics, moisture extraction rates, and subsidy percentages are indicative guidelines based on standard sunny ambient weather conditions and regional state agriculture ministry policies.",
+    sections_termsP2: "Performance metrics and moisture extraction rates are indicative guidelines based on standard sunny ambient weather conditions.",
     sections_corporateInfo: "Corporate Information:",
     sections_isoCert: "ISO Certification",
 
     // Quote page
     sections_quoteBadge: "Official Enquiry",
-    sections_quoteTitle: "Get Free Quote & Subsidy Sizing",
+    sections_quoteTitle: "Get a Free Quote & Sizing",
     sections_quoteWhatsapp: "WhatsApp follow-up",
 
     // Dryer model page
@@ -272,19 +272,19 @@ export default {
     sections_state_OTHER: "பிற மாநிலங்கள்",
 
     sections_privacyHeading: "தனியுரிமை & தரவுப் பாதுகாப்பு அறிவிப்பு",
-    sections_privacyP1: "ZeniTEK Solar Thermal Solutions உங்கள் தனியுரிமையை மதிக்கிறது. எங்கள் விசாரணை மற்றும் விலைப்புள்ளி படிவங்கள் மூலம் நீங்கள் அளிக்கும் தொடர்பு மற்றும் பண்ணை விவரங்கள், உங்களுக்கான சோலார் உலர்த்தி தொழில்நுட்ப முன்மொழிவுகள் மற்றும் மானிய மதிப்பீடுகளைத் தயாரிக்க மட்டுமே பயன்படுத்தப்படும்.",
+    sections_privacyP1: "ZeniTEK Solar Thermal Solutions உங்கள் தனியுரிமையை மதிக்கிறது. எங்கள் விசாரணை மற்றும் விலைப்புள்ளி படிவங்கள் மூலம் நீங்கள் அளிக்கும் தொடர்பு மற்றும் பண்ணை விவரங்கள், உங்களுக்கான சோலார் உலர்த்தி தொழில்நுட்ப முன்மொழிவுகள் மற்றும் விலைப்புள்ளிகளைத் தயாரிக்க மட்டுமே பயன்படுத்தப்படும்.",
     sections_privacyP2: "உங்கள் தொடர்பு விவரங்களையோ அறுவடைத் தரவையோ மூன்றாம் தரப்பு விளம்பர நிறுவனங்களுக்கு நாங்கள் ஒருபோதும் விற்பதோ, வாடகைக்கு விடுவதோ, பரிமாறுவதோ இல்லை.",
     sections_privacyContact: "தனியுரிமை அலுவலரைத் தொடர்புகொள்ள:",
     sections_email: "மின்னஞ்சல்",
     sections_phone: "தொலைபேசி",
     sections_termsHeading: "சேவை விதிகள் & உபகரண உத்தரவாதம்",
     sections_termsP1: "ZeniTEK வழங்கும் அனைத்து சோலார் வெப்ப பாலிஹவுஸ் உலர்த்திகள், கேபினட் உலர்த்திகள் மற்றும் தனிப்பயன் உலர்த்தும் ஆலைகள் ISO 9001:2015 தரநிலைகள் மற்றும் MNRE விவரக்குறிப்புகளின்படி தயாரிக்கப்படுகின்றன.",
-    sections_termsP2: "செயல்திறன் அளவீடுகள், ஈரப்பதம் நீக்கும் விகிதங்கள் மற்றும் மானிய சதவீதங்கள், வழக்கமான வெயில் காலநிலை மற்றும் அந்தந்த மாநில வேளாண் துறைக் கொள்கைகளின் அடிப்படையிலான தோராயமான வழிகாட்டுதல்கள் மட்டுமே.",
+    sections_termsP2: "செயல்திறன் அளவீடுகள் மற்றும் ஈரப்பதம் நீக்கும் விகிதங்கள், வழக்கமான வெயில் காலநிலையின் அடிப்படையிலான தோராயமான வழிகாட்டுதல்கள் மட்டுமே.",
     sections_corporateInfo: "நிறுவனத் தகவல்:",
     sections_isoCert: "ISO சான்றிதழ்",
 
     sections_quoteBadge: "அதிகாரப்பூர்வ விசாரணை",
-    sections_quoteTitle: "இலவச விலைப்புள்ளி & மானியக் கணக்கீடு",
+    sections_quoteTitle: "இலவச விலைப்புள்ளி & அளவுக் கணக்கீடு",
     sections_quoteWhatsapp: "WhatsApp மூலம் தொடர் தொடர்பு",
 
     sections_modelNotFound: "மாதிரி கிடைக்கவில்லை",
@@ -522,19 +522,19 @@ export default {
     sections_state_OTHER: "अन्य राज्य",
 
     sections_privacyHeading: "गोपनीयता और डेटा सुरक्षा सूचना",
-    sections_privacyP1: "ZeniTEK Solar Thermal Solutions आपकी गोपनीयता का सम्मान करता है। हमारे पूछताछ और कोटेशन फॉर्म के माध्यम से दी गई संपर्क और खेत संबंधी जानकारी का उपयोग केवल आपके लिए सोलर ड्रायर के तकनीकी प्रस्ताव और सब्सिडी अनुमान तैयार करने के लिए किया जाता है।",
+    sections_privacyP1: "ZeniTEK Solar Thermal Solutions आपकी गोपनीयता का सम्मान करता है। हमारे पूछताछ और कोटेशन फॉर्म के माध्यम से दी गई संपर्क और खेत संबंधी जानकारी का उपयोग केवल आपके लिए सोलर ड्रायर के तकनीकी प्रस्ताव और मूल्य कोटेशन तैयार करने के लिए किया जाता है।",
     sections_privacyP2: "हम आपकी संपर्क जानकारी या फसल संबंधी डेटा को कभी भी किसी तीसरे पक्ष के विज्ञापन एजेंटों को बेचते, किराए पर देते या साझा नहीं करते।",
     sections_privacyContact: "गोपनीयता अधिकारी से संपर्क करें:",
     sections_email: "ईमेल",
     sections_phone: "फ़ोन",
     sections_termsHeading: "सेवा की शर्तें और उपकरण गारंटी",
     sections_termsP1: "ZeniTEK द्वारा आपूर्ति किए गए सभी सोलर थर्मल पॉलीहाउस ड्रायर, कैबिनेट ड्रायर और कस्टम सुखाने वाले प्लांट ISO 9001:2015 गुणवत्ता मानकों और MNRE विनिर्देशों के अनुसार बनाए जाते हैं।",
-    sections_termsP2: "प्रदर्शन आंकड़े, नमी निकालने की दर और सब्सिडी प्रतिशत सामान्य धूप वाले मौसम और संबंधित राज्य कृषि विभाग की नीतियों पर आधारित अनुमानित दिशानिर्देश हैं।",
+    sections_termsP2: "प्रदर्शन आंकड़े और नमी निकालने की दर सामान्य धूप वाले मौसम पर आधारित अनुमानित दिशानिर्देश हैं।",
     sections_corporateInfo: "कंपनी की जानकारी:",
     sections_isoCert: "ISO प्रमाणन",
 
     sections_quoteBadge: "आधिकारिक पूछताछ",
-    sections_quoteTitle: "निःशुल्क कोटेशन और सब्सिडी आकलन",
+    sections_quoteTitle: "निःशुल्क कोटेशन और आकार आकलन",
     sections_quoteWhatsapp: "WhatsApp पर फॉलो-अप",
 
     sections_modelNotFound: "मॉडल नहीं मिला",
@@ -772,19 +772,19 @@ export default {
     sections_state_OTHER: "മറ്റ് സംസ്ഥാനങ്ങൾ",
 
     sections_privacyHeading: "സ്വകാര്യതയും ഡാറ്റ സംരക്ഷണവും",
-    sections_privacyP1: "ZeniTEK Solar Thermal Solutions നിങ്ങളുടെ സ്വകാര്യതയെ മാനിക്കുന്നു. ഞങ്ങളുടെ അന്വേഷണ, ക്വട്ടേഷൻ ഫോമുകൾ വഴി നൽകുന്ന ബന്ധപ്പെടൽ വിവരങ്ങളും കൃഷി വിവരങ്ങളും നിങ്ങൾക്കുള്ള സോളാർ ഡ്രയർ സാങ്കേതിക നിർദ്ദേശങ്ങളും സബ്സിഡി കണക്കുകളും തയ്യാറാക്കാൻ മാത്രമാണ് ഉപയോഗിക്കുന്നത്.",
+    sections_privacyP1: "ZeniTEK Solar Thermal Solutions നിങ്ങളുടെ സ്വകാര്യതയെ മാനിക്കുന്നു. ഞങ്ങളുടെ അന്വേഷണ, ക്വട്ടേഷൻ ഫോമുകൾ വഴി നൽകുന്ന ബന്ധപ്പെടൽ വിവരങ്ങളും കൃഷി വിവരങ്ങളും നിങ്ങൾക്കുള്ള സോളാർ ഡ്രയർ സാങ്കേതിക നിർദ്ദേശങ്ങളും ക്വട്ടേഷനുകളും തയ്യാറാക്കാൻ മാത്രമാണ് ഉപയോഗിക്കുന്നത്.",
     sections_privacyP2: "നിങ്ങളുടെ ബന്ധപ്പെടൽ വിവരങ്ങളോ വിളവ് വിവരങ്ങളോ മൂന്നാം കക്ഷി പരസ്യ ഏജൻസികൾക്ക് ഞങ്ങൾ ഒരിക്കലും വിൽക്കുകയോ വാടകയ്ക്ക് നൽകുകയോ കൈമാറുകയോ ചെയ്യുന്നില്ല.",
     sections_privacyContact: "സ്വകാര്യതാ ഓഫീസറെ ബന്ധപ്പെടുക:",
     sections_email: "ഇമെയിൽ",
     sections_phone: "ഫോൺ",
     sections_termsHeading: "സേവന നിബന്ധനകളും ഉപകരണ ഗ്യാരണ്ടിയും",
     sections_termsP1: "ZeniTEK നൽകുന്ന എല്ലാ സോളാർ തെർമൽ പോളിഹൗസ് ഡ്രയറുകളും കാബിനറ്റ് ഡ്രയറുകളും കസ്റ്റം ഉണക്കൽ പ്ലാന്റുകളും ISO 9001:2015 ഗുണനിലവാര മാനദണ്ഡങ്ങളും MNRE സ്പെസിഫിക്കേഷനുകളും അനുസരിച്ചാണ് നിർമ്മിക്കുന്നത്.",
-    sections_termsP2: "പ്രകടന കണക്കുകൾ, ഈർപ്പം നീക്കൽ നിരക്കുകൾ, സബ്സിഡി ശതമാനങ്ങൾ എന്നിവ സാധാരണ വെയിലുള്ള കാലാവസ്ഥയെയും അതത് സംസ്ഥാന കൃഷി വകുപ്പ് നയങ്ങളെയും അടിസ്ഥാനമാക്കിയുള്ള ഏകദേശ മാർഗ്ഗനിർദ്ദേശങ്ങൾ മാത്രമാണ്.",
+    sections_termsP2: "പ്രകടന കണക്കുകളും ഈർപ്പം നീക്കൽ നിരക്കുകളും സാധാരണ വെയിലുള്ള കാലാവസ്ഥയെ അടിസ്ഥാനമാക്കിയുള്ള ഏകദേശ മാർഗ്ഗനിർദ്ദേശങ്ങൾ മാത്രമാണ്.",
     sections_corporateInfo: "സ്ഥാപന വിവരങ്ങൾ:",
     sections_isoCert: "ISO സർട്ടിഫിക്കേഷൻ",
 
     sections_quoteBadge: "ഔദ്യോഗിക അന്വേഷണം",
-    sections_quoteTitle: "സൗജന്യ ക്വട്ടേഷനും സബ്സിഡി കണക്കും",
+    sections_quoteTitle: "സൗജന്യ ക്വട്ടേഷനും വലിപ്പ കണക്കും",
     sections_quoteWhatsapp: "WhatsApp വഴി തുടർ സഹായം",
 
     sections_modelNotFound: "മോഡൽ കണ്ടെത്തിയില്ല",
@@ -1022,19 +1022,19 @@ export default {
     sections_state_OTHER: "ఇతర రాష్ట్రాలు",
 
     sections_privacyHeading: "గోప్యత & డేటా రక్షణ ప్రకటన",
-    sections_privacyP1: "ZeniTEK Solar Thermal Solutions మీ గోప్యతను గౌరవిస్తుంది. మా విచారణ మరియు కొటేషన్ ఫారమ్‌ల ద్వారా మీరు ఇచ్చే సంప్రదింపు మరియు పొలం వివరాలను మీకు సోలార్ డ్రైయర్ సాంకేతిక ప్రతిపాదనలు, సబ్సిడీ అంచనాలు తయారు చేయడానికి మాత్రమే ఉపయోగిస్తాం.",
+    sections_privacyP1: "ZeniTEK Solar Thermal Solutions మీ గోప్యతను గౌరవిస్తుంది. మా విచారణ మరియు కొటేషన్ ఫారమ్‌ల ద్వారా మీరు ఇచ్చే సంప్రదింపు మరియు పొలం వివరాలను మీకు సోలార్ డ్రైయర్ సాంకేతిక ప్రతిపాదనలు, ధర కొటేషన్లు తయారు చేయడానికి మాత్రమే ఉపయోగిస్తాం.",
     sections_privacyP2: "మీ సంప్రదింపు వివరాలు లేదా పంట సమాచారాన్ని మూడవ పక్ష ప్రకటన సంస్థలకు మేము ఎప్పుడూ అమ్మము, అద్దెకు ఇవ్వము, పంచుకోము.",
     sections_privacyContact: "గోప్యతా అధికారిని సంప్రదించండి:",
     sections_email: "ఈమెయిల్",
     sections_phone: "ఫోన్",
     sections_termsHeading: "సేవా నిబంధనలు & పరికరాల హామీ",
     sections_termsP1: "ZeniTEK సరఫరా చేసే అన్ని సోలార్ థర్మల్ పాలీహౌస్ డ్రైయర్‌లు, క్యాబినెట్ డ్రైయర్‌లు మరియు కస్టమ్ ఎండబెట్టే ప్లాంట్లు ISO 9001:2015 నాణ్యతా ప్రమాణాలు మరియు MNRE నిర్దేశాల ప్రకారం తయారవుతాయి.",
-    sections_termsP2: "పనితీరు గణాంకాలు, తేమ తొలగింపు రేట్లు మరియు సబ్సిడీ శాతాలు సాధారణ ఎండ వాతావరణం మరియు సంబంధిత రాష్ట్ర వ్యవసాయ శాఖ విధానాల ఆధారంగా ఇచ్చిన సుమారు మార్గదర్శకాలు మాత్రమే.",
+    sections_termsP2: "పనితీరు గణాంకాలు మరియు తేమ తొలగింపు రేట్లు సాధారణ ఎండ వాతావరణం ఆధారంగా ఇచ్చిన సుమారు మార్గదర్శకాలు మాత్రమే.",
     sections_corporateInfo: "సంస్థ సమాచారం:",
     sections_isoCert: "ISO ధృవీకరణ",
 
     sections_quoteBadge: "అధికారిక విచారణ",
-    sections_quoteTitle: "ఉచిత కొటేషన్ & సబ్సిడీ అంచనా",
+    sections_quoteTitle: "ఉచిత కొటేషన్ & సైజు అంచనా",
     sections_quoteWhatsapp: "WhatsApp ద్వారా ఫాలో-అప్",
 
     sections_modelNotFound: "మోడల్ కనుగొనబడలేదు",
@@ -1272,19 +1272,19 @@ export default {
     sections_state_OTHER: "ಇತರ ರಾಜ್ಯಗಳು",
 
     sections_privacyHeading: "ಗೌಪ್ಯತೆ ಮತ್ತು ದತ್ತಾಂಶ ರಕ್ಷಣೆ ಸೂಚನೆ",
-    sections_privacyP1: "ZeniTEK Solar Thermal Solutions ನಿಮ್ಮ ಗೌಪ್ಯತೆಯನ್ನು ಗೌರವಿಸುತ್ತದೆ. ನಮ್ಮ ವಿಚಾರಣೆ ಮತ್ತು ದರಪಟ್ಟಿ ಅರ್ಜಿಗಳ ಮೂಲಕ ನೀವು ನೀಡುವ ಸಂಪರ್ಕ ಮತ್ತು ಜಮೀನಿನ ವಿವರಗಳನ್ನು ನಿಮಗಾಗಿ ಸೋಲಾರ್ ಡ್ರೈಯರ್ ತಾಂತ್ರಿಕ ಪ್ರಸ್ತಾವನೆಗಳು ಮತ್ತು ಸಬ್ಸಿಡಿ ಅಂದಾಜುಗಳನ್ನು ಸಿದ್ಧಪಡಿಸಲು ಮಾತ್ರ ಬಳಸಲಾಗುತ್ತದೆ.",
+    sections_privacyP1: "ZeniTEK Solar Thermal Solutions ನಿಮ್ಮ ಗೌಪ್ಯತೆಯನ್ನು ಗೌರವಿಸುತ್ತದೆ. ನಮ್ಮ ವಿಚಾರಣೆ ಮತ್ತು ದರಪಟ್ಟಿ ಅರ್ಜಿಗಳ ಮೂಲಕ ನೀವು ನೀಡುವ ಸಂಪರ್ಕ ಮತ್ತು ಜಮೀನಿನ ವಿವರಗಳನ್ನು ನಿಮಗಾಗಿ ಸೋಲಾರ್ ಡ್ರೈಯರ್ ತಾಂತ್ರಿಕ ಪ್ರಸ್ತಾವನೆಗಳು ಮತ್ತು ಬೆಲೆ ದರಪಟ್ಟಿಗಳನ್ನು ಸಿದ್ಧಪಡಿಸಲು ಮಾತ್ರ ಬಳಸಲಾಗುತ್ತದೆ.",
     sections_privacyP2: "ನಿಮ್ಮ ಸಂಪರ್ಕ ಮಾಹಿತಿ ಅಥವಾ ಬೆಳೆ ದತ್ತಾಂಶವನ್ನು ನಾವು ಯಾವುದೇ ಮೂರನೇ ವ್ಯಕ್ತಿ ಜಾಹೀರಾತು ಸಂಸ್ಥೆಗಳಿಗೆ ಎಂದಿಗೂ ಮಾರುವುದಿಲ್ಲ, ಬಾಡಿಗೆಗೆ ನೀಡುವುದಿಲ್ಲ ಅಥವಾ ಹಂಚಿಕೊಳ್ಳುವುದಿಲ್ಲ.",
     sections_privacyContact: "ಗೌಪ್ಯತಾ ಅಧಿಕಾರಿಯನ್ನು ಸಂಪರ್ಕಿಸಿ:",
     sections_email: "ಇಮೇಲ್",
     sections_phone: "ಫೋನ್",
     sections_termsHeading: "ಸೇವಾ ನಿಯಮಗಳು ಮತ್ತು ಉಪಕರಣ ಖಾತರಿ",
     sections_termsP1: "ZeniTEK ಪೂರೈಸುವ ಎಲ್ಲಾ ಸೋಲಾರ್ ಥರ್ಮಲ್ ಪಾಲಿಹೌಸ್ ಡ್ರೈಯರ್‌ಗಳು, ಕ್ಯಾಬಿನೆಟ್ ಡ್ರೈಯರ್‌ಗಳು ಮತ್ತು ಕಸ್ಟಮ್ ಒಣಗಿಸುವ ಘಟಕಗಳನ್ನು ISO 9001:2015 ಗುಣಮಟ್ಟದ ಮಾನದಂಡಗಳು ಮತ್ತು MNRE ವಿಶೇಷಣಗಳ ಪ್ರಕಾರ ತಯಾರಿಸಲಾಗುತ್ತದೆ.",
-    sections_termsP2: "ಕಾರ್ಯಕ್ಷಮತೆಯ ಅಂಕಿಅಂಶಗಳು, ತೇವಾಂಶ ತೆಗೆಯುವ ದರಗಳು ಮತ್ತು ಸಬ್ಸಿಡಿ ಶೇಕಡಾವಾರುಗಳು ಸಾಮಾನ್ಯ ಬಿಸಿಲಿನ ಹವಾಮಾನ ಮತ್ತು ಆಯಾ ರಾಜ್ಯ ಕೃಷಿ ಇಲಾಖೆಯ ನೀತಿಗಳನ್ನು ಆಧರಿಸಿದ ಅಂದಾಜು ಮಾರ್ಗಸೂಚಿಗಳು ಮಾತ್ರ.",
+    sections_termsP2: "ಕಾರ್ಯಕ್ಷಮತೆಯ ಅಂಕಿಅಂಶಗಳು ಮತ್ತು ತೇವಾಂಶ ತೆಗೆಯುವ ದರಗಳು ಸಾಮಾನ್ಯ ಬಿಸಿಲಿನ ಹವಾಮಾನವನ್ನು ಆಧರಿಸಿದ ಅಂದಾಜು ಮಾರ್ಗಸೂಚಿಗಳು ಮಾತ್ರ.",
     sections_corporateInfo: "ಸಂಸ್ಥೆಯ ಮಾಹಿತಿ:",
     sections_isoCert: "ISO ಪ್ರಮಾಣೀಕರಣ",
 
     sections_quoteBadge: "ಅಧಿಕೃತ ವಿಚಾರಣೆ",
-    sections_quoteTitle: "ಉಚಿತ ದರಪಟ್ಟಿ ಮತ್ತು ಸಬ್ಸಿಡಿ ಅಂದಾಜು",
+    sections_quoteTitle: "ಉಚಿತ ದರಪಟ್ಟಿ ಮತ್ತು ಗಾತ್ರ ಅಂದಾಜು",
     sections_quoteWhatsapp: "WhatsApp ಮೂಲಕ ಮುಂದಿನ ಸಂಪರ್ಕ",
 
     sections_modelNotFound: "ಮಾದರಿ ಕಂಡುಬಂದಿಲ್ಲ",

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ChevronLeft, ChevronRight, CheckCircle2, MessageSquareQuote, ArrowRight, MapPin, Weight, Grid, Sun, Landmark
+  ChevronLeft, ChevronRight, CheckCircle2, MessageSquareQuote, ArrowRight, MapPin, Weight, Grid, Sun, Zap
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import pageTranslations from '../i18n';
@@ -238,11 +238,12 @@ export default function ProductExplorer() {
             const Icon = it.node.icon;
             const spec = it.spec;
             const [solarMain, solarSub] = spec ? splitSpec(spec.solarPower) : [];
+            const [heaterMain, heaterSub] = spec ? splitSpec(spec.electricalHeater) : [];
             const rows = spec ? [
               { icon: Weight, label: t('hero_perBatch'), main: shortCapacity(spec.capacityRange), sub: /\(([^)]+)\)/.exec(spec.capacityRange || '')?.[1] },
               { icon: Grid, label: t('sections_specFloorTray'), main: t('sections_floor', { value: spec.floorArea }), sub: t('sections_trayArea', { value: spec.totalTrayArea }) },
               { icon: Sun, label: t('sections_specSolar'), main: solarMain, sub: solarSub },
-              { icon: Landmark, label: t('subsidyEligibilityLabel'), main: spec.subsidyEligibility, sub: spec.paybackPeriod && `${t('sections_payback')}: ${spec.paybackPeriod}` },
+              { icon: Zap, label: t('sections_specHeater'), main: heaterMain, sub: heaterSub },
             ] : null;
             return (
               <div

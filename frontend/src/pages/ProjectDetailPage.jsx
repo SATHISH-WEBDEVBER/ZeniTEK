@@ -246,15 +246,11 @@ export default function ProjectDetailPage({ onOpenQuoteModal }) {
 
               </div>
 
-              {/* Quality & Subsidy Badges */}
+              {/* Quality badges */}
               <div className="space-y-2 pt-1 text-xs">
                 <div className="flex items-center text-slate-700 font-semibold">
                   <CheckCircle2 className="w-4 h-4 text-[#1A822B] mr-2 shrink-0" />
                   <span>{t('gallery_projBadge1')}</span>
-                </div>
-                <div className="flex items-center text-slate-700 font-semibold">
-                  <CheckCircle2 className="w-5 h-5 text-[#1A822B] mr-2 shrink-0" />
-                  <span>{t('gallery_projBadge2')}</span>
                 </div>
                 <div className="flex items-center text-slate-700 font-semibold">
                   <CheckCircle2 className="w-5 h-5 text-[#1A822B] mr-2 shrink-0" />

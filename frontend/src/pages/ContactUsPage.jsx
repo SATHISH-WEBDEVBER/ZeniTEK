@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  MapPin, Phone, Mail, MessageCircle, ShieldCheck, ArrowRight, CheckCircle2, Building2, Send, Loader2, Receipt, Landmark, Droplets, Wrench
+  MapPin, Phone, Mail, MessageCircle, ShieldCheck, ArrowRight, CheckCircle2, Building2, Send, Loader2, Receipt, Factory, Droplets, Wrench
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { API_BASE } from '../utils/api';
@@ -314,7 +314,7 @@ export default function ContactUsPage({ onOpenQuoteModal }) {
       <section className="bg-[#F0F4FD] p-6 rounded-2xl border border-[#123B92]/20 shadow-sm">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
           <div className="flex items-center justify-center gap-2 text-sm font-bold text-[#123B92]">
-            <Landmark className="w-5 h-5 shrink-0 text-[#002DC2]" />
+            <Factory className="w-5 h-5 shrink-0 text-[#002DC2]" />
             <span className="text-balance">{t('support1')}</span>
           </div>
           <div className="flex items-center justify-center gap-2 text-sm font-bold text-[#123B92]">

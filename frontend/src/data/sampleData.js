@@ -32,7 +32,7 @@ export const sampleReviews = [
     role: "Food Processing Micro-Entrepreneur",
     location: "Nashik, Maharashtra",
     rating: 5,
-    comment: "We got 50% State Agritech Subsidy assistance handled end-to-end by ZeniTEK. The ROI was fully recovered within 8 months of operation!",
+    comment: "ZeniTEK handled everything end-to-end, from design to installation. The ROI was fully recovered within 8 months of operation!",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     approved: true
   }

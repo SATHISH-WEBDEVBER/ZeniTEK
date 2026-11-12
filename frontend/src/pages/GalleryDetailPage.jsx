@@ -86,7 +86,7 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
     : { value: String(zenitekRealGallery.length), label: t('hero_galPhotos') };
 
   const whatsappMessage = encodeURIComponent(
-    `Hello ZeniTEK Team, I am interested in learning more about the ${item.title} (${item.productModel}) installed at ${item.location}, ${item.state}. Please share pricing and subsidy details.`
+    `Hello ZeniTEK Team, I am interested in learning more about the ${item.title} (${item.productModel}) installed at ${item.location}, ${item.state}. Please share pricing details.`
   );
 
   return (
@@ -187,9 +187,6 @@ export default function GalleryDetailPage({ onOpenQuoteModal }) {
                   </div>
                   <div className="text-base font-extrabold text-[#123B92] leading-snug">
                     {t('gallery_operationalIn', { place: `${item.location}, ${item.state}` })}
-                  </div>
-                  <div className="text-sm text-slate-600">
-                    {t('gallery_subsidyNote')}
                   </div>
                 </div>
 

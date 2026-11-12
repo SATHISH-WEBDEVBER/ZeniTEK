@@ -35,7 +35,6 @@ export const officialDryerModels = [
     circulationFans: "Natural convection airflow",
     controller: "Analog/Digital Thermostat Control",
     mobility: "2\" caster wheels for easy relocation",
-    subsidyEligibility: "Eligible for Micro-Agri & Home Enterprise Grants",
     paybackPeriod: "3 to 5 Months",
     description: "Compact, efficient, and 100% hygienic box type solar dryer. Designed for small businesses, kitchen entrepreneurs, and households desiring dust-free and rain-proof drying of fruits, vegetables, flowers, spices, and herbs.",
     keyFeatures: [
@@ -82,7 +81,6 @@ export const officialDryerModels = [
     circulationFans: "Internal dual-level air draft",
     controller: "Thermostat temperature regulation",
     mobility: "2\" caster wheels for effortless maneuvering",
-    subsidyEligibility: "Eligible for 40% State Micro-Enterprise Subsidy",
     paybackPeriod: "4 to 6 Months",
     description: "Two-tray compact solar box dryer providing 12 sq.ft of SS304 food-grade drying area. Double-tiered capacity is ideal for home farmers and small food startups producing dried mango, moringa flakes, mushroom, and medicinal herbs.",
     keyFeatures: [
@@ -129,7 +127,6 @@ export const officialDryerModels = [
     circulationFans: "4 Nos. internal circulation fans (top-to-bottom even hot air distribution)",
     controller: "Integrated controller with temperature & timer automation",
     mobility: "4\" heavy-duty caster wheels with foot brakes",
-    subsidyEligibility: "Eligible for 40% - 50% State Agriculture & MSME Subsidy",
     paybackPeriod: "5 to 7 Months",
     description: "Built for entrepreneurs and high-value value-addition. SUNDRY 50 houses 8 SS304 stainless steel trays (50 sq.ft total drying area), 4 internal circulation fans, 2 automated exhaust blowers, and 24V solar + battery storage.",
     keyFeatures: [
@@ -178,7 +175,6 @@ export const officialDryerModels = [
     circulationFans: "4 Nos. internal circulation fans for uniform chamber convection",
     controller: "PLC with 4\" touchscreen HMI & dual inside/outside temp & humidity sensors",
     recommendedUsage: "Tray Drying (Taller 10 ft profile gives comfortable walk-in internal access)",
-    subsidyEligibility: "Eligible for 50% - 60% State & National Horticulture Subsidies",
     paybackPeriod: "6 to 8 Months",
     description: "The benchmark commercial walk-in polyhouse solar tunnel dryer. Features 10 ft center clearance, 9 mobile trolleys with 36 SS304 food-grade perforated trays, industrial PLC touch automation, and Victron MPPT solar management.",
     keyFeatures: [
@@ -227,7 +223,6 @@ export const officialDryerModels = [
     circulationFans: "4 Nos. internal air circulation fans",
     controller: "PLC with 4\" touchscreen HMI & dual temp/humidity sensors",
     recommendedUsage: "Tray Drying + Floor Drying (Balanced profile providing increased floor area)",
-    subsidyEligibility: "Eligible for 50% State Agritech Subsidy",
     paybackPeriod: "6 to 8 Months",
     description: "Aerodynamic inverted parabolic solar tunnel dryer offering a wider 17 ft front footprint. Perfectly balances trolley-tray drying with floor bed spreading for versatile mixed-crop operations.",
     keyFeatures: [
@@ -274,7 +269,6 @@ export const officialDryerModels = [
     circulationFans: "4 Nos. internal convection fans",
     controller: "PLC with 4\" touchscreen HMI",
     recommendedUsage: "Floor Drying (Wider 20 ft span maximizes floor drying surface area)",
-    subsidyEligibility: "Eligible for 50% - 60% Horticulture & Agri Subsidies",
     paybackPeriod: "6 to 9 Months",
     description: "Designed for operations requiring maximum floor drying footprint. The 20 ft front width maximizes square footage for bulk spreading of grains, coffee cherries, turmeric rhizomes, and whole coconuts.",
     keyFeatures: [
@@ -323,7 +317,6 @@ export const officialDryerModels = [
     circulationFans: "4 Nos. internal air circulation fans (push hot air down to trays)",
     controller: "PLC automated control with 4\" touchscreen HMI & dual temp/humidity sensors",
     recommendedUsage: "High-Volume Commercial Tray Drying with 18 mobile trolleys",
-    subsidyEligibility: "Eligible for 50% - 60% Commercial Agri & FPO Subsidies",
     paybackPeriod: "6 to 8 Months",
     description: "Flagship commercial solar tunnel system with 24.5 ft tunnel length, 18 mobile trolleys, and 72 food-grade SS304 trays delivering 450 sq.ft of clean tray drying area. Engineered for continuous industrial agricultural production.",
     keyFeatures: [
@@ -371,7 +364,6 @@ export const officialDryerModels = [
     circulationFans: "Distributed high-efficiency brushless DC circulation fans",
     controller: "Multi-zone industrial PLC with full data acquisition & remote IoT telemetry",
     recommendedUsage: "Mega Agri Processing, Co-operative Hubs & Export Food Dehydration",
-    subsidyEligibility: "Eligible for Central & State Mega Food Park Subsidies up to 60%",
     paybackPeriod: "8 to 12 Months",
     description: "Custom-engineered modular solar tunnel architecture. Tunnel length can be extended using interlocking prefabricated sections up to 53 ft length and 1,000 sq.ft floor area with complete turnkey commissioning.",
     keyFeatures: [
@@ -379,7 +371,7 @@ export const officialDryerModels = [
       "Scalable up to 1,000 sq.ft floor area with multi-ton batch processing capacity",
       "Zone-by-zone digital humidity and temperature mapping for precision consistency",
       "Compatible with automated roll-in trolley trains or continuous conveyor systems",
-      "Certified MNRE standards and full subsidy technical documentation provided",
+      "Certified to MNRE standards, with full technical documentation provided",
       "Over 35 commercial installations successfully operational across 9 Indian states"
     ],
     compatibleCrops: ["Bulk Marine Fish", "Export Grade Moringa", "Spice Consignments", "Copra Operations", "Industrial Agritech"]

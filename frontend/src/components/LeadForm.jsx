@@ -72,7 +72,7 @@ const buildInitial = (prefill = {}) => {
 
 const inputClass = 'w-full bg-[#F0F4FD] border border-[#123B92]/30 focus:border-[#002DC2] focus:ring-1 focus:ring-[#002DC2] rounded-xl px-3.5 py-2.5 text-base text-black';
 
-// Quote & subsidy enquiry form (used by the /quote page). Posts to /api/leads and
+// Quote enquiry form (used by the /quote page). Posts to /api/leads and
 // opens the WhatsApp chat link the API returns; falls back to a direct WhatsApp link.
 export default function LeadForm({ prefill }) {
   const { t } = useLanguage();

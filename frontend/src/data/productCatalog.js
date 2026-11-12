@@ -170,7 +170,7 @@ export const showcasePhotos = (node) => {
     .filter(Boolean);
 };
 
-// A dryer model's record in the brochure data (capacity, areas, power, subsidy ...)
+// A dryer model's record in the brochure data (capacity, areas, power ...)
 export const dryerRecord = (node) => (node?.modelId ? officialDryerModels.find(m => m.id === node.modelId) || null : null);
 
 // "2.5 kg to 12.5 kg per batch (…)" -> "2.5–12.5 kg"

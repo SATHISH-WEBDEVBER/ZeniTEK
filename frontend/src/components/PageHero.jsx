@@ -159,7 +159,7 @@ export default function PageHero({
                     {item.stats.map((st, j) => (
                       <div key={j} data-hero-fade style={{ '--d': 2 + j }} className="min-w-0 flex items-center gap-3 py-2.5 sm:py-0 sm:block sm:px-5 sm:first:pl-0 sm:last:pr-0">
                         <dt className="sr-only">{st.label}</dt>
-                        <StatValue value={st.value} className="max-w-[55%] sm:max-w-none text-lg sm:text-2xl font-black text-white leading-tight [overflow-wrap:anywhere] tabular-nums" />
+                        <StatValue value={st.value} className="shrink-0 max-w-[55%] sm:max-w-none text-lg sm:text-2xl font-black text-white leading-tight [overflow-wrap:anywhere] tabular-nums" />
                         <dd className="ml-auto sm:ml-0 text-right sm:text-left text-xs sm:text-sm text-white/80 font-semibold leading-snug sm:mt-1 [overflow-wrap:anywhere]">{st.label}</dd>
                       </div>
                     ))}

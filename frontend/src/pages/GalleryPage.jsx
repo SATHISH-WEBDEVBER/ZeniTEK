@@ -434,7 +434,7 @@ export default function GalleryPage({ onOpenQuoteModal }) {
       </section>
       )}
 
-      {/* SECTION 3: SUBSIDY ASSISTANCE CTA BANNER (ODD: WHITE) */}
+      {/* SECTION 3: CALL TO ACTION BANNER (ODD: WHITE) */}
       <section className="w-full section-odd py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-[#123B92] text-white rounded-3xl p-6 sm:p-10 shadow-xl flex flex-col items-center gap-6 border-2 border-[#23AC39]">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Play, TrendingUp, ShieldCheck, Award, ArrowRight, CheckCircle2, Star, Landmark, Wrench, Handshake, MessageSquareQuote, MapPin
+  Play, TrendingUp, ShieldCheck, Award, ArrowRight, CheckCircle2, Star, Ruler, Wrench, Handshake, MessageSquareQuote, MapPin
 } from 'lucide-react';
 import IconTile from '../components/IconTile';
 import PageHero from '../components/PageHero';
@@ -125,7 +125,7 @@ export default function FarmerStoriesPage({ onOpenQuoteModal }) {
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#123B92]">{t('commitmentTitle')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 bg-white rounded-2xl border border-[#123B92]/20 shadow-sm space-y-2">
-              <IconTile icon={Landmark} />
+              <IconTile icon={Ruler} />
               <h3 className="text-xl font-bold text-[#123B92]">{t('comm1Title')}</h3>
               <p className="text-sm text-black leading-relaxed">{t('comm1Desc')}</p>
             </div>

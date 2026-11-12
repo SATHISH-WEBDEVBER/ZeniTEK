@@ -133,15 +133,6 @@ export default function Footer({ onOpenQuoteModal }) {
                 );
               })}
 
-              <div className="pt-1">
-                <Link 
-                  to="/subsidies"
-                  className="inline-flex items-center text-xs font-bold text-[#123B92] hover:text-[#002DC2] hover:underline transition-colors"
-                >
-                  <ArrowRight className="w-4 h-4 mr-1 text-[#002DC2]" />
-                  <span>{t('common_footer_subsidyGuide')}</span>
-                </Link>
-              </div>
             </div>
           </div>
 

@@ -49,7 +49,7 @@ export default {
     common_form_namePh: "e.g. Ramesh Kumar",
     common_form_statePh: "e.g. Tamil Nadu",
     common_form_districtPh: "e.g. Pollachi / Coimbatore",
-    common_form_messagePh: "e.g. Please share subsidy documents and estimated installation time.",
+    common_form_messagePh: "e.g. Please share the price and estimated installation time.",
     common_form_confidential: "100% Confidential",
     common_form_processing: "Processing...",
     common_form_success: "Quote requested successfully!",
@@ -108,8 +108,7 @@ export default {
     common_review_r2_role: "Organic Spice Exporter",
     common_review_r2_comment: "The essential oil retention in our pepper dried inside ZeniTEK solar dryer is unmatched. Our European buyers gave 100% lab approval on the very first shipment.",
     common_review_r3_role: "Food Processing Micro-Entrepreneur",
-    common_review_r3_comment: "We got 50% State Agritech Subsidy assistance handled end-to-end by ZeniTEK. The ROI was fully recovered within 8 months of operation!",
-
+    common_review_r3_comment: "ZeniTEK handled everything end-to-end, from design to installation. The ROI was fully recovered within 8 months of operation!",
     // Applications page
     common_apps_copraDesc: "Moisture drop from 52% to <6% in 2.5 days. Produces Grade-1 White Copra for oil extraction.",
     common_apps_moringaDesc: "100% dust-free green retention. Preserves chlorophyll for export powders.",
@@ -140,7 +139,7 @@ export default {
     common_contact_thanksTitle: "Thank You for Reaching Out!",
     common_contact_thanksDesc: "Your enquiry has been logged. Our thermal engineers will connect with you on WhatsApp / Phone within 2 hours.",
     common_contact_namePh: "e.g. Subramaniam",
-    common_contact_messagePh: "Mention location, target moisture levels, or subsidy questions..."
+    common_contact_messagePh: "Mention location, crop or target moisture levels..."
   },
 
   // Tamil
@@ -191,7 +190,7 @@ export default {
     common_form_namePh: "எ.கா. ரமேஷ் குமார்",
     common_form_statePh: "எ.கா. தமிழ்நாடு",
     common_form_districtPh: "எ.கா. பொள்ளாச்சி / கோயம்புத்தூர்",
-    common_form_messagePh: "எ.கா. மானிய ஆவணங்களையும் நிறுவல் காலத்தையும் பகிரவும்.",
+    common_form_messagePh: "எ.கா. விலையையும் நிறுவல் காலத்தையும் பகிரவும்.",
     common_form_confidential: "100% ரகசியம்",
     common_form_processing: "செயலாக்கப்படுகிறது...",
     common_form_success: "விலைப்புள்ளி கோரிக்கை வெற்றிகரமாக அனுப்பப்பட்டது!",
@@ -250,8 +249,7 @@ export default {
     common_review_r2_role: "இயற்கை மசாலா ஏற்றுமதியாளர்",
     common_review_r2_comment: "ZeniTEK சோலார் உலர்த்தியில் உலர்த்திய எங்கள் மிளகில் எண்ணெய்ச் சத்து அப்படியே இருக்கிறது. முதல் ஏற்றுமதியிலேயே ஐரோப்பிய வாங்குபவர்கள் 100% ஆய்வக ஒப்புதல் அளித்தனர்.",
     common_review_r3_role: "உணவு பதப்படுத்தும் குறுந்தொழில்முனைவோர்",
-    common_review_r3_comment: "50% மாநில வேளாண் தொழில்நுட்ப மானியத்தை ZeniTEK முழுமையாகப் பெற்றுத் தந்தது. 8 மாதங்களிலேயே முழு முதலீட்டையும் திரும்பப் பெற்றோம்!",
-
+    common_review_r3_comment: "வடிவமைப்பு முதல் நிறுவல் வரை அனைத்தையும் ZeniTEK முழுமையாகச் செய்து தந்தது. 8 மாதங்களிலேயே முழு முதலீட்டையும் திரும்பப் பெற்றோம்!",
     // Applications page
     common_apps_copraDesc: "2.5 நாட்களில் ஈரப்பதம் 52%-லிருந்து <6% ஆகக் குறையும். எண்ணெய் பிழிய முதல்தர வெள்ளை கொப்பரை.",
     common_apps_moringaDesc: "100% தூசியில்லா பச்சை நிறம். ஏற்றுமதிப் பொடிக்கு பச்சையம் காக்கப்படும்.",
@@ -282,7 +280,7 @@ export default {
     common_contact_thanksTitle: "தொடர்பு கொண்டதற்கு நன்றி!",
     common_contact_thanksDesc: "உங்கள் கோரிக்கை பதிவாகியுள்ளது. எங்கள் பொறியாளர்கள் 2 மணி நேரத்தில் WhatsApp / தொலைபேசியில் தொடர்பு கொள்வார்கள்.",
     common_contact_namePh: "எ.கா. சுப்பிரமணியம்",
-    common_contact_messagePh: "இடம், இலக்கு ஈரப்பதம் அல்லது மானியக் கேள்விகளைக் குறிப்பிடுங்கள்..."
+    common_contact_messagePh: "இடம், பயிர் அல்லது இலக்கு ஈரப்பதத்தைக் குறிப்பிடுங்கள்..."
   },
 
   // Hindi
@@ -333,7 +331,7 @@ export default {
     common_form_namePh: "जैसे: रमेश कुमार",
     common_form_statePh: "जैसे: तमिलनाडु",
     common_form_districtPh: "जैसे: पोल्लाची / कोयंबटूर",
-    common_form_messagePh: "जैसे: कृपया सब्सिडी दस्तावेज़ और इंस्टॉलेशन का अनुमानित समय बताएं।",
+    common_form_messagePh: "जैसे: कृपया कीमत और इंस्टॉलेशन का अनुमानित समय बताएं।",
     common_form_confidential: "100% गोपनीय",
     common_form_processing: "प्रक्रिया जारी...",
     common_form_success: "कोटेशन अनुरोध सफलतापूर्वक भेजा गया!",
@@ -392,8 +390,7 @@ export default {
     common_review_r2_role: "जैविक मसाला निर्यातक",
     common_review_r2_comment: "ZeniTEK सोलर ड्रायर में सुखाई गई हमारी काली मिर्च में तेल और सुगंध बेजोड़ रहती है। हमारे यूरोपीय खरीदारों ने पहली ही खेप को 100% लैब मंज़ूरी दे दी।",
     common_review_r3_role: "खाद्य प्रसंस्करण सूक्ष्म उद्यमी",
-    common_review_r3_comment: "ZeniTEK ने 50% राज्य कृषि सब्सिडी की पूरी प्रक्रिया शुरू से अंत तक संभाली। सिर्फ 8 महीनों में हमारा पूरा निवेश (ROI) वापस आ गया!",
-
+    common_review_r3_comment: "डिज़ाइन से इंस्टॉलेशन तक ZeniTEK ने सब कुछ शुरू से अंत तक संभाला। सिर्फ 8 महीनों में हमारा पूरा निवेश (ROI) वापस आ गया!",
     // Applications page
     common_apps_copraDesc: "2.5 दिनों में नमी 52% से <6%। तेल निकालने के लिए ग्रेड-1 सफेद कोपरा।",
     common_apps_moringaDesc: "100% धूल-मुक्त, हरापन बरकरार। निर्यात पाउडर के लिए क्लोरोफिल सुरक्षित।",
@@ -424,7 +421,7 @@ export default {
     common_contact_thanksTitle: "संपर्क करने के लिए धन्यवाद!",
     common_contact_thanksDesc: "आपकी पूछताछ दर्ज हो गई है। हमारे थर्मल इंजीनियर 2 घंटे के भीतर WhatsApp / फोन पर आपसे संपर्क करेंगे।",
     common_contact_namePh: "जैसे: सुब्रमण्यम",
-    common_contact_messagePh: "स्थान, लक्षित नमी स्तर या सब्सिडी संबंधी प्रश्न लिखें..."
+    common_contact_messagePh: "स्थान, फसल या लक्षित नमी स्तर लिखें..."
   },
 
   // Malayalam
@@ -475,7 +472,7 @@ export default {
     common_form_namePh: "ഉദാ. രമേഷ് കുമാർ",
     common_form_statePh: "ഉദാ. തമിഴ്നാട്",
     common_form_districtPh: "ഉദാ. പൊള്ളാച്ചി / കോയമ്പത്തൂർ",
-    common_form_messagePh: "ഉദാ. സബ്സിഡി രേഖകളും സ്ഥാപിക്കാനുള്ള ഏകദേശ സമയവും അറിയിക്കുക.",
+    common_form_messagePh: "ഉദാ. വിലയും സ്ഥാപിക്കാനുള്ള ഏകദേശ സമയവും അറിയിക്കുക.",
     common_form_confidential: "100% രഹസ്യം",
     common_form_processing: "അയക്കുന്നു...",
     common_form_success: "വിലവിവര അപേക്ഷ വിജയകരമായി അയച്ചു!",
@@ -534,8 +531,7 @@ export default {
     common_review_r2_role: "ജൈവ സുഗന്ധവ്യഞ്ജന കയറ്റുമതിക്കാരൻ",
     common_review_r2_comment: "ZeniTEK സോളാർ ഡ്രയറിൽ ഉണക്കിയ കുരുമുളകിൽ എണ്ണയും മണവും നിലനിൽക്കുന്നത് അതുല്യമാണ്. ആദ്യ ഷിപ്മെന്റിൽ തന്നെ ഞങ്ങളുടെ യൂറോപ്യൻ ഉപഭോക്താക്കൾ 100% ലാബ് അംഗീകാരം നൽകി.",
     common_review_r3_role: "ഭക്ഷ്യ സംസ്കരണ ചെറുകിട സംരംഭകൻ",
-    common_review_r3_comment: "50% സംസ്ഥാന അഗ്രിടെക് സബ്സിഡി ലഭിക്കാനുള്ള എല്ലാ കാര്യങ്ങളും ZeniTEK തന്നെ ചെയ്തുതന്നു. പ്രവർത്തനം തുടങ്ങി 8 മാസത്തിനുള്ളിൽ മുഴുവൻ നിക്ഷേപവും തിരിച്ചുകിട്ടി!",
-
+    common_review_r3_comment: "ഡിസൈൻ മുതൽ സ്ഥാപിക്കൽ വരെ എല്ലാ കാര്യങ്ങളും ZeniTEK തന്നെ ചെയ്തുതന്നു. പ്രവർത്തനം തുടങ്ങി 8 മാസത്തിനുള്ളിൽ മുഴുവൻ നിക്ഷേപവും തിരിച്ചുകിട്ടി!",
     // Applications page
     common_apps_copraDesc: "2.5 ദിവസം കൊണ്ട് ഈർപ്പം 52%-ൽ നിന്ന് <6% ആയി കുറയുന്നു. എണ്ണയാട്ടാൻ ഒന്നാം തരം വെളുത്ത കൊപ്ര.",
     common_apps_moringaDesc: "100% പൊടിരഹിതം, പച്ചനിറം നിലനിൽക്കുന്നു. കയറ്റുമതി പൊടിക്ക് ഹരിതകം സംരക്ഷിക്കുന്നു.",
@@ -566,7 +562,7 @@ export default {
     common_contact_thanksTitle: "ബന്ധപ്പെട്ടതിന് നന്ദി!",
     common_contact_thanksDesc: "നിങ്ങളുടെ അന്വേഷണം ലഭിച്ചു. 2 മണിക്കൂറിനുള്ളിൽ ഞങ്ങളുടെ എഞ്ചിനീയർമാർ WhatsApp / ഫോൺ വഴി ബന്ധപ്പെടും.",
     common_contact_namePh: "ഉദാ. സുബ്രഹ്മണ്യം",
-    common_contact_messagePh: "സ്ഥലം, ആവശ്യമായ ഈർപ്പ നില, സബ്സിഡി സംശയങ്ങൾ എന്നിവ എഴുതുക..."
+    common_contact_messagePh: "സ്ഥലം, വിള, ആവശ്യമായ ഈർപ്പ നില എന്നിവ എഴുതുക..."
   },
 
   // Telugu
@@ -617,7 +613,7 @@ export default {
     common_form_namePh: "ఉదా. రమేష్ కుమార్",
     common_form_statePh: "ఉదా. తమిళనాడు",
     common_form_districtPh: "ఉదా. పొల్లాచి / కోయంబత్తూర్",
-    common_form_messagePh: "ఉదా. సబ్సిడీ పత్రాలు మరియు ఇన్‌స్టలేషన్ అంచనా సమయం తెలియజేయండి.",
+    common_form_messagePh: "ఉదా. ధర మరియు ఇన్‌స్టలేషన్ అంచనా సమయం తెలియజేయండి.",
     common_form_confidential: "100% గోప్యం",
     common_form_processing: "ప్రాసెస్ అవుతోంది...",
     common_form_success: "కొటేషన్ అభ్యర్థన విజయవంతంగా పంపబడింది!",
@@ -676,8 +672,7 @@ export default {
     common_review_r2_role: "సేంద్రియ మసాలా ఎగుమతిదారు",
     common_review_r2_comment: "ZeniTEK సోలార్ డ్రైయర్‌లో ఆరబెట్టిన మా మిరియాల్లో సహజ నూనెలు అద్భుతంగా నిలుస్తాయి. మొదటి షిప్‌మెంట్‌కే మా యూరోపియన్ కొనుగోలుదారుల నుండి 100% ల్యాబ్ ఆమోదం వచ్చింది.",
     common_review_r3_role: "ఆహార ప్రాసెసింగ్ సూక్ష్మ వ్యాపారవేత్త",
-    common_review_r3_comment: "50% రాష్ట్ర వ్యవసాయ సబ్సిడీ ప్రక్రియ మొత్తాన్ని ZeniTEK చూసుకుంది. కేవలం 8 నెలల్లోనే మా పెట్టుబడి పూర్తిగా తిరిగి వచ్చింది!",
-
+    common_review_r3_comment: "డిజైన్ నుండి ఇన్‌స్టలేషన్ వరకు అన్నింటినీ ZeniTEK చూసుకుంది. కేవలం 8 నెలల్లోనే మా పెట్టుబడి పూర్తిగా తిరిగి వచ్చింది!",
     // Applications page
     common_apps_copraDesc: "2.5 రోజుల్లో తేమ 52% నుండి <6% కి. నూనె తీయడానికి గ్రేడ్-1 తెల్ల కొప్పెర.",
     common_apps_moringaDesc: "100% ధూళి రహిత ఆకుపచ్చ రంగు. ఎగుమతి పొడుల కోసం పత్రహరితం కాపాడుతుంది.",
@@ -708,7 +703,7 @@ export default {
     common_contact_thanksTitle: "సంప్రదించినందుకు ధన్యవాదాలు!",
     common_contact_thanksDesc: "మీ విచారణ నమోదైంది. మా ఇంజనీర్లు 2 గంటల్లో WhatsApp / ఫోన్ ద్వారా మిమ్మల్ని సంప్రదిస్తారు.",
     common_contact_namePh: "ఉదా. సుబ్రమణ్యం",
-    common_contact_messagePh: "ప్రదేశం, కావలసిన తేమ శాతం లేదా సబ్సిడీ ప్రశ్నలు తెలపండి..."
+    common_contact_messagePh: "ప్రదేశం, పంట లేదా కావలసిన తేమ శాతం తెలపండి..."
   },
 
   // Kannada
@@ -759,7 +754,7 @@ export default {
     common_form_namePh: "ಉದಾ. ರಮೇಶ್ ಕುಮಾರ್",
     common_form_statePh: "ಉದಾ. ತಮಿಳುನಾಡು",
     common_form_districtPh: "ಉದಾ. ಪೊಳ್ಳಾಚಿ / ಕೊಯಮತ್ತೂರು",
-    common_form_messagePh: "ಉದಾ. ಸಬ್ಸಿಡಿ ದಾಖಲೆಗಳು ಮತ್ತು ಅಳವಡಿಕೆ ಸಮಯ ತಿಳಿಸಿ.",
+    common_form_messagePh: "ಉದಾ. ಬೆಲೆ ಮತ್ತು ಅಳವಡಿಕೆ ಸಮಯ ತಿಳಿಸಿ.",
     common_form_confidential: "100% ಗೌಪ್ಯ",
     common_form_processing: "ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿದೆ...",
     common_form_success: "ಕೊಟೇಶನ್ ವಿನಂತಿ ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ!",
@@ -818,8 +813,7 @@ export default {
     common_review_r2_role: "ಸಾವಯವ ಸಾಂಬಾರು ರಫ್ತುದಾರ",
     common_review_r2_comment: "ZeniTEK ಸೋಲಾರ್ ಡ್ರೈಯರ್‌ನಲ್ಲಿ ಒಣಗಿಸಿದ ನಮ್ಮ ಕಾಳುಮೆಣಸಿನಲ್ಲಿ ನೈಸರ್ಗಿಕ ಎಣ್ಣೆ ಅದ್ಭುತವಾಗಿ ಉಳಿಯುತ್ತದೆ. ಮೊದಲ ಸಾಗಣೆಯಲ್ಲೇ ನಮ್ಮ ಯುರೋಪಿಯನ್ ಖರೀದಿದಾರರಿಂದ 100% ಲ್ಯಾಬ್ ಅನುಮೋದನೆ ಸಿಕ್ಕಿತು.",
     common_review_r3_role: "ಆಹಾರ ಸಂಸ್ಕರಣಾ ಸೂಕ್ಷ್ಮ ಉದ್ಯಮಿ",
-    common_review_r3_comment: "50% ರಾಜ್ಯ ಕೃಷಿ ತಂತ್ರಜ್ಞಾನ ಸಬ್ಸಿಡಿಯ ಎಲ್ಲಾ ಕೆಲಸವನ್ನು ZeniTEK ಅವರೇ ಮಾಡಿಕೊಟ್ಟರು. ಕೇವಲ 8 ತಿಂಗಳಲ್ಲಿ ನಮ್ಮ ಹೂಡಿಕೆ ಪೂರ್ತಿ ವಾಪಸ್ ಬಂತು!",
-
+    common_review_r3_comment: "ವಿನ್ಯಾಸದಿಂದ ಅಳವಡಿಕೆಯವರೆಗೆ ಎಲ್ಲಾ ಕೆಲಸವನ್ನು ZeniTEK ಅವರೇ ಮಾಡಿಕೊಟ್ಟರು. ಕೇವಲ 8 ತಿಂಗಳಲ್ಲಿ ನಮ್ಮ ಹೂಡಿಕೆ ಪೂರ್ತಿ ವಾಪಸ್ ಬಂತು!",
     // Applications page
     common_apps_copraDesc: "2.5 ದಿನಗಳಲ್ಲಿ ತೇವಾಂಶ 52% ರಿಂದ <6% ಗೆ. ಎಣ್ಣೆ ತೆಗೆಯಲು ಗ್ರೇಡ್-1 ಬಿಳಿ ಕೊಬ್ಬರಿ.",
     common_apps_moringaDesc: "100% ಧೂಳು-ರಹಿತ, ಹಸಿರು ಬಣ್ಣ ಉಳಿಯುತ್ತದೆ. ರಫ್ತು ಪುಡಿಗೆ ಪತ್ರಹರಿತ್ತು ಸಂರಕ್ಷಣೆ.",
@@ -850,6 +844,6 @@ export default {
     common_contact_thanksTitle: "ಸಂಪರ್ಕಿಸಿದ್ದಕ್ಕೆ ಧನ್ಯವಾದಗಳು!",
     common_contact_thanksDesc: "ನಿಮ್ಮ ವಿಚಾರಣೆ ದಾಖಲಾಗಿದೆ. ನಮ್ಮ ಇಂಜಿನಿಯರ್‌ಗಳು 2 ಗಂಟೆಗಳೊಳಗೆ WhatsApp / ಫೋನ್ ಮೂಲಕ ಸಂಪರ್ಕಿಸುತ್ತಾರೆ.",
     common_contact_namePh: "ಉದಾ. ಸುಬ್ರಮಣ್ಯಂ",
-    common_contact_messagePh: "ಸ್ಥಳ, ಗುರಿ ತೇವಾಂಶ ಅಥವಾ ಸಬ್ಸಿಡಿ ಪ್ರಶ್ನೆಗಳನ್ನು ತಿಳಿಸಿ..."
+    common_contact_messagePh: "ಸ್ಥಳ, ಬೆಳೆ ಅಥವಾ ಗುರಿ ತೇವಾಂಶವನ್ನು ತಿಳಿಸಿ..."
   }
 };

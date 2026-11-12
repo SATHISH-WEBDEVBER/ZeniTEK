@@ -128,10 +128,6 @@ export default function DryerModelPage() {
                   <span className="text-xs font-bold text-black/60 uppercase">{t('targetAudienceLabel')}</span>
                   <span className="font-extrabold text-[#123B92] text-right">{model.targetAudience}</span>
                 </div>
-                <div className="flex items-center justify-between gap-3 border-t border-[#123B92]/10 pt-2">
-                  <span className="text-xs font-bold text-black/60 uppercase">{t('subsidyEligibilityLabel')}</span>
-                  <span className="font-extrabold text-[#002DC2] text-right">{model.subsidyEligibility}</span>
-                </div>
                 {model.paybackPeriod && (
                   <div className="flex items-center justify-between gap-3 border-t border-[#123B92]/10 pt-2">
                     <span className="text-xs font-bold text-black/60 uppercase">{t('sections_payback')}</span>

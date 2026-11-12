@@ -19,7 +19,7 @@ const HERO_SERVICES = [
   {
     id: 'solar-dryer', image: '/images/home-hero/slide-2.webp', position: '78% 50%',
     titleKeys: ['heroTitle1', 'heroTitle2'], subtitleKey: 'heroSubtitle', ctaKey: 'exploreModels',
-    stats: [['1,200+', 'dryersInstalled'], ['500+ MT', 'foodSaved'], ['40-60%', 'subsidyHelp']],
+    stats: [['1,200+', 'dryersInstalled'], ['500+ MT', 'foodSaved'], ['8', 'prod_glanceModels']],
   },
   {
     // parabolic trough collector, IIT Bhubaneswar, Odisha
@@ -116,7 +116,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
             {[
               { Icon: BadgeCheck, key: 'mnreBadge' },
               { Icon: Award, key: 'isoBadge' },
-              { Icon: Landmark, key: 'subsidyBadge2' },
+              { Icon: ShieldCheck, key: 'trustBadge3' },
             ].map(({ Icon, key }) => (
               <div key={key} className="flex items-center space-x-3 px-5 py-4 bg-white rounded-2xl border border-slate-200/90">
                 <IconTile icon={Icon} size="md" />
@@ -379,7 +379,7 @@ export default function HomePage({ onOpenQuoteModal, onOpenDetailModal }) {
                   type="submit"
                   className="w-full sm:w-auto px-8 py-3.5 bg-[#23AC39] hover:bg-[#23AC39] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2"
                 >
-                  <span>{t('getPricingSubsidyQuote')}</span>
+                  <span>{t('getQuote')}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
