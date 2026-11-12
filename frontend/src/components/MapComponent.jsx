@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Tooltip, AttributionControl, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
+import { prefersReducedMotion } from '../motion/core';
+
+const REDUCED_MOTION = prefersReducedMotion();
 import {
   MapPin, ArrowRight, SlidersHorizontal, Plus, Minus, Maximize2, Search, List, Wheat, Eye,
   Satellite, Mountain, Map as MapIcon, Gauge, CalendarDays, MousePointerClick
@@ -644,6 +647,10 @@ export default function MapComponent({ onSelectProjectQuote }) { // eslint-disab
           <MapContainer
             center={[22.5, 80.0]}
             zoom={4.75}
+            // visitors who prefer reduced motion: tiles appear without fading, zooms jump
+            fadeAnimation={!REDUCED_MOTION}
+            zoomAnimation={!REDUCED_MOTION}
+            markerZoomAnimation={!REDUCED_MOTION}
             minZoom={3.5}
             maxZoom={MAP_MAX_ZOOM}
             zoomSnap={0.25}
